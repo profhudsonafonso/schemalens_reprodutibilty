@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: mongo:8.0
+    container_name: schemalens_mongodb_bench
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    volumes:
+      - schemalens_mongodb_data:/data/db
+
+volumes:
+  schemalens_mongodb_data:
