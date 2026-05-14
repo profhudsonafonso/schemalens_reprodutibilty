@@ -223,7 +223,7 @@ Use:
 Placeholder:
 
 ```text
-ANON_REPO_URL=<paste your anonymized OSF view-only link here>
+ANON_REPO_URL=https://osf.io/532rn/overview?view_only=0a93fbed1db745d0978aa2e9f6cd7c78
 ```
 
 ### Suggested repository layout
