@@ -1,362 +1,262 @@
-# SchemaLens Artifact — FIBEN Case Study
-
-This repository contains the code and documentation required to reproduce the FIBEN experiments used in the paper on **SchemaLens: Explainable Design-Space Reduction for Workload-Aware MongoDB Schema Selection**.
-
-FIBEN is used in the paper as a finance-oriented comparative dataset. It evaluates whether SchemaLens can reduce the MongoDB design space for a workload involving companies, financial reports, securities, holdings, accounts, persons, and transactions.
-
-The repository supports reproduction of:
-
-- scale-factor preparation;
-- methodology execution;
-- MongoDB benchmark execution;
-- result analysis;
-- paper-support outputs.
-
----
-
-# Repository structure
-
-Current FIBEN-related files:
+\# SchemaLens Artifact — FIBEN Case Study
 
 
-schemalens_reprodutibilty/
-├── methodology/
-│   └── feben_methdology.ipynb
-│
-├── scale_generator/
-│   └── fiben/
-│       ├── Fiben_generate_scale_factor.ipynb
-│       └── readme_generate_scale_factor_fiben-miss link repository.md
-│
-├── benchmark/
-│   └── fiben/
-│       └── run_fiben_mongo_benchmark.py
-│
-└── analysis/
-    └── fiben/
-        ├── analyzi_results.ipynb
-        ├── comparison sfs.ipynb
-        └── benchmark_execution_plan.csv
 
-Main FIBEN files:
-
-methodology/feben_methdology.ipynb
-scale_generator/fiben/Fiben_generate_scale_factor.ipynb
-benchmark/fiben/run_fiben_mongo_benchmark.py
-analysis/fiben/analyzi_results.ipynb
-analysis/fiben/comparison sfs.ipynb
-analysis/fiben/benchmark_execution_plan.csv
-
-The large FIBEN scale-factor data files are not stored directly in this Git repository due to size constraints.
-
-The artifact assumes an external FIBEN scale-factor package.
-
-FIBEN scale package:
-https://osf.io/532rn/overview?view_only=0a93fbed1db745d0978aa2e9f6cd7c78
+This README describes how to reproduce the FIBEN part of the SchemaLens evaluation.
 
 
-Expected local folder structure:
 
-datasets/
-└── fiben/
-    ├── sf1/
-    ├── sf10/
-    └── sf30/
+FIBEN is used in the paper as a finance-oriented comparative dataset. It complements the IMDb running example by testing SchemaLens on business-oriented structures, including companies, officers, financial metrics, securities, holdings, transactions, and customer accounts.
 
-Here:
 
-sf1 is the workload-induced FIBEN baseline subset;
-sf10 and sf30 are generated from sf1 using the FIBEN scale-factor generation workflow.
-Environment
 
-Requirements:
+The FIBEN case study supports reproduction of:
 
-Python
-Jupyter
-Docker
-MongoDB in Docker
 
-Install the Python dependencies required by the notebooks and scripts, for example:
 
-pip install pandas numpy duckdb pymongo
+1\. methodology execution over a finance/business conceptual schema;
 
-Start MongoDB, for example:
+2\. MongoDB candidate generation and benchmark execution;
 
-docker run -d \
-  --name fiben_mongodb_artifact \
-  -p 27018:27017 \
-  -e MONGO_INITDB_ROOT_USERNAME=mongo \
-  -e MONGO_INITDB_ROOT_PASSWORD=mongo \
-  mongo:8
+3\. result analysis across scale factors;
 
-Adjust host, port, and credentials if needed.
+4\. FIBEN representative rows in the cross-dataset summary.
 
-Reproduction paths
-Full reproduction
 
-From the original/raw FIBEN package to the final paper-support outputs.
 
-Steps:
+\## Repository files
 
-generate the workload-induced sf1 subset;
-generate sf10 and sf30;
-run the SchemaLens methodology notebook;
-run the MongoDB benchmark;
-run the corrected result analysis;
-run the cross-scale comparison;
-generate the final paper-support outputs.
+
+
+Main files for the FIBEN case study:
+
+
+
+
+
+methodology/fiben\_methodology.ipynb
+
+
+
+benchmark/fiben/run\_fiben\_mongo\_benchmark.py
+
+
+
+analysis/fiben/analyze\_results.ipynb
+
+analysis/fiben/compare\_scale\_factors.ipynb
+
+analysis/fiben/benchmark\_execution\_plan.csv
+
+Dataset
+
+
+
+The raw FIBEN dataset files are not stored directly in this repository because of size constraints. The experiments use the IBM FIBEN benchmark dataset and derived scale-factor folders.
+
+
+
+The main conceptual structures used in the paper include:
+
+
+
+Company / Corporation
+
+Officer
+
+FinancialMetric
+
+Security
+
+Holding
+
+Transaction
+
+CustomerAccount
+
+
+
+The scale factors used in the paper are:
+
+
+
+sf1
+
+sf10
+
+sf30
+
+
+
+If your local paths differ from those used in the original experiment, update the data-directory arguments passed to the benchmark runner.
+
+
+
+Methodology reproduction
+
+
+
+Run the notebook:
+
+
+
+methodology/fiben\_methodology.ipynb
+
+
+
+This notebook documents the SchemaLens methodology execution for FIBEN, including:
+
+
+
+conceptual view preparation;
+
+workload mapping;
+
+analytical matrix generation;
+
+query classification;
+
+activated MongoDB configuration families;
+
+benchmark-planning artifacts.
+
 Benchmark reproduction
 
-If the scale-factor folders already exist locally:
-
-run the methodology notebook;
-run the MongoDB benchmark;
-run the analysis notebook;
-run the cross-scale comparison notebook;
-generate the final table-support outputs.
-Result verification
-
-If benchmark outputs already exist:
-
-use the benchmark aggregate outputs for sf1, sf10, and sf30;
-run the corrected analysis;
-regenerate the representative-case outputs;
-regenerate the final table-support outputs.
-
-This is the recommended lightweight verification path.
-
-Workflow
-
-#Step 1 — Scale-factor generation
-
-Run:
-scale_generator/fiben/Fiben_generate_scale_factor.ipynb
-
-This notebook generates or documents the generation of:
-
-sf1
-sf10
-sf30
-
-The FIBEN scale-factor workflow builds a workload-induced sf1 subset and then creates larger synthetic instances while preserving the workload-relevant relationship structure.
-
-The additional scale-generation notes are in:
-
-scale_generator/fiben/readme_generate_scale_factor_fiben-miss link repository.md
-
-#Step 2 — Methodology execution
-
-Run:
-
-methodology/feben_methdology.ipynb
-
-This step executes the SchemaLens methodology for FIBEN. It derives the conceptual/workload matrix, applies the activation logic, and generates the artifacts used by the benchmark.
-
-The key benchmark artifact currently stored in this repository is:
-
-analysis/fiben/benchmark_execution_plan.csv
-
-This file is used as the benchmark execution plan for the FIBEN MongoDB benchmark.
 
 
-#Step 3 — MongoDB benchmark execution
+The benchmark runner is:
 
-Run:
 
-benchmark/fiben/run_fiben_mongo_benchmark.py
 
-This script:
+benchmark/fiben/run\_fiben\_mongo\_benchmark.py
 
-loads the FIBEN scale-factor data;
-materializes MongoDB configurations;
-executes benchmark queries;
-exports benchmark outputs.
 
-Example command for sf1:
 
-python benchmark/fiben/run_fiben_mongo_benchmark.py \
-  --data-dir data/fiben/sf1 \
-  --artifacts-dir analysis/fiben \
-  --results-dir results/fiben/sf1 \
-  --scale-label sf1 \
-  --mongo-host 127.0.0.1 \
-  --mongo-port 27018 \
-  --mongo-username mongo \
-  --mongo-password mongo \
-  --mongo-auth-source admin \
-  --batch-size 100000 \
-  --repetitions 10 \
-  --force-rebuild-db \
-  --verbose
+The benchmark should be executed with the FIBEN data directory, benchmark artifacts directory, results directory, and scale label.
 
-Repeat with the corresponding paths for:
 
-sf10
-sf30
 
-Example:
+Example command:
 
-python benchmark/fiben/run_fiben_mongo_benchmark.py \
-  --data-dir data/fiben/sf10 \
-  --artifacts-dir analysis/fiben \
-  --results-dir results/fiben/sf10 \
-  --scale-label sf10 \
-  --mongo-host 127.0.0.1 \
-  --mongo-port 27018 \
-  --mongo-username mongo \
-  --mongo-password mongo \
-  --mongo-auth-source admin \
-  --batch-size 100000 \
-  --repetitions 10 \
-  --force-rebuild-db \
-  --verbose
 
-python benchmark/fiben/run_fiben_mongo_benchmark.py \
-  --data-dir data/fiben/sf30 \
-  --artifacts-dir analysis/fiben \
-  --results-dir results/fiben/sf30 \
-  --scale-label sf30 \
-  --mongo-host 127.0.0.1 \
-  --mongo-port 27018 \
-  --mongo-username mongo \
-  --mongo-password mongo \
-  --mongo-auth-source admin \
-  --batch-size 100000 \
-  --repetitions 10 \
-  --force-rebuild-db \
-  --verbose
 
-#Step 4 — Corrected result analysis
+python benchmark/fiben/run\_fiben\_mongo\_benchmark.py \\
 
-Run:
+&#x20; --data-dir /path/to/fiben/data/sf1 \\
 
-analysis/fiben/analyzi_results.ipynb
+&#x20; --artifacts-dir /path/to/fiben/benchmark\_artifacts/fiben\_mongodb\_configurations \\
 
-This notebook computes the corrected SchemaLens metrics per:
+&#x20; --results-dir results/fiben/sf1 \\
 
-query × scale factor × run phase
+&#x20; --scale-label sf1 \\
 
-The metrics include:
+&#x20; --mongo-host 127.0.0.1 \\
 
-DSR;
-Top-1 preservation;
-near-best preservation within 5%;
-activated regret;
-primary regret.
+&#x20; --mongo-port 27018 \\
 
-Expected analysis outputs include files such as:
+&#x20; --batch-size 10000 \\
 
-schemalens_reduction_analysis_hot.csv
-fiben_summary_hot_catalog_corrected.csv
-fiben_representative_cases_hot.csv
-fiben_secondary_winners_hot_catalog_corrected.csv
-fiben_control_winners_hot_catalog_corrected.csv
-fiben_best_by_query_scale_hot_catalog_corrected.csv
-Step 5 — Cross-scale comparison
+&#x20; --force-rebuild-db
 
-Run:
 
-analysis/fiben/comparison sfs.ipynb
 
-This notebook compares the FIBEN results across:
+Repeat the execution for:
+
+
 
 sf1
+
 sf10
+
 sf30
 
-Expected cross-scale outputs include files such as:
 
-cross_scale_summary.csv
-cross_scale_p95.csv
-cross_scale_configs.csv
-cross_scale_regret.csv
-cross_scale_near_best.csv
-cross_scale_final_table.csv
-Benchmark notes
 
-The benchmark is executed through:
+MongoDB can be started from the repository root with:
 
-benchmark/fiben/run_fiben_mongo_benchmark.py
 
-Important:
 
-data loading is performed in batches;
-larger batch sizes usually improve loading performance if memory is available;
-each scale factor should use a separate result directory;
---scale-label, --data-dir, and --results-dir must match the intended scale.
+docker compose up -d
 
-Final experiment settings used in the paper:
 
-Run phases: hot and cold
-Repetitions: 10 each
-Scale factors: sf1, sf10, sf30
-MongoDB: Docker-based MongoDB instance
-Expected benchmark outputs
 
-Each benchmark run should generate files such as:
+The default MongoDB port is:
 
-benchmark_aggregate_results.csv
-benchmark_raw_results.csv
-benchmark_run_manifest.json
-candidate_load_summary.csv
-scale_db_initialization_summary.csv
-execution.log
 
-The main file used by the analysis is:
 
-benchmark_aggregate_results.csv
+27018
 
-The raw file is kept for auditability:
+Result analysis
 
-benchmark_raw_results.csv
-Representative FIBEN cases used in the paper
 
-The paper uses three representative FIBEN cases:
 
-Association:
-Q2_CompanyWithIndustryCountryAndListedSecurities
+The main FIBEN analysis notebooks are:
 
-Associative:
-Q3_SecuritiesHeldInEachFinancialServiceAccount
 
-Analytical / containment-like:
-Q5_ReportsAndMetricDataOfCompany
 
-These cases support the FIBEN rows in the final cross-dataset summary table.
+analysis/fiben/analyze\_results.ipynb
+
+analysis/fiben/compare\_scale\_factors.ipynb
+
+
+
+The file:
+
+
+
+analysis/fiben/benchmark\_execution\_plan.csv
+
+
+
+documents the benchmark execution plan used for the FIBEN analysis.
+
+
+
+These analysis files support the FIBEN results reported in the paper, including:
+
+
+
+FIBEN association case;
+
+FIBEN associative case;
+
+FIBEN analytical / containment-like case;
+
+cross-scale comparison;
+
+DSR, Top-1 preservation, near-best preservation, and relative regret.
 
 Paper connection
 
-The FIBEN outputs support the cross-dataset comparison in the SchemaLens paper.
 
-The final table-support outputs are generated from the per-scale analysis and cross-scale comparison notebooks.
 
-Expected final outputs include:
+The FIBEN artifact supports the cross-dataset evaluation in the paper.
 
-cross_scale_final_table.csv
 
-Missing benchmark execution plan
 
-If the benchmark reports a missing execution plan, check that this file exists:
+The representative FIBEN cases used in the cross-dataset summary include:
 
-analysis/fiben/benchmark_execution_plan.csv
 
-and that the benchmark command uses:
 
---artifacts-dir analysis/fiben
-Q5 returns zero documents
+Q2\_CompanyWithIndustryCountryAndListedSecurities
 
-Check whether the benchmark runner uses normalized join fields for SF10/SF30. The corrected Q5 path is:
+Q3\_SecuritiesHeldInEachFinancialServiceAccount
 
-Corporation
-→ FinancialReport
-→ ReportElement
-→ StatementElement
-SF10 or SF30 results look identical to SF1
+Q5\_ReportsAndMetricDataOfCompany
 
-Check that these three arguments point to the correct scale:
 
---data-dir
---results-dir
---scale-label
 
-Each scale factor must use a separate result directory.
+These queries test whether SchemaLens can activate meaningful MongoDB configuration families in a finance-oriented workload with association, associative, and analytical/containment-like access patterns.
+
+
+
+Lightweight verification
+
+
+
+To verify the FIBEN part of the paper without rerunning the full benchmark, use the analysis notebooks and the available benchmark outputs generated by the benchmark runner.
+
+
+
+Full benchmark reproduction is supported, but it is more time-consuming because it requires materializing MongoDB candidate configurations and executing repeated cold/hot benchmark runs for each scale factor.
+

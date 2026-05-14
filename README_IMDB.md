@@ -1,240 +1,292 @@
-# SchemaLens Artifact — IMDb Case Study
+\# SchemaLens Artifact — IMDb Case Study
 
-This repository contains the code and documentation required to reproduce the **IMDb case study** used in the paper on **SchemaLens: Explainable Design-Space Reduction for Workload-Aware MongoDB Schema Selection**.
+
+
+This README describes how to reproduce the IMDb part of the SchemaLens evaluation.
+
+
 
 IMDb is used in the paper as the detailed running example because it contains the three semantic patterns handled by SchemaLens:
 
-- **association**
-- **associative**
-- **containment**
-
-The repository supports reproduction of:
-
-- scale-factor preparation
-- methodology execution
-- MongoDB benchmark
-- result analysis
-- paper-support outputs
-
----
-
-# Repository structure
 
 
-schemalens-artifact/
-├── README.md
-├── requirements.txt
-├── docker-compose.yml
-├── methodology/
-├── scale_generation/
-├── benchmark/
-├── analysis/
-└── docs/
+\- association
 
-Main IMDb files:
+\- associative structures
 
-methodology/imdb_methodology.ipynb
-scale_generation/imdb_scale_generation.ipynb
-benchmark/run_imdb_mongo_benchmark.py
-analysis/analyze_single_scale.py
-analysis/compare_scales.py
+\- containment-like structures
 
-The large IMDb data files are not stored directly in this Git repository due to size constraints.
 
-The artifact assumes an external IMDb sf1 data package, from which the smaller scale factors used in the paper are generated.
 
-IMDb sf package: https://osf.io/532rn/overview?view_only=0a93fbed1db745d0978aa2e9f6cd7c78
+The IMDb case study supports reproduction of:
 
-Expected local folder structure:
 
-data/
-└── imdb/
-    ├── sf_1/
-    ├── sf_025/
-    └── sf_050/
 
-Here:
+1\. scale-factor preparation;
 
-sf_1 is the reference package
-sf_025 and sf_050 are generated from sf_1
-Environment
+2\. methodology execution;
 
-Requirements:
+3\. MongoDB candidate benchmarking;
 
-Python 
-Jupyter
-Docker
-MongoDB in Docker
+4\. result analysis;
 
-Install Python dependencies with:
+5\. paper-support outputs for the IMDb rows in the cross-dataset summary.
 
-pip install -r requirements.txt
 
-Start MongoDB, for example:
 
-docker run -d --name imdb_mongodb_artifact -p 27018:27017 mongo:8
+\## Repository files
 
-Adjust host, port, and container name if needed.
 
-Reproduction paths
-1. Full reproduction
 
-From the IMDb sf1 package to the final paper-support outputs.
+Main files for the IMDb case study:
 
-Steps:
 
-generate sf0.25 and sf0.50 from sf1
-run the methodology notebook
-run the MongoDB benchmark
-run the corrected analysis
-run the cross-scale comparison
-generate the final paper-support outputs
 
-2. Benchmark reproduction
+methodology/imdb\_methodology.ipynb
 
-If the scale-factor folders already exist locally:
 
-run the methodology notebook
-run the benchmark
-run the analysis
-run the comparison
-generate the final table-support outputs
 
-3. Result verification
+benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py
 
-If benchmark outputs already exist:
+benchmark/imdb/mongo\_experiment\_catalog.csv
 
-consolidate benchmark aggregate outputs across sf0.25, sf0.50, and sf1
-run the corrected analysis
-regenerate the representative-case outputs
-regenerate the final table-support outputs
+benchmark/imdb/benchmark\_execution\_template.csv
 
-This is the recommended lightweight verification path.
 
-Workflow
-#Step 1 — Scale-factor generation
 
-Run:
+analysis/imdb/analyze\_results\_using\_catalog.ipynb
 
-scale_generation/imdb_scale_generation.ipynb
+analysis/imdb/compare\_scale\_factors\_imdb.ipynb
 
-This generates:
+analysis/imdb/benchmark\_aggregate\_results\_imdb\_all\_sfs.csv
+
+Dataset
+
+
+
+The raw IMDb TSV files are not stored in this repository because of size and licensing constraints.
+
+
+
+The experiments use the IMDb non-commercial dataset files:
+
+
+
+name.basics.tsv
+
+title.akas.tsv
+
+title.basics.tsv
+
+title.crew.tsv
+
+title.episode.tsv
+
+title.principals.tsv
+
+title.ratings.tsv
+
+
+
+The scale-factor folders used in the experiments are:
+
+
 
 sf0.25
-sf0.50
 
-from the IMDb sf1 package.
+sf0.5
 
-
-#Step 2 — Methodology execution
-
-Run:
-
-methodology/imdb_methodology.ipynb
-
-This step generates the analytical outputs used by the benchmark, especially:
-
-mongo_experiment_catalog.csv
-benchmark_execution_template.csv
-
-
-#Step 3 — Benchmark execution
-
-Run:
-
-benchmark/run_imdb_mongo_benchmark.py
-
-This step:
-
-materializes MongoDB configurations
-loads IMDb data
-executes benchmark queries
-exports benchmark outputs
-
-
-#Step 4 — Corrected result analysis
-
-Run:
-
-analysis/analyze_single_scale.py
-
-This computes, per (query, scale factor, run phase):
-
-DSR
-Top-1 preservation
-near-best preservation within 5%
-activated regret
-primary regret
-
-#Step 5 — Cross-scale comparison
-
-Run:
-
-analysis/compare_scales.py
-
-This compares the IMDb results across:
-
-sf0.25
-sf0.50
 sf1
-Step 6 — Paper-support outputs
-
-Run:
-
-analysis/table12_generation.py
-
-This produces the representative-case summaries used in the paper.
-
-#Benchmark notes
-
-The benchmark is executed through:
-
-benchmark/run_imdb_mongo_benchmark.py
-
-Important:
-
-data loading is performed in batches
-smaller batch sizes make the load slower
-larger batch sizes usually improve performance if memory is available
-
-Document here the final experiment settings used in the paper:
 
 
-Run phase(s): hot and cold
-Repetitions: 10 each
+
+In the benchmark script, these are expected by default at:
+
+
+
+sf0.25 -> /home/hudson/Documents/framework\_test/imdb/data/sf\_025
+
+sf0.5  -> /home/hudson/Documents/framework\_test/imdb/data/sf\_050
+
+sf1    -> /home/hudson/Documents/framework\_test/imdb/data/sf\_1
+
+
+
+If your local paths are different, update the IMDB\_SF\_PATHS dictionary in:
+
+
+
+benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py
+
+Methodology reproduction
+
+
+
+Run the notebook:
+
+
+
+methodology/imdb\_methodology.ipynb
+
+
+
+This notebook generates or documents the IMDb SchemaLens methodology outputs, including:
+
+
+
+conceptual/semantic view preparation;
+
+analytical matrix generation;
+
+query classification;
+
+activated MongoDB configuration families.
+
+
+
+The key methodology artifact used by the benchmark is the MongoDB experiment catalog:
+
+
+
+benchmark/imdb/mongo\_experiment\_catalog.csv
+
+Benchmark reproduction
+
+
+
+The benchmark runner is:
+
+
+
+benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py
+
+
+
+The runner requires:
+
+
+
+benchmark/imdb/mongo\_experiment\_catalog.csv
+
+benchmark/imdb/benchmark\_execution\_template.csv
+
+
 
 Example command:
 
-python benchmark/run_imdb_mongo_benchmark.py \
-  --catalog-csv [PATH_TO_CATALOG] \
-  --template-csv [PATH_TO_TEMPLATE] \
-  --results-dir [PATH_TO_RESULTS] \
-  --run-phase hot \
-  --max-runs [N] \
-  --verbose
-Expected analysis outputs
 
-The corrected IMDb analysis should generate files such as:
 
-imdb_summary_hot_catalog_corrected.csv
-imdb_representative_cases_hot.csv
-imdb_secondary_winners_hot_catalog_corrected.csv
-imdb_control_winners_hot_catalog_corrected.csv
-imdb_best_by_query_scale_hot_catalog_corrected.csv
+python benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py \\
 
-These outputs support:
+&#x20; --catalog-csv benchmark/imdb/mongo\_experiment\_catalog.csv \\
 
-the detailed IMDb case study
-the cross-scale comparison
-the IMDb rows in the final cross-dataset summary table
-Representative IMDb cases used in the paper
+&#x20; --template-csv benchmark/imdb/benchmark\_execution\_template.csv \\
 
-The paper uses three representative IMDb cases:
+&#x20; --results-dir results/imdb/sf0\_25 \\
 
-Containment: QG6_EpisodesOfSeries
-Association: QG3_RecommendationByGenreAndSubtype
-Associative: QG4_AllPersonsOfTypeForWatchItem
+&#x20; --scale-label sf0.25 \\
 
-The detailed end-to-end walkthrough is only given for the containment case.
-The other two are discussed briefly due to page limits.
+&#x20; --run-phase cold hot \\
+
+&#x20; --batch-size 10000 \\
+
+&#x20; --force-rebuild-scale-db
+
+
+
+The benchmark uses 10 cold-run and 10 hot-run repetitions per candidate/query pair.
+
+
+
+MongoDB can be started from the repository root with:
+
+
+
+docker compose up -d
+
+
+
+The default MongoDB port is:
+
+
+
+27018
+
+Result analysis
+
+
+
+The main IMDb analysis notebooks are:
+
+
+
+analysis/imdb/analyze\_results\_using\_catalog.ipynb
+
+analysis/imdb/compare\_scale\_factors\_imdb.ipynb
+
+
+
+The aggregate all-scale result file is:
+
+
+
+analysis/imdb/benchmark\_aggregate\_results\_imdb\_all\_sfs.csv
+
+
+
+These files support the IMDb results reported in the paper, including:
+
+
+
+QG6 containment case;
+
+hot-run results across scale factors;
+
+primary, secondary-affected, and control query comparison;
+
+IMDb representative rows in the cross-dataset summary.
+
+Paper connection
+
+
+
+The IMDb artifact supports:
+
+
+
+the end-to-end SchemaLens walkthrough;
+
+the QG6 containment example;
+
+the IMDb association, associative, and containment rows in the cross-dataset table.
+
+
+
+The main representative IMDb queries are:
+
+
+
+QG3\_RecommendationByGenreAndSubtype
+
+QG4\_AllPersonsOfTypeForWatchItem
+
+QG6\_EpisodesOfSeries
+
+Lightweight verification
+
+
+
+To verify the paper results without rerunning the full benchmark, use:
+
+
+
+analysis/imdb/benchmark\_aggregate\_results\_imdb\_all\_sfs.csv
+
+analysis/imdb/analyze\_results\_using\_catalog.ipynb
+
+analysis/imdb/compare\_scale\_factors\_imdb.ipynb
+
+
+
+Full benchmark reproduction is supported, but it is more time-consuming because it requires materializing MongoDB candidate configurations and executing repeated cold/hot benchmark runs.
 
