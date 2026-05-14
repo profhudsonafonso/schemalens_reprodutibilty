@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 from pymongo import MongoClient
 from pymongo.errors import BulkWriteError
+import os
 
 # ===================== CONFIG =====================
 MONGO_HOST = "127.0.0.1"
@@ -26,9 +27,9 @@ MONGO_PASSWORD = "mongo"
 MONGO_AUTH_SOURCE = "admin"
 
 IMDB_SF_PATHS = {
-    "sf0.25": "/home/hudson/Documents/framework_test/imdb/data/sf_025",
-    "sf0.5": "/home/hudson/Documents/framework_test/imdb/data/sf_050",
-    "sf1": "/home/hudson/Documents/framework_test/imdb/data/sf_1",
+    "sf0.25": os.environ.get("IMDB_SF025_DIR", "data/imdb/sf_025"),
+    "sf0.5": os.environ.get("IMDB_SF050_DIR", "data/imdb/sf_050"),
+    "sf1": os.environ.get("IMDB_SF1_DIR", "data/imdb/sf_1"),
 }
 
 TSV_SCHEMAS = {
