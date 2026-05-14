@@ -89,6 +89,7 @@ run the MongoDB benchmark
 run the corrected analysis
 run the cross-scale comparison
 generate the final paper-support outputs
+
 2. Benchmark reproduction
 
 If the scale-factor folders already exist locally:
@@ -98,6 +99,7 @@ run the benchmark
 run the analysis
 run the comparison
 generate the final table-support outputs
+
 3. Result verification
 
 If benchmark outputs already exist:
@@ -110,7 +112,7 @@ regenerate the final table-support outputs
 This is the recommended lightweight verification path.
 
 Workflow
-Step 1 — Scale-factor generation
+#Step 1 — Scale-factor generation
 
 Run:
 
@@ -123,7 +125,8 @@ sf0.50
 
 from the IMDb sf1 package.
 
-Step 2 — Methodology execution
+
+#Step 2 — Methodology execution
 
 Run:
 
@@ -133,7 +136,9 @@ This step generates the analytical outputs used by the benchmark, especially:
 
 mongo_experiment_catalog.csv
 benchmark_execution_template.csv
-Step 3 — Benchmark execution
+
+
+#Step 3 — Benchmark execution
 
 Run:
 
@@ -145,7 +150,9 @@ materializes MongoDB configurations
 loads IMDb data
 executes benchmark queries
 exports benchmark outputs
-Step 4 — Corrected result analysis
+
+
+#Step 4 — Corrected result analysis
 
 Run:
 
@@ -158,7 +165,8 @@ Top-1 preservation
 near-best preservation within 5%
 activated regret
 primary regret
-Step 5 — Cross-scale comparison
+
+#Step 5 — Cross-scale comparison
 
 Run:
 
@@ -177,7 +185,7 @@ analysis/table12_generation.py
 
 This produces the representative-case summaries used in the paper.
 
-Benchmark notes
+#Benchmark notes
 
 The benchmark is executed through:
 
