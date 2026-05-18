@@ -25,7 +25,9 @@ analysis/ldbc_snb/analyze_results_sf0_1.ipynb
 analysis/ldbc_snb/analyze_results_sf1.ipynb
 analysis/ldbc_snb/analyze_results_sf3.ipynb
 analysis/ldbc_snb/compare_scale_factors.ipynb
-Data availability
+
+
+## Data availability
 
 The raw LDBC SNB data files are not stored directly in this Git repository because of size constraints.
 
@@ -68,10 +70,10 @@ The CsvMergeForeign-StringDateFormatter archive contains the generated social-ne
 
 If you use the CsvComposite-StringDateFormatter archive instead of the CsvMergeForeign-StringDateFormatter archive, update the local data path and loader configuration accordingly. The experiments reported in the paper used the merge-foreign CSV layout.
 
-Expected local data layout
+## Expected local data layout
 
 After downloading and extracting the files, organize them locally as:
-
+````
 data/
   ldbc_snb/
     sf0_1/
@@ -88,12 +90,13 @@ data/
       social_network-sf3-CsvMergeForeign-StringDateFormatter/
       substitution_parameters-sf3/
       social_network-sf3-numpart-1/
+````
 
 Each scale-factor folder should contain the static, dynamic, substitution-parameter, and workload-stream files required by the benchmark runner.
 
 The benchmark runner receives the scale-factor folder through the --data-dir argument.
 
-Official workload used in the paper
+## Official workload used in the paper
 
 The official workload queries evaluated in the paper are:
 
@@ -105,7 +108,7 @@ These queries are kept unchanged and mapped to SchemaLens analytical features be
 
 In the paper, LDBC SNB is reported as an aggregate official-workload result rather than as one representative semantic-family case. This is because the official benchmark workload contains multiple query types and is not rewritten into generic representative queries.
 
-Methodology reproduction
+## Methodology reproduction
 
 Run the notebook:
 
@@ -174,7 +177,9 @@ near-best preservation;
 activated-family regret;
 primary, secondary, and control winners;
 cross-scale comparison across sf0.1, sf1, and sf3.
-Paper connection
+
+
+## Paper connection
 
 The LDBC SNB artifact supports the official-workload validation in the cross-dataset evaluation.
 
@@ -197,6 +202,7 @@ To verify the LDBC SNB part of the paper without rerunning the full benchmark, u
 analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf0_1.csv
 analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf1.csv
 analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf3.csv
+````
 
 These files contain the aggregate cold and hot benchmark results for the three LDBC SNB scale factors used in the paper.
 
