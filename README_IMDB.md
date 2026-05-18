@@ -4,9 +4,9 @@ This README describes how to reproduce the IMDb part of the SchemaLens evaluatio
 
 IMDb is used in the paper as the detailed running example because it contains the three semantic patterns handled by SchemaLens:
 
-- association
-- associative structures
-- containment-like structures
+* association
+* associative structures
+* containment-like structures
 
 The IMDb case study supports reproduction of:
 
@@ -21,29 +21,30 @@ The IMDb case study supports reproduction of:
 Main files for the IMDb case study:
 
 
-methodology/imdb_methodology.ipynb
 
-scale_generator/imdb/README.md
-scale_generator/imdb/IMDB_sf_commented_english.ipynb
+methodology/imdb\_methodology.ipynb
 
-benchmark/imdb/run_mongo_benchmark_option_b_incremental.py
-benchmark/imdb/mongo_experiment_catalog.csv
-benchmark/imdb/benchmark_execution_template.csv
+scale\_generator/imdb/README.md
+scale\_generator/imdb/IMDB\_sf\_commented\_english.ipynb
 
-analysis/imdb/analyze_results_using_catalog.ipynb
-analysis/imdb/compare_scale_factors_imdb.ipynb
-analysis/imdb/benchmark_aggregate_results_imdb_all_sfs.csv
+benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py
+benchmark/imdb/mongo\_experiment\_catalog.csv
+benchmark/imdb/benchmark\_execution\_template.csv
+
+analysis/imdb/analyze\_results\_using\_catalog.ipynb
+analysis/imdb/compare\_scale\_factors\_imdb.ipynb
+analysis/imdb/benchmark\_aggregate\_results\_imdb\_all\_sfs.csv
 Data availability
 
 The raw IMDb TSV files and prepared IMDb scale-factor folders are not stored directly in this Git repository because of size and licensing constraints.
 
 The prepared scale-factor package used in the paper is available on OSF:
 
-https://osf.io/532rn/overview?view_only=0a93fbed1db745d0978aa2e9f6cd7c78
+https://osf.io/532rn/overview?view\_only=0a93fbed1db745d0978aa2e9f6cd7c78
 
 Reviewers can either use the prepared OSF package or regenerate the scale factors using the notebook in:
 
-scale_generator/imdb/
+scale\_generator/imdb/
 
 The experiments use the IMDb non-commercial dataset files:
 
@@ -64,16 +65,16 @@ sf1
 After downloading or generating the data, organize them locally as:
 
 data/
-  imdb/
-    sf_025/
-    sf_050/
-    sf_1/
+imdb/
+sf\_025/
+sf\_050/
+sf\_1/
 
 Each scale-factor folder should contain the required IMDb TSV files.
 
-If your local paths are different, update the IMDB_SF_PATHS dictionary in:
+If your local paths are different, update the IMDB\_SF\_PATHS dictionary in:
 
-benchmark/imdb/run_mongo_benchmark_option_b_incremental.py
+benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py
 Two reproduction options
 Option A — Use the prepared OSF scale-factor package
 
@@ -93,22 +94,22 @@ Use this option only if you want to reproduce the IMDb scale-factor generation p
 
 Run the IMDb scale-generation notebook:
 
-scale_generator/imdb/IMDB_sf_commented_english.ipynb
+scale\_generator/imdb/IMDB\_sf\_commented\_english.ipynb
 
 The notebook documents how the IMDb scale factors were prepared from the IMDb source TSV files. The preparation creates the scale-factor folders used by the benchmark:
 
-sf_025
-sf_050
-sf_1
+sf\_025
+sf\_050
+sf\_1
 
 Additional scale-generation instructions are provided in:
 
-scale_generator/imdb/README.md
+scale\_generator/imdb/README.md
 Methodology reproduction
 
 Run the notebook:
 
-methodology/imdb_methodology.ipynb
+methodology/imdb\_methodology.ipynb
 
 This notebook generates or documents the IMDb SchemaLens methodology outputs, including:
 
@@ -119,32 +120,32 @@ activated MongoDB configuration families.
 
 The key methodology artifact used by the benchmark is the MongoDB experiment catalog:
 
-benchmark/imdb/mongo_experiment_catalog.csv
+benchmark/imdb/mongo\_experiment\_catalog.csv
 Benchmark reproduction
 
 The benchmark runner is:
 
-benchmark/imdb/run_mongo_benchmark_option_b_incremental.py
+benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py
 
 The runner requires:
 
-benchmark/imdb/mongo_experiment_catalog.csv
-benchmark/imdb/benchmark_execution_template.csv
+benchmark/imdb/mongo\_experiment\_catalog.csv
+benchmark/imdb/benchmark\_execution\_template.csv
 
 Example command:
 
-python benchmark/imdb/run_mongo_benchmark_option_b_incremental.py \
-  --catalog-csv benchmark/imdb/mongo_experiment_catalog.csv \
-  --template-csv benchmark/imdb/benchmark_execution_template.csv \
-  --results-dir results/imdb/sf0_25 \
-  --scale-label sf0.25 \
-  --run-phase cold hot \
-  --batch-size 10000 \
-  --force-rebuild-scale-db
+python benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py   
+--catalog-csv benchmark/imdb/mongo\_experiment\_catalog.csv   
+--template-csv benchmark/imdb/benchmark\_execution\_template.csv   
+--results-dir results/imdb/sf0\_25   
+--scale-label sf0.25   
+--run-phase cold hot   
+--batch-size 10000   
+--force-rebuild-scale-db
 
 Repeat the benchmark for the other scale factors by changing:
 
---results-dir
+\--results-dir
 --scale-label
 
 The benchmark uses 10 cold-run and 10 hot-run repetitions per candidate/query pair.
@@ -160,12 +161,12 @@ Result analysis
 
 The main IMDb analysis notebooks are:
 
-analysis/imdb/analyze_results_using_catalog.ipynb
-analysis/imdb/compare_scale_factors_imdb.ipynb
+analysis/imdb/analyze\_results\_using\_catalog.ipynb
+analysis/imdb/compare\_scale\_factors\_imdb.ipynb
 
 The aggregate all-scale result file is:
 
-analysis/imdb/benchmark_aggregate_results_imdb_all_sfs.csv
+analysis/imdb/benchmark\_aggregate\_results\_imdb\_all\_sfs.csv
 
 These files support the IMDb results reported in the paper, including:
 
@@ -183,19 +184,52 @@ the IMDb association, associative, and containment rows in the cross-dataset tab
 
 The main representative IMDb queries are:
 
-QG3_RecommendationByGenreAndSubtype
-QG4_AllPersonsOfTypeForWatchItem
-QG6_EpisodesOfSeries
-Lightweight verification
+QG3\_RecommendationByGenreAndSubtype
+QG4\_AllPersonsOfTypeForWatchItem
+QG6\_EpisodesOfSeries
 
-To verify the paper results without rerunning the full benchmark, use:
 
-analysis/imdb/benchmark_aggregate_results_imdb_all_sfs.csv
-analysis/imdb/analyze_results_using_catalog.ipynb
-analysis/imdb/compare_scale_factors_imdb.ipynb
+\## Lightweight verification
+
+
+
+To verify the IMDb part of the paper without rerunning the full benchmark, use the provided aggregate benchmark outputs.
+
+
+
+Consolidated all-scale file:
+
+
+
+```text
+
+analysis/imdb/benchmark\_aggregate\_results\_imdb\_all\_sfs.csv
+
+
+
+Scale-specific files:
+
+
+
+analysis/imdb/benchmark\_aggregate\_results\_sf025.csv
+
+analysis/imdb/benchmark\_aggregate\_results\_sf050.csv
+
+analysis/imdb/benchmark\_aggregate\_results\_sf1.csv
+
+
+
+The consolidated file is used for cross-scale analysis. The scale-specific files are provided for easier inspection of each IMDb scale factor.
+
+
+
+These files support verification of the IMDb containment case study, the G7/G8/G9 comparison for QG6\_EpisodesOfSeries, p95 latency, near-best preservation within the 5% threshold, and workload-level trade-offs across primary, secondary-affected, and control queries.
+
+
 
 Full benchmark reproduction is supported, but it is more time-consuming because it requires materializing MongoDB candidate configurations and executing repeated cold/hot benchmark runs.
 
 Notes
 
 The scale-factor data are large and are therefore distributed through OSF rather than stored directly in this Git repository. The Git repository contains the methodology notebook, scale-generation notebook, benchmark script, benchmark input files, and analysis notebooks needed to reproduce or verify the IMDb part of the paper.
+

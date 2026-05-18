@@ -74,6 +74,29 @@ Run the analysis notebooks/scripts over the provided aggregate benchmark outputs
 
 This is the recommended lightweight path for reviewers.
 
+### Provided aggregate benchmark outputs
+
+The repository includes aggregate benchmark result files for lightweight verification. These files allow reviewers to inspect the reported p95 latency, design-space reduction, Top-1 preservation, near-best preservation, relative regret, and cross-scale behavior without rerunning the full MongoDB benchmark.
+
+#### IMDb
+
+```text
+analysis/imdb/benchmark_aggregate_results_imdb_all_sfs.csv
+analysis/imdb/benchmark_aggregate_results_sf025.csv
+analysis/imdb/benchmark_aggregate_results_sf050.csv
+analysis/imdb/benchmark_aggregate_results_sf1.csv
+FIBEN
+analysis/fiben/benchmark_aggregate_results_fiben_sf1.csv
+analysis/fiben/benchmark_aggregate_results_fiben_sf10.csv
+analysis/fiben/benchmark_aggregate_results_fiben_sf30.csv
+LDBC SNB
+analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf0_1.csv
+analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf1.csv
+analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf3.csv
+
+Each aggregate file contains cold and hot benchmark summaries, including average latency, median latency, p95 latency, p99 latency, standard deviation, number of successful runs, and average documents returned or written.
+
+
 Data availability
 
 Large raw and scale-factor datasets are not stored directly in this Git repository because of size constraints.

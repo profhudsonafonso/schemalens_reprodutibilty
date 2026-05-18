@@ -189,17 +189,22 @@ The aggregate paper result summarizes:
 
 This means that SchemaLens was evaluated on 22 official LDBC SNB queries across three scale factors. Across the 66 query-scale cases, the activated families preserved the best observed configuration in 65 cases.
 
-Lightweight verification
+## Lightweight verification
 
-To verify the LDBC SNB part of the paper without rerunning the full benchmark, use:
+To verify the LDBC SNB part of the paper without rerunning the full benchmark, use the provided aggregate benchmark outputs:
 
-analysis/ldbc_snb/analyze_results_sf0_1.ipynb
-analysis/ldbc_snb/analyze_results_sf1.ipynb
-analysis/ldbc_snb/analyze_results_sf3.ipynb
-analysis/ldbc_snb/compare_scale_factors.ipynb
+```text
+analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf0_1.csv
+analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf1.csv
+analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf3.csv
+
+These files contain the aggregate cold and hot benchmark results for the three LDBC SNB scale factors used in the paper.
+
+They support verification of the official IC1--IC7, IS1--IS7, and INS1--INS8 workload results, p95 latency, Top-1 preservation, near-best preservation within the 5% threshold, activated regret, primary regret, control-winner cases, and cross-scale behavior.
+
+The LDBC SNB benchmark queries are kept unchanged. SchemaLens maps them to analytical features after extracting touched entities, relationship paths, traversal depth, access type, and write operations.
 
 Full benchmark reproduction is supported, but it is more time-consuming because it requires loading LDBC SNB scale-factor data, materializing MongoDB candidate configurations, and executing repeated benchmark runs over the official workload.
-
 Notes
 
 The LDBC SNB scale-factor data are large and are therefore distributed through the official LDBC dataset repository rather than stored directly in this Git repository. This Git repository contains the methodology notebook, benchmark runner, and analysis notebooks needed to reproduce or verify the LDBC SNB part of the paper once the official data archives have been downloaded.
