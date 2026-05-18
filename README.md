@@ -80,16 +80,15 @@ The repository includes aggregate benchmark result files for lightweight verific
 
 #### IMDb
 
-```text
 analysis/imdb/benchmark_aggregate_results_imdb_all_sfs.csv
 analysis/imdb/benchmark_aggregate_results_sf025.csv
 analysis/imdb/benchmark_aggregate_results_sf050.csv
 analysis/imdb/benchmark_aggregate_results_sf1.csv
-FIBEN
+####FIBEN
 analysis/fiben/benchmark_aggregate_results_fiben_sf1.csv
 analysis/fiben/benchmark_aggregate_results_fiben_sf10.csv
 analysis/fiben/benchmark_aggregate_results_fiben_sf30.csv
-LDBC SNB
+####LDBC SNB
 analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf0_1.csv
 analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf1.csv
 analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf3.csv
@@ -97,7 +96,7 @@ analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf3.csv
 Each aggregate file contains cold and hot benchmark summaries, including average latency, median latency, p95 latency, p99 latency, standard deviation, number of successful runs, and average documents returned or written.
 
 
-Data availability
+###Data availability
 
 Large raw and scale-factor datasets are not stored directly in this Git repository because of size constraints.
 
@@ -109,7 +108,7 @@ README_LDBC_SNB.md
 
 Each dataset README explains the expected local folder structure and the files needed to reproduce or verify the experiments.
 
-Environment
+###Environment
 
 The experiments use Python, Jupyter, Docker, and MongoDB.
 
@@ -123,7 +122,7 @@ docker compose up -d
 
 The default MongoDB port used by the benchmark scripts is 27018.
 
-Dataset-specific instructions
+###Dataset-specific instructions
 
 Use the following README files for detailed instructions:
 
