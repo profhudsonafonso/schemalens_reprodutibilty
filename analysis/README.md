@@ -1,4 +1,4 @@
-\# SchemaLens Analysis Outputs
+# SchemaLens Analysis Outputs
 
 
 
@@ -705,4 +705,61 @@ The lightweight path is recommended for quickly verifying:
 \- control-winner cases;
 
 \- cross-scale behavior.
+
+
+## Step 2 — Check baseline coverage
+
+Purpose
+
+Before simulating baselines, we check whether each baseline strategy selects configuration classes that are available in the measured aggregate benchmark outputs.
+
+This is necessary because some baselines may select configuration classes that were not instantiated or measured for a specific dataset, query, scale factor, and run phase.
+
+This step does not compare latency.
+
+This step does not compute regret.
+
+This step does not rerun MongoDB benchmarks.
+
+It only checks whether the required baseline configuration classes are available in the existing aggregate results.
+
+Input file
+
+    analysis/generated/aggregate_results_all_datasets.csv
+
+Script
+
+    analysis/scripts/check_baseline_coverage.py
+
+Generated files
+
+    analysis/generated/available_g_classes_by_query.csv
+    analysis/generated/baseline_coverage_by_case.csv
+    analysis/generated/baseline_coverage_summary.csv
+    analysis/generated/missing_baseline_candidates.csv
+    analysis/generated/query_metadata_template.csv
+    analysis/generated/baseline_coverage_report.txt
+
+Baselines checked
+
+    random_k
+    always_reference
+    always_embed
+    depth_only
+    relationship_type_only
+
+Important note
+
+The LDBC SNB query metadata used for depth-only and relationship-type-only coverage is provisional in this script.
+
+The metadata should be reviewed before using depth-only or relationship-type-only baseline results in the paper text.
+
+Run command
+
+    python analysis/scripts/check_baseline_coverage.py
+
+On Windows PowerShell:
+
+    py analysis\scripts\check_baseline_coverage.py
+
 

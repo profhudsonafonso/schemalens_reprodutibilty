@@ -1,0 +1,6 @@
+baseline,total_cases,full,partial,none,metadata_missing,no_desired_classes,usable_cases,unavailable_cases,usable_ratio,mean_coverage_ratio
+always_embed,252,60,120,72,0,0,180,72,0.7142857142857143,0.4380952380952381
+always_reference,252,0,252,0,0,0,252,0,1.0,0.5666666666666668
+depth_only,252,66,114,72,0,0,180,72,0.7142857142857143,0.4757936507936508
+random_k,252,252,0,0,0,0,252,0,1.0,1.0
+relationship_type_only,252,48,186,18,0,0,234,18,0.9285714285714286,0.6091269841269841

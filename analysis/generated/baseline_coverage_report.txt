@@ -1,0 +1,39 @@
+# Baseline Coverage Report
+
+This report checks whether the baseline strategies select configuration classes that are available in the measured aggregate benchmark outputs.
+
+This step does not compare latency and does not simulate baseline performance.
+It only checks coverage.
+
+## Output files
+- analysis/generated/available_g_classes_by_query.csv
+- analysis/generated/baseline_coverage_by_case.csv
+- analysis/generated/baseline_coverage_summary.csv
+- analysis/generated/missing_baseline_candidates.csv
+- analysis/generated/query_metadata_template.csv
+- analysis/generated/baseline_coverage_report.txt
+
+## Total query-scale-phase cases
+252
+
+## Cases by dataset
+- fiben: 60
+- imdb: 60
+- ldbc_snb: 132
+
+## Coverage summary
+- always_embed: total=252, full=60, partial=120, none=72, metadata_missing=0, usable_cases=180, unavailable_cases=72, usable_ratio=0.7143, mean_coverage_ratio=0.4381
+- always_reference: total=252, full=0, partial=252, none=0, metadata_missing=0, usable_cases=252, unavailable_cases=0, usable_ratio=1.0000, mean_coverage_ratio=0.5667
+- depth_only: total=252, full=66, partial=114, none=72, metadata_missing=0, usable_cases=180, unavailable_cases=72, usable_ratio=0.7143, mean_coverage_ratio=0.4758
+- random_k: total=252, full=252, partial=0, none=0, metadata_missing=0, usable_cases=252, unavailable_cases=0, usable_ratio=1.0000, mean_coverage_ratio=1.0000
+- relationship_type_only: total=252, full=48, partial=186, none=18, metadata_missing=0, usable_cases=234, unavailable_cases=18, usable_ratio=0.9286, mean_coverage_ratio=0.6091
+
+## Missing baseline candidates
+Rows with missing baseline classes: 834
+
+## Interpretation
+A baseline is considered usable for a query-scale-phase case when it selects at least one measured configuration class. Therefore, both full and partial coverage are usable for the next performance simulation step. Cases with none, metadata_missing, or no_desired_classes are unavailable for that baseline.
+
+## Important note
+The LDBC SNB query metadata is provisional in this coverage script.
+It should be reviewed before using depth-only or relationship-type-only baseline results in the paper text.
