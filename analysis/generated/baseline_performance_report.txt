@@ -1,0 +1,53 @@
+# Baseline Performance Report
+
+This report summarizes baseline performance simulation over the measured aggregate benchmark outputs.
+
+This step does not rerun MongoDB benchmarks.
+It uses p95 latency values already present in the normalized aggregate results.
+
+## Settings
+- Near-best threshold: 0.05
+- Random-k repetitions: 1000
+- Random seed: 42
+
+## Output files
+- analysis/generated/baseline_performance_by_case.csv
+- analysis/generated/baseline_performance_summary.csv
+- analysis/generated/baseline_performance_by_dataset.csv
+- analysis/generated/baseline_failure_cases.csv
+- analysis/generated/baseline_performance_report.txt
+
+## Overall summary
+- always_embed: available=180/252, top1=0.5278, top3=0.9278, near_best=0.7278, mean_regret=0.1089, median_regret=0.0000
+- always_reference: available=252/252, top1=0.5992, top3=0.9167, near_best=0.7262, mean_regret=0.1590, median_regret=0.0000
+- depth_only: available=180/252, top1=0.5444, top3=0.8444, near_best=0.7333, mean_regret=0.1277, median_regret=0.0000
+- random_k: available=252/252, top1=0.8888, top3=0.9956, near_best=0.9360, mean_regret=0.0317, median_regret=0.0000
+- relationship_type_only: available=234/252, top1=0.4829, top3=0.7906, near_best=0.6410, mean_regret=0.7463, median_regret=0.0031
+- schema_lens: available=252/252, top1=0.8730, top3=0.9881, near_best=0.9206, mean_regret=0.0394, median_regret=0.0000
+
+## Dataset-level summary
+- fiben / always_embed: available=54/60, top1=0.5000, near_best=0.8519, mean_regret=0.1154
+- fiben / always_reference: available=60/60, top1=0.5167, near_best=0.6833, mean_regret=0.1513
+- fiben / depth_only: available=48/60, top1=0.4792, near_best=0.7500, mean_regret=0.2373
+- fiben / random_k: available=60/60, top1=0.8048, near_best=0.8989, mean_regret=0.0774
+- fiben / relationship_type_only: available=60/60, top1=0.3833, near_best=0.5833, mean_regret=0.4121
+- fiben / schema_lens: available=60/60, top1=0.8333, near_best=0.9000, mean_regret=0.0937
+- imdb / always_embed: available=60/60, top1=0.7167, near_best=0.7833, mean_regret=0.0703
+- imdb / always_reference: available=60/60, top1=0.2833, near_best=0.4667, mean_regret=0.3421
+- imdb / depth_only: available=60/60, top1=0.6500, near_best=0.7500, mean_regret=0.0694
+- imdb / random_k: available=60/60, top1=0.7770, near_best=0.8652, mean_regret=0.0405
+- imdb / relationship_type_only: available=60/60, top1=0.2500, near_best=0.4167, mean_regret=2.3680
+- imdb / schema_lens: available=60/60, top1=0.6667, near_best=0.7833, mean_regret=0.0626
+- ldbc_snb / always_embed: available=66/132, top1=0.3788, near_best=0.5758, mean_regret=0.1386
+- ldbc_snb / always_reference: available=132/132, top1=0.7803, near_best=0.8636, mean_regret=0.0792
+- ldbc_snb / depth_only: available=72/132, top1=0.5000, near_best=0.7083, mean_regret=0.1033
+- ldbc_snb / random_k: available=132/132, top1=0.9777, near_best=0.9850, mean_regret=0.0070
+- ldbc_snb / relationship_type_only: available=114/132, top1=0.6579, near_best=0.7895, mean_regret=0.0688
+- ldbc_snb / schema_lens: available=132/132, top1=0.9848, near_best=0.9924, mean_regret=0.0043
+
+## Failure and near-failure candidates
+- Rows flagged: 523
+- A row is flagged when top-1 is not preserved, near-best is not preserved, or relative regret is above the near-best threshold.
+
+## Interpretation note
+Unavailable cases are not assigned inferred latency values. A baseline is evaluated only when it selects at least one measured configuration class.
