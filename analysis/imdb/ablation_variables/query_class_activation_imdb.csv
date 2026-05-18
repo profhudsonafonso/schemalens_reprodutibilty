@@ -1,0 +1,28 @@
+query_name,generic_class,activated_class,selected_root,activation_reason
+QG10_AdvancedSearchWatchItems,QG10,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG10_AdvancedSearchWatchItems,QG10,G2,WatchItem,"A matriz indica descritor compartilhado próximo da raiz, com absorção total rasa e baixa volatilidade."
+QG10_AdvancedSearchWatchItems,QG10,G3,WatchItem,"A matriz indica subtipo/componente estrutural próximo da raiz, com ganho raso e baixa volatilidade."
+QG1_WatchItemById,QG1,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG2_WatchItemByTitle,QG2,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG3_RecommendationByGenreAndSubtype,QG3,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG3_RecommendationByGenreAndSubtype,QG3,G2,WatchItem,"A matriz indica descritor compartilhado próximo da raiz, com absorção total rasa e baixa volatilidade."
+QG3_RecommendationByGenreAndSubtype,QG3,G3,WatchItem,"A matriz indica subtipo/componente estrutural próximo da raiz, com ganho raso e baixa volatilidade."
+QG4_AllPersonsOfTypeForWatchItem,QG4,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG4_AllPersonsOfTypeForWatchItem,QG4,G4,WatchItem,A matriz indica região associativa relevante; a entidade associativa próxima da raiz é candidata a embutimento parcial.
+QG4_AllPersonsOfTypeForWatchItem,QG4,G5,WatchItem,Há caminho associativo profundo com entidade final compartilhada; snapshot é candidato quando full embedding pode ser arriscado.
+QG4_AllPersonsOfTypeForWatchItem,QG4,G6,WatchItem,Há caminho associativo profundo e baixa volatilidade suficiente para testar o limite superior da absorção.
+QG5_AllPersonsForEpisodesOfSeries,QG5,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG5_AllPersonsForEpisodesOfSeries,QG5,G4,WatchItem,A matriz indica região associativa relevante; a entidade associativa próxima da raiz é candidata a embutimento parcial.
+QG5_AllPersonsForEpisodesOfSeries,QG5,G5,WatchItem,Há caminho associativo profundo com entidade final compartilhada; snapshot é candidato quando full embedding pode ser arriscado.
+QG5_AllPersonsForEpisodesOfSeries,QG5,G6,WatchItem,Há caminho associativo profundo e baixa volatilidade suficiente para testar o limite superior da absorção.
+QG6_EpisodesOfSeries,QG6,G7,Series,Baseline da família de containment para a raiz de composição.
+QG6_EpisodesOfSeries,QG6,G8,Series,Há estrutura parte-todo com componente contido que pode ser embutido de forma reduzida.
+QG6_EpisodesOfSeries,QG6,G9,Series,Há containment forte e estável; o embutimento completo do componente contido é candidato.
+QG7_UpdateWatchItemMetadata,QG7,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG8_AddPersonRoleToWatchItem,QG8,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG8_AddPersonRoleToWatchItem,QG8,G4,WatchItem,A matriz indica região associativa relevante; a entidade associativa próxima da raiz é candidata a embutimento parcial.
+QG8_AddPersonRoleToWatchItem,QG8,G5,WatchItem,Há caminho associativo profundo com entidade final compartilhada; snapshot é candidato quando full embedding pode ser arriscado.
+QG8_AddPersonRoleToWatchItem,QG8,G6,WatchItem,Há caminho associativo profundo e baixa volatilidade suficiente para testar o limite superior da absorção.
+QG9_TopRatedSeriesByGenre,QG9,G0,WatchItem,Baseline documental principal para a raiz selecionada.
+QG9_TopRatedSeriesByGenre,QG9,G2,WatchItem,"A matriz indica descritor compartilhado próximo da raiz, com absorção total rasa e baixa volatilidade."
+QG9_TopRatedSeriesByGenre,QG9,G3,WatchItem,"A matriz indica subtipo/componente estrutural próximo da raiz, com ganho raso e baixa volatilidade."

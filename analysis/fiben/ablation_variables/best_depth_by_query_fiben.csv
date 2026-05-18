@@ -1,0 +1,11 @@
+query_name,generic_class,query_family,query_type,selected_root,best_document_depth,max_depth_for_query,Rc,Re_at_best_depth,DeltaR_at_best_depth,DeltaRratio_at_best_depth,n_reachable_entities_at_best_depth,reachable_entities_at_best_depth,is_full_coverage_at_best_depth
+Q10_CreateAccountHoldingAndBuyTransaction,QG10,Update / insertion with relationship creation,insert,Person,3,3,5,0,5,1.0,6,"['BuyTransaction', 'FinancialServiceAccount', 'Holding', 'ListedSecurity', 'Person', 'Transaction']",True
+Q1_CompanyProfileIBM,QG1,Local lookup,select,Corporation,0,0,0,0,0,0.0,1,['Corporation'],True
+Q2_CompanyWithIndustryCountryAndListedSecurities,QG2,Shallow rooted retrieval,select,Corporation,1,1,3,0,3,1.0,4,"['Corporation', 'Country', 'Industry', 'ListedSecurity']",True
+Q3_SecuritiesHeldInEachFinancialServiceAccount,QG3,Associative retrieval,select,FinancialServiceAccount,3,3,3,0,3,1.0,4,"['FinancialServiceAccount', 'Holding', 'ListedSecurity', 'Security']",True
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,QG4,Deep traversal,select,Person,4,4,4,0,4,1.0,5,"['Corporation', 'FinancialServiceAccount', 'Holding', 'ListedSecurity', 'Person']",True
+Q5_ReportsAndMetricDataOfCompany,QG5,Containment retrieval,select,Corporation,3,3,4,0,4,1.0,5,"['Corporation', 'Disclosure', 'FinancialReport', 'ReportElement', 'StatementElement']",True
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,QG6,Filtered search / recommendation,select,ListedSecurity,2,2,3,0,3,1.0,4,"['Corporation', 'Country', 'Industry', 'ListedSecurity']",True
+Q7_PersonsWhoBoughtMoreIBMThanSold,QG7,Aggregation / ranking,select,Person,4,4,6,0,6,1.0,7,"['BuyTransaction', 'Corporation', 'FinancialServiceAccount', 'ListedSecurity', 'Person', 'SellTransaction', 'Transaction']",True
+Q8_IBMTransactionsBelowAverageSellingPrice,QG8,Aggregation / ranking,select,Transaction,2,2,3,0,3,1.0,4,"['Corporation', 'ListedSecurity', 'SellTransaction', 'Transaction']",True
+Q9_PersonsWhoBoughtAndSoldSameStock,QG9,Associative retrieval + comparison,select,Person,3,3,5,0,5,1.0,6,"['BuyTransaction', 'FinancialServiceAccount', 'ListedSecurity', 'Person', 'SellTransaction', 'Transaction']",True

@@ -969,3 +969,187 @@ On Windows PowerShell, run:
 ```powershell
 py analysis\scripts\analyze_baseline_diagnostics.py
 ```
+
+
+## Step 5 — Normalize ablation variables
+
+### Purpose
+
+This step normalizes the analytical metadata used for the ablation study across IMDb, FIBEN, and LDBC SNB.
+
+Each dataset stores SchemaLens methodology outputs with different column names and file structures. This normalization step converts them into common files so that the ablation analysis can use real methodology variables instead of proxy rules.
+
+---
+
+### Input folders
+
+```text
+analysis/imdb/ablation_variables/
+analysis/fiben/ablation_variables/
+analysis/ldbc_snb/ablation_variables/
+```
+
+---
+
+### Main input files
+
+IMDb:
+
+```text
+analysis/imdb/ablation_variables/query_analytical_metadata_imdb.csv
+analysis/imdb/ablation_variables/query_class_activation_imdb.csv
+analysis/imdb/ablation_variables/benchmark_coverage_imdb.csv
+analysis/imdb/ablation_variables/reduction_summary_imdb.csv
+```
+
+FIBEN:
+
+```text
+analysis/fiben/ablation_variables/query_analytical_metadata_fiben.csv
+analysis/fiben/ablation_variables/query_class_activation_fiben.csv
+analysis/fiben/ablation_variables/query_class_activation_long_fiben.csv
+analysis/fiben/ablation_variables/benchmark_configuration_selection_fiben.csv
+analysis/fiben/ablation_variables/reduction_delta_by_query_depth_fiben.csv
+```
+
+LDBC SNB:
+
+```text
+analysis/ldbc_snb/ablation_variables/query_analytical_metadata_ldbc_snb.csv
+analysis/ldbc_snb/ablation_variables/query_class_activation_ldbc_snb.csv
+analysis/ldbc_snb/ablation_variables/query_class_activation_long_ldbc_snb.csv
+analysis/ldbc_snb/ablation_variables/benchmark_execution_plan_ldbc_snb.csv
+analysis/ldbc_snb/ablation_variables/reduction_metrics_ldbc_snb.csv
+```
+
+---
+
+### Script
+
+```text
+analysis/scripts/normalize_ablation_variables.py
+```
+
+---
+
+### Generated files
+
+```text
+analysis/generated/query_analytical_metadata_all_datasets.csv
+analysis/generated/query_class_activation_all_datasets.csv
+analysis/generated/benchmark_configuration_selection_all_datasets.csv
+analysis/generated/ablation_variables_normalization_report.txt
+```
+
+---
+
+### Normalized query metadata
+
+The file:
+
+```text
+analysis/generated/query_analytical_metadata_all_datasets.csv
+```
+
+contains one row per query and dataset.
+
+It standardizes the main analytical variables used by SchemaLens:
+
+```text
+dataset
+query_name
+selected_root
+Rc
+D
+Re
+DeltaR
+DeltaRratio
+dominant_semantic_type
+association_count
+associative_count
+containment_count
+update_volatility_mean
+update_volatility_max
+update_volatility_class
+observed_sharedness_mean
+observed_sharedness_max
+observed_sharedness_class
+```
+
+---
+
+### Normalized activation output
+
+The file:
+
+```text
+analysis/generated/query_class_activation_all_datasets.csv
+```
+
+contains the normalized G-class activation output.
+
+For FIBEN, the source file contains both active and inactive G-class rows. Downstream scripts must use:
+
+```text
+is_active == True
+```
+
+For IMDb and LDBC SNB, the activation files contain only activated classes.
+
+---
+
+### Normalized benchmark selection
+
+The file:
+
+```text
+analysis/generated/benchmark_configuration_selection_all_datasets.csv
+```
+
+links query names, configuration identifiers, G-classes, design patterns, and benchmark groups.
+
+The normalized benchmark groups are:
+
+```text
+primary
+secondary_affected
+control
+```
+
+---
+
+### Validation result
+
+The normalization report confirms:
+
+```text
+query_analytical_metadata_all_datasets.csv: 42 rows
+query_class_activation_all_datasets.csv: 191 rows
+benchmark_configuration_selection_all_datasets.csv: 214 rows
+```
+
+Query metadata by dataset:
+
+```text
+IMDb: 10 queries
+FIBEN: 10 queries
+LDBC SNB: 22 queries
+```
+
+The report also confirms that there are no missing required columns and no query mismatches between query metadata, activation output, and benchmark selection.
+
+---
+
+### Run command
+
+From the repository root:
+
+```bash
+python analysis/scripts/normalize_ablation_variables.py
+```
+
+On Windows PowerShell:
+
+```powershell
+py analysis\scripts\normalize_ablation_variables.py
+```

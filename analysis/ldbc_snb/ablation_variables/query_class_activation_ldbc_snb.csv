@@ -1,0 +1,23 @@
+query_name,official_id,official_title,query_group,operation_type,root_entity,dominant_semantic_type,activated_g_classes,primary_g_classes,secondary_g_classes,control_g_classes,n_activated_classes
+IC1_TransitiveFriendsWithName,IC1,Transitive friends with a certain name,complex_read,read,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IC2_RecentMessagesByFriends,IC2,Recent messages by your friends,complex_read,read,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IC3_FriendsAndFriendsOfFriendsInCountries,IC3,Friends and friends of friends that have been to given countries,complex_read,read,Person,association,"['G0', 'G3', 'G7', 'G9']","['G0', 'G3']","['G7', 'G9']",[],4
+IC4_NewTopics,IC4,New topics,complex_read,read,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IC5_NewGroups,IC5,New groups,complex_read,read,Person,association,"['G0', 'G3', 'G4', 'G6', 'G7', 'G9']","['G0', 'G3']","['G4', 'G6', 'G7', 'G9']",[],6
+IC6_TagCoOccurrence,IC6,Tag co-occurrence,complex_read,read,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IC7_RecentLikers,IC7,Recent likers,complex_read,read,Person,association,"['G0', 'G3', 'G4', 'G6']","['G0', 'G3']","['G4', 'G6']",[],4
+INS1_AddPerson,INS1,Add person,insert,insert,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+INS2_AddLikeToPost,INS2,Add like to post,insert,insert,Person,associative,"['G4', 'G6']","['G4', 'G6']",[],[],2
+INS3_AddLikeToComment,INS3,Add like to comment,insert,insert,Person,associative,"['G4', 'G6']","['G4', 'G6']",[],[],2
+INS4_AddForum,INS4,Add forum,insert,insert,Forum,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+INS5_AddForumMembership,INS5,Add forum membership,insert,insert,Forum,associative,"['G4', 'G6']","['G4', 'G6']",[],[],2
+INS6_AddPost,INS6,Add post,insert,insert,Post,association,"['G0', 'G3', 'G7', 'G9']","['G0', 'G3']","['G7', 'G9']",[],4
+INS7_AddComment,INS7,Add comment,insert,insert,Comment,association,"['G0', 'G3', 'G7', 'G9']","['G0', 'G3']","['G7', 'G9']",[],4
+INS8_AddFriendship,INS8,Add friendship,insert,insert,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IS1_ProfileOfPerson,IS1,Profile of a person,short_read,read,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IS2_RecentMessagesOfPerson,IS2,Recent messages of a person,short_read,read,Person,mixed,"['G0', 'G3', 'G4', 'G6', 'G7', 'G9']",[],"['G0', 'G3', 'G4', 'G6', 'G7', 'G9']",[],6
+IS3_FriendsOfPerson,IS3,Friends of a person,short_read,read,Person,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IS4_ContentOfMessage,IS4,Content of a message,short_read,read,Post,lookup,"['G0', 'G1']",['G1'],[],['G0'],2
+IS5_CreatorOfMessage,IS5,Creator of a message,short_read,read,Post,association,"['G0', 'G3']","['G0', 'G3']",[],[],2
+IS6_ForumOfMessage,IS6,Forum of a message,short_read,read,Post,containment,"['G0', 'G3', 'G7', 'G9']","['G7', 'G9']","['G0', 'G3']",[],4
+IS7_RepliesOfMessage,IS7,Replies of a message,short_read,read,Post,association,"['G0', 'G3', 'G7', 'G9']","['G0', 'G3']","['G7', 'G9']",[],4

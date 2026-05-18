@@ -1,0 +1,41 @@
+# Ablation Variables Normalization Report
+
+This report summarizes normalized analytical metadata, activation outputs, and benchmark configuration selections.
+
+## Output row counts
+- query_analytical_metadata_all_datasets.csv: 42 rows
+- query_class_activation_all_datasets.csv: 191 rows
+- benchmark_configuration_selection_all_datasets.csv: 214 rows
+
+## Query metadata by dataset
+- fiben: rows=10, unique_queries=10
+- imdb: rows=10, unique_queries=10
+- ldbc_snb: rows=22, unique_queries=22
+
+## Activation rows by dataset
+- fiben: rows=100, active_rows=50, unique_queries=10, active_g_classes=G0|G1|G2|G3|G4|G5|G6|G7|G9
+- imdb: rows=27, active_rows=27, unique_queries=10, active_g_classes=G0|G2|G3|G4|G5|G6|G7|G8|G9
+- ldbc_snb: rows=64, active_rows=64, unique_queries=22, active_g_classes=G0|G1|G3|G4|G6|G7|G9
+
+## Benchmark selection rows by dataset
+- fiben: rows=60, unique_queries=10, groups=control|primary|secondary_affected, g_classes=CONTROL|G0|G1|G2|G3|G4|G5|G6|G7|G9
+- imdb: rows=90, unique_queries=10, groups=control|primary|secondary_affected, g_classes=G0|G2|G3|G4|G5|G6|G7|G8|G9
+- ldbc_snb: rows=64, unique_queries=22, groups=control|primary|secondary_affected, g_classes=G0|G1|G3|G4|G6|G7|G9
+
+## Validation checks
+- Missing columns in query metadata: []
+- Missing columns in activation: []
+- Missing columns in benchmark selection: []
+- imdb: query metadata not in activation = []
+- imdb: query metadata not in benchmark selection = []
+- imdb: benchmark selection not in query metadata = []
+- fiben: query metadata not in activation = []
+- fiben: query metadata not in benchmark selection = []
+- fiben: benchmark selection not in query metadata = []
+- ldbc_snb: query metadata not in activation = []
+- ldbc_snb: query metadata not in benchmark selection = []
+- ldbc_snb: benchmark selection not in query metadata = []
+
+## Important note
+FIBEN activation contains both active and inactive G-class rows. For full SchemaLens selection, downstream scripts should use only rows where is_active is True.
+IMDb activation contains only activated rows. LDBC SNB activation also contains activated rows with activation strength.
