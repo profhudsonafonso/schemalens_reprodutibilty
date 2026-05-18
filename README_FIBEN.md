@@ -165,7 +165,8 @@ Top-1 preservation;
 near-best preservation within 5%;
 activated regret;
 primary regret.
-Paper connection
+
+## Paper connection
 
 The FIBEN artifact supports the cross-dataset evaluation in the paper.
 
