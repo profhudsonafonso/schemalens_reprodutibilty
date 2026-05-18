@@ -1,0 +1,102 @@
+# Ablation Analysis Report
+
+This report summarizes simulated ablations over the measured aggregate benchmark outputs.
+
+The analysis uses real SchemaLens methodology variables normalized from IMDb, FIBEN, and LDBC SNB artifacts.
+
+No MongoDB benchmark is rerun.
+No latency is inferred for unmeasured configurations.
+
+## Settings
+- Near-best threshold: 0.05
+
+## Ablation variants
+- full_schema_lens: all non-control measured SchemaLens configurations.
+- no_relationship_semantics: removes relationship-semantics-driven classes.
+- no_depth: removes depth-sensitive classes.
+- no_residual_traversal: removes classes driven by Re, DeltaR, or residual traversal.
+- no_sharedness: removes sharedness-sensitive classes.
+- no_update_volatility: removes update/volatility-sensitive classes.
+- no_relationship_semantics_no_depth: removes both relationship-semantics and depth-sensitive classes.
+
+## Overall summary
+- full_schema_lens: available=252/252, top1=0.8730, top3=0.9881, near_best=0.9206, mean_regret=0.0394, median_regret=0.0000
+- no_depth: available=252/252, top1=0.5516, top3=0.9841, near_best=0.7063, mean_regret=0.9666, median_regret=0.0000
+- no_relationship_semantics: available=234/252, top1=0.4615, top3=0.8590, near_best=0.6581, mean_regret=1.1203, median_regret=0.0059
+- no_relationship_semantics_no_depth: available=234/252, top1=0.4145, top3=0.7821, near_best=0.5940, mean_regret=1.1803, median_regret=0.0173
+- no_residual_traversal: available=252/252, top1=0.4802, top3=0.9802, near_best=0.6746, mean_regret=1.0118, median_regret=0.0042
+- no_sharedness: available=252/252, top1=0.5675, top3=0.9722, near_best=0.7421, mean_regret=0.9647, median_regret=0.0000
+- no_update_volatility: available=252/252, top1=0.5714, top3=0.9484, near_best=0.7540, mean_regret=0.9563, median_regret=0.0000
+
+## Hot-run summary
+- full_schema_lens: available=126/126, top1=0.8651, near_best=0.9206, mean_regret=0.0324
+- no_depth: available=126/126, top1=0.5794, near_best=0.6825, mean_regret=0.1435
+- no_relationship_semantics: available=117/126, top1=0.4786, near_best=0.6325, mean_regret=0.1580
+- no_relationship_semantics_no_depth: available=117/126, top1=0.4274, near_best=0.5641, mean_regret=0.1986
+- no_residual_traversal: available=126/126, top1=0.4921, near_best=0.6508, mean_regret=0.1573
+- no_sharedness: available=126/126, top1=0.5317, near_best=0.6905, mean_regret=0.1232
+- no_update_volatility: available=126/126, top1=0.5397, near_best=0.6905, mean_regret=0.1286
+
+## Dataset-level summary
+- fiben / full_schema_lens: available=60/60, top1=0.8333, near_best=0.9000, mean_regret=0.0937
+- fiben / no_depth: available=60/60, top1=0.6833, near_best=0.7667, mean_regret=0.1158
+- fiben / no_relationship_semantics: available=60/60, top1=0.4167, near_best=0.6833, mean_regret=0.2014
+- fiben / no_relationship_semantics_no_depth: available=60/60, top1=0.3500, near_best=0.5500, mean_regret=0.2500
+- fiben / no_residual_traversal: available=60/60, top1=0.6167, near_best=0.7833, mean_regret=0.1191
+- fiben / no_sharedness: available=60/60, top1=0.6333, near_best=0.8500, mean_regret=0.1119
+- fiben / no_update_volatility: available=60/60, top1=0.7000, near_best=0.8833, mean_regret=0.0973
+- imdb / full_schema_lens: available=60/60, top1=0.6667, near_best=0.7833, mean_regret=0.0626
+- imdb / no_depth: available=60/60, top1=0.3833, near_best=0.6500, mean_regret=0.0902
+- imdb / no_relationship_semantics: available=60/60, top1=0.3500, near_best=0.5167, mean_regret=0.3939
+- imdb / no_relationship_semantics_no_depth: available=60/60, top1=0.2333, near_best=0.4000, mean_regret=0.5794
+- imdb / no_residual_traversal: available=60/60, top1=0.3000, near_best=0.5500, mean_regret=0.2576
+- imdb / no_sharedness: available=60/60, top1=0.5667, near_best=0.6667, mean_regret=0.1643
+- imdb / no_update_volatility: available=60/60, top1=0.5333, near_best=0.6667, mean_regret=0.1073
+- ldbc_snb / full_schema_lens: available=132/132, top1=0.9848, near_best=0.9924, mean_regret=0.0043
+- ldbc_snb / no_depth: available=132/132, top1=0.5682, near_best=0.7045, mean_regret=1.7517
+- ldbc_snb / no_relationship_semantics: available=114/132, top1=0.5439, near_best=0.7193, mean_regret=1.9863
+- ldbc_snb / no_relationship_semantics_no_depth: available=114/132, top1=0.5439, near_best=0.7193, mean_regret=1.9863
+- ldbc_snb / no_residual_traversal: available=132/132, top1=0.5000, near_best=0.6818, mean_regret=1.7604
+- ldbc_snb / no_sharedness: available=132/132, top1=0.5379, near_best=0.7273, mean_regret=1.7162
+- ldbc_snb / no_update_volatility: available=132/132, top1=0.5303, near_best=0.7348, mean_regret=1.7327
+
+## Hot-run dataset-level summary
+- fiben / full_schema_lens: available=30/30, top1=0.8333, near_best=0.8667, mean_regret=0.0801
+- fiben / no_depth: available=30/30, top1=0.7000, near_best=0.7333, mean_regret=0.0985
+- fiben / no_relationship_semantics: available=30/30, top1=0.4000, near_best=0.6667, mean_regret=0.1273
+- fiben / no_relationship_semantics_no_depth: available=30/30, top1=0.3000, near_best=0.5000, mean_regret=0.1789
+- fiben / no_residual_traversal: available=30/30, top1=0.6000, near_best=0.7333, mean_regret=0.1192
+- fiben / no_sharedness: available=30/30, top1=0.5667, near_best=0.8000, mean_regret=0.0910
+- fiben / no_update_volatility: available=30/30, top1=0.7000, near_best=0.8333, mean_regret=0.0856
+- imdb / full_schema_lens: available=30/30, top1=0.6333, near_best=0.8333, mean_regret=0.0387
+- imdb / no_depth: available=30/30, top1=0.4333, near_best=0.7333, mean_regret=0.0729
+- imdb / no_relationship_semantics: available=30/30, top1=0.4000, near_best=0.5667, mean_regret=0.1940
+- imdb / no_relationship_semantics_no_depth: available=30/30, top1=0.3000, near_best=0.4667, mean_regret=0.3006
+- imdb / no_residual_traversal: available=30/30, top1=0.3667, near_best=0.7000, mean_regret=0.0785
+- imdb / no_sharedness: available=30/30, top1=0.5333, near_best=0.7000, mean_regret=0.1648
+- imdb / no_update_volatility: available=30/30, top1=0.4333, near_best=0.6667, mean_regret=0.0977
+- ldbc_snb / full_schema_lens: available=66/66, top1=0.9848, near_best=0.9848, mean_regret=0.0078
+- ldbc_snb / no_depth: available=66/66, top1=0.5909, near_best=0.6364, mean_regret=0.1961
+- ldbc_snb / no_relationship_semantics: available=57/66, top1=0.5614, near_best=0.6491, mean_regret=0.1552
+- ldbc_snb / no_relationship_semantics_no_depth: available=57/66, top1=0.5614, near_best=0.6491, mean_regret=0.1552
+- ldbc_snb / no_residual_traversal: available=66/66, top1=0.5000, near_best=0.5909, mean_regret=0.2104
+- ldbc_snb / no_sharedness: available=66/66, top1=0.5152, near_best=0.6364, mean_regret=0.1189
+- ldbc_snb / no_update_volatility: available=66/66, top1=0.5152, near_best=0.6364, mean_regret=0.1622
+
+## Rule coverage
+- Query-level ablation rule rows: 294
+- full_schema_lens: queries=42, empty_selections=0
+- no_depth: queries=42, empty_selections=0
+- no_relationship_semantics: queries=42, empty_selections=3
+- no_relationship_semantics_no_depth: queries=42, empty_selections=3
+- no_residual_traversal: queries=42, empty_selections=0
+- no_sharedness: queries=42, empty_selections=0
+- no_update_volatility: queries=42, empty_selections=0
+
+## Failure and near-failure candidates
+- Rows flagged: 756
+- A row is flagged when Top-1 is not preserved, near-best is not preserved, or relative regret is above the near-best threshold.
+
+## Methodological note
+This is a simulated ablation over the measured comparison space. It removes component-specific G classes from the measured SchemaLens-selected space using the normalized analytical metadata and activation evidence.
+The root-choice ablation is not simulated here because the benchmark artifacts do not include alternative-root MongoDB configurations for all queries. Testing root choice would require materializing and benchmarking additional candidates rooted at non-selected entities.

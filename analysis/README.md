@@ -1153,3 +1153,166 @@ On Windows PowerShell:
 ```powershell
 py analysis\scripts\normalize_ablation_variables.py
 ```
+
+## Step 6 — Run ablation analysis
+
+### Purpose
+
+This step evaluates how much each analytical component contributes to SchemaLens.
+
+The ablation analysis compares the full SchemaLens activation with reduced variants that remove one type of activation evidence at a time.
+
+This analysis uses the normalized methodology variables generated in the previous step.
+
+No MongoDB benchmark is rerun.
+
+No latency is inferred for unmeasured configurations.
+
+---
+
+### Input files
+
+```text
+analysis/generated/aggregate_results_all_datasets.csv
+analysis/generated/query_analytical_metadata_all_datasets.csv
+analysis/generated/query_class_activation_all_datasets.csv
+analysis/generated/benchmark_configuration_selection_all_datasets.csv
+```
+
+---
+
+### Script
+
+```text
+analysis/scripts/run_ablation_analysis.py
+```
+
+---
+
+### Ablation variants
+
+```text
+full_schema_lens
+no_relationship_semantics
+no_depth
+no_residual_traversal
+no_sharedness
+no_update_volatility
+no_relationship_semantics_no_depth
+```
+
+---
+
+### Meaning of the variants
+
+#### `full_schema_lens`
+
+Uses the complete measured SchemaLens-selected space.
+
+This corresponds to all non-control configurations selected for benchmark evaluation.
+
+#### `no_relationship_semantics`
+
+Removes activation evidence based on relationship semantics, such as association, associative, containment, descriptor, ownership, and subtype signals.
+
+#### `no_depth`
+
+Removes activation evidence based on embedding depth or deep/nested traversal.
+
+#### `no_residual_traversal`
+
+Removes activation evidence based on residual traversal and structural reduction, including `Re`, `DeltaR`, and `DeltaRratio`.
+
+#### `no_sharedness`
+
+Removes activation evidence based on observed sharedness.
+
+#### `no_update_volatility`
+
+Removes activation evidence based on update pressure or update volatility.
+
+#### `no_relationship_semantics_no_depth`
+
+Removes both relationship semantics and depth-sensitive activation evidence.
+
+---
+
+### Generated files
+
+```text
+analysis/generated/ablation_rules_used.csv
+analysis/generated/ablation_performance_by_case.csv
+analysis/generated/ablation_performance_summary.csv
+analysis/generated/ablation_performance_by_dataset.csv
+analysis/generated/ablation_performance_summary_hot.csv
+analysis/generated/ablation_performance_by_dataset_hot.csv
+analysis/generated/ablation_failure_cases.csv
+analysis/generated/ablation_report.txt
+```
+
+---
+
+### Main metrics
+
+For each dataset, scale factor, query, run phase, and ablation variant, the script computes:
+
+```text
+top1_preserved
+top3_preserved
+near_best_preserved
+relative_regret
+```
+
+Near-best uses the 5% threshold:
+
+```text
+(selected_p95 - global_best_p95) / global_best_p95 <= 0.05
+```
+
+---
+
+### Main result
+
+The ablation analysis shows that removing analytical components reduces the ability to preserve best or near-best configurations.
+
+The full SchemaLens variant preserves substantially more Top-1 and near-best configurations than the ablated variants.
+
+Hot-run summary:
+
+```text
+full_schema_lens: top1=0.8651, near_best=0.9206, mean_regret=0.0324
+no_depth: top1=0.5794, near_best=0.6825, mean_regret=0.1435
+no_relationship_semantics: top1=0.4786, near_best=0.6325, mean_regret=0.1580
+no_relationship_semantics_no_depth: top1=0.4274, near_best=0.5641, mean_regret=0.1986
+no_residual_traversal: top1=0.4921, near_best=0.6508, mean_regret=0.1573
+no_sharedness: top1=0.5317, near_best=0.6905, mean_regret=0.1232
+no_update_volatility: top1=0.5397, near_best=0.6905, mean_regret=0.1286
+```
+
+---
+
+### Methodological note
+
+This is a simulated ablation over the measured comparison space.
+
+It removes component-specific G classes from the measured SchemaLens-selected space using normalized analytical metadata and activation evidence.
+
+The root-choice ablation is not simulated because the benchmark artifacts do not include alternative-root MongoDB configurations for all queries.
+
+Testing root choice would require materializing and benchmarking additional candidates rooted at non-selected entities.
+
+---
+
+### Run command
+
+From the repository root:
+
+```bash
+python analysis/scripts/run_ablation_analysis.py
+```
+
+On Windows PowerShell:
+
+```powershell
+py analysis\scripts\run_ablation_analysis.py
+```
