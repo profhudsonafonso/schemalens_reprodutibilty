@@ -1,0 +1,62 @@
+# Normalization Report
+
+Output file: analysis/generated/aggregate_results_all_datasets.csv
+Total rows: 1284
+
+## Rows by dataset
+- fiben: 360
+- imdb: 540
+- ldbc_snb: 384
+
+## Rows by dataset and scale
+- fiben / sf1: 120
+- fiben / sf10: 120
+- fiben / sf30: 120
+- imdb / sf0.25: 180
+- imdb / sf0.5: 180
+- imdb / sf1: 180
+- ldbc_snb / sf0.1: 128
+- ldbc_snb / sf1: 128
+- ldbc_snb / sf3: 128
+
+## Rows by dataset and run phase
+- fiben / cold: 180
+- fiben / hot: 180
+- imdb / cold: 270
+- imdb / hot: 270
+- ldbc_snb / cold: 192
+- ldbc_snb / hot: 192
+
+## Benchmark groups
+- fiben / control: 60
+- fiben / primary: 198
+- fiben / secondary_affected: 102
+- imdb / control: 120
+- imdb / primary: 162
+- imdb / secondary_affected: 258
+- ldbc_snb / control: 6
+- ldbc_snb / primary: 246
+- ldbc_snb / secondary_affected: 132
+
+## Unique queries by dataset
+- fiben: 10
+- imdb: 10
+- ldbc_snb: 22
+
+## G classes by dataset
+- fiben: CONTROL, G0, G1, G2, G3, G4, G5, G6, G7, G9
+- imdb: G0, G2, G3, G4, G5, G6, G7, G8, G9
+- ldbc_snb: G0, G1, G3, G4, G6, G7, G9
+
+## Validation checks
+- Rows with missing p95_latency_ms: 0
+- Duplicate rows by ['dataset', 'scale_label', 'query_name', 'config_id', 'g_class', 'run_phase']: 0
+
+## Source files
+- analysis/fiben/benchmark_aggregate_results_fiben_sf1.csv
+- analysis/fiben/benchmark_aggregate_results_fiben_sf10.csv
+- analysis/fiben/benchmark_aggregate_results_fiben_sf30.csv
+- analysis/imdb/benchmark_aggregate_results_imdb_all_sfs.csv
+- analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf0_1.csv
+- analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf1.csv
+- analysis/ldbc_snb/benchmark_aggregate_results_ldbc_snb_sf3.csv
