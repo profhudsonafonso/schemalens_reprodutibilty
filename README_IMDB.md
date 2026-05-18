@@ -75,8 +75,10 @@ Each scale-factor folder should contain the required IMDb TSV files.
 If your local paths are different, update the IMDB\_SF\_PATHS dictionary in:
 
 benchmark/imdb/run\_mongo\_benchmark\_option\_b\_incremental.py
-Two reproduction options
-Option A — Use the prepared OSF scale-factor package
+
+### Two reproduction options
+
+#### Option A — Use the prepared OSF scale-factor package
 
 This is the recommended path for reviewers.
 
@@ -88,7 +90,7 @@ Run the IMDb analysis notebooks to verify the reported results.
 
 This option avoids the time-consuming scale-factor generation step.
 
-Option B — Regenerate the scale factors
+#### Option B — Regenerate the scale factors
 
 Use this option only if you want to reproduce the IMDb scale-factor generation process.
 
@@ -107,7 +109,7 @@ Additional scale-generation instructions are provided in:
 scale\_generator/imdb/README.md
 Methodology reproduction
 
-Run the notebook:
+## Run the notebook:
 
 methodology/imdb\_methodology.ipynb
 
@@ -121,7 +123,8 @@ activated MongoDB configuration families.
 The key methodology artifact used by the benchmark is the MongoDB experiment catalog:
 
 benchmark/imdb/mongo\_experiment\_catalog.csv
-Benchmark reproduction
+
+## Benchmark reproduction
 
 The benchmark runner is:
 
@@ -157,7 +160,8 @@ docker compose up -d
 The default MongoDB port is:
 
 27018
-Result analysis
+
+## Result analysis
 
 The main IMDb analysis notebooks are:
 
@@ -174,7 +178,8 @@ QG6 containment case;
 hot-run results across scale factors;
 primary, secondary-affected, and control query comparison;
 IMDb representative rows in the cross-dataset summary.
-Paper connection
+
+## Paper connection
 
 The IMDb artifact supports:
 
@@ -189,7 +194,7 @@ QG4\_AllPersonsOfTypeForWatchItem
 QG6\_EpisodesOfSeries
 
 
-\## Lightweight verification
+## Lightweight verification
 
 
 
@@ -217,7 +222,7 @@ analysis/imdb/benchmark\_aggregate\_results\_sf050.csv
 
 analysis/imdb/benchmark\_aggregate\_results\_sf1.csv
 
-
+````
 
 The consolidated file is used for cross-scale analysis. The scale-specific files are provided for easier inspection of each IMDb scale factor.
 
@@ -229,7 +234,7 @@ These files support verification of the IMDb containment case study, the G7/G8/G
 
 Full benchmark reproduction is supported, but it is more time-consuming because it requires materializing MongoDB candidate configurations and executing repeated cold/hot benchmark runs.
 
-Notes
+## Notes
 
 The scale-factor data are large and are therefore distributed through OSF rather than stored directly in this Git repository. The Git repository contains the methodology notebook, scale-generation notebook, benchmark script, benchmark input files, and analysis notebooks needed to reproduce or verify the IMDb part of the paper.
 
