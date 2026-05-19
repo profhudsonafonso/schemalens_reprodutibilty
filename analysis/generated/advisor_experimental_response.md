@@ -9,6 +9,20 @@ The goal is to move the evaluation from a descriptive workflow demonstration to 
 3. how to interpret random-k;
 4. what evidence should be included later in the paper.
 
+
+## 0. How this document responds to the advisor comments
+
+The advisor's main criticism was that the experimental section was too descriptive: it explained the SchemaLens workflow, but did not yet provide enough evidence about why the method is useful, why particular configurations win, and what the results say about the proposed methodology.
+
+This document now answers that criticism through three complementary layers of evidence:
+
+1. **Baseline comparison.** This answers whether SchemaLens is better than simple heuristic reductions. It directly addresses the request for stronger experimental comparison rather than only a workflow demonstration.
+2. **Ablation study.** This answers whether the analytical matrix variables actually matter. It directly addresses the concern that the method should not only describe variables, but also show that removing them damages the ability to preserve best or near-best configurations.
+3. **Representative-case analysis.** This answers why specific configurations win in concrete cases. It directly addresses the advisor's request to explain under which data/workload characteristics a configuration wins, rather than only reporting that SchemaLens selected or preserved it.
+
+Therefore, the current document should be read as an expanded response to the advisor. It is not yet the final paper text. Its purpose is to show the advisor the complete evidence, and only later decide which tables and paragraphs should be moved into the paper or kept in the repository/supplementary material.
+
+
 ## 1. What was added
 
 | Advisor concern | Action taken |
@@ -18,6 +32,19 @@ The goal is to move the evaluation from a descriptive workflow demonstration to 
 | Need to show which analytical variables matter. | Added ablations removing relationship semantics, depth, residual traversal, sharedness, and update volatility. |
 | Repository had aggregate outputs only for one dataset. | Added aggregate outputs for IMDb, FIBEN, and LDBC SNB. |
 | Need reproducible analysis. | Added scripts under analysis/scripts and generated outputs under analysis/generated. |
+
+
+### Relation to the advisor's suggestions
+
+This section is important because it converts each advisor concern into a concrete experimental action. The advisor did not only ask for more results; the advisor asked for a less descriptive and more analytical evaluation. The table shows that each criticism was translated into a reproducible analysis step:
+
+- the concern about a descriptive evaluation is answered by adding baselines, ablation, and representative-case explanations;
+- the concern about simple comparisons is answered by deterministic baselines and random-k;
+- the concern about whether the analytical variables matter is answered by removing those variables one by one;
+- the concern about reproducibility is answered by keeping scripts and generated outputs in the repository.
+
+This is useful for discussion with the advisor because it makes clear that the revision is not just adding more tables; it is restructuring the experimental evidence around the exact weaknesses identified in the feedback.
+
 
 ## 2. Normalized analysis scope
 
@@ -34,6 +61,16 @@ Query coverage by dataset:
 | fiben | 10 |
 | imdb | 10 |
 | ldbc_snb | 22 |
+
+
+### Why the normalized scope matters
+
+This scope is important because the new analyses are not isolated examples. They are based on normalized outputs across the three datasets used in the evaluation: IMDb, FIBEN, and LDBC SNB. This directly supports the advisor's request for stronger evidence beyond the IMDb walkthrough.
+
+The normalized files also make the analysis reproducible. Instead of manually selecting examples after the fact, the scripts use common input tables that connect query-level methodology variables, G-class activation, benchmark selection, and measured results. This is important because the advisor's concern was not only about performance numbers, but also about explaining how those numbers relate to the proposed methodology.
+
+In other words, this section shows that the later conclusions are grounded in a shared evidence base: 42 queries, 191 activation rows, and 214 benchmark-selection rows.
+
 
 ## 3. Baseline comparison - all runs
 
@@ -52,6 +89,21 @@ SchemaLens clearly outperforms the deterministic heuristic baselines. The determ
 
 Random-k is competitive in the aggregate because it samples the same number of measured configuration classes as SchemaLens. Therefore, when the measured space is small or SchemaLens selects several classes, random-k has a high probability of including the global best by chance.
 
+
+### Relation to the advisor's baseline concern
+
+This section responds to the advisor's request for comparison against simpler alternatives. Without these baselines, the paper could only claim that SchemaLens reduces the design space and preserves good candidates. With these baselines, the paper can say something stronger: simple one-rule strategies are not enough.
+
+The deterministic baselines are intentionally simple. They represent common shortcuts someone might use instead of SchemaLens:
+
+- always keep references;
+- always embed;
+- choose based only on depth;
+- choose based only on relationship type.
+
+The results show that these shortcuts lose important candidates because each one ignores part of the analytical matrix. This supports the central claim of the method: SchemaLens is useful because it combines several signals, not because of one isolated rule.
+
+
 ## 4. Baseline comparison - hot runs
 
 | Method | Available hot cases | Top-1 | Near-best | Mean regret | Interpretation |
@@ -65,6 +117,14 @@ Random-k is competitive in the aggregate because it samples the same number of m
 
 The hot-run table is the best candidate for the paper because the paper mainly interprets hot p95 latency.
 
+
+### Why the hot-run table is especially relevant
+
+The hot-run table is the best candidate for the paper because the experimental interpretation focuses mainly on hot p95 latency. This is also easier to explain to the advisor: the hot-run setting reflects the steady-state behavior after caches and execution paths are warmed.
+
+This table strengthens the answer to the advisor because it shows that the conclusion is not only an artifact of mixing cold and hot runs. Even when focusing on hot runs, SchemaLens remains clearly stronger than deterministic heuristic baselines. The only exception is random-k, which should be interpreted separately as a statistical sanity check, not as an explainable design method.
+
+
 ## 5. Random-k diagnostic
 
 - Overall, SchemaLens Top-1 = 0.8730, random-k Top-1 = 0.8888.
@@ -76,6 +136,18 @@ The hot-run table is the best candidate for the paper because the paper mainly i
 The correct interpretation is not that random selection is a better design method. Random-k is a statistical sanity check: it asks what happens if we select the same number of measured classes without using any semantic explanation.
 
 SchemaLens remains different because it provides an explainable and reproducible reduction based on EER/workload evidence. On the official LDBC SNB workload, SchemaLens also slightly outperforms random-k in Top-1 preservation and regret.
+
+
+### How to explain random-k to the advisor
+
+The random-k result must be handled carefully. It is competitive in the aggregate, and in some rows it is slightly better than SchemaLens. This should not be hidden, because hiding it would weaken the credibility of the response. Instead, the correct explanation is methodological.
+
+Random-k asks a different question from SchemaLens. It asks: if we randomly choose the same number of measured classes as SchemaLens, how often do we include the best one by chance? When the measured design space is small, or when SchemaLens selects several classes, random-k has a high probability of sampling the winner.
+
+Therefore, random-k is not a design method. It does not explain why a configuration should be benchmarked, does not use EER semantics, does not use workload structure, and does not produce a reproducible semantic justification. This is why the LDBC SNB result is important: on the official workload, SchemaLens is not only explainable, but also slightly better than random-k in Top-1 preservation and regret.
+
+This directly responds to the advisor's request for deeper analysis. We are not simply reporting that random-k is close; we are explaining why it is close and what that means for the method.
+
 
 ## 6. Ablation study - all runs
 
@@ -91,6 +163,16 @@ SchemaLens remains different because it provides an explainable and reproducible
 
 The all-run ablation shows that removing any major analytical component reduces preservation quality and increases regret.
 
+
+### Relation to the advisor's analytical-variable concern
+
+This section directly answers the question: are the analytical variables actually useful, or are they only descriptive labels?
+
+The ablation study shows that the variables are not decorative. When depth, relationship semantics, residual traversal, sharedness, or update volatility are removed, the ability to preserve Top-1 and near-best configurations decreases. This is exactly the type of evidence needed to support the methodology.
+
+The strongest message for the advisor is that the complete method performs better because it combines variables. Removing relationship semantics and depth together causes the largest degradation, which means that the conceptual structure and the workload traversal structure must be interpreted together.
+
+
 ## 7. Ablation study - hot runs
 
 | Variant | Available hot cases | Top-1 | Near-best | Mean regret | Interpretation |
@@ -104,6 +186,14 @@ The all-run ablation shows that removing any major analytical component reduces 
 | no_update_volatility | 126/126 | 0.5397 | 0.6905 | 0.1286 | Removes update/write-pressure evidence. |
 
 The hot-run ablation is especially useful for the paper. The full SchemaLens variant preserves near-best configurations in more than 92% of hot cases, while all ablated variants show lower Top-1 and near-best preservation.
+
+
+### Why this ablation should be emphasized
+
+This hot-run ablation is probably one of the strongest tables for the paper. It shows that the full SchemaLens variant preserves near-best configurations in more than 92% of hot cases, while every ablated variant performs worse.
+
+This directly answers the advisor's concern that the evaluation needed to show what the method contributes. The contribution is not only the final reduced set of candidates. The contribution is the analytical matrix that decides which families remain in the reduced design space. The ablation shows that when pieces of this matrix are removed, the reduction becomes less reliable.
+
 
 ## 8. Dataset-level ablation - hot runs
 
@@ -124,6 +214,14 @@ The hot-run ablation is especially useful for the paper. The full SchemaLens var
 
 The LDBC SNB results are particularly important because this is the official workload. There, the complete SchemaLens variant almost always preserves the best or near-best configuration, while removing analytical components causes a large drop.
 
+
+### Why dataset-level ablation matters
+
+The dataset-level view is useful because it shows that the effect is not uniform across datasets. IMDb, FIBEN, and LDBC SNB have different data characteristics and workloads, so the same analytical variables do not have exactly the same impact everywhere.
+
+The strongest dataset-level evidence is LDBC SNB because it is an official benchmark workload. The complete method almost always preserves the best or near-best configuration there, while removing relationship semantics or residual traversal causes a large performance drop. This is important for the advisor because it shows that SchemaLens is not only tuned to the IMDb running example.
+
+
 ## 9. Main conclusions for the advisor
 
 1. SchemaLens is stronger than deterministic heuristic baselines.
@@ -142,6 +240,18 @@ Removing relationship semantics, depth, residual traversal, sharedness, or updat
 
 The current benchmark artifacts do not include alternative-root MongoDB configurations for all queries. A fair root-choice ablation would require generating and benchmarking additional candidates rooted at non-selected entities.
 
+
+### Additional conclusion after the representative-case analysis
+
+After adding the representative-case analysis, there is now a fifth conclusion:
+
+5. The representative cases explain why configurations win.
+
+The baseline and ablation results show that SchemaLens is competitive and that its analytical variables matter. The representative-case analysis adds the missing explanatory layer requested by the advisor: it connects each winning configuration to query characteristics such as traversal depth, residual traversal, relationship semantics, sharedness, and update volatility.
+
+This is important because the advisor specifically noted that the previous experimental section was too descriptive. The representative cases transform the evaluation from "SchemaLens selected these families" into "these families win because these workload/data conditions make them appropriate."
+
+
 ## 10. Resume
 
 > I added two new experimental analyses to address the concern that the evaluation was too descriptive.
@@ -149,6 +259,22 @@ The current benchmark artifacts do not include alternative-root MongoDB configur
 > First, I added a baseline comparison over the normalized aggregate benchmark outputs. The baselines include random-k, always-reference, always-embed, depth-only, and relationship-type-only strategies. This analysis does not rerun MongoDB benchmarks; it uses the measured p95 values already available in the aggregate outputs. SchemaLens clearly outperforms the deterministic heuristic baselines. Random-k is competitive in the aggregate because it samples the same number of measured configuration classes as SchemaLens, so it has a high probability of including the global best when the measured space is small. However, random-k has no semantic explanation. On the official LDBC SNB workload, SchemaLens slightly outperforms random-k in Top-1 preservation and regret.
 >
 > Second, I added an ablation study using real methodology variables extracted from the IMDb, FIBEN, and LDBC SNB artifacts. The ablation removes relationship semantics, depth, residual traversal, sharedness, and update volatility from the measured SchemaLens-selected space. The full SchemaLens variant achieves high Top-1 and near-best preservation on hot runs with low mean regret. All ablated variants perform substantially worse. The strongest degradation occurs when relationship semantics and depth are removed together. This supports the claim that the analytical matrix materially contributes to preserving best or near-best configurations.
+
+
+### Updated resume including the representative-case analysis
+
+The current resume mentions two analyses: baseline comparison and ablation. After the latest update, it should be understood as three analyses:
+
+1. baseline comparison;
+2. ablation study;
+3. representative-case analysis.
+
+The representative-case analysis is the part that most directly answers the advisor's request to explain why one configuration wins and under which data characteristics this happens. It should be mentioned together with the two previous analyses when sending the response to the advisor.
+
+Suggested additional paragraph:
+
+> Third, I added a representative-case analysis connecting the analytical variables used by SchemaLens with the measured hot-run winners. For selected IMDb, FIBEN, and LDBC SNB cases, the analysis reports the selected root, traversal count, depth, residual traversal, semantic type, sharedness, update pressure, activated/selected G classes, the measured p95 winner, and whether SchemaLens preserved Top-1 or near-best configurations. This complements the aggregate baseline and ablation results by explaining why specific configuration families win under specific workload and data characteristics.
+
 
 ## 11. Next steps
 
@@ -164,11 +290,42 @@ The current benchmark artifacts do not include alternative-root MongoDB configur
 
 
 
+
+### Updated status after completing the representative-case step
+
+Some of the next steps listed above have already been partially completed. In particular, representative query-level explanations were added, and the GitHub repository was updated with the scripts and generated outputs. Therefore, the remaining work is no longer about generating the main evidence, but about deciding how to present it.
+
+The updated next steps are:
+
+1. Review this full advisor response without reducing it.
+2. Decide, with the advisor, which tables should go into the paper and which should remain in the repository.
+3. Convert the selected tables to LaTeX.
+4. Write the experimental-section narrative in the paper using the three-layer structure: baselines, ablation, and representative cases.
+5. Add a short limitations paragraph explaining random-k, root-choice ablation, and scale-sensitive misses.
+6. Perform a final repository consistency check before submission.
+
+
 ## Representative-case analysis
 
 I added a representative-case analysis to connect the analytical variables used by SchemaLens with the measured benchmark winners. The goal is to move the experimental section beyond aggregate preservation metrics and explain why particular configuration families win under specific workload and data characteristics.
 
 The analysis uses only measured hot-run p95 results. No MongoDB benchmark is rerun, no latency is inferred for unmeasured configurations, and root-choice ablation is not included because it would require materializing and benchmarking alternative-root candidates.
+
+
+### Relation to the advisor's request for deeper interpretation
+
+This section is the most direct answer to the advisor's comment that the experimental section needed to explain why configurations win. The previous analyses answer "does SchemaLens preserve good configurations?" and "do its variables matter?" This section answers "why does a specific family win in a specific query?"
+
+The cases are useful because they cover different reasons for a configuration to win:
+
+- containment-like access, as in IMDb `QG6_EpisodesOfSeries` and LDBC SNB `IS6_ForumOfMessage`;
+- sharedness and filtered access, as in IMDb `QG10_AdvancedSearchWatchItems`;
+- update pressure and relationship creation, as in FIBEN `Q10_CreateAccountHoldingAndBuyTransaction`;
+- deep traversal, as in FIBEN `Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity`;
+- graph-like associative traversal, as in LDBC SNB `IC1_TransitiveFriendsWithName` and `IC7_RecentLikers`.
+
+This is exactly the type of explanation the advisor requested: the result is no longer only "this configuration was selected"; it becomes "this configuration wins because the query has these traversal, semantic, sharedness, or update characteristics."
+
 
 ### Representative cases and interpretation
 
@@ -192,6 +349,18 @@ The analysis uses only measured hot-run p95 results. No MongoDB benchmark is rer
 | imdb | `QG6_EpisodesOfSeries` | sf0.25 | G2 (control, p95=0.6322362009086646) | G7; regret=0.4536 | Small-scale containment failure: a simple control/primary-style candidate wins at sf0.25, but the containment family wins at larger scales. |
 | fiben | `Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity` | sf1 | CONTROL (control, p95=1.0028332064393908) | G4; regret=0.1807 | Scale-sensitive deep-traversal failure: CONTROL wins at sf1, while activated configurations win at sf10 and sf30. |
 
+
+### How to interpret the failure and near-failure cases
+
+These cases should not be removed. They are useful because they show that the analysis is honest and not only selecting successful examples.
+
+The IMDb `QG6_EpisodesOfSeries` miss at sf0.25 suggests small-scale sensitivity: a simpler control candidate wins when the dataset is small, but the containment family wins at larger scales. This means the activation logic is not necessarily wrong; rather, at very small scale, fixed overheads and simple execution plans can dominate.
+
+The FIBEN `Q4` miss at sf1 has a similar interpretation. CONTROL wins at the smallest scale, but activated configurations win at sf10 and sf30. This supports the idea that deeper traversal patterns benefit more clearly from SchemaLens-selected designs as the traversal cost grows.
+
+These cases should be presented as limitations or scale-sensitive behavior. They help answer the advisor more convincingly because they show not only where SchemaLens works, but also where the boundary conditions are.
+
+
 ### Main takeaways
 
 1. The representative cases show that SchemaLens does not simply choose embedding or references by default. Different workload/data characteristics lead to different winning families.
@@ -199,3 +368,16 @@ The analysis uses only measured hot-run p95 results. No MongoDB benchmark is rer
 3. Secondary_affected candidates are important: several winners come from this group, especially in mixed association/containment cases.
 4. The failure cases are informative rather than fatal: IMDb QG6 at sf0.25 and FIBEN Q4 at sf1 are small-scale or scale-sensitive misses, while larger scales preserve the activated winners.
 5. For the final paper text, activation-matrix classes and final SchemaLens benchmark-selected classes should be reported separately to avoid ambiguity.
+
+## Final explanatory note for the advisor
+
+The current experimental response should be understood as a detailed evidence package, not as the final text to be copied directly into the paper. Its main value is that it shows the advisor that the experimental revision now addresses the original concerns in depth:
+
+- baselines answer whether SchemaLens is better than simple alternatives;
+- random-k clarifies what happens when the same number of classes is selected without explanation;
+- ablation shows that the analytical variables materially affect preservation quality;
+- representative cases explain why specific configurations win;
+- failure/near-failure cases clarify limitations and scale-sensitive behavior;
+- repository outputs and scripts make the evidence reproducible.
+
+This gives us enough material to later write a shorter paper section, but the current advisor document should remain detailed so the advisor can evaluate the complete reasoning before deciding what should enter the final manuscript.
