@@ -43,6 +43,10 @@ analysis/
      └── analyze_baseline_diagnostics.py
      └── generated/
      ├── aggregate_results_all_datasets.csv
+     ├── inspect_ablation_variables.py
+     ├── normalize_ablation_variables.py
+     ├── run_ablation_analysis.py
+     └── experimental_response_ablation_baselines.py
 generated/
      ├── aggregate_results_all_datasets.csv
      ├── normalization_report.txt
@@ -61,8 +65,24 @@ generated/
      ├── baseline_performance_by_dataset_hot.csv
      ├── schema_lens_vs_random_k_by_case.csv
      ├── schema_lens_vs_random_k_summary.csv
-     └── schema_lens_vs_random_k_report.txt
+     ├── schema_lens_vs_random_k_report.txt
+     ├── ablation_variables_inventory.csv
+     ├── ablation_variables_inventory_report.txt
+     ├── query_analytical_metadata_all_datasets.csv
+     ├── query_class_activation_all_datasets.csv
+     ├── benchmark_configuration_selection_all_datasets.csv
+     ├── ablation_variables_normalization_report.txt
+     ├── ablation_rules_used.csv
+     ├── ablation_performance_by_case.csv
+     ├── ablation_performance_summary.csv
+     ├── ablation_performance_by_dataset.csv
+     ├── ablation_performance_summary_hot.csv
+     ├── ablation_performance_by_dataset_hot.csv
+     ├── ablation_failure_cases.csv
+     ├── ablation_report.txt
+     └── advisor_experimental_response.md
 ```
+
 ## Step 1 — Normalize aggregate benchmark outputs
 
 ### Purpose
@@ -1316,3 +1336,97 @@ On Windows PowerShell:
 ```powershell
 py analysis\scripts\run_ablation_analysis.py
 ```
+
+## Step 7 — Generate advisor experimental response
+
+### Purpose
+
+This step generates a Markdown report summarizing the additional experimental analyses prepared in response to the advisor comments.
+
+The report is intended as an intermediate explanation document. It is not necessarily the final paper text.
+
+It includes:
+
+```text
+baseline comparison
+random-k diagnostic
+ablation study
+dataset-level ablation
+main interpretation
+suggested response text for the advisor
+recommended next steps
+```
+
+---
+
+### Input files
+
+```text
+analysis/generated/baseline_performance_summary.csv
+analysis/generated/baseline_performance_summary_hot.csv
+analysis/generated/schema_lens_vs_random_k_summary.csv
+analysis/generated/ablation_performance_summary.csv
+analysis/generated/ablation_performance_summary_hot.csv
+analysis/generated/ablation_performance_by_dataset_hot.csv
+analysis/generated/query_analytical_metadata_all_datasets.csv
+analysis/generated/query_class_activation_all_datasets.csv
+analysis/generated/benchmark_configuration_selection_all_datasets.csv
+```
+
+---
+
+### Script
+
+```text
+analysis/scripts/experimental_response_ablation_baselines.py
+```
+
+---
+
+### Generated file
+
+```text
+analysis/generated/advisor_experimental_response.md
+```
+
+---
+
+### Main purpose of the generated report
+
+The generated report explains that:
+
+```text
+SchemaLens outperforms deterministic heuristic baselines.
+random-k is competitive but should be interpreted as a statistical sanity check.
+The ablation study shows that the analytical matrix components materially contribute to preservation quality.
+Removing relationship semantics, depth, residual traversal, sharedness, or update volatility reduces Top-1 and near-best preservation.
+```
+
+---
+
+### Run command
+
+From the repository root:
+
+```bash
+python analysis/scripts/experimental_response_ablation_baselines.py
+```
+
+On Windows PowerShell:
+
+```powershell
+py analysis\scripts\experimental_response_ablation_baselines.py
+```
+
+---
+
+### Expected output
+
+After running the script, the following file is generated:
+
+```text
+analysis/generated/advisor_experimental_response.md
+```
+
+This file can be used as a detailed advisor-facing explanation of the baseline and ablation results before deciding which parts should be moved into the paper.
+
