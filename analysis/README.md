@@ -1430,3 +1430,60 @@ analysis/generated/advisor_experimental_response.md
 
 This file can be used as a detailed advisor-facing explanation of the baseline and ablation results before deciding which parts should be moved into the paper.
 
+
+
+### Representative case analysis
+
+After running the aggregate normalization, baseline, random-k diagnostic, and ablation scripts, generate the representative-case analysis with:
+
+```bash
+python analysis/scripts/analyze_representative_cases.py
+```
+
+This script does **not** rerun MongoDB benchmarks. It only combines already measured aggregate benchmark outputs with normalized SchemaLens methodology variables.
+
+Inputs:
+
+- `analysis/generated/aggregate_results_all_datasets.csv`
+- `analysis/generated/query_analytical_metadata_all_datasets.csv`
+- `analysis/generated/query_class_activation_all_datasets.csv`
+- `analysis/generated/benchmark_configuration_selection_all_datasets.csv`
+- `analysis/generated/ablation_performance_by_case.csv`
+- `analysis/generated/baseline_performance_by_case.csv`
+- `analysis/generated/schema_lens_vs_random_k_by_case.csv`
+
+Outputs:
+
+- `analysis/generated/representative_case_table.csv`
+- `analysis/generated/representative_case_analysis.md`
+
+The report explains selected IMDb, FIBEN, and LDBC SNB cases using:
+
+- selected root;
+- conceptual traversal count (`Rc`);
+- depth (`D`);
+- residual traversal (`Re`);
+- `DeltaRratio`;
+- dominant semantic type;
+- update-volatility signal;
+- observed-sharedness signal;
+- activated G classes;
+- measured benchmark classes;
+- hot-run p95 winner;
+- whether SchemaLens preserved Top-1 or a near-best configuration.
+
+For a compact paper-oriented version using only the largest scale per dataset/query, run:
+
+```bash
+python analysis/scripts/analyze_representative_cases.py --scale-mode largest
+```
+
+The near-best threshold defaults to 5%, consistent with the paper revision:
+
+```bash
+python analysis/scripts/analyze_representative_cases.py --near-best-threshold 0.05
+```
+
+Methodological note: the script does not simulate root-choice ablation. Testing alternative roots would require materializing and benchmarking additional MongoDB configurations rooted at non-selected entities.
+
+
