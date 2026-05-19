@@ -1,0 +1,35 @@
+# Representative Case Consistency Report
+
+## Purpose
+
+This report checks whether representative cases distinguish raw activation-matrix classes from the final SchemaLens benchmark-selected space.
+
+## Input availability
+
+- Activation file found: `analysis\generated\query_class_activation_all_datasets.csv` -> True
+- Benchmark-selection file found: `analysis\generated\benchmark_configuration_selection_all_datasets.csv` -> True
+
+## Status summary
+
+- Total representative rows checked: 30
+- CONTROL_WINNER: 1
+- NOT_PRESERVED: 1
+- OK: 25
+- OK_SELECTED_BEYOND_RAW_ACTIVATION: 3
+
+## Interpretation
+
+- `OK` means the measured winner is inside the final SchemaLens-selected benchmark space.
+- `OK_SELECTED_BEYOND_RAW_ACTIVATION` means the winner was preserved through the benchmark-selection/secondary stage, but it is not listed in the raw activation matrix. This is not necessarily an experimental error, but the report should name both sets separately.
+- `CONTROL_WINNER` and `NOT_PRESERVED` should be treated as failure or scale-sensitive cases.
+- `INCONSISTENT_TOP1_FLAG` requires correction before the row is used in the paper.
+
+## Rows requiring attention
+
+| dataset   | query_name                                                       | scale_label   | global_best_g_class   |   schema_lens_top1_preserved | activation_matrix_classes   | schema_lens_selected_classes   | consistency_status                |
+|:----------|:-----------------------------------------------------------------|:--------------|:----------------------|-----------------------------:|:----------------------------|:-------------------------------|:----------------------------------|
+| imdb      | QG6_EpisodesOfSeries                                             | sf0.25        | G2                    |                            0 | G7|G8|G9                    | G3|G7|G8|G9                    | NOT_PRESERVED                     |
+| imdb      | QG10_AdvancedSearchWatchItems                                    | sf0.25        | G9                    |                            1 | G0|G2|G3                    | G0|G2|G3|G4|G5|G6|G7|G8|G9     | OK_SELECTED_BEYOND_RAW_ACTIVATION |
+| imdb      | QG10_AdvancedSearchWatchItems                                    | sf0.5         | G7                    |                            1 | G0|G2|G3                    | G0|G2|G3|G4|G5|G6|G7|G8|G9     | OK_SELECTED_BEYOND_RAW_ACTIVATION |
+| imdb      | QG10_AdvancedSearchWatchItems                                    | sf1           | G9                    |                            1 | G0|G2|G3                    | G0|G2|G3|G4|G5|G6|G7|G8|G9     | OK_SELECTED_BEYOND_RAW_ACTIVATION |
+| fiben     | Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity | sf1           | CONTROL               |                            0 | G2|G3|G4|G5|G7|G9           | G2|G3|G4|G5|G7|G9              | CONTROL_WINNER                    |

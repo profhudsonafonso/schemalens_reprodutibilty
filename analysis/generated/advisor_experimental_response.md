@@ -158,3 +158,44 @@ The current benchmark artifacts do not include alternative-root MongoDB configur
 4. Add a short paragraph explaining why root-choice ablation requires additional benchmark candidates.
 5. Add representative query-level explanations showing why specific configurations win.
 6. Decide what stays in the paper and what remains as supplementary repository material.
+
+
+
+
+
+
+## Representative-case analysis
+
+I added a representative-case analysis to connect the analytical variables used by SchemaLens with the measured benchmark winners. The goal is to move the experimental section beyond aggregate preservation metrics and explain why particular configuration families win under specific workload and data characteristics.
+
+The analysis uses only measured hot-run p95 results. No MongoDB benchmark is rerun, no latency is inferred for unmeasured configurations, and root-choice ablation is not included because it would require materializing and benchmarking alternative-root candidates.
+
+### Representative cases and interpretation
+
+| Dataset | Query | Pattern / key signal | Hot-run winner(s) across scales | Preservation | Interpretation |
+|---|---|---|---|---|---|
+| imdb | `QG6_EpisodesOfSeries` | containment / low-sharedness traversal; root=Series; Rc=1.0; D=1.0; Re=0.0; DeltaRratio=1.0; semantic=none | sf0.25: G2 (control, 0.6322 ms); sf0.5: G7 (primary, 1.016 ms); sf1: G7 (primary, 2.272 ms) | Top-1 2/3; near-best 2/3 | This is the canonical IMDb containment case. It fails at sf0.25, where a simple control candidate wins, but the expected containment family wins at sf0.5 and sf1. |
+| imdb | `QG10_AdvancedSearchWatchItems` | association / sharedness / filtered search; root=WatchItem; Rc=4.0; D=1.0; Re=0.0; DeltaRratio=1.0; semantic=none | sf0.25: G9 (secondary_affected, 115.3 ms); sf0.5: G7 (secondary_affected, 171.6 ms); sf1: G9 (secondary_affected, 299.8 ms) | Top-1 3/3; near-best 3/3 | This is the IMDb sharedness/filtering case. Use it after checking the activation-vs-selection distinction, because the winners are secondary/hybrid candidates that may be selected beyond the raw activation-matrix classes. |
+| fiben | `Q10_CreateAccountHoldingAndBuyTransaction` | update + relationship creation; root=Person; Rc=5.0; D=3.0; Re=0.0; DeltaRratio=1.0; semantic=mixed | sf1: G9 (secondary_affected, 0.5756 ms); sf10: G3 (primary, 0.4271 ms); sf30: G7 (secondary_affected, 0.619 ms) | Top-1 3/3; near-best 3/3 | This is the best FIBEN case for update volatility. The query creates relationships under high update pressure, so the winner changes across scales rather than always favoring embedding. |
+| fiben | `Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity` | deep traversal; root=Person; Rc=4.0; D=4.0; Re=0.0; DeltaRratio=1.0; semantic=mixed | sf1: CONTROL (control, 1.003 ms); sf10: G5 (primary, 4.308 ms); sf30: G4 (primary, 17.14 ms) | Top-1 2/3; near-best 2/3 | This is the main scale-sensitive FIBEN case. CONTROL wins at sf1, but activated designs win at larger scales, suggesting that the benefit of the activated space becomes clearer as traversal cost grows. |
+| ldbc_snb | `IC1_TransitiveFriendsWithName` | official complex read / transitive association; root=Person; Rc=7.0; D=4.0; Re=3.0; DeltaRratio=0.5714285714; semantic=association | sf0.1: G3 (primary, 131.4 ms); sf1: G3 (primary, 227.7 ms); sf3: G3 (primary, 260 ms) | Top-1 3/3; near-best 3/3 | This is a strong official workload case. High traversal depth and residual traversal over associative relationships explain why a reference/summary-oriented Person-rooted configuration remains competitive instead of full embedding. |
+| ldbc_snb | `IC5_NewGroups` | official complex read / association + containment mix; root=Person; Rc=5.0; D=3.0; Re=2.0; DeltaRratio=0.6000000000000001; semantic=association | sf0.1: G7 (secondary_affected, 135.3 ms); sf1: G6 (secondary_affected, 176.8 ms); sf3: G7 (secondary_affected, 193.8 ms) | Top-1 3/3; near-best 3/3 | This case is useful to justify secondary_affected candidates. The winners are secondary families across scales, showing that mixed association/containment workloads require more than only the primary family. |
+| ldbc_snb | `IC7_RecentLikers` | official complex read / likes and friend check; root=Person; Rc=5.0; D=2.0; Re=3.0; DeltaRratio=0.4; semantic=association | sf0.1: G4 (secondary_affected, 7.464 ms); sf1: G3 (primary, 7.009 ms); sf3: G4 (secondary_affected, 8.037 ms) | Top-1 3/3; near-best 3/3 | This query combines likes, message ownership, and friendship checks. The alternation between G4 and G3 shows that explicit associative-edge and reference-aware designs are both relevant under graph-like access. |
+| ldbc_snb | `IS2_RecentMessagesOfPerson` | official short read / messages of person; root=Person; Rc=4.0; D=2.0; Re=2.0; DeltaRratio=0.5; semantic=mixed | sf0.1: G6 (secondary_affected, 2.256 ms); sf1: G9 (secondary_affected, 3.231 ms); sf3: G0 (secondary_affected, 2.711 ms) | Top-1 3/3; near-best 3/3 | This short-read case is compact but still has mixed message structures and residual traversal. It supports the need to preserve several secondary alternatives instead of choosing a single fixed document pattern. |
+| ldbc_snb | `IS6_ForumOfMessage` | official short read / containment path; root=Post; Rc=4.0; D=3.0; Re=1.0; DeltaRratio=0.75; semantic=containment | sf0.1: G9 (primary, 1.171 ms); sf1: G9 (primary, 2.301 ms); sf3: G0 (secondary_affected, 1.332 ms) | Top-1 3/3; near-best 3/3 | This is a good containment/hybrid example. Even though the path is containment-like, residual traversal remains, explaining why hybrid or reference-aware candidates can win. |
+| ldbc_snb | `IS7_RepliesOfMessage` | official short read / replies and author relation; root=Post; Rc=5.0; D=2.0; Re=3.0; DeltaRratio=0.4; semantic=association | sf0.1: G0 (primary, 7.944 ms); sf1: G9 (secondary_affected, 11.01 ms); sf3: G7 (secondary_affected, 14.04 ms) | Top-1 3/3; near-best 3/3 | This short-read case mixes replies, authors, and author relationships. It is useful for showing that update-aware and hybrid candidates can matter even in compact access patterns. |
+
+### Failure and near-failure cases
+
+| Dataset | Query | Scale | Winner | Best SchemaLens candidate / regret | Interpretation |
+|---|---|---|---|---|---|
+| imdb | `QG6_EpisodesOfSeries` | sf0.25 | G2 (control, p95=0.6322362009086646) | G7; regret=0.4536 | Small-scale containment failure: a simple control/primary-style candidate wins at sf0.25, but the containment family wins at larger scales. |
+| fiben | `Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity` | sf1 | CONTROL (control, p95=1.0028332064393908) | G4; regret=0.1807 | Scale-sensitive deep-traversal failure: CONTROL wins at sf1, while activated configurations win at sf10 and sf30. |
+
+### Main takeaways
+
+1. The representative cases show that SchemaLens does not simply choose embedding or references by default. Different workload/data characteristics lead to different winning families.
+2. LDBC SNB provides the strongest evidence because it is an official workload and the selected cases consistently preserve Top-1 or near-best configurations.
+3. Secondary_affected candidates are important: several winners come from this group, especially in mixed association/containment cases.
+4. The failure cases are informative rather than fatal: IMDb QG6 at sf0.25 and FIBEN Q4 at sf1 are small-scale or scale-sensitive misses, while larger scales preserve the activated winners.
+5. For the final paper text, activation-matrix classes and final SchemaLens benchmark-selected classes should be reported separately to avoid ambiguity.
