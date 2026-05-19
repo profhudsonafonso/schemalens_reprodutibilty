@@ -142,7 +142,7 @@ Removing relationship semantics, depth, residual traversal, sharedness, or updat
 
 The current benchmark artifacts do not include alternative-root MongoDB configurations for all queries. A fair root-choice ablation would require generating and benchmarking additional candidates rooted at non-selected entities.
 
-## 10. Suggested text for the advisor response
+## 10. Resume
 
 > I added two new experimental analyses to address the concern that the evaluation was too descriptive.
 >
@@ -150,7 +150,7 @@ The current benchmark artifacts do not include alternative-root MongoDB configur
 >
 > Second, I added an ablation study using real methodology variables extracted from the IMDb, FIBEN, and LDBC SNB artifacts. The ablation removes relationship semantics, depth, residual traversal, sharedness, and update volatility from the measured SchemaLens-selected space. The full SchemaLens variant achieves high Top-1 and near-best preservation on hot runs with low mean regret. All ablated variants perform substantially worse. The strongest degradation occurs when relationship semantics and depth are removed together. This supports the claim that the analytical matrix materially contributes to preserving best or near-best configurations.
 
-## 11. Recommended next steps
+## 11. Next steps
 
 1. Select which baseline table should go into the paper.
 2. Select which ablation table should go into the paper.
