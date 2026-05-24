@@ -1486,4 +1486,52 @@ python analysis/scripts/analyze_representative_cases.py --near-best-threshold 0.
 
 Methodological note: the script does not simulate root-choice ablation. Testing alternative roots would require materializing and benchmarking additional MongoDB configurations rooted at non-selected entities.
 
+### Joint explanatory case selection
+
+This step identifies representative cases that jointly explain baseline separation and ablation sensitivity.
+
+The goal is to find cases where SchemaLens preserves the Top-1 configuration while deterministic baselines and/or ablated SchemaLens variants miss the winner.
+
+Script:
+
+```bash
+python analysis/scripts/find_joint_explanatory_cases.py
+```
+
+Inputs:
+
+- `analysis/generated/baseline_performance_by_case.csv`
+- `analysis/generated/ablation_performance_by_case.csv`
+
+Outputs:
+
+- `analysis/generated/joint_explanatory_cases_hot.csv`
+- `analysis/generated/joint_explanatory_cases_by_query_hot.csv`
+- `analysis/generated/joint_explanatory_cases_hot.md`
+
+The script classifies each hot-run case into one of the following categories:
+
+- `joint_strong`
+- `baseline_strong`
+- `ablation_strong`
+- `baseline_strong_with_ablation_signal`
+- `ablation_strong_with_baseline_signal`
+- `baseline_moderate`
+- `ablation_moderate`
+- `weak_or_redundant`
+
+Interpretation:
+
+- `baseline_strong` cases are useful to explain why fixed heuristics such as always-reference, always-embed, depth-only, or relationship-type-only are unstable.
+- `ablation_strong` cases are useful to explain why SchemaLens analytical variables matter.
+- `joint_strong` cases are the most complete examples because they connect baseline failure, ablation sensitivity, workload structure, and measured winners.
+
+In the current revision, three representative explanatory cases are used as candidate examples:
+
+- LDBC SNB `IC7_RecentLikers`: mixed workload, primary vs. secondary_affected candidates, and ablation sensitivity.
+- FIBEN `Q2_CompanyWithIndustryCountryAndListedSecurities`: baseline separation and scale-dependent winner changes.
+- IMDb `QG9_TopRatedSeriesByGenre`: extreme baseline failure, especially for `relationship_type_only`.
+
+This step does not rerun MongoDB benchmarks. It reuses measured hot-run p95 results and the already generated baseline and ablation outputs.
+
 
