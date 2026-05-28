@@ -1,0 +1,2 @@
+# Large raw MongoDB explain outputs
+analysis/generated/query_plan/**/query_plan_raw_json/

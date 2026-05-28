@@ -1,0 +1,4 @@
+scale_label,collection_name,config_name,documents_inserted,elapsed_seconds
+sf0.25,watchitems,watchitem_g2,10000,2.8345337850041687
+sf0.25,watchitems,watchitem_g0,10000,2.739461499033496
+sf0.25,series,series_g8,10000,18.918572052149102

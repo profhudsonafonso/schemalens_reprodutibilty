@@ -1,0 +1,5 @@
+scale_label,query_name,query_group,run_phase,execution_status,n_rows
+sf0.25,QG9_TopRatedSeriesByGenre,primary,hot,completed,2
+sf0.25,QG9_TopRatedSeriesByGenre,secondary_affected,hot,completed,2
+sf1,QG9_TopRatedSeriesByGenre,primary,cold,completed,2
+sf1,QG9_TopRatedSeriesByGenre,secondary_affected,cold,completed,2

@@ -1535,3 +1535,45 @@ In the current revision, three representative explanatory cases are used as cand
 This step does not rerun MongoDB benchmarks. It reuses measured hot-run p95 results and the already generated baseline and ablation outputs.
 
 
+### IMDb query-plan validation
+
+A MongoDB query-plan-only runner was added for IMDb:
+
+```bash
+python benchmark/imdb/run_imdb_mongo_query_plan.py
+```
+
+The runner collects MongoDB `explain("executionStats")` metrics and physical collection statistics, including:
+
+- `totalDocsExamined`
+- `totalKeysExamined`
+- `nReturned`
+- plan stages such as `IXSCAN`, `FETCH`, `SORT`, and `AND_SORTED`
+- collection document count
+- collection size
+- average object size
+- estimated examined bytes
+
+The first validated case is IMDb `QG9_TopRatedSeriesByGenre`, stored under:
+
+```text
+analysis/generated/query_plan/imdb/qg9_validation/
+```
+
+This case explains why `G7` wins over `G8` and over WatchItem-rooted baselines. `G7` uses a specialized `series` root with small documents. `G8` uses the same root, but embeds episodes that QG9 does not use, increasing document size. WatchItem-rooted configurations operate over the more generic `watchitems` collection and require a more complex indexed plan.
+
+The QG9 validation is currently stored as split source outputs plus consolidated CSV files:
+
+- `query_plan_summary_qg9_all_sfs.csv`
+- `query_plan_components_qg9_all_sfs.csv`
+- `query_plan_status_summary_qg9_all_sfs.csv`
+
+The consolidation step is performed with:
+
+```bash
+python analysis/scripts/merge_qg9_query_plan_results.py
+```
+
+The full IMDb query-plan analysis will be executed in groups to avoid excessive load caused by the large `roles` collection at `sf1`.
+
+

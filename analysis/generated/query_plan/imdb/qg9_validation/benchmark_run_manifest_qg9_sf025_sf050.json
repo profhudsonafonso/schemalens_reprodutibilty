@@ -1,0 +1,41 @@
+{
+  "runner": "run_imdb_mongo_benchmark_query_plan_v4.py",
+  "started_at_utc": "2026-05-27 19:45:55.368159+00:00",
+  "finished_at_utc": "2026-05-27 19:47:05.310151+00:00",
+  "duration_seconds": 69.941992,
+  "results_dir": "/home/hudson/Documents/framework_test/imdb/query_plan_test_qg9",
+  "catalog_csv": "/home/hudson/Documents/framework_test/imdb/mongo_experiment_catalog.csv",
+  "template_csv": "/home/hudson/Documents/framework_test/imdb/benchmark_execution_template.csv",
+  "query_plan_only": true,
+  "explain_verbosity": "executionStats",
+  "scale_label_filter": [
+    "sf0.25"
+  ],
+  "experiments_filter": null,
+  "config_name_filter": [
+    "series_g7",
+    "series_g8",
+    "watchitem_g0",
+    "watchitem_g2"
+  ],
+  "query_group_filter": null,
+  "run_phase_filter": [
+    "hot"
+  ],
+  "query_name_filter": [
+    "QG9_TopRatedSeriesByGenre"
+  ],
+  "max_runs": null,
+  "row_limit": 10000,
+  "batch_size": 10000,
+  "sample_size": 5,
+  "execution_db_prefix": "imdb_exec",
+  "force_rebuild_scale_db": true,
+  "save_raw_explain": true,
+  "collect_collection_stats": true,
+  "n_selected_experiments": 4,
+  "n_initialization_rows": 1,
+  "n_collection_swap_rows": 3,
+  "n_query_plan_summary_rows": 4,
+  "log_file": "/home/hudson/Documents/framework_test/imdb/query_plan_test_qg9/execution.log"
+}
