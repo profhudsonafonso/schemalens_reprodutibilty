@@ -1595,3 +1595,14 @@ Main QG9 validation files:
 * `analysis/generated/query_plan/imdb/qg9_validation/query_plan_components_qg9_all_sfs.csv`
 
 Raw MongoDB `explain` JSON files are not committed by default because they can become large in full query-plan runs.
+
+
+Group B results are stored in:
+
+`analysis/generated/query_plan/imdb/group_B_episodes/`
+
+Group B covers:
+
+- `QG6_EpisodesOfSeries`
+
+The run completed for `sf0.25`, `sf0.5`, and `sf1`. No failed query-plan rows were detected. A `query_plan_zero_returned_rows_group_B.csv` file was generated, but these rows correspond to expected MongoDB `COUNT` / `COUNT_SCAN` behavior over the `episodes` collection and should not be interpreted as execution failures.

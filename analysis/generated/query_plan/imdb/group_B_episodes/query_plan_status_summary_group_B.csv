@@ -1,0 +1,10 @@
+scale_label,query_name,query_group,run_phase,execution_status,n_rows
+sf0.25,QG6_EpisodesOfSeries,control,hot,completed,5
+sf0.25,QG6_EpisodesOfSeries,primary,hot,completed,3
+sf0.25,QG6_EpisodesOfSeries,secondary_affected,hot,completed,1
+sf0.5,QG6_EpisodesOfSeries,control,hot,completed,5
+sf0.5,QG6_EpisodesOfSeries,primary,hot,completed,3
+sf0.5,QG6_EpisodesOfSeries,secondary_affected,hot,completed,1
+sf1,QG6_EpisodesOfSeries,control,hot,completed,5
+sf1,QG6_EpisodesOfSeries,primary,hot,completed,3
+sf1,QG6_EpisodesOfSeries,secondary_affected,hot,completed,1

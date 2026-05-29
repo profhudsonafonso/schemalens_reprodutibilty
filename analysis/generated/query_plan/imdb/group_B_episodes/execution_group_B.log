@@ -1,0 +1,381 @@
+[2026-05-29 02:15:06] [INFO] === IMDb MongoDB query-plan runner started ===
+[2026-05-29 02:15:06] [INFO] results_dir=/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes
+[2026-05-29 02:15:06] [INFO] query_plan_only=True explain_verbosity=executionStats
+[2026-05-29 02:15:06] [INFO] force_rebuild_scale_db=True row_limit=None batch_size=100000
+[2026-05-29 02:15:06] [INFO] scale_label_filter=None config_name_filter=None query_name_filter=['QG6_EpisodesOfSeries']
+[2026-05-29 02:15:06] [INFO] Selected experiments: 27
+[2026-05-29 02:15:06] [INFO] Saved selected experiments summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/selected_experiments_summary.csv
+[2026-05-29 02:15:06] [INFO]   - series_g7_sf0.25 | config=series_g7 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - series_g8_sf0.25 | config=series_g8 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - series_g9_sf0.25 | config=series_g9 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - watchitem_g0_sf0.25 | config=watchitem_g0 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - watchitem_g2_sf0.25 | config=watchitem_g2 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - watchitem_g3_sf0.25 | config=watchitem_g3 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - watchitem_g4_sf0.25 | config=watchitem_g4 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - watchitem_g5_sf0.25 | config=watchitem_g5 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - watchitem_g6_sf0.25 | config=watchitem_g6 | scale=sf0.25
+[2026-05-29 02:15:06] [INFO]   - series_g7_sf0.5 | config=series_g7 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - series_g8_sf0.5 | config=series_g8 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - series_g9_sf0.5 | config=series_g9 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - watchitem_g0_sf0.5 | config=watchitem_g0 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - watchitem_g2_sf0.5 | config=watchitem_g2 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - watchitem_g3_sf0.5 | config=watchitem_g3 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - watchitem_g4_sf0.5 | config=watchitem_g4 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - watchitem_g5_sf0.5 | config=watchitem_g5 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - watchitem_g6_sf0.5 | config=watchitem_g6 | scale=sf0.5
+[2026-05-29 02:15:06] [INFO]   - series_g7_sf1 | config=series_g7 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - series_g8_sf1 | config=series_g8 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - series_g9_sf1 | config=series_g9 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - watchitem_g0_sf1 | config=watchitem_g0 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - watchitem_g2_sf1 | config=watchitem_g2 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - watchitem_g3_sf1 | config=watchitem_g3 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - watchitem_g4_sf1 | config=watchitem_g4 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - watchitem_g5_sf1 | config=watchitem_g5 | scale=sf1
+[2026-05-29 02:15:06] [INFO]   - watchitem_g6_sf1 | config=watchitem_g6 | scale=sf1
+[2026-05-29 02:15:06] [INFO] ######## START SCALE sf0.25 ########
+[2026-05-29 02:15:06] [INFO] Opening DuckDB for sf0.25 from /home/hudson/Documents/framework_test/imdb/data/sf_025
+[2026-05-29 02:15:07] [INFO] Creating DuckDB view imdb_name_basics
+[2026-05-29 02:15:07] [INFO] Creating DuckDB view imdb_title_akas
+[2026-05-29 02:15:07] [INFO] Creating DuckDB view imdb_title_basics
+[2026-05-29 02:15:07] [INFO] Creating DuckDB view imdb_title_crew
+[2026-05-29 02:15:07] [INFO] Creating DuckDB view imdb_title_episode
+[2026-05-29 02:15:07] [INFO] Creating DuckDB view imdb_title_principals
+[2026-05-29 02:15:07] [INFO] Creating DuckDB view imdb_title_ratings
+[2026-05-29 02:15:07] [INFO] Building query parameter pool for sf0.25
+[2026-05-29 02:15:15] [INFO] Parameter pool ready for sf0.25
+[2026-05-29 02:15:15] [INFO] Minimal base-load decision: queries=['QG6_EpisodesOfSeries'] load_persons=False load_roles=False load_episodes=True
+[2026-05-29 02:15:15] [INFO] === INITIALIZING EXECUTION DB imdb_exec_sf0_25 ===
+[2026-05-29 02:15:15] [INFO] Removing Mongo database: imdb_exec_sf0_25
+[2026-05-29 02:15:15] [INFO] [materialize:persons] skipped by minimal/skip-load option
+[2026-05-29 02:15:15] [INFO] [materialize:roles] skipped by minimal/skip-load option
+[2026-05-29 02:15:15] [INFO] [materialize:episodes] start
+[2026-05-29 02:15:18] [INFO] [materialize:episodes] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 02:16:21] [INFO] [materialize:episodes] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 02:16:41] [INFO] [materialize:episodes] completed total_inserted=2294687
+[2026-05-29 02:16:41] [INFO] [replace:watchitems] start config=watchitem_g0
+[2026-05-29 02:16:49] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 02:19:41] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 02:22:28] [INFO] [replace:watchitems] completed config=watchitem_g0 total_inserted=3119040
+[2026-05-29 02:22:28] [INFO] [replace:series] start config=series_g7
+[2026-05-29 02:24:00] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 02:24:54] [INFO] [replace:series] completed config=series_g7 total_inserted=186514
+[2026-05-29 02:24:54] [INFO] === EXECUTION DB READY imdb_exec_sf0_25 persons=0 roles=0 episodes=2294687 watchitems=3119040 series=186514 ===
+[2026-05-29 02:24:54] [INFO] === QUERY PLAN START experiment_id=watchitem_g0_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 02:24:54] [INFO] Explain plan rows for watchitem_g0_sf0.25: 1
+[2026-05-29 02:24:54] [INFO] [explain-progress] experiment=watchitem_g0_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 02:24:54] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g0_sf0.25 rows=1 components=1 ===
+[2026-05-29 02:24:54] [INFO] [replace:watchitems] start config=watchitem_g2
+[2026-05-29 02:25:02] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 02:28:07] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 02:31:02] [INFO] [replace:watchitems] completed config=watchitem_g2 total_inserted=3119040
+[2026-05-29 02:31:02] [INFO] === QUERY PLAN START experiment_id=watchitem_g2_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 02:31:02] [INFO] Explain plan rows for watchitem_g2_sf0.25: 1
+[2026-05-29 02:31:02] [INFO] [explain-progress] experiment=watchitem_g2_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 02:31:02] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g2_sf0.25 rows=1 components=1 ===
+[2026-05-29 02:31:02] [INFO] [replace:watchitems] start config=watchitem_g3
+[2026-05-29 02:31:11] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 02:34:19] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 02:37:18] [INFO] [replace:watchitems] completed config=watchitem_g3 total_inserted=3119040
+[2026-05-29 02:37:18] [INFO] === QUERY PLAN START experiment_id=watchitem_g3_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 02:37:18] [INFO] Explain plan rows for watchitem_g3_sf0.25: 1
+[2026-05-29 02:37:18] [INFO] [explain-progress] experiment=watchitem_g3_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=secondary_affected rep=1
+[2026-05-29 02:37:18] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g3_sf0.25 rows=1 components=1 ===
+[2026-05-29 02:37:18] [INFO] [replace:watchitems] start config=watchitem_g4
+[2026-05-29 02:38:40] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 02:57:47] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 03:01:39] [INFO] [replace:watchitems] completed config=watchitem_g4 total_inserted=3119040
+[2026-05-29 03:01:39] [INFO] === QUERY PLAN START experiment_id=watchitem_g4_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 03:01:39] [INFO] Explain plan rows for watchitem_g4_sf0.25: 1
+[2026-05-29 03:01:39] [INFO] [explain-progress] experiment=watchitem_g4_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 03:01:39] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g4_sf0.25 rows=1 components=1 ===
+[2026-05-29 03:01:39] [INFO] [replace:watchitems] start config=watchitem_g5
+[2026-05-29 03:03:30] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 03:28:21] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 03:32:19] [INFO] [replace:watchitems] completed config=watchitem_g5 total_inserted=3119040
+[2026-05-29 03:32:19] [INFO] === QUERY PLAN START experiment_id=watchitem_g5_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 03:32:19] [INFO] Explain plan rows for watchitem_g5_sf0.25: 1
+[2026-05-29 03:32:19] [INFO] [explain-progress] experiment=watchitem_g5_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 03:32:19] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g5_sf0.25 rows=1 components=1 ===
+[2026-05-29 03:32:19] [INFO] [replace:watchitems] start config=watchitem_g6
+[2026-05-29 03:34:10] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 03:58:58] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 04:02:57] [INFO] [replace:watchitems] completed config=watchitem_g6 total_inserted=3119040
+[2026-05-29 04:02:57] [INFO] === QUERY PLAN START experiment_id=watchitem_g6_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 04:02:57] [INFO] Explain plan rows for watchitem_g6_sf0.25: 1
+[2026-05-29 04:02:57] [INFO] [explain-progress] experiment=watchitem_g6_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 04:02:57] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g6_sf0.25 rows=1 components=1 ===
+[2026-05-29 04:02:57] [INFO] [replace:watchitems] start config=watchitem_g0
+[2026-05-29 04:03:05] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:05:56] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 04:08:42] [INFO] [replace:watchitems] completed config=watchitem_g0 total_inserted=3119040
+[2026-05-29 04:08:43] [INFO] === QUERY PLAN START experiment_id=series_g7_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 04:08:43] [INFO] Explain plan rows for series_g7_sf0.25: 1
+[2026-05-29 04:08:43] [INFO] [explain-progress] experiment=series_g7_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 04:08:43] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g7_sf0.25 rows=1 components=1 ===
+[2026-05-29 04:08:43] [INFO] [replace:series] start config=series_g8
+[2026-05-29 04:10:16] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:11:11] [INFO] [replace:series] completed config=series_g8 total_inserted=186514
+[2026-05-29 04:11:11] [INFO] === QUERY PLAN START experiment_id=series_g8_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 04:11:11] [INFO] Explain plan rows for series_g8_sf0.25: 1
+[2026-05-29 04:11:11] [INFO] [explain-progress] experiment=series_g8_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 04:11:11] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g8_sf0.25 rows=1 components=1 ===
+[2026-05-29 04:11:11] [INFO] [replace:series] start config=series_g9
+[2026-05-29 04:12:45] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:13:41] [INFO] [replace:series] completed config=series_g9 total_inserted=186514
+[2026-05-29 04:13:41] [INFO] === QUERY PLAN START experiment_id=series_g9_sf0.25 execution_db=imdb_exec_sf0_25 ===
+[2026-05-29 04:13:41] [INFO] Explain plan rows for series_g9_sf0.25: 1
+[2026-05-29 04:13:41] [INFO] [explain-progress] experiment=series_g9_sf0.25 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 04:13:41] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g9_sf0.25 rows=1 components=1 ===
+[2026-05-29 04:13:41] [INFO] ######## COMPLETED SCALE sf0.25 ########
+[2026-05-29 04:13:41] [INFO] ######## START SCALE sf0.5 ########
+[2026-05-29 04:13:41] [INFO] Opening DuckDB for sf0.5 from /home/hudson/Documents/framework_test/imdb/data/sf_050
+[2026-05-29 04:13:41] [INFO] Creating DuckDB view imdb_name_basics
+[2026-05-29 04:13:41] [INFO] Creating DuckDB view imdb_title_akas
+[2026-05-29 04:13:41] [INFO] Creating DuckDB view imdb_title_basics
+[2026-05-29 04:13:41] [INFO] Creating DuckDB view imdb_title_crew
+[2026-05-29 04:13:41] [INFO] Creating DuckDB view imdb_title_episode
+[2026-05-29 04:13:41] [INFO] Creating DuckDB view imdb_title_principals
+[2026-05-29 04:13:41] [INFO] Creating DuckDB view imdb_title_ratings
+[2026-05-29 04:13:41] [INFO] Building query parameter pool for sf0.5
+[2026-05-29 04:13:59] [INFO] Parameter pool ready for sf0.5
+[2026-05-29 04:13:59] [INFO] Minimal base-load decision: queries=['QG6_EpisodesOfSeries'] load_persons=False load_roles=False load_episodes=True
+[2026-05-29 04:13:59] [INFO] === INITIALIZING EXECUTION DB imdb_exec_sf0_5 ===
+[2026-05-29 04:13:59] [INFO] Removing Mongo database: imdb_exec_sf0_5
+[2026-05-29 04:13:59] [INFO] [materialize:persons] skipped by minimal/skip-load option
+[2026-05-29 04:13:59] [INFO] [materialize:roles] skipped by minimal/skip-load option
+[2026-05-29 04:13:59] [INFO] [materialize:episodes] start
+[2026-05-29 04:14:04] [INFO] [materialize:episodes] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:15:48] [INFO] [materialize:episodes] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 04:17:38] [INFO] [materialize:episodes] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 04:18:31] [INFO] [materialize:episodes] completed total_inserted=4589137
+[2026-05-29 04:18:31] [INFO] [replace:watchitems] start config=watchitem_g0
+[2026-05-29 04:18:42] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:22:28] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 04:26:30] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 04:30:33] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 04:32:54] [INFO] [replace:watchitems] completed config=watchitem_g0 total_inserted=6067595
+[2026-05-29 04:32:54] [INFO] [replace:series] start config=series_g7
+[2026-05-29 04:35:32] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:37:39] [INFO] [replace:series] completed config=series_g7 total_inserted=230194
+[2026-05-29 04:37:39] [INFO] === EXECUTION DB READY imdb_exec_sf0_5 persons=0 roles=0 episodes=4589137 watchitems=6067595 series=230194 ===
+[2026-05-29 04:37:39] [INFO] === QUERY PLAN START experiment_id=watchitem_g0_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 04:37:39] [INFO] Explain plan rows for watchitem_g0_sf0.5: 1
+[2026-05-29 04:37:39] [INFO] [explain-progress] experiment=watchitem_g0_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 04:37:39] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g0_sf0.5 rows=1 components=1 ===
+[2026-05-29 04:37:39] [INFO] [replace:watchitems] start config=watchitem_g2
+[2026-05-29 04:37:50] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:41:47] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 04:46:01] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 04:50:19] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 04:52:40] [INFO] [replace:watchitems] completed config=watchitem_g2 total_inserted=6067595
+[2026-05-29 04:52:40] [INFO] === QUERY PLAN START experiment_id=watchitem_g2_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 04:52:40] [INFO] Explain plan rows for watchitem_g2_sf0.5: 1
+[2026-05-29 04:52:40] [INFO] [explain-progress] experiment=watchitem_g2_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 04:52:40] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g2_sf0.5 rows=1 components=1 ===
+[2026-05-29 04:52:40] [INFO] [replace:watchitems] start config=watchitem_g3
+[2026-05-29 04:52:52] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 04:56:55] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 05:01:15] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 05:05:38] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 05:08:02] [INFO] [replace:watchitems] completed config=watchitem_g3 total_inserted=6067595
+[2026-05-29 05:08:02] [INFO] === QUERY PLAN START experiment_id=watchitem_g3_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 05:08:02] [INFO] Explain plan rows for watchitem_g3_sf0.5: 1
+[2026-05-29 05:08:02] [INFO] [explain-progress] experiment=watchitem_g3_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=secondary_affected rep=1
+[2026-05-29 05:08:02] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g3_sf0.5 rows=1 components=1 ===
+[2026-05-29 05:08:02] [INFO] [replace:watchitems] start config=watchitem_g4
+[2026-05-29 05:09:38] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 05:31:48] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 05:52:26] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 05:59:03] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 06:01:37] [INFO] [replace:watchitems] completed config=watchitem_g4 total_inserted=6067595
+[2026-05-29 06:01:37] [INFO] === QUERY PLAN START experiment_id=watchitem_g4_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 06:01:37] [INFO] Explain plan rows for watchitem_g4_sf0.5: 1
+[2026-05-29 06:01:37] [INFO] [explain-progress] experiment=watchitem_g4_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 06:01:37] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g4_sf0.5 rows=1 components=1 ===
+[2026-05-29 06:01:37] [INFO] [replace:watchitems] start config=watchitem_g5
+[2026-05-29 06:03:41] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 06:31:19] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 06:57:06] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 07:03:43] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 07:06:20] [INFO] [replace:watchitems] completed config=watchitem_g5 total_inserted=6067595
+[2026-05-29 07:06:21] [INFO] === QUERY PLAN START experiment_id=watchitem_g5_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 07:06:21] [INFO] Explain plan rows for watchitem_g5_sf0.5: 1
+[2026-05-29 07:06:21] [INFO] [explain-progress] experiment=watchitem_g5_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 07:06:21] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g5_sf0.5 rows=1 components=1 ===
+[2026-05-29 07:06:21] [INFO] [replace:watchitems] start config=watchitem_g6
+[2026-05-29 07:08:25] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 07:36:04] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 08:01:59] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 08:08:35] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 08:11:16] [INFO] [replace:watchitems] completed config=watchitem_g6 total_inserted=6067595
+[2026-05-29 08:11:16] [INFO] === QUERY PLAN START experiment_id=watchitem_g6_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 08:11:16] [INFO] Explain plan rows for watchitem_g6_sf0.5: 1
+[2026-05-29 08:11:16] [INFO] [explain-progress] experiment=watchitem_g6_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 08:11:16] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g6_sf0.5 rows=1 components=1 ===
+[2026-05-29 08:11:16] [INFO] [replace:watchitems] start config=watchitem_g0
+[2026-05-29 08:11:26] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 08:15:09] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 08:19:09] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 08:23:15] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 08:25:34] [INFO] [replace:watchitems] completed config=watchitem_g0 total_inserted=6067595
+[2026-05-29 08:25:34] [INFO] === QUERY PLAN START experiment_id=series_g7_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 08:25:34] [INFO] Explain plan rows for series_g7_sf0.5: 1
+[2026-05-29 08:25:34] [INFO] [explain-progress] experiment=series_g7_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 08:25:34] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g7_sf0.5 rows=1 components=1 ===
+[2026-05-29 08:25:34] [INFO] [replace:series] start config=series_g8
+[2026-05-29 08:28:16] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 08:30:24] [INFO] [replace:series] completed config=series_g8 total_inserted=230194
+[2026-05-29 08:30:24] [INFO] === QUERY PLAN START experiment_id=series_g8_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 08:30:24] [INFO] Explain plan rows for series_g8_sf0.5: 1
+[2026-05-29 08:30:24] [INFO] [explain-progress] experiment=series_g8_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 08:30:24] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g8_sf0.5 rows=1 components=1 ===
+[2026-05-29 08:30:24] [INFO] [replace:series] start config=series_g9
+[2026-05-29 08:33:07] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 08:35:18] [INFO] [replace:series] completed config=series_g9 total_inserted=230194
+[2026-05-29 08:35:18] [INFO] === QUERY PLAN START experiment_id=series_g9_sf0.5 execution_db=imdb_exec_sf0_5 ===
+[2026-05-29 08:35:18] [INFO] Explain plan rows for series_g9_sf0.5: 1
+[2026-05-29 08:35:18] [INFO] [explain-progress] experiment=series_g9_sf0.5 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 08:35:18] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g9_sf0.5 rows=1 components=1 ===
+[2026-05-29 08:35:18] [INFO] ######## COMPLETED SCALE sf0.5 ########
+[2026-05-29 08:35:18] [INFO] ######## START SCALE sf1 ########
+[2026-05-29 08:35:18] [INFO] Opening DuckDB for sf1 from /home/hudson/Documents/framework_test/imdb/data/sf_1
+[2026-05-29 08:35:18] [INFO] Creating DuckDB view imdb_name_basics
+[2026-05-29 08:35:18] [INFO] Creating DuckDB view imdb_title_akas
+[2026-05-29 08:35:18] [INFO] Creating DuckDB view imdb_title_basics
+[2026-05-29 08:35:18] [INFO] Creating DuckDB view imdb_title_crew
+[2026-05-29 08:35:18] [INFO] Creating DuckDB view imdb_title_episode
+[2026-05-29 08:35:18] [INFO] Creating DuckDB view imdb_title_principals
+[2026-05-29 08:35:18] [INFO] Creating DuckDB view imdb_title_ratings
+[2026-05-29 08:35:18] [INFO] Building query parameter pool for sf1
+[2026-05-29 08:35:54] [INFO] Parameter pool ready for sf1
+[2026-05-29 08:35:54] [INFO] Minimal base-load decision: queries=['QG6_EpisodesOfSeries'] load_persons=False load_roles=False load_episodes=True
+[2026-05-29 08:35:54] [INFO] === INITIALIZING EXECUTION DB imdb_exec_sf1 ===
+[2026-05-29 08:35:54] [INFO] Removing Mongo database: imdb_exec_sf1
+[2026-05-29 08:35:54] [INFO] [materialize:persons] skipped by minimal/skip-load option
+[2026-05-29 08:35:54] [INFO] [materialize:roles] skipped by minimal/skip-load option
+[2026-05-29 08:35:54] [INFO] [materialize:episodes] start
+[2026-05-29 08:36:03] [INFO] [materialize:episodes] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 08:39:06] [INFO] [materialize:episodes] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 08:42:22] [INFO] [materialize:episodes] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 08:45:35] [INFO] [materialize:episodes] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 08:48:52] [INFO] [materialize:episodes] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 08:51:34] [INFO] [materialize:episodes] completed total_inserted=9177015
+[2026-05-29 08:51:34] [INFO] [replace:watchitems] start config=watchitem_g0
+[2026-05-29 08:51:48] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 08:56:38] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 09:01:52] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 09:07:06] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 09:12:23] [INFO] [materialize:watchitems] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 09:17:36] [INFO] [materialize:watchitems] batch=100 batch_docs=100000 total_inserted=10000000
+[2026-05-29 09:22:55] [INFO] [materialize:watchitems] batch=120 batch_docs=18372 total_inserted=11918372
+[2026-05-29 09:27:12] [INFO] [replace:watchitems] completed config=watchitem_g0 total_inserted=11918372
+[2026-05-29 09:27:12] [INFO] [replace:series] start config=series_g7
+[2026-05-29 09:31:45] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 09:36:27] [INFO] [replace:series] completed config=series_g7 total_inserted=287707
+[2026-05-29 09:36:27] [INFO] === EXECUTION DB READY imdb_exec_sf1 persons=0 roles=0 episodes=9177015 watchitems=11918372 series=287707 ===
+[2026-05-29 09:36:28] [INFO] === QUERY PLAN START experiment_id=watchitem_g0_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 09:36:28] [INFO] Explain plan rows for watchitem_g0_sf1: 1
+[2026-05-29 09:36:28] [INFO] [explain-progress] experiment=watchitem_g0_sf1 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 09:36:28] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g0_sf1 rows=1 components=1 ===
+[2026-05-29 09:36:28] [INFO] [replace:watchitems] start config=watchitem_g2
+[2026-05-29 09:36:42] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 09:41:38] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 09:46:58] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 09:52:21] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 09:57:49] [INFO] [materialize:watchitems] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 10:03:13] [INFO] [materialize:watchitems] batch=100 batch_docs=100000 total_inserted=10000000
+[2026-05-29 10:08:39] [INFO] [materialize:watchitems] batch=120 batch_docs=18372 total_inserted=11918372
+[2026-05-29 10:12:55] [INFO] [replace:watchitems] completed config=watchitem_g2 total_inserted=11918372
+[2026-05-29 10:12:55] [INFO] === QUERY PLAN START experiment_id=watchitem_g2_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 10:12:55] [INFO] Explain plan rows for watchitem_g2_sf1: 1
+[2026-05-29 10:12:55] [INFO] [explain-progress] experiment=watchitem_g2_sf1 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 10:12:55] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g2_sf1 rows=1 components=1 ===
+[2026-05-29 10:12:55] [INFO] [replace:watchitems] start config=watchitem_g3
+[2026-05-29 10:13:10] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 10:18:08] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 10:23:41] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 10:29:07] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 10:34:38] [INFO] [materialize:watchitems] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 10:40:11] [INFO] [materialize:watchitems] batch=100 batch_docs=100000 total_inserted=10000000
+[2026-05-29 10:45:39] [INFO] [materialize:watchitems] batch=120 batch_docs=18372 total_inserted=11918372
+[2026-05-29 10:49:58] [INFO] [replace:watchitems] completed config=watchitem_g3 total_inserted=11918372
+[2026-05-29 10:49:58] [INFO] === QUERY PLAN START experiment_id=watchitem_g3_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 10:49:58] [INFO] Explain plan rows for watchitem_g3_sf1: 1
+[2026-05-29 10:49:58] [INFO] [explain-progress] experiment=watchitem_g3_sf1 row=1/1 query=QG6_EpisodesOfSeries group=secondary_affected rep=1
+[2026-05-29 10:49:58] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g3_sf1 rows=1 components=1 ===
+[2026-05-29 10:49:58] [INFO] [replace:watchitems] start config=watchitem_g4
+[2026-05-29 10:51:53] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 11:19:32] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 11:43:28] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 12:07:26] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 12:29:50] [INFO] [materialize:watchitems] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 12:39:33] [INFO] [materialize:watchitems] batch=100 batch_docs=100000 total_inserted=10000000
+[2026-05-29 12:49:21] [INFO] [materialize:watchitems] batch=120 batch_docs=18372 total_inserted=11918372
+[2026-05-29 12:53:49] [INFO] [replace:watchitems] completed config=watchitem_g4 total_inserted=11918372
+[2026-05-29 12:53:49] [INFO] === QUERY PLAN START experiment_id=watchitem_g4_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 12:53:49] [INFO] Explain plan rows for watchitem_g4_sf1: 1
+[2026-05-29 12:53:49] [INFO] [explain-progress] experiment=watchitem_g4_sf1 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 12:53:49] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g4_sf1 rows=1 components=1 ===
+[2026-05-29 12:53:49] [INFO] [replace:watchitems] start config=watchitem_g5
+[2026-05-29 12:56:09] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 13:29:35] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 13:58:28] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 14:27:38] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 14:54:32] [INFO] [materialize:watchitems] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 15:04:25] [INFO] [materialize:watchitems] batch=100 batch_docs=100000 total_inserted=10000000
+[2026-05-29 15:14:15] [INFO] [materialize:watchitems] batch=120 batch_docs=18372 total_inserted=11918372
+[2026-05-29 15:18:47] [INFO] [replace:watchitems] completed config=watchitem_g5 total_inserted=11918372
+[2026-05-29 15:18:47] [INFO] === QUERY PLAN START experiment_id=watchitem_g5_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 15:18:47] [INFO] Explain plan rows for watchitem_g5_sf1: 1
+[2026-05-29 15:18:47] [INFO] [explain-progress] experiment=watchitem_g5_sf1 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 15:18:47] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g5_sf1 rows=1 components=1 ===
+[2026-05-29 15:18:47] [INFO] [replace:watchitems] start config=watchitem_g6
+[2026-05-29 15:21:06] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 15:54:42] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 16:23:32] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 16:52:37] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 17:19:28] [INFO] [materialize:watchitems] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 17:29:21] [INFO] [materialize:watchitems] batch=100 batch_docs=100000 total_inserted=10000000
+[2026-05-29 17:39:11] [INFO] [materialize:watchitems] batch=120 batch_docs=18372 total_inserted=11918372
+[2026-05-29 17:44:02] [INFO] [replace:watchitems] completed config=watchitem_g6 total_inserted=11918372
+[2026-05-29 17:44:02] [INFO] === QUERY PLAN START experiment_id=watchitem_g6_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 17:44:02] [INFO] Explain plan rows for watchitem_g6_sf1: 1
+[2026-05-29 17:44:02] [INFO] [explain-progress] experiment=watchitem_g6_sf1 row=1/1 query=QG6_EpisodesOfSeries group=control rep=1
+[2026-05-29 17:44:02] [INFO] === QUERY PLAN COMPLETED experiment_id=watchitem_g6_sf1 rows=1 components=1 ===
+[2026-05-29 17:44:02] [INFO] [replace:watchitems] start config=watchitem_g0
+[2026-05-29 17:44:16] [INFO] [materialize:watchitems] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 17:49:03] [INFO] [materialize:watchitems] batch=20 batch_docs=100000 total_inserted=2000000
+[2026-05-29 17:54:19] [INFO] [materialize:watchitems] batch=40 batch_docs=100000 total_inserted=4000000
+[2026-05-29 17:59:37] [INFO] [materialize:watchitems] batch=60 batch_docs=100000 total_inserted=6000000
+[2026-05-29 18:04:52] [INFO] [materialize:watchitems] batch=80 batch_docs=100000 total_inserted=8000000
+[2026-05-29 18:10:05] [INFO] [materialize:watchitems] batch=100 batch_docs=100000 total_inserted=10000000
+[2026-05-29 18:15:15] [INFO] [materialize:watchitems] batch=120 batch_docs=18372 total_inserted=11918372
+[2026-05-29 18:19:29] [INFO] [replace:watchitems] completed config=watchitem_g0 total_inserted=11918372
+[2026-05-29 18:19:29] [INFO] === QUERY PLAN START experiment_id=series_g7_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 18:19:29] [INFO] Explain plan rows for series_g7_sf1: 1
+[2026-05-29 18:19:29] [INFO] [explain-progress] experiment=series_g7_sf1 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 18:19:29] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g7_sf1 rows=1 components=1 ===
+[2026-05-29 18:19:29] [INFO] [replace:series] start config=series_g8
+[2026-05-29 18:24:09] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 18:28:51] [INFO] [replace:series] completed config=series_g8 total_inserted=287707
+[2026-05-29 18:28:52] [INFO] === QUERY PLAN START experiment_id=series_g8_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 18:28:52] [INFO] Explain plan rows for series_g8_sf1: 1
+[2026-05-29 18:28:52] [INFO] [explain-progress] experiment=series_g8_sf1 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 18:28:52] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g8_sf1 rows=1 components=1 ===
+[2026-05-29 18:28:52] [INFO] [replace:series] start config=series_g9
+[2026-05-29 18:33:33] [INFO] [materialize:series] batch=1 batch_docs=100000 total_inserted=100000
+[2026-05-29 18:38:21] [INFO] [replace:series] completed config=series_g9 total_inserted=287707
+[2026-05-29 18:38:22] [INFO] === QUERY PLAN START experiment_id=series_g9_sf1 execution_db=imdb_exec_sf1 ===
+[2026-05-29 18:38:22] [INFO] Explain plan rows for series_g9_sf1: 1
+[2026-05-29 18:38:22] [INFO] [explain-progress] experiment=series_g9_sf1 row=1/1 query=QG6_EpisodesOfSeries group=primary rep=1
+[2026-05-29 18:38:22] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g9_sf1 rows=1 components=1 ===
+[2026-05-29 18:38:22] [INFO] ######## COMPLETED SCALE sf1 ########
+[2026-05-29 18:38:22] [INFO] Saved initialization summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/scale_db_initialization_summary.csv
+[2026-05-29 18:38:22] [INFO] Saved collection swap summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/collection_swap_summary.csv
+[2026-05-29 18:38:22] [INFO] Saved query plan summary results: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/query_plan_summary_results.csv
+[2026-05-29 18:38:22] [INFO] Saved query plan status summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/query_plan_status_summary.csv
+[2026-05-29 18:38:22] [INFO] No failed query-plan rows detected.
+[2026-05-29 18:38:22] [WARN] Saved zero-returned read query-plan rows for inspection: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/query_plan_zero_returned_rows.csv
+[2026-05-29 18:38:22] [INFO] Saved query plan component results: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/query_plan_component_results.csv
+[2026-05-29 18:38:22] [INFO] Saved run manifest: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes/benchmark_run_manifest.json
+[2026-05-29 18:38:22] [INFO] Done. Results in: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_B_episodes
