@@ -1,0 +1,43 @@
+{
+  "runner": "run_imdb_mongo_benchmark_query_plan_v4_minimal.py",
+  "started_at_utc": "2026-05-28 11:59:19.805164+00:00",
+  "finished_at_utc": "2026-05-29 03:53:09.426914+00:00",
+  "duration_seconds": 57229.62175,
+  "results_dir": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles",
+  "catalog_csv": "/home/hudson/Documents/framework_test/imdb/mongo_experiment_catalog.csv",
+  "template_csv": "/home/hudson/Documents/framework_test/imdb/benchmark_execution_template.csv",
+  "query_plan_only": true,
+  "explain_verbosity": "executionStats",
+  "scale_label_filter": null,
+  "experiments_filter": null,
+  "config_name_filter": null,
+  "query_group_filter": null,
+  "run_phase_filter": [
+    "hot"
+  ],
+  "query_name_filter": [
+    "QG1_WatchItemById",
+    "QG2_WatchItemByTitle",
+    "QG3_RecommendationByGenreAndSubtype",
+    "QG7_UpdateWatchItemMetadata",
+    "QG9_TopRatedSeriesByGenre",
+    "QG10_AdvancedSearchWatchItems"
+  ],
+  "max_runs": null,
+  "row_limit": null,
+  "batch_size": 100000,
+  "sample_size": 5,
+  "execution_db_prefix": "imdb_exec",
+  "force_rebuild_scale_db": true,
+  "minimal_base_load": true,
+  "skip_persons": false,
+  "skip_roles": false,
+  "skip_episodes": false,
+  "save_raw_explain": true,
+  "collect_collection_stats": true,
+  "n_selected_experiments": 27,
+  "n_initialization_rows": 3,
+  "n_collection_swap_rows": 24,
+  "n_query_plan_summary_rows": 162,
+  "log_file": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/execution.log"
+}

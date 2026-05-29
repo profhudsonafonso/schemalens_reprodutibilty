@@ -1537,43 +1537,61 @@ This step does not rerun MongoDB benchmarks. It reuses measured hot-run p95 resu
 
 ### IMDb query-plan validation
 
-A MongoDB query-plan-only runner was added for IMDb:
+A MongoDB query-plan-only runner was added for the IMDb experiments.
 
-```bash
-python benchmark/imdb/run_imdb_mongo_query_plan.py
-```
+Runner:
+
+`python benchmark/imdb/run_imdb_mongo_query_plan.py`
 
 The runner collects MongoDB `explain("executionStats")` metrics and physical collection statistics, including:
 
-- `totalDocsExamined`
-- `totalKeysExamined`
-- `nReturned`
-- plan stages such as `IXSCAN`, `FETCH`, `SORT`, and `AND_SORTED`
-- collection document count
-- collection size
-- average object size
-- estimated examined bytes
+* `totalDocsExamined`
+* `totalKeysExamined`
+* `nReturned`
+* plan stages such as `IXSCAN`, `FETCH`, `SORT`, and `AND_SORTED`
+* collection document count
+* collection size
+* average object size
+* estimated examined bytes
 
-The first validated case is IMDb `QG9_TopRatedSeriesByGenre`, stored under:
+The first detailed validation case is IMDb `QG9_TopRatedSeriesByGenre`.
 
-```text
-analysis/generated/query_plan/imdb/qg9_validation/
-```
+QG9 results are stored in:
 
-This case explains why `G7` wins over `G8` and over WatchItem-rooted baselines. `G7` uses a specialized `series` root with small documents. `G8` uses the same root, but embeds episodes that QG9 does not use, increasing document size. WatchItem-rooted configurations operate over the more generic `watchitems` collection and require a more complex indexed plan.
+`analysis/generated/query_plan/imdb/qg9_validation/`
 
-The QG9 validation is currently stored as split source outputs plus consolidated CSV files:
+This case explains why `G7 / series_g7` wins over WatchItem-rooted alternatives and over more embedded Series-rooted alternatives. `G7 / series_g7` uses a specialized `series` root with small documents. `G8 / series_g8` and `G9 / series_g9` use the same `series` root, but embed episode data that QG9 does not use, increasing physical document size. WatchItem-rooted configurations operate over the more generic `watchitems` collection and require a more complex indexed plan.
 
-- `query_plan_summary_qg9_all_sfs.csv`
-- `query_plan_components_qg9_all_sfs.csv`
-- `query_plan_status_summary_qg9_all_sfs.csv`
+The first full IMDb query-plan group is stored in:
 
-The consolidation step is performed with:
+`analysis/generated/query_plan/imdb/group_A_light_no_roles/`
 
-```bash
-python analysis/scripts/merge_qg9_query_plan_results.py
-```
+Group A covers the following queries:
 
-The full IMDb query-plan analysis will be executed in groups to avoid excessive load caused by the large `roles` collection at `sf1`.
+* `QG1_WatchItemById`
+* `QG2_WatchItemByTitle`
+* `QG3_RecommendationByGenreAndSubtype`
+* `QG7_UpdateWatchItemMetadata`
+* `QG9_TopRatedSeriesByGenre`
+* `QG10_AdvancedSearchWatchItems`
 
+Group A was executed with `--minimal-base-load` because these queries do not require the auxiliary MongoDB collections `persons`, `roles`, or `episodes`.
 
+This option does not simplify the candidate collections under evaluation. Candidate root collections such as `watchitems` and `series` are still fully materialized for each selected configuration. The option only skips auxiliary collections that are not accessed by the selected query group.
+
+Main Group A files:
+
+* `analysis/generated/query_plan/imdb/group_A_light_no_roles/query_plan_summary_results_group_A.csv`
+* `analysis/generated/query_plan/imdb/group_A_light_no_roles/query_plan_component_results_group_A.csv`
+* `analysis/generated/query_plan/imdb/group_A_light_no_roles/query_plan_status_summary_group_A.csv`
+* `analysis/generated/query_plan/imdb/group_A_light_no_roles/benchmark_run_manifest_group_A.json`
+* `analysis/generated/query_plan/imdb/group_A_light_no_roles/execution_group_A.log`
+
+Main QG9 validation files:
+
+* `analysis/generated/query_plan/imdb/qg9_validation/README_QG9_query_plan.md`
+* `analysis/generated/query_plan/imdb/qg9_validation/qg9_query_plan_analysis.md`
+* `analysis/generated/query_plan/imdb/qg9_validation/query_plan_summary_qg9_all_sfs.csv`
+* `analysis/generated/query_plan/imdb/qg9_validation/query_plan_components_qg9_all_sfs.csv`
+
+Raw MongoDB `explain` JSON files are not committed by default because they can become large in full query-plan runs.
