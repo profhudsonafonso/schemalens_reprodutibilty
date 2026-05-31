@@ -1,0 +1,10 @@
+scale_label,query_name,query_group,run_phase,execution_status,n_rows
+sf0.25,QG8_AddPersonRoleToWatchItem,control,hot,completed,3
+sf0.25,QG8_AddPersonRoleToWatchItem,primary,hot,completed,4
+sf0.25,QG8_AddPersonRoleToWatchItem,secondary_affected,hot,completed,2
+sf0.5,QG8_AddPersonRoleToWatchItem,control,hot,completed,3
+sf0.5,QG8_AddPersonRoleToWatchItem,primary,hot,completed,4
+sf0.5,QG8_AddPersonRoleToWatchItem,secondary_affected,hot,completed,2
+sf1,QG8_AddPersonRoleToWatchItem,control,hot,completed,3
+sf1,QG8_AddPersonRoleToWatchItem,primary,hot,completed,4
+sf1,QG8_AddPersonRoleToWatchItem,secondary_affected,hot,completed,2

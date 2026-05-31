@@ -1606,3 +1606,14 @@ Group B covers:
 - `QG6_EpisodesOfSeries`
 
 The run completed for `sf0.25`, `sf0.5`, and `sf1`. No failed query-plan rows were detected. A `query_plan_zero_returned_rows_group_B.csv` file was generated, but these rows correspond to expected MongoDB `COUNT` / `COUNT_SCAN` behavior over the `episodes` collection and should not be interpreted as execution failures.
+
+
+Group D results are stored in:
+
+`analysis/generated/query_plan/imdb/group_D_insert_qg8/`
+
+Group D covers:
+
+- `QG8_AddPersonRoleToWatchItem`
+
+The run completed for `sf0.25`, `sf0.5`, and `sf1`. No failed query-plan rows were detected. Because QG8 is an insert/update-oriented operation, pure `insert_one` components are recorded as `not_explainable`, which is expected in MongoDB. For associative configurations such as `G4`, `G5`, and `G6`, the runner captured explainable update components using `UPDATE`, `FETCH`, and `IXSCAN` over the `watchitem_id_1` index.

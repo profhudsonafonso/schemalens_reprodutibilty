@@ -1,0 +1,38 @@
+{
+  "runner": "run_imdb_mongo_benchmark_query_plan_v4_minimal.py",
+  "started_at_utc": "2026-05-30 05:51:15.600096+00:00",
+  "finished_at_utc": "2026-05-30 19:29:37.410615+00:00",
+  "duration_seconds": 49101.810519,
+  "results_dir": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_D_insert_qg8",
+  "catalog_csv": "/home/hudson/Documents/framework_test/imdb/mongo_experiment_catalog.csv",
+  "template_csv": "/home/hudson/Documents/framework_test/imdb/benchmark_execution_template.csv",
+  "query_plan_only": true,
+  "explain_verbosity": "executionStats",
+  "scale_label_filter": null,
+  "experiments_filter": null,
+  "config_name_filter": null,
+  "query_group_filter": null,
+  "run_phase_filter": [
+    "hot"
+  ],
+  "query_name_filter": [
+    "QG8_AddPersonRoleToWatchItem"
+  ],
+  "max_runs": null,
+  "row_limit": null,
+  "batch_size": 200000,
+  "sample_size": 5,
+  "execution_db_prefix": "imdb_exec",
+  "force_rebuild_scale_db": true,
+  "minimal_base_load": true,
+  "skip_persons": true,
+  "skip_roles": true,
+  "skip_episodes": true,
+  "save_raw_explain": true,
+  "collect_collection_stats": true,
+  "n_selected_experiments": 27,
+  "n_initialization_rows": 3,
+  "n_collection_swap_rows": 24,
+  "n_query_plan_summary_rows": 27,
+  "log_file": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_D_insert_qg8/execution.log"
+}
