@@ -3,9 +3,9 @@
   "started_at_utc": "2026-05-28 11:59:19.805164+00:00",
   "finished_at_utc": "2026-05-29 03:53:09.426914+00:00",
   "duration_seconds": 57229.62175,
-  "results_dir": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles",
-  "catalog_csv": "/home/hudson/Documents/framework_test/imdb/mongo_experiment_catalog.csv",
-  "template_csv": "/home/hudson/Documents/framework_test/imdb/benchmark_execution_template.csv",
+  "results_dir": "<LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles",
+  "catalog_csv": "<LOCAL_PROJECT_ROOT>/imdb/mongo_experiment_catalog.csv",
+  "template_csv": "<LOCAL_PROJECT_ROOT>/imdb/benchmark_execution_template.csv",
   "query_plan_only": true,
   "explain_verbosity": "executionStats",
   "scale_label_filter": null,
@@ -39,5 +39,5 @@
   "n_initialization_rows": 3,
   "n_collection_swap_rows": 24,
   "n_query_plan_summary_rows": 162,
-  "log_file": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/execution.log"
+  "log_file": "<LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/execution.log"
 }

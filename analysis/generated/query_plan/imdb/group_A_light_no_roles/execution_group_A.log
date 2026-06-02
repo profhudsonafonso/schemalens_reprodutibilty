@@ -1,10 +1,10 @@
 [2026-05-28 08:59:19] [INFO] === IMDb MongoDB query-plan runner started ===
-[2026-05-28 08:59:19] [INFO] results_dir=/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles
+[2026-05-28 08:59:19] [INFO] results_dir=<LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles
 [2026-05-28 08:59:19] [INFO] query_plan_only=True explain_verbosity=executionStats
 [2026-05-28 08:59:19] [INFO] force_rebuild_scale_db=True row_limit=None batch_size=100000
 [2026-05-28 08:59:19] [INFO] scale_label_filter=None config_name_filter=None query_name_filter=['QG1_WatchItemById', 'QG2_WatchItemByTitle', 'QG3_RecommendationByGenreAndSubtype', 'QG7_UpdateWatchItemMetadata', 'QG9_TopRatedSeriesByGenre', 'QG10_AdvancedSearchWatchItems']
 [2026-05-28 08:59:19] [INFO] Selected experiments: 27
-[2026-05-28 08:59:19] [INFO] Saved selected experiments summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/selected_experiments_summary.csv
+[2026-05-28 08:59:19] [INFO] Saved selected experiments summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/selected_experiments_summary.csv
 [2026-05-28 08:59:19] [INFO]   - series_g7_sf0.25 | config=series_g7 | scale=sf0.25
 [2026-05-28 08:59:19] [INFO]   - series_g8_sf0.25 | config=series_g8 | scale=sf0.25
 [2026-05-28 08:59:19] [INFO]   - series_g9_sf0.25 | config=series_g9 | scale=sf0.25
@@ -33,7 +33,7 @@
 [2026-05-28 08:59:19] [INFO]   - watchitem_g5_sf1 | config=watchitem_g5 | scale=sf1
 [2026-05-28 08:59:19] [INFO]   - watchitem_g6_sf1 | config=watchitem_g6 | scale=sf1
 [2026-05-28 08:59:19] [INFO] ######## START SCALE sf0.25 ########
-[2026-05-28 08:59:19] [INFO] Opening DuckDB for sf0.25 from /home/hudson/Documents/framework_test/imdb/data/sf_025
+[2026-05-28 08:59:19] [INFO] Opening DuckDB for sf0.25 from <LOCAL_PROJECT_ROOT>/imdb/data/sf_025
 [2026-05-28 08:59:19] [INFO] Creating DuckDB view imdb_name_basics
 [2026-05-28 08:59:19] [INFO] Creating DuckDB view imdb_title_akas
 [2026-05-28 08:59:19] [INFO] Creating DuckDB view imdb_title_basics
@@ -125,7 +125,7 @@
 [2026-05-28 10:55:15] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g9_sf0.25 rows=6 components=6 ===
 [2026-05-28 10:55:15] [INFO] ######## COMPLETED SCALE sf0.25 ########
 [2026-05-28 10:55:15] [INFO] ######## START SCALE sf0.5 ########
-[2026-05-28 10:55:15] [INFO] Opening DuckDB for sf0.5 from /home/hudson/Documents/framework_test/imdb/data/sf_050
+[2026-05-28 10:55:15] [INFO] Opening DuckDB for sf0.5 from <LOCAL_PROJECT_ROOT>/imdb/data/sf_050
 [2026-05-28 10:55:15] [INFO] Creating DuckDB view imdb_name_basics
 [2026-05-28 10:55:15] [INFO] Creating DuckDB view imdb_title_akas
 [2026-05-28 10:55:15] [INFO] Creating DuckDB view imdb_title_basics
@@ -231,7 +231,7 @@
 [2026-05-28 15:09:44] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g9_sf0.5 rows=6 components=6 ===
 [2026-05-28 15:09:44] [INFO] ######## COMPLETED SCALE sf0.5 ########
 [2026-05-28 15:09:44] [INFO] ######## START SCALE sf1 ########
-[2026-05-28 15:09:44] [INFO] Opening DuckDB for sf1 from /home/hudson/Documents/framework_test/imdb/data/sf_1
+[2026-05-28 15:09:44] [INFO] Opening DuckDB for sf1 from <LOCAL_PROJECT_ROOT>/imdb/data/sf_1
 [2026-05-28 15:09:44] [INFO] Creating DuckDB view imdb_name_basics
 [2026-05-28 15:09:44] [INFO] Creating DuckDB view imdb_title_akas
 [2026-05-28 15:09:44] [INFO] Creating DuckDB view imdb_title_basics
@@ -357,11 +357,11 @@
 [2026-05-29 00:53:09] [INFO] [explain-progress] experiment=series_g9_sf1 row=1/6 query=QG1_WatchItemById group=control rep=1
 [2026-05-29 00:53:09] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g9_sf1 rows=6 components=6 ===
 [2026-05-29 00:53:09] [INFO] ######## COMPLETED SCALE sf1 ########
-[2026-05-29 00:53:09] [INFO] Saved initialization summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/scale_db_initialization_summary.csv
-[2026-05-29 00:53:09] [INFO] Saved collection swap summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/collection_swap_summary.csv
-[2026-05-29 00:53:09] [INFO] Saved query plan summary results: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/query_plan_summary_results.csv
-[2026-05-29 00:53:09] [INFO] Saved query plan status summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/query_plan_status_summary.csv
+[2026-05-29 00:53:09] [INFO] Saved initialization summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/scale_db_initialization_summary.csv
+[2026-05-29 00:53:09] [INFO] Saved collection swap summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/collection_swap_summary.csv
+[2026-05-29 00:53:09] [INFO] Saved query plan summary results: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/query_plan_summary_results.csv
+[2026-05-29 00:53:09] [INFO] Saved query plan status summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/query_plan_status_summary.csv
 [2026-05-29 00:53:09] [INFO] No failed query-plan rows detected.
-[2026-05-29 00:53:09] [INFO] Saved query plan component results: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/query_plan_component_results.csv
-[2026-05-29 00:53:09] [INFO] Saved run manifest: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles/benchmark_run_manifest.json
-[2026-05-29 00:53:09] [INFO] Done. Results in: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_A_light_no_roles
+[2026-05-29 00:53:09] [INFO] Saved query plan component results: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/query_plan_component_results.csv
+[2026-05-29 00:53:09] [INFO] Saved run manifest: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles/benchmark_run_manifest.json
+[2026-05-29 00:53:09] [INFO] Done. Results in: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_A_light_no_roles
