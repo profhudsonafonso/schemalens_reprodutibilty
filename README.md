@@ -74,6 +74,14 @@ Run the analysis notebooks/scripts over the provided aggregate benchmark outputs
 
 This is the recommended lightweight path for reviewers.
 
+
+### Short-paper table reproduction
+
+For reproducing the short-paper Table 1 summaries and the Table 2 diagnostic cases, see:
+
+    docs/short_paper_reproduction.md
+
+
 ### Provided aggregate benchmark outputs
 
 The repository includes aggregate benchmark result files for lightweight verification. These files allow reviewers to inspect the reported p95 latency, design-space reduction, Top-1 preservation, near-best preservation, relative regret, and cross-scale behavior without rerunning the full MongoDB benchmark.
