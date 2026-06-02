@@ -1,0 +1,20 @@
+SchemaLens short-paper table reproduction report
+====================================================
+
+Aggregate source: analysis/generated/aggregate_results_all_datasets.csv
+Baseline source:  analysis/generated/baseline_performance_by_case.csv
+Ablation source:  analysis/generated/ablation_performance_by_case.csv
+
+Generated files:
+  - short_paper_table1_reproduced.csv
+  - short_paper_table1_details.csv
+  - short_paper_table2_reproduced.csv
+
+Table 1 rows: 7
+Table 2 rows: 2
+
+Table 2 reproduced cases:
+  - imdb / QG4, persons of type for watch item: G6/G5/G6; 0.394/0.333/0.202 ms
+  - imdb / QG6, episodes of a series: G2/G7/G7; 0.632/1.016/2.272 ms
+
+Note: this script verifies paper-facing summaries from existing aggregate, baseline, and ablation outputs. It does not rerun MongoDB.

@@ -1,0 +1,8 @@
+dataset,query/workload,activated_family,best_observed,dsr,top1,regret,winner_p95_signal,interpretation
+ldbc_snb,"IC1--IC7, IS1--IS7, INS1--INS8",query-specific families,activated in 65/66 cases,71.4%,98.5%,0.008,official workload aggregate,"Official workload validation over IC, IS, and INS queries."
+imdb,"QG6, episodes of a series",G7|G8|G9,G2/G7/G7,70.0%,no,0.454,G2/G7/G7; p95=0.632/1.016/2.272 ms,Containment activation; benchmark shows reference-based containment can beat embedded containment.
+imdb,"QG3, recommendation by genre/subtype",G0|G2|G3,G8/G8/G8,70.0%,no,0.096,G8/G8/G8; p95=5.638/7.589/10.417 ms,Association-family limit case; activated family should preserve a competitive alternative.
+imdb,"QG4, persons of type for watch item",G4|G5|G6,G6/G5/G6,70.0%,yes,0.000,G6/G5/G6; p95=0.394/0.333/0.202 ms,Associative bridge case; WatchItem--Role--Person requires bridge-aware candidates.
+fiben,"Q2, company with industry/country/securities",G1|G3|G5|G7|G9,G5/G1/G9,50.0%,yes,0.000,G5/G1/G9; p95=0.117/0.155/0.251 ms,Shallow corporation-centred association; winner can change by scale.
+fiben,"Q3, securities held in accounts",G2|G3|G4|G5|G7|G9,G5/G4/G5,40.0%,yes,0.000,G5/G4/G5; p95=0.435/0.899/1.652 ms,Bridge-oriented financial access; mixed reference/bridge family.
+fiben,"Q5, reports and metric data of company",G2|G4|G9,G2/G9/CONTROL,70.0%,near-best,0.005,G2/G9/CONTROL; p95=37.627/28.433/45.217 ms,Analytical containment-like case; near-best can matter when control wins.

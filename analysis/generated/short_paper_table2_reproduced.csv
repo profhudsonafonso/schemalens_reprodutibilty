@@ -1,0 +1,3 @@
+dataset,case,winner_p95_signal,baseline_failure,ablation_signal,interpretation
+imdb,"QG4, persons of type for watch item",G6/G5/G6; 0.394/0.333/0.202 ms,Embed misses two scales; reference misses sf0.5.,No semantics/sharedness loses Top-1; max regret 2.649.,Bridge query needs bridge-aware candidates.
+imdb,"QG6, episodes of a series",G2/G7/G7; 0.632/1.016/2.272 ms,Containment/reference miss sf0.25; embed/depth miss larger scales.,Only no-update-volatility removes G7 at larger scales.,Containment does not imply embedding.
