@@ -17,6 +17,26 @@ These analyses use the aggregate benchmark result files already included in the 
 
 ---
 
+## Quick links
+
+- Normalize aggregate outputs: `analysis/scripts/normalize_aggregate_outputs.py`
+- Baseline coverage: `analysis/scripts/check_baseline_coverage.py`
+- Baseline simulation: `analysis/scripts/simulate_baselines.py`
+- Baseline diagnostics: `analysis/scripts/analyze_baseline_diagnostics.py`
+- Ablation normalization: `analysis/scripts/normalize_ablation_variables.py`
+- Ablation analysis: `analysis/scripts/run_ablation_analysis.py`
+- Representative cases: `analysis/scripts/analyze_representative_cases.py`
+- Joint explanatory cases: `analysis/scripts/find_joint_explanatory_cases.py`
+- Short-paper table reproduction: `analysis/scripts/reproduce_short_paper_tables.py`
+- IMDb query-plan validation: `analysis/generated/query_plan/imdb/`
+
+For short-paper Table 1 and Table 2 reproduction, see:
+
+    docs/short_paper_reproduction.md
+
+---
+
+
 ## Folder structure
 
 ```text
@@ -37,50 +57,27 @@ analysis/
 │   ├── benchmark_aggregate_results_ldbc_snb_sf1.csv
 │   └── benchmark_aggregate_results_ldbc_snb_sf3.csv
 ├── scripts/
-     ├── normalize_aggregate_outputs.py
-     ├── check_baseline_coverage.py
-     ├── simulate_baselines.py
-     └── analyze_baseline_diagnostics.py
-     └── generated/
-     ├── aggregate_results_all_datasets.csv
-     ├── inspect_ablation_variables.py
-     ├── normalize_ablation_variables.py
-     ├── run_ablation_analysis.py
-     └── experimental_response_ablation_baselines.py
-generated/
-     ├── aggregate_results_all_datasets.csv
-     ├── normalization_report.txt
-     ├── available_g_classes_by_query.csv
-     ├── baseline_coverage_by_case.csv
-     ├── baseline_coverage_summary.csv
-     ├── missing_baseline_candidates.csv
-     ├── query_metadata_template.csv
-     ├── baseline_coverage_report.txt
-     ├── baseline_performance_by_case.csv
-     ├── baseline_performance_summary.csv
-     ├── baseline_performance_by_dataset.csv
-     ├── baseline_failure_cases.csv
-     ├── baseline_performance_report.txt
-     ├── baseline_performance_summary_hot.csv
-     ├── baseline_performance_by_dataset_hot.csv
-     ├── schema_lens_vs_random_k_by_case.csv
-     ├── schema_lens_vs_random_k_summary.csv
-     ├── schema_lens_vs_random_k_report.txt
-     ├── ablation_variables_inventory.csv
-     ├── ablation_variables_inventory_report.txt
-     ├── query_analytical_metadata_all_datasets.csv
-     ├── query_class_activation_all_datasets.csv
-     ├── benchmark_configuration_selection_all_datasets.csv
-     ├── ablation_variables_normalization_report.txt
-     ├── ablation_rules_used.csv
-     ├── ablation_performance_by_case.csv
-     ├── ablation_performance_summary.csv
-     ├── ablation_performance_by_dataset.csv
-     ├── ablation_performance_summary_hot.csv
-     ├── ablation_performance_by_dataset_hot.csv
-     ├── ablation_failure_cases.csv
-     ├── ablation_report.txt
-     └── advisor_experimental_response.md
+│   ├── normalize_aggregate_outputs.py
+│   ├── check_baseline_coverage.py
+│   ├── simulate_baselines.py
+│   ├── analyze_baseline_diagnostics.py
+│   ├── normalize_ablation_variables.py
+│   ├── run_ablation_analysis.py
+│   ├── experimental_response_ablation_baselines.py
+│   ├── analyze_representative_cases.py
+│   ├── find_joint_explanatory_cases.py
+│   └── reproduce_short_paper_tables.py
+└── generated/
+    ├── aggregate_results_all_datasets.csv
+    ├── baseline_performance_by_case.csv
+    ├── ablation_performance_by_case.csv
+    ├── representative_case_table.csv
+    ├── joint_explanatory_cases_hot.csv
+    ├── short_paper_table1_reproduced.csv
+    ├── short_paper_table1_details.csv
+    ├── short_paper_table2_reproduced.csv
+    ├── short_paper_reproduction_report.txt
+    └── query_plan/
 ```
 
 ## Step 1 — Normalize aggregate benchmark outputs
