@@ -1,0 +1,19 @@
+dataset,query_name,query_label,scale_label,activated_family,available_g_count,dsr,global_best_g,global_best_config_id,global_best_p95,best_activated_g,best_activated_p95,top1_preserved,near_best_preserved,relative_regret
+imdb,QG6_EpisodesOfSeries,"QG6, episodes of a series",sf0.25,G7|G8|G9,10,0.7,G2,watchitem_g2,0.6322362009086646,G7,0.9189984484692104,0,0,0.453568218884658
+imdb,QG6_EpisodesOfSeries,"QG6, episodes of a series",sf0.5,G7|G8|G9,10,0.7,G7,series_g7,1.0162401005800346,G7,1.0162401005800346,1,1,0.0
+imdb,QG6_EpisodesOfSeries,"QG6, episodes of a series",sf1,G7|G8|G9,10,0.7,G7,series_g7,2.2719003987731408,G7,2.2719003987731408,1,1,0.0
+imdb,QG3_RecommendationByGenreAndSubtype,"QG3, recommendation by genre/subtype",sf0.25,G0|G2|G3,10,0.7,G8,series_g8,5.637626150928553,G2,6.176213199796621,0,0,0.09553436755989199
+imdb,QG3_RecommendationByGenreAndSubtype,"QG3, recommendation by genre/subtype",sf0.5,G0|G2|G3,10,0.7,G8,series_g8,7.588796650088624,G0,7.950160656037042,0,1,0.04761809053668577
+imdb,QG3_RecommendationByGenreAndSubtype,"QG3, recommendation by genre/subtype",sf1,G0|G2|G3,10,0.7,G8,series_g8,10.41732880621566,G0,10.72731149906758,0,1,0.029756447033424116
+imdb,QG4_AllPersonsOfTypeForWatchItem,"QG4, persons of type for watch item",sf0.25,G4|G5|G6,10,0.7,G6,watchitem_g6,0.3935545493732206,G6,0.3935545493732206,1,1,0.0
+imdb,QG4_AllPersonsOfTypeForWatchItem,"QG4, persons of type for watch item",sf0.5,G4|G5|G6,10,0.7,G5,watchitem_g5,0.3330338535306509,G5,0.3330338535306509,1,1,0.0
+imdb,QG4_AllPersonsOfTypeForWatchItem,"QG4, persons of type for watch item",sf1,G4|G5|G6,10,0.7,G6,watchitem_g6,0.2023525965341832,G6,0.2023525965341832,1,1,0.0
+fiben,Q2_CompanyWithIndustryCountryAndListedSecurities,"Q2, company with industry/country/securities",sf1,G1|G3|G5|G7|G9,10,0.5,G5,q2_company_with_industry_country_and_listed_securities__g5__shared_targets_as_references,0.1171174575574696,G5,0.1171174575574696,1,1,0.0
+fiben,Q2_CompanyWithIndustryCountryAndListedSecurities,"Q2, company with industry/country/securities",sf10,G1|G3|G5|G7|G9,10,0.5,G1,q2_company_with_industry_country_and_listed_securities__g1__embed_descriptors,0.1553680398501455,G1,0.1553680398501455,1,1,0.0
+fiben,Q2_CompanyWithIndustryCountryAndListedSecurities,"Q2, company with industry/country/securities",sf30,G1|G3|G5|G7|G9,10,0.5,G9,q2_company_with_industry_country_and_listed_securities__g9__tradeoff_benchmark_candidate,0.2507009194232523,G9,0.2507009194232523,1,1,0.0
+fiben,Q3_SecuritiesHeldInEachFinancialServiceAccount,"Q3, securities held in accounts",sf1,G2|G3|G4|G5|G7|G9,10,0.4,G5,q3_securities_held_in_each_financial_service_account__g5__shared_targets_as_references,0.4349461290985345,G5,0.4349461290985345,1,1,0.0
+fiben,Q3_SecuritiesHeldInEachFinancialServiceAccount,"Q3, securities held in accounts",sf10,G2|G3|G4|G5|G7|G9,10,0.4,G4,q3_securities_held_in_each_financial_service_account__g4__deep_nested_path,0.8991432900074869,G4,0.8991432900074869,1,1,0.0
+fiben,Q3_SecuritiesHeldInEachFinancialServiceAccount,"Q3, securities held in accounts",sf30,G2|G3|G4|G5|G7|G9,10,0.4,G5,q3_securities_held_in_each_financial_service_account__g5__shared_targets_as_references,1.652036904124543,G5,1.652036904124543,1,1,0.0
+fiben,Q5_ReportsAndMetricDataOfCompany,"Q5, reports and metric data of company",sf1,G2|G4|G9,10,0.7,G2,q5_reports_and_metric_data_of_company__g2__embed_containment_children,37.62679109349847,G2,37.62679109349847,1,1,0.0
+fiben,Q5_ReportsAndMetricDataOfCompany,"Q5, reports and metric data of company",sf10,G2|G4|G9,10,0.7,G9,q5_reports_and_metric_data_of_company__g9__tradeoff_benchmark_candidate,28.43278254731557,G9,28.43278254731557,1,1,0.0
+fiben,Q5_ReportsAndMetricDataOfCompany,"Q5, reports and metric data of company",sf30,G2|G4|G9,10,0.7,CONTROL,q5_reports_and_metric_data_of_company__control__normalized_reference_baseline,45.21718232426791,G4,45.43279848876408,0,1,0.004768456445382003

@@ -6,6 +6,7 @@ import json
 import math
 import time
 import uuid
+import os
 import traceback
 from collections import defaultdict
 from datetime import datetime
@@ -25,10 +26,12 @@ MONGO_USERNAME = "mongo"
 MONGO_PASSWORD = "mongo"
 MONGO_AUTH_SOURCE = "admin"
 
+IMDB_DATA_ROOT = os.environ.get("IMDB_DATA_ROOT", "<LOCAL_PROJECT_ROOT>/imdb/data")
+
 IMDB_SF_PATHS = {
-    "sf0.25": "/home/hudson/Documents/framework_test/imdb/data/sf_025",
-    "sf0.5": "/home/hudson/Documents/framework_test/imdb/data/sf_050",
-    "sf1": "/home/hudson/Documents/framework_test/imdb/data/sf_1",
+    "sf0.25": os.path.join(IMDB_DATA_ROOT, "sf_025"),
+    "sf0.5": os.path.join(IMDB_DATA_ROOT, "sf_050"),
+    "sf1": os.path.join(IMDB_DATA_ROOT, "sf_1"),
 }
 
 TSV_SCHEMAS = {

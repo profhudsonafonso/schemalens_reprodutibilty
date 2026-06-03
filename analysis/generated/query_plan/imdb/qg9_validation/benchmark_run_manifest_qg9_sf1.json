@@ -3,9 +3,9 @@
   "started_at_utc": "2026-05-28 07:40:26.210391+00:00",
   "finished_at_utc": "2026-05-28 10:39:45.792223+00:00",
   "duration_seconds": 10759.581832,
-  "results_dir": "/home/hudson/Documents/framework_test/imdb/query_plan_test_qg9_sf1_minimal",
-  "catalog_csv": "/home/hudson/Documents/framework_test/imdb/mongo_experiment_catalog.csv",
-  "template_csv": "/home/hudson/Documents/framework_test/imdb/benchmark_execution_template.csv",
+  "results_dir": "<LOCAL_PROJECT_ROOT>/imdb/query_plan_test_qg9_sf1_minimal",
+  "catalog_csv": "<LOCAL_PROJECT_ROOT>/imdb/mongo_experiment_catalog.csv",
+  "template_csv": "<LOCAL_PROJECT_ROOT>/imdb/benchmark_execution_template.csv",
   "query_plan_only": true,
   "explain_verbosity": "executionStats",
   "scale_label_filter": [
@@ -39,5 +39,5 @@
   "n_initialization_rows": 1,
   "n_collection_swap_rows": 3,
   "n_query_plan_summary_rows": 4,
-  "log_file": "/home/hudson/Documents/framework_test/imdb/query_plan_test_qg9_sf1_minimal/execution.log"
+  "log_file": "<LOCAL_PROJECT_ROOT>/imdb/query_plan_test_qg9_sf1_minimal/execution.log"
 }

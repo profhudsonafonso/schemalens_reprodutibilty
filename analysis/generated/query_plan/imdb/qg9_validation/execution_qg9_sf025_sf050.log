@@ -1,10 +1,10 @@
 [2026-05-27 17:35:45] [INFO] === IMDb MongoDB query-plan runner started ===
-[2026-05-27 17:35:45] [INFO] results_dir=/home/hudson/Documents/framework_test/imdb/query_plan_test_qg9
+[2026-05-27 17:35:45] [INFO] results_dir=<LOCAL_PROJECT_ROOT>/imdb/query_plan_test_qg9
 [2026-05-27 17:35:45] [INFO] query_plan_only=True explain_verbosity=executionStats
 [2026-05-27 17:35:45] [INFO] force_rebuild_scale_db=True row_limit=None batch_size=200000
 [2026-05-27 17:35:45] [INFO] scale_label_filter=None config_name_filter=['series_g7', 'series_g8', 'watchitem_g0', 'watchitem_g2'] query_name_filter=None
 [2026-05-27 17:35:45] [INFO] Selected experiments: 12
-[2026-05-27 17:35:45] [INFO] Saved selected experiments summary: /home/hudson/Documents/framework_test/imdb/query_plan_test_qg9/selected_experiments_summary.csv
+[2026-05-27 17:35:45] [INFO] Saved selected experiments summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_test_qg9/selected_experiments_summary.csv
 [2026-05-27 17:35:45] [INFO]   - series_g7_sf0.25 | config=series_g7 | scale=sf0.25
 [2026-05-27 17:35:45] [INFO]   - series_g8_sf0.25 | config=series_g8 | scale=sf0.25
 [2026-05-27 17:35:45] [INFO]   - watchitem_g0_sf0.25 | config=watchitem_g0 | scale=sf0.25
@@ -18,7 +18,7 @@
 [2026-05-27 17:35:45] [INFO]   - watchitem_g0_sf1 | config=watchitem_g0 | scale=sf1
 [2026-05-27 17:35:45] [INFO]   - watchitem_g2_sf1 | config=watchitem_g2 | scale=sf1
 [2026-05-27 17:35:45] [INFO] ######## START SCALE sf0.25 ########
-[2026-05-27 17:35:45] [INFO] Opening DuckDB for sf0.25 from /home/hudson/Documents/framework_test/imdb/data/sf_025
+[2026-05-27 17:35:45] [INFO] Opening DuckDB for sf0.25 from <LOCAL_PROJECT_ROOT>/imdb/data/sf_025
 [2026-05-27 17:35:46] [INFO] Creating DuckDB view imdb_name_basics
 [2026-05-27 17:35:46] [INFO] Creating DuckDB view imdb_title_akas
 [2026-05-27 17:35:46] [INFO] Creating DuckDB view imdb_title_basics
@@ -77,7 +77,7 @@
 [2026-05-27 18:17:13] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g8_sf0.25 rows=10 components=14 ===
 [2026-05-27 18:17:13] [INFO] ######## COMPLETED SCALE sf0.25 ########
 [2026-05-27 18:17:13] [INFO] ######## START SCALE sf0.5 ########
-[2026-05-27 18:17:13] [INFO] Opening DuckDB for sf0.5 from /home/hudson/Documents/framework_test/imdb/data/sf_050
+[2026-05-27 18:17:13] [INFO] Opening DuckDB for sf0.5 from <LOCAL_PROJECT_ROOT>/imdb/data/sf_050
 [2026-05-27 18:17:13] [INFO] Creating DuckDB view imdb_name_basics
 [2026-05-27 18:17:13] [INFO] Creating DuckDB view imdb_title_akas
 [2026-05-27 18:17:13] [INFO] Creating DuckDB view imdb_title_basics
@@ -144,7 +144,7 @@
 [2026-05-27 20:08:19] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g8_sf0.5 rows=10 components=14 ===
 [2026-05-27 20:08:19] [INFO] ######## COMPLETED SCALE sf0.5 ########
 [2026-05-27 20:08:19] [INFO] ######## START SCALE sf1 ########
-[2026-05-27 20:08:19] [INFO] Opening DuckDB for sf1 from /home/hudson/Documents/framework_test/imdb/data/sf_1
+[2026-05-27 20:08:19] [INFO] Opening DuckDB for sf1 from <LOCAL_PROJECT_ROOT>/imdb/data/sf_1
 [2026-05-27 20:08:19] [INFO] Creating DuckDB view imdb_name_basics
 [2026-05-27 20:08:19] [INFO] Creating DuckDB view imdb_title_akas
 [2026-05-27 20:08:19] [INFO] Creating DuckDB view imdb_title_basics
