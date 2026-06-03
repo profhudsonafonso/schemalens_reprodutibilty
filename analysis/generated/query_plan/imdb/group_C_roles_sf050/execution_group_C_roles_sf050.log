@@ -1,10 +1,10 @@
 [2026-05-31 05:02:46] [INFO] === IMDb MongoDB query-plan runner started ===
-[2026-05-31 05:02:46] [INFO] results_dir=/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050
+[2026-05-31 05:02:46] [INFO] results_dir=<LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050
 [2026-05-31 05:02:46] [INFO] query_plan_only=True explain_verbosity=executionStats
 [2026-05-31 05:02:46] [INFO] force_rebuild_scale_db=True row_limit=None batch_size=100000
 [2026-05-31 05:02:46] [INFO] scale_label_filter=['sf0.5'] config_name_filter=None query_name_filter=['QG4_AllPersonsOfTypeForWatchItem', 'QG5_AllPersonsForEpisodesOfSeries']
 [2026-05-31 05:02:46] [INFO] Selected experiments: 9
-[2026-05-31 05:02:46] [INFO] Saved selected experiments summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050/selected_experiments_summary.csv
+[2026-05-31 05:02:46] [INFO] Saved selected experiments summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050/selected_experiments_summary.csv
 [2026-05-31 05:02:46] [INFO]   - series_g7_sf0.5 | config=series_g7 | scale=sf0.5
 [2026-05-31 05:02:46] [INFO]   - series_g8_sf0.5 | config=series_g8 | scale=sf0.5
 [2026-05-31 05:02:46] [INFO]   - series_g9_sf0.5 | config=series_g9 | scale=sf0.5
@@ -15,7 +15,7 @@
 [2026-05-31 05:02:46] [INFO]   - watchitem_g5_sf0.5 | config=watchitem_g5 | scale=sf0.5
 [2026-05-31 05:02:46] [INFO]   - watchitem_g6_sf0.5 | config=watchitem_g6 | scale=sf0.5
 [2026-05-31 05:02:46] [INFO] ######## START SCALE sf0.5 ########
-[2026-05-31 05:02:46] [INFO] Opening DuckDB for sf0.5 from /home/hudson/Documents/framework_test/imdb/data/sf_050
+[2026-05-31 05:02:46] [INFO] Opening DuckDB for sf0.5 from <LOCAL_PROJECT_ROOT>/imdb/data/sf_050
 [2026-05-31 05:02:46] [INFO] Creating DuckDB view imdb_name_basics
 [2026-05-31 05:02:46] [INFO] Creating DuckDB view imdb_title_akas
 [2026-05-31 05:02:46] [INFO] Creating DuckDB view imdb_title_basics
@@ -144,11 +144,11 @@
 [2026-05-31 11:10:18] [INFO] [explain-progress] experiment=series_g9_sf0.5 row=1/2 query=QG4_AllPersonsOfTypeForWatchItem group=control rep=1
 [2026-05-31 11:10:18] [INFO] === QUERY PLAN COMPLETED experiment_id=series_g9_sf0.5 rows=2 components=5 ===
 [2026-05-31 11:10:18] [INFO] ######## COMPLETED SCALE sf0.5 ########
-[2026-05-31 11:10:18] [INFO] Saved initialization summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050/scale_db_initialization_summary.csv
-[2026-05-31 11:10:18] [INFO] Saved collection swap summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050/collection_swap_summary.csv
-[2026-05-31 11:10:18] [INFO] Saved query plan summary results: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050/query_plan_summary_results.csv
-[2026-05-31 11:10:18] [INFO] Saved query plan status summary: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050/query_plan_status_summary.csv
+[2026-05-31 11:10:18] [INFO] Saved initialization summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050/scale_db_initialization_summary.csv
+[2026-05-31 11:10:18] [INFO] Saved collection swap summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050/collection_swap_summary.csv
+[2026-05-31 11:10:18] [INFO] Saved query plan summary results: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050/query_plan_summary_results.csv
+[2026-05-31 11:10:18] [INFO] Saved query plan status summary: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050/query_plan_status_summary.csv
 [2026-05-31 11:10:18] [INFO] No failed query-plan rows detected.
-[2026-05-31 11:10:18] [INFO] Saved query plan component results: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050/query_plan_component_results.csv
-[2026-05-31 11:10:18] [INFO] Saved run manifest: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050/benchmark_run_manifest.json
-[2026-05-31 11:10:18] [INFO] Done. Results in: /home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf050
+[2026-05-31 11:10:18] [INFO] Saved query plan component results: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050/query_plan_component_results.csv
+[2026-05-31 11:10:18] [INFO] Saved run manifest: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050/benchmark_run_manifest.json
+[2026-05-31 11:10:18] [INFO] Done. Results in: <LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf050
