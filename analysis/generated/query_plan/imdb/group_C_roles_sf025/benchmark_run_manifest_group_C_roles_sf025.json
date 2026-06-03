@@ -3,9 +3,9 @@
   "started_at_utc": "2026-05-31 05:02:24.730458+00:00",
   "finished_at_utc": "2026-05-31 07:31:45.318170+00:00",
   "duration_seconds": 8960.587712,
-  "results_dir": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf025",
-  "catalog_csv": "/home/hudson/Documents/framework_test/imdb/mongo_experiment_catalog.csv",
-  "template_csv": "/home/hudson/Documents/framework_test/imdb/benchmark_execution_template.csv",
+  "results_dir": "<LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf025",
+  "catalog_csv": "<LOCAL_PROJECT_ROOT>/imdb/mongo_experiment_catalog.csv",
+  "template_csv": "<LOCAL_PROJECT_ROOT>/imdb/benchmark_execution_template.csv",
   "query_plan_only": true,
   "explain_verbosity": "executionStats",
   "scale_label_filter": [
@@ -37,5 +37,5 @@
   "n_initialization_rows": 1,
   "n_collection_swap_rows": 8,
   "n_query_plan_summary_rows": 18,
-  "log_file": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf025/execution.log"
+  "log_file": "<LOCAL_PROJECT_ROOT>/imdb/query_plan_full_by_groups/group_C_roles_sf025/execution.log"
 }
