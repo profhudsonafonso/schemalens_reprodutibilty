@@ -55,6 +55,8 @@ schemalens_reprodutibilty/
   README_FIBEN.md
   README_LDBC_SNB.md
   requirements.txt
+  requirements-analysis.txt
+  requirements-benchmark.txt
   docker-compose.yml
 ```
 
@@ -141,10 +143,38 @@ Each dataset README explains the expected local folder structure and the files n
 
 The experiments use Python, Jupyter, Docker, and MongoDB.
 
-Install Python dependencies with:
+The artifact separates Python dependencies by reproduction mode to improve reproducibility and avoid mixing the analysis environment with the benchmark-server environment.
+
+### Python dependency files
+
+The dependency files are:
+
+```
+requirements.txt
+requirements-analysis.txt
+requirements-benchmark.txt
+```
+
+Use `requirements.txt` for the default lightweight verification environment. This file points to the pinned analysis environment:
+
+```
+-r requirements-analysis.txt
+```
+
+Use `requirements-analysis.txt` for notebooks, aggregate-result analysis, short-paper table reproduction, baseline diagnostics, ablation analysis, and paper-support scripts.
+
+Use `requirements-benchmark.txt` for full MongoDB benchmark reproduction on the benchmark server.
+
+For lightweight verification, install:
 
 ```
 pip install -r requirements.txt
+```
+
+For full MongoDB benchmark reproduction, install:
+
+```
+pip install -r requirements-benchmark.txt
 ```
 
 Start MongoDB with Docker Compose:
@@ -178,3 +208,10 @@ The artifact supports the paper results as follows:
 The fastest way to verify the results is to use the provided aggregate benchmark outputs and run the analysis scripts/notebooks.
 
 Full benchmark reproduction is supported but may take substantially longer because it requires materializing MongoDB candidate configurations and executing repeated cold/hot benchmark runs.
+
+For this reason, the recommended reviewer path is:
+
+1. install the lightweight analysis environment with `pip install -r requirements.txt`;
+2. run the short-paper table reproduction script;
+3. inspect the generated CSV summaries and aggregate benchmark outputs;
+4. use the dataset-specific READMEs only if full benchmark reproduction is needed.
