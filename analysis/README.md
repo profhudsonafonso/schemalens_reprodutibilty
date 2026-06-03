@@ -1534,7 +1534,11 @@ This step does not rerun MongoDB benchmarks. It reuses measured hot-run p95 resu
 
 ### IMDb query-plan validation
 
-A MongoDB query-plan-only runner was added for the IMDb experiments.
+The IMDb query-plan experiments were executed with the MongoDB query-plan-only runner:
+
+`benchmark/imdb/run_imdb_mongo_query_plan.py`
+
+The runner reuses the IMDb MongoDB materialization logic and collects `explain("executionStats")` metrics together with physical collection statistics.
 
 Runner:
 
@@ -1614,3 +1618,18 @@ Group D covers:
 - `QG8_AddPersonRoleToWatchItem`
 
 The run completed for `sf0.25`, `sf0.5`, and `sf1`. No failed query-plan rows were detected. Because QG8 is an insert/update-oriented operation, pure `insert_one` components are recorded as `not_explainable`, which is expected in MongoDB. For associative configurations such as `G4`, `G5`, and `G6`, the runner captured explainable update components using `UPDATE`, `FETCH`, and `IXSCAN` over the `watchitem_id_1` index.
+
+Group C results are documented in:
+
+`analysis/generated/query_plan/imdb/README_group_C_roles.md`
+
+Group C covers:
+
+- `QG4_AllPersonsOfTypeForWatchItem`
+- `QG5_AllPersonsForEpisodesOfSeries`
+
+The full runs completed for `sf0.25` and `sf0.5`. For `sf1`, the full run was repeatedly interrupted during the materialization of the external `roles` collection. Therefore, the repository includes targeted associative runs for `watchitem_g4`, `watchitem_g5`, and `watchitem_g6`. The QG4 `sf1` associative run is stored in `group_C_roles_sf1_assoc_only/`. QG5 additionally requires the `episodes` collection, so its valid `sf1` run is stored in `group_C_qg5_sf1_assoc_only_with_episodes/`.
+
+All IMDb query-plan groups were executed with:
+
+`benchmark/imdb/run_imdb_mongo_query_plan.py`
