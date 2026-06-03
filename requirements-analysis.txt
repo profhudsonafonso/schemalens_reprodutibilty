@@ -1,0 +1,7 @@
+﻿pandas==2.1.1
+numpy==1.24.4
+duckdb==1.5.2
+jupyterlab==4.5.0
+ipykernel==7.1.0
+matplotlib==3.8.0
+openpyxl==3.1.2
