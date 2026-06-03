@@ -1,0 +1,2 @@
+scale_label,query_name,query_group,run_phase,execution_status,n_rows
+sf1,QG5_AllPersonsForEpisodesOfSeries,primary,hot,completed,3

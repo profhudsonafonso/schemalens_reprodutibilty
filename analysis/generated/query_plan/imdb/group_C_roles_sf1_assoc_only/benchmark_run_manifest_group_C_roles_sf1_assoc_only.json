@@ -1,0 +1,45 @@
+{
+  "runner": "run_imdb_mongo_benchmark_query_plan_v4_minimal.py",
+  "started_at_utc": "2026-06-01 21:20:51.296777+00:00",
+  "finished_at_utc": "2026-06-02 07:31:05.492523+00:00",
+  "duration_seconds": 36614.195746,
+  "results_dir": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf1_assoc_only",
+  "catalog_csv": "/home/hudson/Documents/framework_test/imdb/mongo_experiment_catalog.csv",
+  "template_csv": "/home/hudson/Documents/framework_test/imdb/benchmark_execution_template.csv",
+  "query_plan_only": true,
+  "explain_verbosity": "executionStats",
+  "scale_label_filter": [
+    "sf1"
+  ],
+  "experiments_filter": null,
+  "config_name_filter": [
+    "watchitem_g4",
+    "watchitem_g5",
+    "watchitem_g6"
+  ],
+  "query_group_filter": null,
+  "run_phase_filter": [
+    "hot"
+  ],
+  "query_name_filter": [
+    "QG4_AllPersonsOfTypeForWatchItem",
+    "QG5_AllPersonsForEpisodesOfSeries"
+  ],
+  "max_runs": null,
+  "row_limit": null,
+  "batch_size": 50000,
+  "sample_size": 5,
+  "execution_db_prefix": "imdb_exec",
+  "force_rebuild_scale_db": true,
+  "minimal_base_load": true,
+  "skip_persons": true,
+  "skip_roles": true,
+  "skip_episodes": true,
+  "save_raw_explain": true,
+  "collect_collection_stats": true,
+  "n_selected_experiments": 3,
+  "n_initialization_rows": 1,
+  "n_collection_swap_rows": 3,
+  "n_query_plan_summary_rows": 6,
+  "log_file": "/home/hudson/Documents/framework_test/imdb/query_plan_full_by_groups/group_C_roles_sf1_assoc_only/execution.log"
+}

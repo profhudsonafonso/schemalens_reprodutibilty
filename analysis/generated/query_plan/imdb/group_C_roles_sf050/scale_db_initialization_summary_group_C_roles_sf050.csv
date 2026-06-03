@@ -1,0 +1,2 @@
+db_name,persons_inserted,roles_inserted,episodes_inserted,watchitems_inserted,series_inserted,load_persons,load_roles,load_episodes,scale_label
+imdb_exec_sf0_5,3685411,31833185,4589137,6067595,230194,True,True,True,sf0.5

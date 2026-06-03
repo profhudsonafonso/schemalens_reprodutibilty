@@ -1,0 +1,6 @@
+scale_label,query_name,query_group,run_phase,execution_status,n_rows
+sf0.25,QG4_AllPersonsOfTypeForWatchItem,control,hot,completed,3
+sf0.25,QG4_AllPersonsOfTypeForWatchItem,primary,hot,completed,4
+sf0.25,QG4_AllPersonsOfTypeForWatchItem,secondary_affected,hot,completed,2
+sf0.25,QG5_AllPersonsForEpisodesOfSeries,primary,hot,completed,4
+sf0.25,QG5_AllPersonsForEpisodesOfSeries,secondary_affected,hot,completed,5
