@@ -84,6 +84,24 @@ Run the analysis notebooks/scripts over the provided aggregate benchmark outputs
 
 This is the recommended lightweight path for reviewers.
 
+## Makefile-based reproduction
+
+The artifact provides a Makefile with lightweight verification and benchmark-entry targets.
+
+Common commands include:
+
+    make docker-up
+    make check-artifact
+    make reproduce-paper
+    make analysis-pipeline
+    make imdb-benchmark
+    make fiben-benchmark
+    make ldbc-benchmark
+
+For details and required variables, see:
+
+    docs/makefile_reproduction.md
+
 ## Short-paper table reproduction
 
 For reproducing the short-paper Table 1 summaries and the Table 2 diagnostic cases, see:
