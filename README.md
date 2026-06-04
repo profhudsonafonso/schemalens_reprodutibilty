@@ -102,6 +102,10 @@ For details and required variables, see:
 
     docs/makefile_reproduction.md
 
+Observed runtime estimates for lightweight verification, full benchmarks, and query-plan evidence are provided in:
+
+    docs/runtime_estimates.md
+
 ## Short-paper table reproduction
 
 For reproducing the short-paper Table 1 summaries and the Table 2 diagnostic cases, see:

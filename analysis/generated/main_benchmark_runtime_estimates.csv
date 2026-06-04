@@ -1,0 +1,10 @@
+dataset,scale,scenario,runtime_human,runtime_seconds,source_type,source_file,note
+IMDb,sf0.25,Full benchmark,1 h 32 min,5560,benchmark_raw_results.csv,imdb/results_incremental_wave1_sf025/benchmark_raw_results.csv,Interval from first start_ts to last end_ts in benchmark_raw_results.csv.
+IMDb,sf0.5,Full benchmark,3 h 2 min,10931,benchmark_raw_results.csv,imdb/results_incremental_wave2_sf05/benchmark_raw_results.csv,Interval from first start_ts to last end_ts in benchmark_raw_results.csv.
+IMDb,sf1,Full benchmark,6 h 0 min,21636,benchmark_raw_results.csv,imdb/results_incremental_wave3_sf1/benchmark_raw_results.csv,Interval from first start_ts to last end_ts in benchmark_raw_results.csv.
+FIBEN,sf1,Full benchmark,24 min 52 sec,1492,execution.log,fiben/results/fiben_mongo_sf1/execution.log,Interval from first to last timestamp in execution.log.
+FIBEN,sf10,Full benchmark,1 h 7 min,4035,execution.log,fiben/results/fiben_mongo_sf10/execution.log,Interval from first to last timestamp in execution.log.
+FIBEN,sf30,Full benchmark,6 h 49 min,24556,execution.log,fiben/results/fiben_mongo_sf30/execution.log,Interval from first to last timestamp in execution.log.
+LDBC SNB,sf0.1,Full benchmark,15 min 3 sec,903,execution.log,ldbc_snb_benchmark/results/ldbc_snb_sf0_1_full_fiben_format_clean/execution.log,Interval from first to last timestamp in execution.log.
+LDBC SNB,sf1,Full benchmark,2 h 13 min,7986,execution.log,ldbc_snb_benchmark/results/ldbc_snb_sf1_full_fiben_format_clean/execution.log,Interval from first to last timestamp in execution.log.
+LDBC SNB,sf3,Full benchmark,6 h 30 min,23457,execution.log,ldbc_snb_benchmark/results/ldbc_snb_sf3_full_fiben_format_clean/execution.log,Interval from first to last timestamp in execution.log.

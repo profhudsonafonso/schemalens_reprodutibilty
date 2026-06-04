@@ -163,7 +163,17 @@ The following runtimes are approximate and depend on hardware, storage, Docker p
 
 Observed benchmark runtimes should be interpreted as machine-specific wall-clock guidance, not hardware-independent guarantees.
 
-A separate runtime-estimation table can be generated from execution logs when benchmark logs are available.
+Runtime guidance for lightweight verification, full benchmark reproduction, and additional query-plan evidence is provided in:
+
+    docs/runtime_estimates.md
+
+The main benchmark runtime CSV is:
+
+    analysis/generated/main_benchmark_runtime_estimates.csv
+
+Additional query-plan runtimes can be regenerated from repository logs with:
+
+    python analysis/scripts/estimate_runtime_from_logs.py
 
 ## Methodology notebooks
 
