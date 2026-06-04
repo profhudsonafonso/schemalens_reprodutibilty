@@ -43,7 +43,7 @@ analysis-pipeline:
 
 check-artifact:
 	$(PYTHON) -c "from pathlib import Path; required=['README.md','docker-compose.yml','requirements.txt','requirements-analysis.txt','requirements-benchmark.txt','analysis/scripts/reproduce_short_paper_tables.py','analysis/generated/aggregate_results_all_datasets.csv','analysis/generated/baseline_performance_by_case.csv','analysis/generated/ablation_performance_by_case.csv']; missing=[p for p in required if not Path(p).exists()]; print('Missing files:' if missing else 'All required files found.'); [print(' -', p) for p in missing]; raise SystemExit(1 if missing else 0)"
-	$(PYTHON) -c "from pathlib import Path; broken=[]; [broken.append(str(p)) for p in Path('.').rglob('*.md') if '.git' not in p.parts and p.read_text(errors='ignore').count('```') % 2 != 0]; print('Broken markdown fences:' if broken else 'Markdown fences OK.'); [print(' -', p) for p in broken]; raise SystemExit(1 if broken else 0)"
+	$(PYTHON) -c "from pathlib import Path; broken=[]; [broken.append(str(p)) for p in Path('.').rglob('*.md') if '.git' not in p.parts and p.read_text(errors='ignore').count(chr(96)*3) % 2 != 0]; print('Broken markdown fences:' if broken else 'Markdown fences OK.'); [print(' -', p) for p in broken]; raise SystemExit(1 if broken else 0)"
 
 clean-generated:
 	@echo "No destructive clean is defined. Generated CSV outputs are part of the artifact."
