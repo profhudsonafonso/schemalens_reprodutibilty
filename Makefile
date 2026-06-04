@@ -1,7 +1,7 @@
 PYTHON ?= python
 PIP ?= pip
 
-.PHONY: help docker-up docker-down install-analysis install-benchmark reproduce-paper analysis-pipeline check-artifact imdb-benchmark fiben-benchmark ldbc-benchmark clean-generated
+.PHONY: help docker-up docker-down install-analysis install-benchmark reproduce-paper analysis-pipeline check-artifact imdb-framework imdb-benchmark fiben-benchmark ldbc-benchmark clean-generated
 
 help:
 	@echo "SchemaLens reproducibility commands"
@@ -12,6 +12,7 @@ help:
 	@echo "  make reproduce-paper       Reproduce short-paper Table 1 and Table 2 CSVs"
 	@echo "  make analysis-pipeline     Regenerate normalized, baseline, ablation, and paper outputs"
 	@echo "  make check-artifact        Run basic artifact consistency checks"
+	@echo "  make imdb-framework        Generate IMDb framework artifacts for benchmarking"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-up             Start MongoDB with Docker Compose"
@@ -24,8 +25,8 @@ help:
 	@echo ""
 	@echo "Examples:"
 	@echo "  make imdb-benchmark IMDB_SCALE=sf0.25 IMDB_RESULTS_DIR=results/imdb/sf0_25"
-	@echo "  make fiben-benchmark FIBEN_DATA_DIR=/path/to/fiben/sf1 FIBEN_SCALE=sf1 FIBEN_RESULTS_DIR=results/fiben/sf1"
-	@echo "  make ldbc-benchmark LDBC_DATA_DIR=/path/to/ldbc_snb/sf0_1 LDBC_ARTIFACTS_DIR=/path/to/artifacts LDBC_SCALE=sf0.1 LDBC_RESULTS_DIR=results/ldbc_snb/sf0_1"
+	@echo "  make fiben-benchmark FIBEN_DATA_DIR=<path-to-fiben-sf1> FIBEN_SCALE=sf1 FIBEN_RESULTS_DIR=results/fiben/sf1"
+	@echo "  make ldbc-benchmark LDBC_DATA_DIR=<path-to-ldbc-snb-sf0_1> LDBC_ARTIFACTS_DIR=<path-to-ldbc-artifacts> LDBC_SCALE=sf0.1 LDBC_RESULTS_DIR=results/ldbc_snb/sf0_1"
 
 install-analysis:
 	$(PIP) install -r requirements.txt
@@ -51,12 +52,30 @@ analysis-pipeline:
 	$(PYTHON) analysis/scripts/reproduce_short_paper_tables.py
 
 check-artifact:
-	$(PYTHON) -c "from pathlib import Path; required=['README.md','docker-compose.yml','requirements.txt','requirements-analysis.txt','requirements-benchmark.txt','analysis/scripts/reproduce_short_paper_tables.py','analysis/generated/aggregate_results_all_datasets.csv','analysis/generated/baseline_performance_by_case.csv','analysis/generated/ablation_performance_by_case.csv']; missing=[p for p in required if not Path(p).exists()]; print('Missing files:' if missing else 'All required files found.'); [print(' -', p) for p in missing]; raise SystemExit(1 if missing else 0)"
+	$(PYTHON) -c "from pathlib import Path; required=['README.md','docker-compose.yml','requirements.txt','requirements-analysis.txt','requirements-benchmark.txt','analysis/scripts/reproduce_short_paper_tables.py','methodology/imdb_methodology.ipynb','methodology/run_imdb_framework_notebook.py','analysis/generated/aggregate_results_all_datasets.csv','analysis/generated/baseline_performance_by_case.csv','analysis/generated/ablation_performance_by_case.csv']; missing=[p for p in required if not Path(p).exists()]; print('Missing files:' if missing else 'All required files found.'); [print(' -', p) for p in missing]; raise SystemExit(1 if missing else 0)"
 	$(PYTHON) -c "from pathlib import Path; broken=[]; [broken.append(str(p)) for p in Path('.').rglob('*.md') if '.git' not in p.parts and p.read_text(errors='ignore').count(chr(96)*3) % 2 != 0]; print('Broken markdown fences:' if broken else 'Markdown fences OK.'); [print(' -', p) for p in broken]; raise SystemExit(1 if broken else 0)"
 
 
 install-benchmark:
 	$(PIP) install -r requirements-benchmark.txt
+
+
+# IMDb framework defaults.
+IMDB_ACTIVE_SCALE ?= sf0.25
+IMDB_FRAMEWORK_OUTPUT_DIR ?= analysis/generated/framework/imdb
+IMDB_FRAMEWORK_NOTEBOOK ?= methodology/imdb_methodology.ipynb
+IMDB_FRAMEWORK_SCRIPT ?= methodology/run_imdb_framework_notebook.py
+IMDB_BENCHMARK_OUTPUT_DIR ?= benchmark/imdb
+
+imdb-framework:
+	@[ -n "$(IMDB_SF_ROOT)" ] || (echo "Missing IMDB_SF_ROOT. Example: make imdb-framework IMDB_SF_ROOT=<path-to-imdb-sf-outputs> IMDB_ACTIVE_SCALE=sf0.25"; exit 1)
+	$(PYTHON) $(IMDB_FRAMEWORK_SCRIPT) \
+		--notebook $(IMDB_FRAMEWORK_NOTEBOOK) \
+		--imdb-sf-root $(IMDB_SF_ROOT) \
+		--active-scale-label $(IMDB_ACTIVE_SCALE) \
+		--framework-output-dir $(IMDB_FRAMEWORK_OUTPUT_DIR) \
+		--benchmark-output-dir $(IMDB_BENCHMARK_OUTPUT_DIR)
+
 
 # Shared MongoDB benchmark defaults.
 MONGO_HOST ?= 127.0.0.1
@@ -96,7 +115,7 @@ FIBEN_SAMPLE_SIZE ?= $(SAMPLE_SIZE)
 FIBEN_REPETITIONS ?= $(REPETITIONS)
 
 fiben-benchmark:
-	@[ -n "$(FIBEN_DATA_DIR)" ] || (echo "Missing FIBEN_DATA_DIR. Example: make fiben-benchmark FIBEN_DATA_DIR=/path/to/fiben/sf1 FIBEN_SCALE=sf1 FIBEN_RESULTS_DIR=results/fiben/sf1"; exit 1)
+	@[ -n "$(FIBEN_DATA_DIR)" ] || (echo "Missing FIBEN_DATA_DIR. Example: make fiben-benchmark FIBEN_DATA_DIR=<path-to-fiben-sf1> FIBEN_SCALE=sf1 FIBEN_RESULTS_DIR=results/fiben/sf1"; exit 1)
 	@[ -n "$(FIBEN_SCALE)" ] || (echo "Missing FIBEN_SCALE. Example: FIBEN_SCALE=sf1"; exit 1)
 	$(PYTHON) benchmark/fiben/run_fiben_mongo_benchmark.py \
 		--data-dir $(FIBEN_DATA_DIR) \
@@ -120,8 +139,8 @@ LDBC_BATCH_SIZE ?= 5000
 LDBC_SAMPLE_SIZE ?= $(SAMPLE_SIZE)
 
 ldbc-benchmark:
-	@[ -n "$(LDBC_DATA_DIR)" ] || (echo "Missing LDBC_DATA_DIR. Example: make ldbc-benchmark LDBC_DATA_DIR=/path/to/ldbc_snb/sf0_1 LDBC_ARTIFACTS_DIR=/path/to/artifacts LDBC_SCALE=sf0.1 LDBC_RESULTS_DIR=results/ldbc_snb/sf0_1"; exit 1)
-	@[ -n "$(LDBC_ARTIFACTS_DIR)" ] || (echo "Missing LDBC_ARTIFACTS_DIR. Example: LDBC_ARTIFACTS_DIR=/path/to/ldbc_snb_mongo_configurations"; exit 1)
+	@[ -n "$(LDBC_DATA_DIR)" ] || (echo "Missing LDBC_DATA_DIR. Example: make ldbc-benchmark LDBC_DATA_DIR=<path-to-ldbc-snb-sf0_1> LDBC_ARTIFACTS_DIR=<path-to-ldbc-artifacts> LDBC_SCALE=sf0.1 LDBC_RESULTS_DIR=results/ldbc_snb/sf0_1"; exit 1)
+	@[ -n "$(LDBC_ARTIFACTS_DIR)" ] || (echo "Missing LDBC_ARTIFACTS_DIR. Example: LDBC_ARTIFACTS_DIR=<path-to-ldbc-snb-mongo-configurations>"; exit 1)
 	@[ -n "$(LDBC_SCALE)" ] || (echo "Missing LDBC_SCALE. Example: LDBC_SCALE=sf0.1"; exit 1)
 	$(PYTHON) benchmark/ldbc_snb/run_ldbc_snb_mongo_benchmark.py \
 		--data-dir $(LDBC_DATA_DIR) \

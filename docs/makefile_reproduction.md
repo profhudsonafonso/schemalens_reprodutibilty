@@ -64,6 +64,31 @@ The main output files are:
 
 This is the fastest and recommended path for reviewers.
 
+## IMDb framework artifact generation
+
+The IMDb framework step is implemented under `methodology/`.
+
+It can be executed with:
+
+    make imdb-framework IMDB_SF_ROOT=<path-to-imdb-sf-outputs> IMDB_ACTIVE_SCALE=sf0.25
+
+This target runs:
+
+    methodology/run_imdb_framework_notebook.py
+
+which executes:
+
+    methodology/imdb_methodology.ipynb
+
+The target regenerates the benchmark input artifacts:
+
+    benchmark/imdb/mongo_experiment_catalog.csv
+    benchmark/imdb/benchmark_execution_template.csv
+
+and stores trace artifacts under:
+
+    analysis/generated/framework/imdb/
+
 ## Full benchmark reproduction
 
 Full benchmark reproduction requires:
@@ -102,7 +127,7 @@ Important: the IMDb benchmark runner does not expose a data-directory argument i
 
 Example command:
 
-    make fiben-benchmark FIBEN_DATA_DIR=/path/to/fiben/sf1 FIBEN_SCALE=sf1 FIBEN_RESULTS_DIR=results/fiben/sf1
+    make fiben-benchmark FIBEN_DATA_DIR=<path-to-fiben-sf1> FIBEN_SCALE=sf1 FIBEN_RESULTS_DIR=results/fiben/sf1
 
 The target runs:
 
@@ -123,7 +148,7 @@ Default artifact directory:
 
 Example command:
 
-    make ldbc-benchmark LDBC_DATA_DIR=/path/to/ldbc_snb/sf0_1 LDBC_ARTIFACTS_DIR=/path/to/ldbc_snb_mongo_configurations LDBC_SCALE=sf0.1 LDBC_RESULTS_DIR=results/ldbc_snb/sf0_1
+    make ldbc-benchmark LDBC_DATA_DIR=<path-to-ldbc-snb-sf0_1> LDBC_ARTIFACTS_DIR=<path-to-ldbc-snb-mongo-configurations> LDBC_SCALE=sf0.1 LDBC_RESULTS_DIR=results/ldbc_snb/sf0_1
 
 The target runs:
 
