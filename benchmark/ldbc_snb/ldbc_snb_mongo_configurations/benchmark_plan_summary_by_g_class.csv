@@ -1,0 +1,15 @@
+g_class,benchmark_group,mongodb_pattern,n_candidates,queries
+G0,control,root_with_references,1,['IS4_ContentOfMessage']
+G0,primary,root_with_references,16,"['IC1_TransitiveFriendsWithName', 'IC2_RecentMessagesByFriends', 'IC3_FriendsAndFriendsOfFriendsInCountries', 'IC4_NewTopics', 'IC5_NewGroups', 'IC6_TagCoOccurrence', 'IC7_RecentLikers', 'INS1_AddPerson', 'INS4_AddForum', 'INS6_AddPost', 'INS7_AddComment', 'INS8_AddFriendship', 'IS1_ProfileOfPerson', 'IS3_FriendsOfPerson', 'IS5_CreatorOfMessage', 'IS7_RepliesOfMessage']"
+G0,secondary_affected,root_with_references,2,"['IS2_RecentMessagesOfPerson', 'IS6_ForumOfMessage']"
+G1,primary,single_entity_lookup,1,['IS4_ContentOfMessage']
+G3,primary,root_with_references_or_summaries,16,"['IC1_TransitiveFriendsWithName', 'IC2_RecentMessagesByFriends', 'IC3_FriendsAndFriendsOfFriendsInCountries', 'IC4_NewTopics', 'IC5_NewGroups', 'IC6_TagCoOccurrence', 'IC7_RecentLikers', 'INS1_AddPerson', 'INS4_AddForum', 'INS6_AddPost', 'INS7_AddComment', 'INS8_AddFriendship', 'IS1_ProfileOfPerson', 'IS3_FriendsOfPerson', 'IS5_CreatorOfMessage', 'IS7_RepliesOfMessage']"
+G3,secondary_affected,root_with_references_or_summaries,2,"['IS2_RecentMessagesOfPerson', 'IS6_ForumOfMessage']"
+G4,primary,explicit_edge_collection,3,"['INS2_AddLikeToPost', 'INS3_AddLikeToComment', 'INS5_AddForumMembership']"
+G4,secondary_affected,explicit_edge_collection,3,"['IC5_NewGroups', 'IC7_RecentLikers', 'IS2_RecentMessagesOfPerson']"
+G6,primary,referenced_or_reverse_indexed_edges,3,"['INS2_AddLikeToPost', 'INS3_AddLikeToComment', 'INS5_AddForumMembership']"
+G6,secondary_affected,referenced_or_reverse_indexed_edges,3,"['IC5_NewGroups', 'IC7_RecentLikers', 'IS2_RecentMessagesOfPerson']"
+G7,primary,containment_baseline,1,['IS6_ForumOfMessage']
+G7,secondary_affected,containment_baseline,6,"['IC3_FriendsAndFriendsOfFriendsInCountries', 'IC5_NewGroups', 'INS6_AddPost', 'INS7_AddComment', 'IS2_RecentMessagesOfPerson', 'IS7_RepliesOfMessage']"
+G9,primary,hybrid_containment,1,['IS6_ForumOfMessage']
+G9,secondary_affected,hybrid_containment,6,"['IC3_FriendsAndFriendsOfFriendsInCountries', 'IC5_NewGroups', 'INS6_AddPost', 'INS7_AddComment', 'IS2_RecentMessagesOfPerson', 'IS7_RepliesOfMessage']"

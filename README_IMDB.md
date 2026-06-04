@@ -16,6 +16,33 @@ The IMDb case study supports reproduction of:
 4. result analysis;
 5. paper-support outputs for the IMDb rows in the cross-dataset summary.
 
+## IMDb framework artifacts
+
+The IMDb framework step is implemented by:
+
+    methodology/imdb_methodology.ipynb
+    methodology/run_imdb_framework_notebook.py
+
+To regenerate the IMDb benchmark input artifacts, run:
+
+    make imdb-framework IMDB_SF_ROOT=<path-to-imdb-sf-outputs> IMDB_ACTIVE_SCALE=sf0.25
+
+The required `IMDB_SF_ROOT` directory should contain the IMDb scale-factor folders, for example:
+
+    sf_025/
+    sf_050/ or sf_05/
+    sf_1/
+
+The generated benchmark inputs are:
+
+    benchmark/imdb/mongo_experiment_catalog.csv
+    benchmark/imdb/benchmark_execution_template.csv
+
+Additional trace artifacts are written to:
+
+    analysis/generated/framework/imdb/
+
+
 ## Repository files
 
 Main files for the IMDb case study:

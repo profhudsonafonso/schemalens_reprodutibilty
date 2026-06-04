@@ -84,6 +84,28 @@ Run the analysis notebooks/scripts over the provided aggregate benchmark outputs
 
 This is the recommended lightweight path for reviewers.
 
+## Makefile-based reproduction
+
+The artifact provides a Makefile with lightweight verification and benchmark-entry targets.
+
+Common commands include:
+
+    make docker-up
+    make check-artifact
+    make reproduce-paper
+    make analysis-pipeline
+    make imdb-benchmark
+    make fiben-benchmark
+    make ldbc-benchmark
+
+For details and required variables, see:
+
+    docs/makefile_reproduction.md
+
+Observed runtime estimates for lightweight verification, full benchmarks, and query-plan evidence are provided in:
+
+    docs/runtime_estimates.md
+
 ## Short-paper table reproduction
 
 For reproducing the short-paper Table 1 summaries and the Table 2 diagnostic cases, see:
@@ -138,6 +160,21 @@ README_LDBC_SNB.md
 ```
 
 Each dataset README explains the expected local folder structure and the files needed to reproduce or verify the experiments.
+
+## Hardware requirements
+
+The hardware requirements depend on the reproduction level.
+
+| Reproduction level | Suggested hardware | Notes |
+|---|---|---|
+| Lightweight verification | 4 CPU cores, 8 GB RAM, standard disk | Runs `make check-artifact` and `make reproduce-paper`. It does not rerun MongoDB benchmarks. |
+| Analysis pipeline | 4-8 CPU cores, 16 GB RAM, SSD recommended | Regenerates analysis outputs from existing aggregate CSV files. |
+| Full MongoDB benchmark reproduction | 8+ CPU cores, 64 GB RAM, NVMe/SSD strongly recommended | Required for materializing MongoDB candidate configurations and running repeated cold/hot benchmark executions. |
+| Query-plan evidence reproduction | 8+ CPU cores, 64 GB RAM, NVMe/SSD strongly recommended | Some IMDb query-plan validation runs took several hours. |
+
+The original benchmark runs were executed on a server with an Intel Core i7-13700 CPU, 24 logical CPUs, 16 physical cores, 62 GiB RAM, and NVMe SSD storage.
+
+At collection time, the benchmark filesystem had 937 GB total capacity and 226 GB available. Full reproduction may require substantial free disk space, especially when retaining multiple scale factors, materialized MongoDB databases, logs, and intermediate results.
 
 ## Environment
 
