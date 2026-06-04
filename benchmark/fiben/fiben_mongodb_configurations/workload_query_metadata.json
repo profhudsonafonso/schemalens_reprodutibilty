@@ -1,0 +1,158 @@
+[
+  {
+    "query_name": "Q1_CompanyProfileIBM",
+    "query_type": "select",
+    "generic_class": "QG1",
+    "query_family": "Local lookup",
+    "entities_touched": [
+      "Corporation"
+    ],
+    "abstract_query": "Show the profile of company IBM.",
+    "notes": "Local lookup over Corporation. The concrete company name IBM is treated as a query parameter.",
+    "n_entities_touched": 1
+  },
+  {
+    "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "query_type": "select",
+    "generic_class": "QG2",
+    "query_family": "Shallow rooted retrieval",
+    "entities_touched": [
+      "Corporation",
+      "Industry",
+      "Country",
+      "ListedSecurity"
+    ],
+    "abstract_query": "Show IBM with its industry, country, and listed securities.",
+    "notes": "Shallow rooted retrieval centered on Corporation with direct descriptor and associated entities.",
+    "n_entities_touched": 4
+  },
+  {
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "query_type": "select",
+    "generic_class": "QG3",
+    "query_family": "Associative retrieval",
+    "entities_touched": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Security"
+    ],
+    "abstract_query": "Show the securities held in each financial service account.",
+    "notes": "Associative retrieval from financial service accounts through holdings to listed securities and underlying securities.",
+    "n_entities_touched": 4
+  },
+  {
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "query_type": "select",
+    "generic_class": "QG4",
+    "query_family": "Deep traversal",
+    "entities_touched": [
+      "Person",
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "abstract_query": "Show the companies reached from a person through account, holding, and listed security.",
+    "notes": "Deep traversal from Person to Corporation through the account and holding structure.",
+    "n_entities_touched": 5
+  },
+  {
+    "query_name": "Q5_ReportsAndMetricDataOfCompany",
+    "query_type": "select",
+    "generic_class": "QG5",
+    "query_family": "Containment retrieval",
+    "entities_touched": [
+      "Corporation",
+      "FinancialReport",
+      "ReportElement",
+      "StatementElement",
+      "Disclosure"
+    ],
+    "abstract_query": "Show the financial reports of a company and the metric data contained in each report.",
+    "notes": "Containment retrieval from Corporation to FinancialReport and its contained report elements, statement elements, and disclosures.",
+    "n_entities_touched": 5
+  },
+  {
+    "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "query_type": "select",
+    "generic_class": "QG6",
+    "query_family": "Filtered search / recommendation",
+    "entities_touched": [
+      "Corporation",
+      "Industry",
+      "Country",
+      "ListedSecurity"
+    ],
+    "abstract_query": "Find listed securities of technology companies in the US with high last traded value.",
+    "notes": "Filtered search over listed securities using corporation industry, country, and traded-value predicates.",
+    "n_entities_touched": 4
+  },
+  {
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "query_type": "select",
+    "generic_class": "QG7",
+    "query_family": "Aggregation / ranking",
+    "entities_touched": [
+      "Person",
+      "FinancialServiceAccount",
+      "BuyTransaction",
+      "SellTransaction",
+      "Transaction",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "abstract_query": "Who bought more IBM stocks than they sold?",
+    "notes": "Aggregation comparing buy and sell quantities per person for the IBM listed security.",
+    "n_entities_touched": 7
+  },
+  {
+    "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "query_type": "select",
+    "generic_class": "QG8",
+    "query_family": "Aggregation / ranking",
+    "entities_touched": [
+      "Transaction",
+      "SellTransaction",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "abstract_query": "Show me each transaction for IBM whose price is less than the average selling price.",
+    "notes": "Comparison query that computes an average selling price and returns IBM transactions below that value.",
+    "n_entities_touched": 4
+  },
+  {
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "query_type": "select",
+    "generic_class": "QG9",
+    "query_family": "Associative retrieval + comparison",
+    "entities_touched": [
+      "Person",
+      "FinancialServiceAccount",
+      "BuyTransaction",
+      "SellTransaction",
+      "Transaction",
+      "ListedSecurity"
+    ],
+    "abstract_query": "Show me everyone who bought and sold the same stock.",
+    "notes": "Associative comparison query identifying persons with both buy and sell activity for the same listed security.",
+    "n_entities_touched": 6
+  },
+  {
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "query_type": "insert",
+    "generic_class": "QG10",
+    "query_family": "Update / insertion with relationship creation",
+    "entities_touched": [
+      "Person",
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Transaction",
+      "BuyTransaction"
+    ],
+    "abstract_query": "Create a financial service account for a person, add a holding for a listed security, and register a buy transaction with price and quantity.",
+    "notes": "Insertion workload with relationship creation across person, account, holding, listed security, and buy transaction.",
+    "n_entities_touched": 6
+  }
+]

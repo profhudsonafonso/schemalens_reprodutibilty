@@ -1,0 +1,2041 @@
+[
+  {
+    "candidate_id": "q10_create_account_holding_and_buy_transaction__control__normalized_reference_baseline",
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "g_class": "CONTROL",
+    "root_entity": "Person",
+    "collection_name": "persons_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Transaction",
+      "BuyTransaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 1,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.932,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q10_create_account_holding_and_buy_transaction__g4__deep_nested_path",
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "g_class": "G4",
+    "root_entity": "Person",
+    "collection_name": "persons_deep_nested",
+    "design_pattern": "deep_nested_document",
+    "embedded_entities": [
+      "BuyTransaction",
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Create a deep nested document following the query path because the query reaches entities at multiple conceptual depths.",
+    "benchmark": {
+      "benchmark_plan_order": 2,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.704423,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.932,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q10_create_account_holding_and_buy_transaction__g2__embed_containment_children",
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "g_class": "G2",
+    "root_entity": "Person",
+    "collection_name": "persons_with_containment",
+    "design_pattern": "embedded_containment",
+    "embedded_entities": [
+      "Holding",
+      "Transaction"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed containment children because the query follows containment paths that can be represented as nested arrays or subdocuments.",
+    "benchmark": {
+      "benchmark_plan_order": 3,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.584424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.932,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q10_create_account_holding_and_buy_transaction__g5__shared_targets_as_references",
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "g_class": "G5",
+    "root_entity": "Person",
+    "collection_name": "persons_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [
+      "BuyTransaction"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 4,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.584424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.932,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q10_create_account_holding_and_buy_transaction__g3__association_references",
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "g_class": "G3",
+    "root_entity": "Person",
+    "collection_name": "persons_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 5,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.534424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.932,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q10_create_account_holding_and_buy_transaction__g7__update_aware_references",
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "g_class": "G7",
+    "root_entity": "Person",
+    "collection_name": "persons_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Person",
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Transaction",
+      "BuyTransaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 6,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.404424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.932,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q10_create_account_holding_and_buy_transaction__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q10_CreateAccountHoldingAndBuyTransaction",
+    "g_class": "G9",
+    "root_entity": "Person",
+    "collection_name": "persons_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Transaction",
+      "Person",
+      "BuyTransaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 7,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.404424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.932,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q1_company_profile_ibm__control__normalized_reference_baseline",
+    "query_name": "Q1_CompanyProfileIBM",
+    "g_class": "CONTROL",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 8,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 0.0,
+      "query_update_volatility_score": 0.0,
+      "max_observed_sharedness_score": 0.0,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "low_overall_design_pressure"
+    }
+  },
+  {
+    "candidate_id": "q1_company_profile_ibm__g0__root_only",
+    "query_name": "Q1_CompanyProfileIBM",
+    "g_class": "G0",
+    "root_entity": "Corporation",
+    "collection_name": "corporations",
+    "design_pattern": "root_only_collection",
+    "embedded_entities": [],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Use a simple root collection because the query has no relationship traversal or no relevant relationship-reduction need.",
+    "benchmark": {
+      "benchmark_plan_order": 9,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.3,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 0.0,
+      "query_update_volatility_score": 0.0,
+      "max_observed_sharedness_score": 0.0,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "low_overall_design_pressure"
+    }
+  },
+  {
+    "candidate_id": "q2_company_with_industry_country_and_listed_securities__control__normalized_reference_baseline",
+    "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "g_class": "CONTROL",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Industry",
+      "Country",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 10,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q2_company_with_industry_country_and_listed_securities__g1__embed_descriptors",
+    "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "g_class": "G1",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_with_descriptors",
+    "design_pattern": "embedded_descriptors",
+    "embedded_entities": [
+      "Industry",
+      "Country"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed descriptor entities close to the root because descriptor relationships are covered by the selected document depth.",
+    "benchmark": {
+      "benchmark_plan_order": 11,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.697916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q2_company_with_industry_country_and_listed_securities__g5__shared_targets_as_references",
+    "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "g_class": "G5",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Country",
+      "Industry",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 12,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.647916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q2_company_with_industry_country_and_listed_securities__g3__association_references",
+    "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "g_class": "G3",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 13,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.627916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q2_company_with_industry_country_and_listed_securities__g7__update_aware_references",
+    "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "g_class": "G7",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [
+      "Country",
+      "Industry"
+    ],
+    "referenced_entities": [
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 14,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.557916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q2_company_with_industry_country_and_listed_securities__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "g_class": "G9",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Country",
+      "Industry",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 15,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.497916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q3_securities_held_in_each_financial_service_account__control__normalized_reference_baseline",
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "g_class": "CONTROL",
+    "root_entity": "FinancialServiceAccount",
+    "collection_name": "financial_service_accounts_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Holding",
+      "ListedSecurity",
+      "Security"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 16,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.799,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q3_securities_held_in_each_financial_service_account__g4__deep_nested_path",
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "g_class": "G4",
+    "root_entity": "FinancialServiceAccount",
+    "collection_name": "financial_service_accounts_deep_nested",
+    "design_pattern": "deep_nested_document",
+    "embedded_entities": [
+      "Holding",
+      "ListedSecurity",
+      "Security"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Create a deep nested document following the query path because the query reaches entities at multiple conceptual depths.",
+    "benchmark": {
+      "benchmark_plan_order": 17,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.651023,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.799,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q3_securities_held_in_each_financial_service_account__g2__embed_containment_children",
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "g_class": "G2",
+    "root_entity": "FinancialServiceAccount",
+    "collection_name": "financial_service_accounts_with_containment",
+    "design_pattern": "embedded_containment",
+    "embedded_entities": [
+      "Holding"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed containment children because the query follows containment paths that can be represented as nested arrays or subdocuments.",
+    "benchmark": {
+      "benchmark_plan_order": 18,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.571024,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.799,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q3_securities_held_in_each_financial_service_account__g5__shared_targets_as_references",
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "g_class": "G5",
+    "root_entity": "FinancialServiceAccount",
+    "collection_name": "financial_service_accounts_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Holding",
+      "ListedSecurity",
+      "Security"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 19,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.561024,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.799,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q3_securities_held_in_each_financial_service_account__g3__association_references",
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "g_class": "G3",
+    "root_entity": "FinancialServiceAccount",
+    "collection_name": "financial_service_accounts_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Security",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 20,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.551023,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.799,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q3_securities_held_in_each_financial_service_account__g7__update_aware_references",
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "g_class": "G7",
+    "root_entity": "FinancialServiceAccount",
+    "collection_name": "financial_service_accounts_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [
+      "Security"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 21,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.451024,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.799,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q3_securities_held_in_each_financial_service_account__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "g_class": "G9",
+    "root_entity": "FinancialServiceAccount",
+    "collection_name": "financial_service_accounts_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Holding",
+      "ListedSecurity",
+      "Security",
+      "FinancialServiceAccount"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 22,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.421023,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.799,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q4_companies_reached_from_person_through_account_holding_listed_security__control__normalized_reference_baseline",
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "g_class": "CONTROL",
+    "root_entity": "Person",
+    "collection_name": "persons_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 23,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7984,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q4_companies_reached_from_person_through_account_holding_listed_security__g4__deep_nested_path",
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "g_class": "G4",
+    "root_entity": "Person",
+    "collection_name": "persons_deep_nested",
+    "design_pattern": "deep_nested_document",
+    "embedded_entities": [
+      "Corporation",
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Create a deep nested document following the query path because the query reaches entities at multiple conceptual depths.",
+    "benchmark": {
+      "benchmark_plan_order": 24,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.691144,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7984,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q4_companies_reached_from_person_through_account_holding_listed_security__g5__shared_targets_as_references",
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "g_class": "G5",
+    "root_entity": "Person",
+    "collection_name": "persons_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [
+      "Corporation"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 25,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.601144,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7984,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q4_companies_reached_from_person_through_account_holding_listed_security__g2__embed_containment_children",
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "g_class": "G2",
+    "root_entity": "Person",
+    "collection_name": "persons_with_containment",
+    "design_pattern": "embedded_containment",
+    "embedded_entities": [
+      "Holding"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed containment children because the query follows containment paths that can be represented as nested arrays or subdocuments.",
+    "benchmark": {
+      "benchmark_plan_order": 26,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.571144,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7984,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q4_companies_reached_from_person_through_account_holding_listed_security__g3__association_references",
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "g_class": "G3",
+    "root_entity": "Person",
+    "collection_name": "persons_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "ListedSecurity",
+      "FinancialServiceAccount"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 27,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.551144,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7984,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q4_companies_reached_from_person_through_account_holding_listed_security__g7__update_aware_references",
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "g_class": "G7",
+    "root_entity": "Person",
+    "collection_name": "persons_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [
+      "Corporation"
+    ],
+    "referenced_entities": [
+      "Person",
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 28,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.461144,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7984,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q4_companies_reached_from_person_through_account_holding_listed_security__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "g_class": "G9",
+    "root_entity": "Person",
+    "collection_name": "persons_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [
+      "Corporation"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "Holding",
+      "ListedSecurity",
+      "Person"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 29,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.461144,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7984,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q5_reports_and_metric_data_of_company__control__normalized_reference_baseline",
+    "query_name": "Q5_ReportsAndMetricDataOfCompany",
+    "g_class": "CONTROL",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialReport",
+      "ReportElement",
+      "StatementElement",
+      "Disclosure"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 30,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.0,
+      "max_observed_sharedness_score": 0.29462099999999997,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q5_reports_and_metric_data_of_company__g2__embed_containment_children",
+    "query_name": "Q5_ReportsAndMetricDataOfCompany",
+    "g_class": "G2",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_with_containment",
+    "design_pattern": "embedded_containment",
+    "embedded_entities": [
+      "FinancialReport",
+      "ReportElement",
+      "StatementElement",
+      "Disclosure"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed containment children because the query follows containment paths that can be represented as nested arrays or subdocuments.",
+    "benchmark": {
+      "benchmark_plan_order": 31,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.851076,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.0,
+      "max_observed_sharedness_score": 0.29462099999999997,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q5_reports_and_metric_data_of_company__g4__deep_nested_path",
+    "query_name": "Q5_ReportsAndMetricDataOfCompany",
+    "g_class": "G4",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_deep_nested",
+    "design_pattern": "deep_nested_document",
+    "embedded_entities": [
+      "Disclosure",
+      "FinancialReport",
+      "ReportElement",
+      "StatementElement"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Create a deep nested document following the query path because the query reaches entities at multiple conceptual depths.",
+    "benchmark": {
+      "benchmark_plan_order": 32,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.851076,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.0,
+      "max_observed_sharedness_score": 0.29462099999999997,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q5_reports_and_metric_data_of_company__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q5_ReportsAndMetricDataOfCompany",
+    "g_class": "G9",
+    "root_entity": "Corporation",
+    "collection_name": "corporations_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Disclosure",
+      "FinancialReport",
+      "ReportElement",
+      "StatementElement"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 33,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.581076,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.0,
+      "max_observed_sharedness_score": 0.29462099999999997,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q6_tech_uslisted_securities_with_high_last_traded_value__control__normalized_reference_baseline",
+    "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "g_class": "CONTROL",
+    "root_entity": "ListedSecurity",
+    "collection_name": "listed_securitys_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "Corporation",
+      "Industry",
+      "Country"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 34,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q6_tech_uslisted_securities_with_high_last_traded_value__g1__embed_descriptors",
+    "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "g_class": "G1",
+    "root_entity": "ListedSecurity",
+    "collection_name": "listed_securitys_with_descriptors",
+    "design_pattern": "embedded_descriptors",
+    "embedded_entities": [
+      "Industry",
+      "Country"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed descriptor entities close to the root because descriptor relationships are covered by the selected document depth.",
+    "benchmark": {
+      "benchmark_plan_order": 35,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.697916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q6_tech_uslisted_securities_with_high_last_traded_value__g5__shared_targets_as_references",
+    "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "g_class": "G5",
+    "root_entity": "ListedSecurity",
+    "collection_name": "listed_securitys_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [
+      "Corporation"
+    ],
+    "referenced_entities": [
+      "Country",
+      "Industry",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 36,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.687916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q6_tech_uslisted_securities_with_high_last_traded_value__g3__association_references",
+    "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "g_class": "G3",
+    "root_entity": "ListedSecurity",
+    "collection_name": "listed_securitys_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 37,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.627916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q6_tech_uslisted_securities_with_high_last_traded_value__g7__update_aware_references",
+    "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "g_class": "G7",
+    "root_entity": "ListedSecurity",
+    "collection_name": "listed_securitys_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [
+      "Corporation",
+      "Country",
+      "Industry"
+    ],
+    "referenced_entities": [
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 38,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.597916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q6_tech_uslisted_securities_with_high_last_traded_value__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "g_class": "G9",
+    "root_entity": "ListedSecurity",
+    "collection_name": "listed_securitys_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [
+      "Corporation"
+    ],
+    "referenced_entities": [
+      "Country",
+      "Industry",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 39,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.537916,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.36299999999999993,
+      "max_observed_sharedness_score": 0.2974182444061962,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_low_maintenance_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__control__normalized_reference_baseline",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "CONTROL",
+    "root_entity": "Person",
+    "collection_name": "persons_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "BuyTransaction",
+      "SellTransaction",
+      "Transaction",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 40,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__g4__deep_nested_path",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "G4",
+    "root_entity": "Person",
+    "collection_name": "persons_deep_nested",
+    "design_pattern": "deep_nested_document",
+    "embedded_entities": [
+      "BuyTransaction",
+      "Corporation",
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "SellTransaction",
+      "Transaction"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Create a deep nested document following the query path because the query reaches entities at multiple conceptual depths.",
+    "benchmark": {
+      "benchmark_plan_order": 41,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.736766,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__g5__shared_targets_as_references",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "G5",
+    "root_entity": "Person",
+    "collection_name": "persons_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [
+      "BuyTransaction",
+      "Corporation",
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 42,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.686766,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__g2__embed_containment_children",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "G2",
+    "root_entity": "Person",
+    "collection_name": "persons_with_containment",
+    "design_pattern": "embedded_containment",
+    "embedded_entities": [
+      "Holding",
+      "Transaction"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed containment children because the query follows containment paths that can be represented as nested arrays or subdocuments.",
+    "benchmark": {
+      "benchmark_plan_order": 43,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.616766,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__g3__association_references",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "G3",
+    "root_entity": "Person",
+    "collection_name": "persons_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "ListedSecurity",
+      "FinancialServiceAccount",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 44,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.566766,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__g6__materialized_query_view",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "G6",
+    "root_entity": "Person",
+    "collection_name": "persons_q7_persons_who_bought_more_ibmthan_sold_materialized",
+    "design_pattern": "aggregation_materialized_collection",
+    "embedded_entities": [],
+    "referenced_entities": [],
+    "materialized_entities": [
+      "Person",
+      "FinancialServiceAccount",
+      "BuyTransaction",
+      "SellTransaction",
+      "Transaction",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "rationale": "Create a materialized query-oriented collection because the query has aggregation, ranking, or comparison behavior.",
+    "benchmark": {
+      "benchmark_plan_order": 45,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.536766,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__g7__update_aware_references",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "G7",
+    "root_entity": "Person",
+    "collection_name": "persons_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [
+      "Corporation",
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "Person",
+      "FinancialServiceAccount",
+      "BuyTransaction",
+      "Transaction",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 46,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.516766,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q7_persons_who_bought_more_ibmthan_sold__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "g_class": "G9",
+    "root_entity": "Person",
+    "collection_name": "persons_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [
+      "Corporation",
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "Transaction",
+      "Person",
+      "BuyTransaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 47,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.516766,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.7702857142857144,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q8_ibmtransactions_below_average_selling_price__control__normalized_reference_baseline",
+    "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "g_class": "CONTROL",
+    "root_entity": "Transaction",
+    "collection_name": "transactions_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "SellTransaction",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 48,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.649,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q8_ibmtransactions_below_average_selling_price__g5__shared_targets_as_references",
+    "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "g_class": "G5",
+    "root_entity": "Transaction",
+    "collection_name": "transactions_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [
+      "Corporation",
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 49,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.661024,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.649,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q8_ibmtransactions_below_average_selling_price__g3__association_references",
+    "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "g_class": "G3",
+    "root_entity": "Transaction",
+    "collection_name": "transactions_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 50,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.581024,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.649,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q8_ibmtransactions_below_average_selling_price__g6__materialized_query_view",
+    "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "g_class": "G6",
+    "root_entity": "Transaction",
+    "collection_name": "transactions_q8_ibmtransactions_below_average_selling_price_materialized",
+    "design_pattern": "aggregation_materialized_collection",
+    "embedded_entities": [],
+    "referenced_entities": [],
+    "materialized_entities": [
+      "Transaction",
+      "SellTransaction",
+      "ListedSecurity",
+      "Corporation"
+    ],
+    "rationale": "Create a materialized query-oriented collection because the query has aggregation, ranking, or comparison behavior.",
+    "benchmark": {
+      "benchmark_plan_order": 51,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.561024,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.649,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q8_ibmtransactions_below_average_selling_price__g7__update_aware_references",
+    "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "g_class": "G7",
+    "root_entity": "Transaction",
+    "collection_name": "transactions_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [
+      "Corporation",
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "Transaction",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 52,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.511023,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.649,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q8_ibmtransactions_below_average_selling_price__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "g_class": "G9",
+    "root_entity": "Transaction",
+    "collection_name": "transactions_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [
+      "Corporation",
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 53,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.511023,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.649,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "needs_review_no_observed_match",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q9_persons_who_bought_and_sold_same_stock__control__normalized_reference_baseline",
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "g_class": "CONTROL",
+    "root_entity": "Person",
+    "collection_name": "persons_normalized_baseline",
+    "design_pattern": "normalized_reference_baseline",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "BuyTransaction",
+      "SellTransaction",
+      "Transaction",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Control configuration. Keep related entities as independent collections connected by references.",
+    "benchmark": {
+      "benchmark_plan_order": 54,
+      "final_benchmark_group": "control",
+      "selection_role": "baseline_comparison",
+      "candidate_selection_score": 0.0,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": false,
+      "benchmark_notes": "Control baseline for comparison."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.8320000000000001,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q9_persons_who_bought_and_sold_same_stock__g4__deep_nested_path",
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "g_class": "G4",
+    "root_entity": "Person",
+    "collection_name": "persons_deep_nested",
+    "design_pattern": "deep_nested_document",
+    "embedded_entities": [
+      "BuyTransaction",
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "SellTransaction",
+      "Transaction"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Create a deep nested document following the query path because the query reaches entities at multiple conceptual depths.",
+    "benchmark": {
+      "benchmark_plan_order": 55,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.724423,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.8320000000000001,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q9_persons_who_bought_and_sold_same_stock__g5__shared_targets_as_references",
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "g_class": "G5",
+    "root_entity": "Person",
+    "collection_name": "persons_shared_refs",
+    "design_pattern": "shared_target_reference_strategy",
+    "embedded_entities": [
+      "BuyTransaction",
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Use references for shared target entities to avoid excessive duplication when the same target is reused by many source entities.",
+    "benchmark": {
+      "benchmark_plan_order": 56,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.634424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.8320000000000001,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q9_persons_who_bought_and_sold_same_stock__g2__embed_containment_children",
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "g_class": "G2",
+    "root_entity": "Person",
+    "collection_name": "persons_with_containment",
+    "design_pattern": "embedded_containment",
+    "embedded_entities": [
+      "Holding",
+      "Transaction"
+    ],
+    "referenced_entities": [],
+    "materialized_entities": [],
+    "rationale": "Embed containment children because the query follows containment paths that can be represented as nested arrays or subdocuments.",
+    "benchmark": {
+      "benchmark_plan_order": 57,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.604424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.8320000000000001,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q9_persons_who_bought_and_sold_same_stock__g3__association_references",
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "g_class": "G3",
+    "root_entity": "Person",
+    "collection_name": "persons_with_references",
+    "design_pattern": "association_references",
+    "embedded_entities": [],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "Transaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Represent associative, ownership, or subtype links through references or small embedded summaries because these links may connect reusable or independently managed entities.",
+    "benchmark": {
+      "benchmark_plan_order": 58,
+      "final_benchmark_group": "primary",
+      "selection_role": "main_candidate",
+      "candidate_selection_score": 0.554423,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Primary candidate generated from activation logic."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.8320000000000001,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q9_persons_who_bought_and_sold_same_stock__g7__update_aware_references",
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "g_class": "G7",
+    "root_entity": "Person",
+    "collection_name": "persons_update_aware",
+    "design_pattern": "update_aware_reference_design",
+    "embedded_entities": [
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "Person",
+      "FinancialServiceAccount",
+      "BuyTransaction",
+      "Transaction",
+      "ListedSecurity"
+    ],
+    "materialized_entities": [],
+    "rationale": "Prefer references for update-volatile entities to reduce write amplification and document maintenance cost.",
+    "benchmark": {
+      "benchmark_plan_order": 59,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.464424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.8320000000000001,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  },
+  {
+    "candidate_id": "q9_persons_who_bought_and_sold_same_stock__g9__tradeoff_benchmark_candidate",
+    "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "g_class": "G9",
+    "root_entity": "Person",
+    "collection_name": "persons_tradeoff",
+    "design_pattern": "benchmark_tradeoff_alternative",
+    "embedded_entities": [
+      "SellTransaction"
+    ],
+    "referenced_entities": [
+      "FinancialServiceAccount",
+      "ListedSecurity",
+      "Transaction",
+      "Person",
+      "BuyTransaction"
+    ],
+    "materialized_entities": [],
+    "rationale": "Generate a benchmark-required trade-off candidate because the query has read-reduction potential together with update pressure, sharedness pressure, or mapping uncertainty.",
+    "benchmark": {
+      "benchmark_plan_order": 60,
+      "final_benchmark_group": "secondary_affected",
+      "selection_role": "tradeoff_candidate",
+      "candidate_selection_score": 0.464424,
+      "should_load_configuration": true,
+      "should_run_read_benchmark": true,
+      "should_run_update_benchmark": true,
+      "benchmark_notes": "Secondary affected candidate; evaluate read benefit and maintenance cost."
+    },
+    "metrics_context": {
+      "DeltaRratio": 1.0,
+      "query_update_volatility_score": 0.8320000000000001,
+      "max_observed_sharedness_score": 0.2958825,
+      "physical_mapping_reliability": "ok",
+      "combined_document_design_risk_class": "strong_read_candidate_high_update_pressure"
+    }
+  }
+]

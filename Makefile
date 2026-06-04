@@ -1,7 +1,7 @@
 PYTHON ?= python
 PIP ?= pip
 
-.PHONY: help docker-up docker-down install-analysis install-benchmark reproduce-paper analysis-pipeline check-artifact imdb-framework imdb-benchmark fiben-benchmark ldbc-benchmark clean-generated
+.PHONY: help docker-up docker-down install-analysis install-benchmark reproduce-paper analysis-pipeline check-artifact imdb-framework fiben-framework imdb-benchmark fiben-benchmark ldbc-benchmark clean-generated
 
 help:
 	@echo "SchemaLens reproducibility commands"
@@ -13,6 +13,7 @@ help:
 	@echo "  make analysis-pipeline     Regenerate normalized, baseline, ablation, and paper outputs"
 	@echo "  make check-artifact        Run basic artifact consistency checks"
 	@echo "  make imdb-framework        Generate IMDb framework artifacts for benchmarking"
+	@echo "  make fiben-framework       Generate FIBEN framework artifacts for benchmarking"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-up             Start MongoDB with Docker Compose"
@@ -52,7 +53,7 @@ analysis-pipeline:
 	$(PYTHON) analysis/scripts/reproduce_short_paper_tables.py
 
 check-artifact:
-	$(PYTHON) -c "from pathlib import Path; required=['README.md','docker-compose.yml','requirements.txt','requirements-analysis.txt','requirements-benchmark.txt','analysis/scripts/reproduce_short_paper_tables.py','methodology/imdb_methodology.ipynb','methodology/run_imdb_framework_notebook.py','analysis/generated/aggregate_results_all_datasets.csv','analysis/generated/baseline_performance_by_case.csv','analysis/generated/ablation_performance_by_case.csv']; missing=[p for p in required if not Path(p).exists()]; print('Missing files:' if missing else 'All required files found.'); [print(' -', p) for p in missing]; raise SystemExit(1 if missing else 0)"
+	$(PYTHON) -c "from pathlib import Path; required=['README.md','docker-compose.yml','requirements.txt','requirements-analysis.txt','requirements-benchmark.txt','analysis/scripts/reproduce_short_paper_tables.py','methodology/imdb_methodology.ipynb','methodology/run_imdb_framework_notebook.py','benchmark/fiben/fiben_mongodb_configurations/benchmark_manifest.json','benchmark/fiben/fiben_mongodb_configurations/mongodb_candidate_specs_by_candidate_id.json','benchmark/fiben/fiben_mongodb_configurations/benchmark_execution_plan.csv','methodology/run_fiben_framework_notebook.py','methodology/fiben_methodology.ipynb','analysis/generated/aggregate_results_all_datasets.csv','analysis/generated/baseline_performance_by_case.csv','analysis/generated/ablation_performance_by_case.csv']; missing=[p for p in required if not Path(p).exists()]; print('Missing files:' if missing else 'All required files found.'); [print(' -', p) for p in missing]; raise SystemExit(1 if missing else 0)"
 	$(PYTHON) -c "from pathlib import Path; broken=[]; [broken.append(str(p)) for p in Path('.').rglob('*.md') if '.git' not in p.parts and p.read_text(errors='ignore').count(chr(96)*3) % 2 != 0]; print('Broken markdown fences:' if broken else 'Markdown fences OK.'); [print(' -', p) for p in broken]; raise SystemExit(1 if broken else 0)"
 
 
@@ -75,6 +76,24 @@ imdb-framework:
 		--active-scale-label $(IMDB_ACTIVE_SCALE) \
 		--framework-output-dir $(IMDB_FRAMEWORK_OUTPUT_DIR) \
 		--benchmark-output-dir $(IMDB_BENCHMARK_OUTPUT_DIR)
+
+
+
+# FIBEN framework defaults.
+FIBEN_ACTIVE_SCALE ?= SF1
+FIBEN_FRAMEWORK_OUTPUT_DIR ?= analysis/generated/framework/fiben
+FIBEN_FRAMEWORK_NOTEBOOK ?= methodology/fiben_methodology.ipynb
+FIBEN_FRAMEWORK_SCRIPT ?= methodology/run_fiben_framework_notebook.py
+FIBEN_BENCHMARK_OUTPUT_DIR ?= benchmark/fiben/fiben_mongodb_configurations
+
+fiben-framework:
+	@[ -n "$(FIBEN_SF_ROOT)" ] || (echo "Missing FIBEN_SF_ROOT. Example: make fiben-framework FIBEN_SF_ROOT=<path-to-fiben-sf-artifacts> FIBEN_ACTIVE_SCALE=SF1"; exit 1)
+	$(PYTHON) $(FIBEN_FRAMEWORK_SCRIPT) \
+		--notebook $(FIBEN_FRAMEWORK_NOTEBOOK) \
+		--fiben-sf-root $(FIBEN_SF_ROOT) \
+		--active-scale-label $(FIBEN_ACTIVE_SCALE) \
+		--framework-output-dir $(FIBEN_FRAMEWORK_OUTPUT_DIR) \
+		--benchmark-output-dir $(FIBEN_BENCHMARK_OUTPUT_DIR)
 
 
 # Shared MongoDB benchmark defaults.
@@ -108,7 +127,7 @@ imdb-benchmark:
 		--force-rebuild-scale-db
 
 # FIBEN benchmark defaults.
-FIBEN_ARTIFACTS_DIR ?= analysis/fiben
+FIBEN_ARTIFACTS_DIR ?= benchmark/fiben/fiben_mongodb_configurations
 FIBEN_RESULTS_DIR ?= results/fiben/$(FIBEN_SCALE)
 FIBEN_BATCH_SIZE ?= 100000
 FIBEN_SAMPLE_SIZE ?= $(SAMPLE_SIZE)

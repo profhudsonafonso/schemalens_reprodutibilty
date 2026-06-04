@@ -247,3 +247,39 @@ Full benchmark reproduction is supported, but it is more time-consuming because 
 The scale-factor data are large and are therefore distributed through OSF rather than stored directly in this Git repository.
 
 The Git repository contains the methodology notebook, scale-generation notebook, benchmark script, benchmark input files, aggregate outputs, and analysis notebooks needed to reproduce or verify the FIBEN part of the paper.
+
+## FIBEN framework artifacts
+
+The FIBEN framework step is implemented by:
+
+    methodology/fiben_methodology.ipynb
+    methodology/run_fiben_framework_notebook.py
+
+To regenerate the FIBEN MongoDB benchmark configuration artifacts from the materialized FIBEN scale-factor tables, run:
+
+    make fiben-framework FIBEN_SF_ROOT=<path-to-fiben-sf-artifacts> FIBEN_ACTIVE_SCALE=SF1
+
+The required `FIBEN_SF_ROOT` directory should contain the FIBEN scale-factor folders, for example:
+
+    sf1_materialized/tables/
+    scaled_corp_rooted/SF10/tables/
+    scaled_corp_rooted/SF30/tables/
+
+The generated benchmark artifacts are written to:
+
+    benchmark/fiben/fiben_mongodb_configurations/
+
+The main benchmark input files are:
+
+    benchmark_execution_plan.csv
+    mongodb_candidate_specs_by_candidate_id.json
+    benchmark_manifest.json
+
+Additional trace artifacts are written to:
+
+    analysis/generated/framework/fiben/
+
+The FIBEN benchmark runner consumes these artifacts through `FIBEN_ARTIFACTS_DIR`, whose default is:
+
+    benchmark/fiben/fiben_mongodb_configurations
+

@@ -1,0 +1,152 @@
+{
+  "artifact_type": "fiben_mongodb_benchmark_configuration_bundle",
+  "scenario_name": "FIBEN_Q1_Q10",
+  "dataset_name": "FIBEN",
+  "selected_scale": "SF1",
+  "methodology_stage": "configuration_selection_completed",
+  "description": "Artifacts exported from the FIBEN methodology notebook. These files define MongoDB candidate configurations and benchmark groups. They are intended for a separate server-side load and benchmark script.",
+  "n_queries": 10,
+  "n_selected_configurations": 60,
+  "n_control_configurations": 10,
+  "n_primary_configurations": 33,
+  "n_secondary_affected_configurations": 17,
+  "benchmark_groups": {
+    "control": {
+      "candidate_ids": [
+        "q10_create_account_holding_and_buy_transaction__control__normalized_reference_baseline",
+        "q1_company_profile_ibm__control__normalized_reference_baseline",
+        "q2_company_with_industry_country_and_listed_securities__control__normalized_reference_baseline",
+        "q3_securities_held_in_each_financial_service_account__control__normalized_reference_baseline",
+        "q4_companies_reached_from_person_through_account_holding_listed_security__control__normalized_reference_baseline",
+        "q5_reports_and_metric_data_of_company__control__normalized_reference_baseline",
+        "q6_tech_uslisted_securities_with_high_last_traded_value__control__normalized_reference_baseline",
+        "q7_persons_who_bought_more_ibmthan_sold__control__normalized_reference_baseline",
+        "q8_ibmtransactions_below_average_selling_price__control__normalized_reference_baseline",
+        "q9_persons_who_bought_and_sold_same_stock__control__normalized_reference_baseline"
+      ],
+      "query_names": [
+        "Q10_CreateAccountHoldingAndBuyTransaction",
+        "Q1_CompanyProfileIBM",
+        "Q2_CompanyWithIndustryCountryAndListedSecurities",
+        "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "Q5_ReportsAndMetricDataOfCompany",
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q8_IBMTransactionsBelowAverageSellingPrice",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "design_patterns": [
+        "normalized_reference_baseline"
+      ],
+      "n_candidates": 10,
+      "n_queries": 10
+    },
+    "primary": {
+      "candidate_ids": [
+        "q10_create_account_holding_and_buy_transaction__g4__deep_nested_path",
+        "q10_create_account_holding_and_buy_transaction__g2__embed_containment_children",
+        "q10_create_account_holding_and_buy_transaction__g5__shared_targets_as_references",
+        "q10_create_account_holding_and_buy_transaction__g3__association_references",
+        "q1_company_profile_ibm__g0__root_only",
+        "q2_company_with_industry_country_and_listed_securities__g1__embed_descriptors",
+        "q2_company_with_industry_country_and_listed_securities__g5__shared_targets_as_references",
+        "q2_company_with_industry_country_and_listed_securities__g3__association_references",
+        "q3_securities_held_in_each_financial_service_account__g4__deep_nested_path",
+        "q3_securities_held_in_each_financial_service_account__g2__embed_containment_children",
+        "q3_securities_held_in_each_financial_service_account__g5__shared_targets_as_references",
+        "q3_securities_held_in_each_financial_service_account__g3__association_references",
+        "q4_companies_reached_from_person_through_account_holding_listed_security__g4__deep_nested_path",
+        "q4_companies_reached_from_person_through_account_holding_listed_security__g5__shared_targets_as_references",
+        "q4_companies_reached_from_person_through_account_holding_listed_security__g2__embed_containment_children",
+        "q4_companies_reached_from_person_through_account_holding_listed_security__g3__association_references",
+        "q5_reports_and_metric_data_of_company__g2__embed_containment_children",
+        "q5_reports_and_metric_data_of_company__g4__deep_nested_path",
+        "q6_tech_uslisted_securities_with_high_last_traded_value__g1__embed_descriptors",
+        "q6_tech_uslisted_securities_with_high_last_traded_value__g5__shared_targets_as_references",
+        "q6_tech_uslisted_securities_with_high_last_traded_value__g3__association_references",
+        "q7_persons_who_bought_more_ibmthan_sold__g4__deep_nested_path",
+        "q7_persons_who_bought_more_ibmthan_sold__g5__shared_targets_as_references",
+        "q7_persons_who_bought_more_ibmthan_sold__g2__embed_containment_children",
+        "q7_persons_who_bought_more_ibmthan_sold__g3__association_references",
+        "q7_persons_who_bought_more_ibmthan_sold__g6__materialized_query_view",
+        "q8_ibmtransactions_below_average_selling_price__g5__shared_targets_as_references",
+        "q8_ibmtransactions_below_average_selling_price__g3__association_references",
+        "q8_ibmtransactions_below_average_selling_price__g6__materialized_query_view",
+        "q9_persons_who_bought_and_sold_same_stock__g4__deep_nested_path",
+        "q9_persons_who_bought_and_sold_same_stock__g5__shared_targets_as_references",
+        "q9_persons_who_bought_and_sold_same_stock__g2__embed_containment_children",
+        "q9_persons_who_bought_and_sold_same_stock__g3__association_references"
+      ],
+      "query_names": [
+        "Q10_CreateAccountHoldingAndBuyTransaction",
+        "Q1_CompanyProfileIBM",
+        "Q2_CompanyWithIndustryCountryAndListedSecurities",
+        "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "Q5_ReportsAndMetricDataOfCompany",
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q8_IBMTransactionsBelowAverageSellingPrice",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "design_patterns": [
+        "aggregation_materialized_collection",
+        "association_references",
+        "deep_nested_document",
+        "embedded_containment",
+        "embedded_descriptors",
+        "root_only_collection",
+        "shared_target_reference_strategy"
+      ],
+      "n_candidates": 33,
+      "n_queries": 10
+    },
+    "secondary_affected": {
+      "candidate_ids": [
+        "q10_create_account_holding_and_buy_transaction__g7__update_aware_references",
+        "q10_create_account_holding_and_buy_transaction__g9__tradeoff_benchmark_candidate",
+        "q2_company_with_industry_country_and_listed_securities__g7__update_aware_references",
+        "q2_company_with_industry_country_and_listed_securities__g9__tradeoff_benchmark_candidate",
+        "q3_securities_held_in_each_financial_service_account__g7__update_aware_references",
+        "q3_securities_held_in_each_financial_service_account__g9__tradeoff_benchmark_candidate",
+        "q4_companies_reached_from_person_through_account_holding_listed_security__g7__update_aware_references",
+        "q4_companies_reached_from_person_through_account_holding_listed_security__g9__tradeoff_benchmark_candidate",
+        "q5_reports_and_metric_data_of_company__g9__tradeoff_benchmark_candidate",
+        "q6_tech_uslisted_securities_with_high_last_traded_value__g7__update_aware_references",
+        "q6_tech_uslisted_securities_with_high_last_traded_value__g9__tradeoff_benchmark_candidate",
+        "q7_persons_who_bought_more_ibmthan_sold__g7__update_aware_references",
+        "q7_persons_who_bought_more_ibmthan_sold__g9__tradeoff_benchmark_candidate",
+        "q8_ibmtransactions_below_average_selling_price__g7__update_aware_references",
+        "q8_ibmtransactions_below_average_selling_price__g9__tradeoff_benchmark_candidate",
+        "q9_persons_who_bought_and_sold_same_stock__g7__update_aware_references",
+        "q9_persons_who_bought_and_sold_same_stock__g9__tradeoff_benchmark_candidate"
+      ],
+      "query_names": [
+        "Q10_CreateAccountHoldingAndBuyTransaction",
+        "Q2_CompanyWithIndustryCountryAndListedSecurities",
+        "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "Q5_ReportsAndMetricDataOfCompany",
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q8_IBMTransactionsBelowAverageSellingPrice",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "design_patterns": [
+        "benchmark_tradeoff_alternative",
+        "update_aware_reference_design"
+      ],
+      "n_candidates": 17,
+      "n_queries": 9
+    }
+  },
+  "expected_external_script_inputs": {
+    "benchmark_execution_plan_csv": "benchmark_execution_plan.csv",
+    "benchmark_execution_plan_json": "benchmark_execution_plan.json",
+    "mongodb_candidate_specs_json": "mongodb_candidate_specs.json",
+    "query_to_candidate_mapping_json": "query_to_candidate_mapping.json",
+    "benchmark_groups_summary_csv": "benchmark_groups_summary.csv"
+  },
+  "important_note": "This bundle does not contain the FIBEN data files. The external benchmark script must receive the dataset path separately."
+}

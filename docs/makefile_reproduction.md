@@ -89,6 +89,37 @@ and stores trace artifacts under:
 
     analysis/generated/framework/imdb/
 
+## FIBEN framework artifact generation
+
+The FIBEN framework step is implemented under `methodology/`.
+
+It can be executed with:
+
+    make fiben-framework FIBEN_SF_ROOT=<path-to-fiben-sf-artifacts> FIBEN_ACTIVE_SCALE=SF1
+
+This target runs:
+
+    methodology/run_fiben_framework_notebook.py
+
+which executes:
+
+    methodology/fiben_methodology.ipynb
+
+The target regenerates the MongoDB benchmark configuration artifacts from the materialized FIBEN scale-factor tables and writes them to:
+
+    benchmark/fiben/fiben_mongodb_configurations/
+
+The main generated files are:
+
+    benchmark_execution_plan.csv
+    mongodb_candidate_specs_by_candidate_id.json
+    benchmark_manifest.json
+
+Trace artifacts are written under:
+
+    analysis/generated/framework/fiben/
+
+
 ## Full benchmark reproduction
 
 Full benchmark reproduction requires:
