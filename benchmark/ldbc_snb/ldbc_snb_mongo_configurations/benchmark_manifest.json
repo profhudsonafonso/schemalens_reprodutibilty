@@ -1,0 +1,36 @@
+{
+  "dataset": "ldbc_snb",
+  "scale_label": "sf0.1",
+  "workload": "LDBC SNB Interactive v1 official-based subset",
+  "created_at": "2026-06-04T12:39:58.253063Z",
+  "n_queries": 22,
+  "n_activations": 64,
+  "n_candidates": 64,
+  "files": {
+    "candidate_specs": "mongodb_candidate_specs_by_candidate_id.json",
+    "candidate_specs_overview": "mongodb_candidate_specs_overview.csv",
+    "candidate_validation": "mongodb_candidate_validation.csv",
+    "candidate_summary_by_g_class": "mongodb_candidate_summary_by_g_class.csv",
+    "candidate_summary_by_query": "mongodb_candidate_summary_by_query.csv",
+    "pattern_templates": "mongodb_pattern_templates_g0_g9.csv",
+    "benchmark_execution_plan": "benchmark_execution_plan.csv",
+    "benchmark_execution_plan_smoke": "benchmark_execution_plan_smoke.csv",
+    "benchmark_plan_summary_by_group": "benchmark_plan_summary_by_group.csv",
+    "benchmark_plan_summary_by_g_class": "benchmark_plan_summary_by_g_class.csv",
+    "benchmark_plan_smoke_summary": "benchmark_plan_smoke_summary.csv",
+    "benchmark_plan_validation": "benchmark_plan_validation.csv"
+  },
+  "notes": [
+    "Candidates are generated from the official-based LDBC SNB Interactive workload subset.",
+    "These specs are not benchmark results; they define MongoDB materialization candidates.",
+    "Benchmark execution will be handled by a separate runner script."
+  ],
+  "updated_at": "2026-06-04T12:39:58.371394Z",
+  "n_benchmark_plan_rows": 64,
+  "n_smoke_plan_rows": 24,
+  "benchmark_groups": [
+    "control",
+    "primary",
+    "secondary_affected"
+  ]
+}

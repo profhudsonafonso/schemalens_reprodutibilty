@@ -1,0 +1,11 @@
+g_class,mongodb_pattern,document_strategy,description,embedding_level,reference_level,summary_level,risk_profile
+G0,root_with_references,reference,Root collection stores root entity fields and references to related entities.,none_or_minimal,high,optional,safe_baseline
+G1,single_entity_lookup,single_collection,Single entity collection optimized for direct lookup by primary key.,none,none,none,lookup_baseline
+G2,root_with_embedded_low_risk_associations,embed,Embed low-risk associated data inside the root document.,medium,low,optional,embedding_when_safe
+G3,root_with_references_or_summaries,reference_summary,Use references and/or denormalized summaries for associated entities.,low,high,medium,shared_or_volatile_safe
+G4,explicit_edge_collection,edge_document,Represent associative relationships as explicit edge/relationship collections.,none,high,none,associative_baseline
+G5,source_embedded_edges,embed_edges,Embed associative edges near the source root when fanout is manageable.,medium,medium,optional,direct_associative_embedding
+G6,referenced_or_reverse_indexed_edges,edge_reference_reverse_index,"Use references, edge collections, and optional reverse indexes for volatile/shared associative relationships.",low,high,optional,volatile_associative_safe
+G7,containment_baseline,containment_reference,Baseline containment layout with parent-child references.,low,medium,optional,containment_baseline
+G8,deep_containment_embedding,embed_contained_children,Embed contained child entities inside the root document when risk is low.,high,low,optional,deep_embedding_when_safe
+G9,hybrid_containment,hybrid_embed_reference_summary,"Use partial embedding, references, and summaries for containment paths with fanout/sharedness/volatility risk.",medium_partial,high,medium,hybrid_containment_safe

@@ -269,3 +269,39 @@ Full benchmark reproduction is supported, but it is more time-consuming because 
 The LDBC SNB scale-factor data are large and are therefore distributed through the official LDBC dataset repository rather than stored directly in this Git repository.
 
 This Git repository contains the methodology notebook, benchmark runner, aggregate outputs, and analysis notebooks needed to reproduce or verify the LDBC SNB part of the paper once the official data archives have been downloaded.
+
+## LDBC SNB framework artifacts
+
+The LDBC SNB framework step is implemented by:
+
+    methodology/ldbc_snb_methodology.ipynb
+    methodology/run_ldbc_snb_framework_notebook.py
+
+To regenerate the LDBC SNB MongoDB benchmark configuration artifacts from the LDBC SNB SF0.1 data, run:
+
+    make ldbc-framework LDBC_DATA_DIR=<path-to-ldbc-snb-sf0.1-data> LDBC_FRAMEWORK_SCALE=sf0.1
+
+The expected `LDBC_DATA_DIR` should contain the LDBC SNB SF0.1 folders used by the framework, including:
+
+    social_network-sf0.1-CsvMergeForeign-StringDateFormatter/
+    social_network-sf0.1-numpart-1/
+    substitution_parameters-sf0.1/
+
+The generated benchmark artifacts are written to:
+
+    benchmark/ldbc_snb/ldbc_snb_mongo_configurations/
+
+The main benchmark input files are:
+
+    benchmark_execution_plan.csv
+    mongodb_candidate_specs_by_candidate_id.json
+    benchmark_manifest.json
+
+Additional trace artifacts are written to:
+
+    analysis/generated/framework/ldbc_snb/
+
+The LDBC SNB benchmark runner consumes these artifacts through `LDBC_ARTIFACTS_DIR`, whose default is:
+
+    benchmark/ldbc_snb/ldbc_snb_mongo_configurations
+

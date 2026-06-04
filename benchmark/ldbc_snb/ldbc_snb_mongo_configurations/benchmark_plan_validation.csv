@@ -1,0 +1,6 @@
+check,value,status,details
+full_plan_count_matches_candidates,64 / 64,OK,
+full_plan_candidate_ids_unique,64 / 64,OK,
+valid_benchmark_groups,0,OK,[]
+smoke_plan_non_empty,24,OK,
+smoke_plan_covers_all_benchmark_groups,0,OK,[]

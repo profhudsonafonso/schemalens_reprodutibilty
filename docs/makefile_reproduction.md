@@ -120,6 +120,37 @@ Trace artifacts are written under:
     analysis/generated/framework/fiben/
 
 
+## LDBC SNB framework artifact generation
+
+The LDBC SNB framework step is implemented under `methodology/`.
+
+It can be executed with:
+
+    make ldbc-framework LDBC_DATA_DIR=<path-to-ldbc-snb-sf0.1-data> LDBC_FRAMEWORK_SCALE=sf0.1
+
+This target runs:
+
+    methodology/run_ldbc_snb_framework_notebook.py
+
+which executes:
+
+    methodology/ldbc_snb_methodology.ipynb
+
+The target regenerates the MongoDB benchmark configuration artifacts from the LDBC SNB SF0.1 data and writes them to:
+
+    benchmark/ldbc_snb/ldbc_snb_mongo_configurations/
+
+The main generated files are:
+
+    benchmark_execution_plan.csv
+    mongodb_candidate_specs_by_candidate_id.json
+    benchmark_manifest.json
+
+Trace artifacts are written under:
+
+    analysis/generated/framework/ldbc_snb/
+
+
 ## Full benchmark reproduction
 
 Full benchmark reproduction requires:

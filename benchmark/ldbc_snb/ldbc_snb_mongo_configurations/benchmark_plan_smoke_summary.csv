@@ -1,0 +1,8 @@
+benchmark_group,query_group,n_candidates,n_queries,g_classes
+control,short_read,1,1,['G0']
+primary,complex_read,4,2,"['G0', 'G3']"
+primary,insert,4,2,"['G0', 'G3', 'G4', 'G6']"
+primary,short_read,7,4,"['G0', 'G1', 'G3', 'G7', 'G9']"
+secondary_affected,complex_read,4,1,"['G4', 'G6', 'G7', 'G9']"
+secondary_affected,insert,2,1,"['G7', 'G9']"
+secondary_affected,short_read,2,1,"['G0', 'G3']"

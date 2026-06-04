@@ -1,0 +1,5 @@
+check,value,status,details
+candidate_count_matches_activation_count,64 / 64,OK,
+candidate_ids_are_unique,64 / 64,OK,
+candidate_g_classes_valid,0,OK,[]
+candidate_root_entities_present,0,OK,
