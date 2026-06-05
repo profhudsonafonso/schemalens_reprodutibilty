@@ -1633,3 +1633,20 @@ The full runs completed for `sf0.25` and `sf0.5`. For `sf1`, the full run was re
 All IMDb query-plan groups were executed with:
 
 `benchmark/imdb/run_imdb_mongo_query_plan.py`
+
+### FIBEN MongoDB query-plan validation
+
+The FIBEN MongoDB query-plan validation results are available in:
+
+`analysis/generated/query_plan/fiben/`
+
+This folder contains consolidated query-plan summaries and component-level explain results for FIBEN across SF1, SF10, and SF30. Read queries Q1–Q9 completed successfully across all scales. Q10 was consistently marked as skipped because it is an insert/update workload and is not comparable under read-query MongoDB `executionStats`.
+
+Main files:
+
+- `fiben_query_plan_summary_all.csv`
+- `fiben_query_plan_components_all.csv`
+- `fiben_query_plan_query_scale_status.csv`
+- `fiben_query_plan_query_scale_overview.csv`
+- `fiben_query_plan_best_by_estimated_bytes.csv`
+- `fiben_query_plan_compact_candidates.csv`
