@@ -1634,6 +1634,11 @@ All IMDb query-plan groups were executed with:
 
 `benchmark/imdb/run_imdb_mongo_query_plan.py`
 
+For IMDb query-plan details and journal-ready table reproduction, see:
+
+`analysis/generated/query_plan/imdb/README.md`
+- IMDb journal query-plan table reproduction: `analysis/scripts/reproduce_imdb_query_plan_journal_tables.py`
+
 ### FIBEN MongoDB query-plan validation
 
 The FIBEN MongoDB query-plan validation results are available in:
