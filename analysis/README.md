@@ -1650,3 +1650,25 @@ Main files:
 - `fiben_query_plan_query_scale_overview.csv`
 - `fiben_query_plan_best_by_estimated_bytes.csv`
 - `fiben_query_plan_compact_candidates.csv`
+
+### FIBEN Q2 query-plan explanation table
+
+The reproducible script for generating the FIBEN Q2 query-plan explanation table is available at:
+
+`analysis/scripts/generate_fiben_q2_query_plan_table.py`
+
+It uses the consolidated FIBEN query-plan results in:
+
+`analysis/generated/query_plan/fiben/fiben_query_plan_summary_all.csv`
+
+and the FIBEN benchmark aggregate results in:
+
+`analysis/fiben/`
+
+The script generates:
+
+`analysis/generated/query_plan/fiben/fiben_q2_query_plan_table_rows.csv`
+
+`analysis/generated/query_plan/fiben/fiben_q2_query_plan_table.tex`
+
+The generated table compares the hot-p95 winner with the query-plan evidence for each activated Q2 configuration across SF1, SF10, and SF30. Ratios are computed relative to the hot-p95 winner at the same scale.

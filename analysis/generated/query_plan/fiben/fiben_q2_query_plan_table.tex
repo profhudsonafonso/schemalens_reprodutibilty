@@ -1,0 +1,34 @@
+\begin{table*}[t]
+\centering
+\caption{Query-plan explanation for FIBEN Q2 under MongoDB \texttt{executionStats}. Ratios are computed relative to the hot-p95 winning configuration at the same scale.}
+\label{tab:fiben_q2_query_plan_explanation}
+\tiny
+\setlength{\tabcolsep}{2.0pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{p{0.045\textwidth}p{0.055\textwidth}p{0.115\textwidth}p{0.155\textwidth}r r r p{0.390\textwidth}}
+\hline
+Scale & Config. & Matrix signal & MongoDB plan & Docs ratio & Obj. ratio & Est. bytes ratio & Explanation \tabularnewline
+\hline
+SF1 & CONTROL & baseline refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.01x & 1.00x & Normalized baseline; uses separate indexed dereferencing steps for the descriptor/listed-security path. \tabularnewline
+SF1 & G1 & descriptor embedding & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.75x & 1.50x & 1.05x & Descriptor embedding colocates Industry and Country near the root, reducing one dereferencing component. \tabularnewline
+SF1 & G3 & association refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 0.88x & 0.94x & Reference-oriented alternative; preserves indexed dereferencing through association references. \tabularnewline
+SF1 & \textbf{G5} & shared refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.00x & 1.00x & Shared-reference alternative; keeps indexed dereferencing while accounting for shared target entities. \tabularnewline
+SF1 & G7 & update-aware refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.50x & 1.58x & 0.98x & Update-aware reference design; fewer indexed components, but potentially larger root documents. \tabularnewline
+SF1 & G9 & trade-off & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.00x & 1.00x & Trade-off candidate preserved by SchemaLens to benchmark a secondary read/update alternative. \tabularnewline
+\hline
+SF10 & CONTROL & baseline refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.62x & 8.48x & 4.36x & Normalized baseline; uses separate indexed dereferencing steps for the descriptor/listed-security path. \tabularnewline
+SF10 & \textbf{G1} & descriptor embedding & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.00x & 1.00x & Descriptor embedding colocates Industry and Country near the root, reducing one dereferencing component. \tabularnewline
+SF10 & G3 & association refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.62x & 8.43x & 4.33x & Reference-oriented alternative; preserves indexed dereferencing through association references. \tabularnewline
+SF10 & G5 & shared refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.62x & 8.48x & 4.36x & Shared-reference alternative; keeps indexed dereferencing while accounting for shared target entities. \tabularnewline
+SF10 & G7 & update-aware refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.52x & 9.31x & 4.70x & Update-aware reference design; fewer indexed components, but potentially larger root documents. \tabularnewline
+SF10 & G9 & trade-off & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.62x & 8.48x & 4.36x & Trade-off candidate preserved by SchemaLens to benchmark a secondary read/update alternative. \tabularnewline
+\hline
+SF30 & CONTROL & baseline refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.00x & 1.00x & Normalized baseline; uses separate indexed dereferencing steps for the descriptor/listed-security path. \tabularnewline
+SF30 & G1 & descriptor embedding & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.85x & 0.01x & 0.03x & Descriptor embedding colocates Industry and Country near the root, reducing one dereferencing component. \tabularnewline
+SF30 & G3 & association refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.00x & 1.00x & Reference-oriented alternative; preserves indexed dereferencing through association references. \tabularnewline
+SF30 & G5 & shared refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.00x & 1.00x & Shared-reference alternative; keeps indexed dereferencing while accounting for shared target entities. \tabularnewline
+SF30 & G7 & update-aware refs & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 0.94x & 1.01x & 1.01x & Update-aware reference design; fewer indexed components, but potentially larger root documents. \tabularnewline
+SF30 & \textbf{G9} & trade-off & \texttt{EXPRESS\_IXSCAN+IXSCAN+FETCH} & 1.00x & 1.00x & 1.00x & Trade-off candidate preserved by SchemaLens to benchmark a secondary read/update alternative. \tabularnewline
+\hline
+\end{tabular}
+\end{table*}
