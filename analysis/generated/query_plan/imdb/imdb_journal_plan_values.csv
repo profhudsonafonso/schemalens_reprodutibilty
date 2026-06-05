@@ -1,0 +1,7 @@
+Query,Compared configs,Main stages,Docs/Keys,Physical signal
+QG6,G7 vs. G8/G9,COUNT_SCAN vs. IXSCAN+FETCH+PROJ.,"G7 0/18,594; G8/G9 1/1","240 B vs. 3,085 B/6,222 B; external episodes vs. embedded arrays."
+QG9,G7 vs. G2/G8,IXSCAN+SORT vs. AND_SORTED/embedded payload,"G7 91/91; G2 24,226/24,226; G8 91/91","255 B vs. 363 B/3,085 B; series root vs. generic watchitems."
+QG4,G4/G5/G6,IXSCAN+FETCH+PROJ.,1/1 each,"1,134 B/1,730 B/2,184 B; associative materialization in watchitems."
+QG5,G4/G5/G6,IXSCAN+FETCH+PROJ.,"19,093/19,234",Requires episodes; then reaches Role/Person data.
+QG8,G4/G5/G6,UPDATE+FETCH+IXSCAN,1/1 each,Write maintenance over watchitem_id_1.
+QG3,G8 vs. G0/G2,IXSCAN+SORT,27/27,Current run preserves G8; baselines/ablations may select weaker families.
