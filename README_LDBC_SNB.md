@@ -198,6 +198,27 @@ The default MongoDB port is:
 27018
 ```
 
+## Faithful physical materialization extension
+
+In addition to the original benchmark runner, this repository includes a reproducibility record for the faithful MongoDB physical materialization of the LDBC SNB SF0.1 candidate space.
+
+The original SchemaLens evaluation logic is preserved: `primary` and `secondary_affected` candidates form the activated family used for DSR, while `control` candidates are part of the broader benchmarked comparison space used for Top-1 preservation, near-best preservation, activated regret, and primary regret.
+
+The generated Phase 1 manifests are stored in:
+
+    analysis/generated/physical_materialization/ldbc_snb/sf0_1/
+
+The final SF0.1 physical comparison manifest is:
+
+    analysis/generated/physical_materialization/ldbc_snb/sf0_1/phase1C_full_comparison/physical_materialization_manifest.csv
+
+The corresponding documentation is available in:
+
+    docs/ldbc_snb_physical_materialization.md
+
+This extension does not change the analytical matrix, activation rules, candidate identifiers, or benchmark groups. It only replaces the previous simplified execution layer with faithful MongoDB physical materializations for the generated candidates.
+
+
 ## Result analysis
 
 The main LDBC SNB analysis notebooks are:

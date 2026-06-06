@@ -1,0 +1,1 @@
+candidate_id,official_id,query_name,benchmark_group,activation_strength_raw,g_class,mongodb_pattern,document_strategy,root_entity,activation_reason,already_materialized,is_activated,needs_materialization,reason

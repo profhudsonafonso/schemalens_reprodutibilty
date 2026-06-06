@@ -1,0 +1,2 @@
+json_total_candidates,activated_manifest_rows,activated_manifest_unique_candidates,primary_candidates,secondary_affected_candidates,control_candidates,primary_already_materialized,secondary_already_materialized,control_already_materialized,control_needs_materialization,activated_missing_unexpected
+64,64,64,41,22,1,41,22,1,0,0
