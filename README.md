@@ -41,14 +41,16 @@ schemalens_reprodutibilty/
     ldbc_snb/
 
   analysis/
-    imdb/
-    fiben/
-    ldbc_snb/
-    generated/
-    scripts/
+  imdb/
+  fiben/
+  ldbc_snb/
+  generated/
+    physical_materialization/
+  scripts/
 
   docs/
-    short_paper_reproduction.md
+  short_paper_reproduction.md
+  ldbc_snb_physical_materialization.md
 
   README.md
   README_IMDB.md
@@ -115,6 +117,32 @@ docs/short_paper_reproduction.md
 ```
 
 The reproduction script generates paper-facing CSV summaries from existing aggregate, baseline, and ablation outputs. It does not rerun MongoDB.
+
+## LDBC SNB faithful physical materialization extension
+
+The repository also includes a reproducibility record for the LDBC SNB SF0.1 faithful MongoDB physical-materialization extension.
+
+This extension preserves the original SchemaLens evaluation logic: `primary` and `secondary_affected` candidates form the activated family used for DSR, while `control` candidates are part of the broader benchmarked comparison space used for Top-1 preservation, near-best preservation, activated regret, and primary regret.
+
+The generated Phase 1 manifests are stored in:
+
+```
+analysis/generated/physical_materialization/ldbc_snb/sf0_1/
+```
+
+The final SF0.1 physical comparison manifest is:
+
+```
+analysis/generated/physical_materialization/ldbc_snb/sf0_1/phase1C_full_comparison/physical_materialization_manifest.csv
+```
+
+The corresponding documentation is available in:
+
+```
+docs/ldbc_snb_physical_materialization.md
+```
+
+This extension does not change the analytical matrix, activation rules, candidate identifiers, or benchmark groups. It only replaces the previous simplified execution layer with faithful MongoDB physical materializations for the generated candidates.
 
 ## Provided aggregate benchmark outputs
 
@@ -238,7 +266,8 @@ The artifact supports the paper results as follows:
 
 * IMDb supports the detailed end-to-end walkthrough and the representative IMDb rows in the cross-dataset table.
 * FIBEN supports the finance-oriented representative cases in the cross-dataset comparison.
-* LDBC SNB supports the aggregate official-workload validation across IC, IS, and INS queries.
+* LDBC SNB supports the aggregate official-workload validation across IC, IS, and INS queries. The repository also includes a faithful MongoDB physical-materialization record for the LDBC SNB SF0.1 candidate space, documented in `docs/ldbc_snb_physical_materialization.md`.
+
 
 ## Notes for reviewers
 

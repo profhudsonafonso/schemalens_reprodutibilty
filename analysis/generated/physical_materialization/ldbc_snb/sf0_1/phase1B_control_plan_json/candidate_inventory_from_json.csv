@@ -1,0 +1,65 @@
+candidate_id,official_id,query_name,benchmark_group,activation_strength_raw,g_class,mongodb_pattern,document_strategy,root_entity,activation_reason,already_materialized,is_activated,needs_materialization,reason
+ldbc_snb_ic1_g0_6aac8974,IC1,IC1_TransitiveFriendsWithName,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic1_g3_89a97e97,IC1,IC1_TransitiveFriendsWithName,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic2_g0_bcc20fff,IC2,IC2_RecentMessagesByFriends,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic2_g3_8f05f032,IC2,IC2_RecentMessagesByFriends,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic3_g7_a1750f34,IC3,IC3_FriendsAndFriendsOfFriendsInCountries,secondary_affected,secondary,G7,,,,Containment-family baseline.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic3_g9_75aa81cd,IC3,IC3_FriendsAndFriendsOfFriendsInCountries,secondary_affected,secondary,G9,,,,"Containment path has high sharedness, high volatility, or high residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic3_g0_f7817cbe,IC3,IC3_FriendsAndFriendsOfFriendsInCountries,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic3_g3_f4732bc1,IC3,IC3_FriendsAndFriendsOfFriendsInCountries,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic4_g0_54d8940c,IC4,IC4_NewTopics,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic4_g3_00df9f3e,IC4,IC4_NewTopics,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic5_g4_69144c92,IC5,IC5_NewGroups,secondary_affected,secondary,G4,,,,Associative-family baseline using explicit relationship documents.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic5_g6_733601c1,IC5,IC5_NewGroups,secondary_affected,secondary,G6,,,,Associative relation is volatile/shared and should be represented with references or reverse indexes.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic5_g7_a2002d4c,IC5,IC5_NewGroups,secondary_affected,secondary,G7,,,,Containment-family baseline.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic5_g9_7a7a63d2,IC5,IC5_NewGroups,secondary_affected,secondary,G9,,,,"Containment path has high sharedness, high volatility, or high residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic5_g0_f44bd6f8,IC5,IC5_NewGroups,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic5_g3_45734260,IC5,IC5_NewGroups,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic6_g0_f6a698ed,IC6,IC6_TagCoOccurrence,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic6_g3_9a00a0b5,IC6,IC6_TagCoOccurrence,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic7_g4_5de4a081,IC7,IC7_RecentLikers,secondary_affected,secondary,G4,,,,Associative-family baseline using explicit relationship documents.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic7_g6_084f8a43,IC7,IC7_RecentLikers,secondary_affected,secondary,G6,,,,Associative relation is volatile/shared and should be represented with references or reverse indexes.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic7_g0_39cfc8f6,IC7,IC7_RecentLikers,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ic7_g3_d6d26f02,IC7,IC7_RecentLikers,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins1_g0_ffbfd07e,INS1,INS1_AddPerson,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins1_g3_10a467d5,INS1,INS1_AddPerson,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins2_g4_9fb1f96c,INS2,INS2_AddLikeToPost,primary,primary,G4,,,,Associative-family baseline using explicit relationship documents.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins2_g6_f226f1c0,INS2,INS2_AddLikeToPost,primary,primary,G6,,,,Associative relation is volatile/shared and should be represented with references or reverse indexes.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins3_g4_9ec9f8f6,INS3,INS3_AddLikeToComment,primary,primary,G4,,,,Associative-family baseline using explicit relationship documents.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins3_g6_c1c01729,INS3,INS3_AddLikeToComment,primary,primary,G6,,,,Associative relation is volatile/shared and should be represented with references or reverse indexes.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins4_g0_63b0def3,INS4,INS4_AddForum,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins4_g3_b5f0ac72,INS4,INS4_AddForum,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins5_g4_79a744a2,INS5,INS5_AddForumMembership,primary,primary,G4,,,,Associative-family baseline using explicit relationship documents.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins5_g6_9496cfdb,INS5,INS5_AddForumMembership,primary,primary,G6,,,,Associative relation is volatile/shared and should be represented with references or reverse indexes.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins6_g7_2ba4aefb,INS6,INS6_AddPost,secondary_affected,secondary,G7,,,,Containment-family baseline.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins6_g9_0dad4d32,INS6,INS6_AddPost,secondary_affected,secondary,G9,,,,"Containment path has high sharedness, high volatility, or high residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins6_g0_50983b9d,INS6,INS6_AddPost,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins6_g3_d110d93b,INS6,INS6_AddPost,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins7_g7_c86de251,INS7,INS7_AddComment,secondary_affected,secondary,G7,,,,Containment-family baseline.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins7_g9_bcd2ce9b,INS7,INS7_AddComment,secondary_affected,secondary,G9,,,,"Containment path has high sharedness, high volatility, or high residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins7_g0_1f628fad,INS7,INS7_AddComment,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins7_g3_e7300dd8,INS7,INS7_AddComment,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins8_g0_2acc6939,INS8,INS8_AddFriendship,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_ins8_g3_8e5c5f42,INS8,INS8_AddFriendship,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is1_g0_edd90ee3,IS1,IS1_ProfileOfPerson,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is1_g3_6c817501,IS1,IS1_ProfileOfPerson,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is2_g0_1d094f1c,IS2,IS2_RecentMessagesOfPerson,secondary_affected,secondary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is2_g3_b993236d,IS2,IS2_RecentMessagesOfPerson,secondary_affected,secondary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is2_g4_9622e695,IS2,IS2_RecentMessagesOfPerson,secondary_affected,secondary,G4,,,,Associative-family baseline using explicit relationship documents.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is2_g6_7253ed90,IS2,IS2_RecentMessagesOfPerson,secondary_affected,secondary,G6,,,,Associative relation is volatile/shared and should be represented with references or reverse indexes.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is2_g7_26e684aa,IS2,IS2_RecentMessagesOfPerson,secondary_affected,secondary,G7,,,,Containment-family baseline.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is2_g9_b1df45f6,IS2,IS2_RecentMessagesOfPerson,secondary_affected,secondary,G9,,,,"Containment path has high sharedness, high volatility, or high residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is3_g0_fc24df68,IS3,IS3_FriendsOfPerson,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is3_g3_ebc00ba6,IS3,IS3_FriendsOfPerson,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is4_g1_c923c633,IS4,IS4_ContentOfMessage,primary,primary,G1,,,,Lookup query with no explicit relationship traversal.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is4_g0_103e0c60,IS4,IS4_ContentOfMessage,control,control,G0,,,,Control baseline for root document comparison.,True,False,False,already_materialized_in_phase_1A
+ldbc_snb_is5_g0_0e8582ef,IS5,IS5_CreatorOfMessage,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is5_g3_f332352f,IS5,IS5_CreatorOfMessage,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is6_g0_768bbe02,IS6,IS6_ForumOfMessage,secondary_affected,secondary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is6_g3_f811f02c,IS6,IS6_ForumOfMessage,secondary_affected,secondary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is6_g7_0aecbe5c,IS6,IS6_ForumOfMessage,primary,primary,G7,,,,Containment-family baseline.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is6_g9_c7584187,IS6,IS6_ForumOfMessage,primary,primary,G9,,,,"Containment path has high sharedness, high volatility, or high residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is7_g7_4e6a7bf8,IS7,IS7_RepliesOfMessage,secondary_affected,secondary,G7,,,,Containment-family baseline.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is7_g9_392f7469,IS7,IS7_RepliesOfMessage,secondary_affected,secondary,G9,,,,"Containment path has high sharedness, high volatility, or high residual traversal.",True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is7_g0_7dff7761,IS7,IS7_RepliesOfMessage,primary,primary,G0,,,,Association-family baseline root document.,True,True,False,already_materialized_in_phase_1A
+ldbc_snb_is7_g3_6298fb5e,IS7,IS7_RepliesOfMessage,primary,primary,G3,,,,"Association path has high sharedness, high volatility, deep traversal, or residual traversal.",True,True,False,already_materialized_in_phase_1A
