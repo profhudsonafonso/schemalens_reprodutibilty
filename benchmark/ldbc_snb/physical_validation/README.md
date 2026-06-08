@@ -84,3 +84,17 @@ Main files:
 The validation confirms that INS1–INS8 physical candidates execute successfully, write documents, and maintain the expected base and derived physical structures.
 
 For write workloads, the artifact records synthetic `WRITE` evidence instead of read-style MongoDB `executionStats`.
+
+## Full SF0.1 physical validation summary
+
+The folder also includes a consolidated SF0.1 validation summary for all LDBC SNB query groups:
+
+    physical_validation/ldbc_snb_sf0_1_full_physical_validation/
+
+Main files:
+
+- `ldbc_snb_sf0_1_physical_validation_summary.csv`
+- `ldbc_snb_sf0_1_physical_validation_global_summary.csv`
+- `README_ldbc_snb_sf0_1_full_physical_validation.md`
+
+This summary consolidates IC1–IC7, IS1–IS7, and INS1–INS8. It reports 22 validated official queries, 64 physical candidates, zero failed runs, zero semantic warnings, and zero collection-scan query groups in the inspected evidence.

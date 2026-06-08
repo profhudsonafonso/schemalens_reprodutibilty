@@ -394,3 +394,19 @@ The validation artifacts are located in:
 This pilot validates that INS1–INS8 physical candidates execute successfully, write documents, and maintain the expected base and derived physical structures.
 
 Because INS workloads are write-oriented, the artifact records write-path evidence and physical-maintenance checks rather than treating these operations as read-style explain-plan workloads.
+
+## Full physical validation summary for SF0.1
+
+A consolidated SF0.1 physical validation summary is available at:
+
+    benchmark/ldbc_snb/physical_validation/ldbc_snb_sf0_1_full_physical_validation/
+
+This summary combines:
+
+- IC1–IC7 physical read-query validation;
+- IS1–IS7 physical read-query validation;
+- INS1–INS8 physical write-workload validation.
+
+The SF0.1 pilot validates 22 official LDBC SNB queries and 64 physical MongoDB candidates. The global summary reports all queries as validated, with zero failed runs, zero semantic warnings, and zero collection-scan query groups in the inspected evidence.
+
+This is a pilot validation phase. It validates physical correctness and execution evidence before larger benchmark campaigns over SF0.1, SF1, and SF3.
