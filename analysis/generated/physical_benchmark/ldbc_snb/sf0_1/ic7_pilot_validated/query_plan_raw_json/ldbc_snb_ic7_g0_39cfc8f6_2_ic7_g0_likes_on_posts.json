@@ -1,0 +1,246 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6.person_likes_post",
+    "parsedQuery": {
+      "post_id": {
+        "$in": [
+          "1030792151988",
+          "1030792151989",
+          "1030792151990",
+          "1030792151991",
+          "1030792151992",
+          "1030792151993",
+          "1030792151994",
+          "1030792151995",
+          "1030792151996",
+          "1030792151997",
+          "1030792151998",
+          "1030792151999",
+          "1030792152000",
+          "1030792152001",
+          "1030792152002",
+          "1030792152003",
+          "1030792152004",
+          "1030792152049",
+          "1030792152050",
+          "1030792152051"
+        ]
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "62E8728B",
+    "planCacheShapeHash": "62E8728B",
+    "planCacheKey": "8B618304",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "SORT",
+      "sortPattern": {
+        "creation_date": -1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 20,
+      "type": "simple",
+      "inputStage": {
+        "stage": "FETCH",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "keyPattern": {
+            "post_id": 1
+          },
+          "indexName": "post_id_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "post_id": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "post_id": [
+              "[\"1030792151988\", \"1030792151988\"]",
+              "[\"1030792151989\", \"1030792151989\"]",
+              "[\"1030792151990\", \"1030792151990\"]",
+              "[\"1030792151991\", \"1030792151991\"]",
+              "[\"1030792151992\", \"1030792151992\"]",
+              "[\"1030792151993\", \"1030792151993\"]",
+              "[\"1030792151994\", \"1030792151994\"]",
+              "[\"1030792151995\", \"1030792151995\"]",
+              "[\"1030792151996\", \"1030792151996\"]",
+              "[\"1030792151997\", \"1030792151997\"]",
+              "[\"1030792151998\", \"1030792151998\"]",
+              "[\"1030792151999\", \"1030792151999\"]",
+              "[\"1030792152000\", \"1030792152000\"]",
+              "[\"1030792152001\", \"1030792152001\"]",
+              "[\"1030792152002\", \"1030792152002\"]",
+              "[\"1030792152003\", \"1030792152003\"]",
+              "[\"1030792152004\", \"1030792152004\"]",
+              "[\"1030792152049\", \"1030792152049\"]",
+              "[\"1030792152050\", \"1030792152050\"]",
+              "[\"1030792152051\", \"1030792152051\"]"
+            ]
+          }
+        }
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 2,
+    "totalDocsExamined": 1,
+    "executionStages": {
+      "isCached": false,
+      "stage": "SORT",
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0,
+      "works": 4,
+      "advanced": 1,
+      "needTime": 2,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "sortPattern": {
+        "creation_date": -1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 20,
+      "type": "simple",
+      "totalDataSizeSorted": 211,
+      "usedDisk": false,
+      "spills": 0,
+      "spilledDataStorageSize": 0,
+      "inputStage": {
+        "stage": "FETCH",
+        "nReturned": 1,
+        "executionTimeMillisEstimate": 0,
+        "works": 2,
+        "advanced": 1,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "docsExamined": 1,
+        "alreadyHasObj": 0,
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nReturned": 1,
+          "executionTimeMillisEstimate": 0,
+          "works": 2,
+          "advanced": 1,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "keyPattern": {
+            "post_id": 1
+          },
+          "indexName": "post_id_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "post_id": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "post_id": [
+              "[\"1030792151988\", \"1030792151988\"]",
+              "[\"1030792151989\", \"1030792151989\"]",
+              "[\"1030792151990\", \"1030792151990\"]",
+              "[\"1030792151991\", \"1030792151991\"]",
+              "[\"1030792151992\", \"1030792151992\"]",
+              "[\"1030792151993\", \"1030792151993\"]",
+              "[\"1030792151994\", \"1030792151994\"]",
+              "[\"1030792151995\", \"1030792151995\"]",
+              "[\"1030792151996\", \"1030792151996\"]",
+              "[\"1030792151997\", \"1030792151997\"]",
+              "[\"1030792151998\", \"1030792151998\"]",
+              "[\"1030792151999\", \"1030792151999\"]",
+              "[\"1030792152000\", \"1030792152000\"]",
+              "[\"1030792152001\", \"1030792152001\"]",
+              "[\"1030792152002\", \"1030792152002\"]",
+              "[\"1030792152003\", \"1030792152003\"]",
+              "[\"1030792152004\", \"1030792152004\"]",
+              "[\"1030792152049\", \"1030792152049\"]",
+              "[\"1030792152050\", \"1030792152050\"]",
+              "[\"1030792152051\", \"1030792152051\"]"
+            ]
+          },
+          "keysExamined": 2,
+          "seeks": 1,
+          "dupsTested": 0,
+          "dupsDropped": 0
+        }
+      }
+    }
+  },
+  "queryShapeHash": "6FA0A22C62FA662CA991CF5F65D09AA42C86FD51DC6A2B9334E6B8725CE28ED1",
+  "command": {
+    "find": "person_likes_post",
+    "filter": {
+      "post_id": {
+        "$in": [
+          "1030792152004",
+          "1030792152003",
+          "1030792152002",
+          "1030792152001",
+          "1030792152000",
+          "1030792151999",
+          "1030792151998",
+          "1030792151997",
+          "1030792151996",
+          "1030792151995",
+          "1030792151994",
+          "1030792151993",
+          "1030792151992",
+          "1030792151991",
+          "1030792151990",
+          "1030792151989",
+          "1030792151988",
+          "1030792152051",
+          "1030792152050",
+          "1030792152049"
+        ]
+      }
+    },
+    "sort": {
+      "creation_date": -1
+    },
+    "limit": 20,
+    "$db": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6"
+  },
+  "serverInfo": {
+    "host": "b5ca2d54e19c",
+    "port": 27017,
+    "version": "8.0.20",
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

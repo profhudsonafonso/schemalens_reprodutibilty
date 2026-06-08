@@ -218,6 +218,30 @@ The corresponding documentation is available in:
 
 This extension does not change the analytical matrix, activation rules, candidate identifiers, or benchmark groups. It only replaces the previous simplified execution layer with faithful MongoDB physical materializations for the generated candidates.
 
+## Faithful physical benchmark phase 2 status
+
+The repository also includes the current Phase 2 validation outputs for the faithful MongoDB physical benchmark on LDBC SNB SF0.1.
+
+The Phase 2 runner executes each candidate through its candidate-specific physical access path, separates timed p95 measurement from MongoDB explain, and records resource-monitor logs for debugging.
+
+Current validated outputs:
+
+    analysis/generated/physical_benchmark/ldbc_snb/sf0_1/ic7_pilot_validated/
+    analysis/generated/physical_benchmark/ldbc_snb/sf0_1/is_validated/
+
+Documentation:
+
+    docs/ldbc_snb_physical_benchmark_phase2.md
+
+Current status:
+
+    IC7 pilot validated
+    IS1--IS7 validated
+    failed_runs_total = 0 for the validated IS group
+    semantic_warning_rows = 0 for the validated IS group
+    collscan_rows = 0 for the validated IS group
+
+These are pilot validation runs. Final larger p95 runs will be executed after IC1--IC6 and INS1--INS8 are validated.
 
 ## Result analysis
 

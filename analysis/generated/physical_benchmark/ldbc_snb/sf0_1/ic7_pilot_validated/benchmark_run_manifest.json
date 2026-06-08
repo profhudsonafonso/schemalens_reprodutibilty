@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-06-07T15:15:45.085717+00:00",
+  "script": "run_ldbc_snb_physical_benchmark_ic7.py",
+  "manifest": "/home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf0_1_full_comparison_consolidated/materialization/physical_materialization_manifest.csv",
+  "results_dir": "/home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_benchmark/ic7_pilot_sf0_1_v4",
+  "official_id": "IC7",
+  "scale_label": "sf0.1",
+  "sample_size": 5,
+  "warmup_runs": 3,
+  "benchmark_runs": 20,
+  "resource_monitor": true,
+  "notes": "Benchmark p95 was measured before query-plan explain. Explain results are not included in performance timings."
+}

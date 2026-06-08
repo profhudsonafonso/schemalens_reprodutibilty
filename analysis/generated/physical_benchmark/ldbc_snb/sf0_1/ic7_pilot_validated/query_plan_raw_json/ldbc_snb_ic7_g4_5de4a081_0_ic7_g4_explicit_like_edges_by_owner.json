@@ -1,0 +1,195 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g4_5de4a081.ic7_g4_explicit_like_edges",
+    "parsedQuery": {
+      "owner_person_id": {
+        "$eq": "10995116278700"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "FB33C242",
+    "planCacheShapeHash": "FB33C242",
+    "planCacheKey": "CEF91669",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "FETCH",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "keyPattern": {
+            "owner_person_id": 1,
+            "creation_date": -1
+          },
+          "indexName": "owner_person_id_1_creation_date_-1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "owner_person_id": [],
+            "creation_date": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "owner_person_id": [
+              "[\"10995116278700\", \"10995116278700\"]"
+            ],
+            "creation_date": [
+              "[MaxKey, MinKey]"
+            ]
+          }
+        }
+      }
+    },
+    "rejectedPlans": [
+      {
+        "isCached": false,
+        "stage": "SORT",
+        "sortPattern": {
+          "creation_date": -1
+        },
+        "memLimit": 104857600,
+        "limitAmount": 20,
+        "type": "simple",
+        "inputStage": {
+          "stage": "FETCH",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "keyPattern": {
+              "owner_person_id": 1
+            },
+            "indexName": "owner_person_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "owner_person_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "owner_person_id": [
+                "[\"10995116278700\", \"10995116278700\"]"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 6,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 6,
+    "totalDocsExamined": 6,
+    "executionStages": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "nReturned": 6,
+      "executionTimeMillisEstimate": 0,
+      "works": 8,
+      "advanced": 6,
+      "needTime": 0,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "FETCH",
+        "nReturned": 6,
+        "executionTimeMillisEstimate": 0,
+        "works": 8,
+        "advanced": 6,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "docsExamined": 6,
+        "alreadyHasObj": 0,
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nReturned": 6,
+          "executionTimeMillisEstimate": 0,
+          "works": 7,
+          "advanced": 6,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "keyPattern": {
+            "owner_person_id": 1,
+            "creation_date": -1
+          },
+          "indexName": "owner_person_id_1_creation_date_-1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "owner_person_id": [],
+            "creation_date": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "owner_person_id": [
+              "[\"10995116278700\", \"10995116278700\"]"
+            ],
+            "creation_date": [
+              "[MaxKey, MinKey]"
+            ]
+          },
+          "keysExamined": 6,
+          "seeks": 1,
+          "dupsTested": 0,
+          "dupsDropped": 0
+        }
+      }
+    }
+  },
+  "queryShapeHash": "F92680B5D9277740CAD2D891F88D8BD49072BC367DC14C91EA5184F48FFD1972",
+  "command": {
+    "find": "ic7_g4_explicit_like_edges",
+    "filter": {
+      "owner_person_id": "10995116278700"
+    },
+    "sort": {
+      "creation_date": -1
+    },
+    "limit": 20,
+    "$db": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g4_5de4a081"
+  },
+  "serverInfo": {
+    "host": "b5ca2d54e19c",
+    "port": 27017,
+    "version": "8.0.20",
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

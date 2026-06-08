@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-06-07T17:08:42.421818+00:00",
+  "dataset": "ldbc_snb",
+  "scale_label": "sf0.1",
+  "validated_group": "IS1-IS7",
+  "aggregate_rows": 22,
+  "raw_rows": 220,
+  "query_plan_summary_rows": 22,
+  "query_plan_component_rows": 58,
+  "official_ids": [
+    "IS1",
+    "IS2",
+    "IS3",
+    "IS4",
+    "IS5",
+    "IS6",
+    "IS7"
+  ],
+  "failed_runs_total": 0,
+  "semantic_warning_rows": 0,
+  "collscan_rows": 0
+}

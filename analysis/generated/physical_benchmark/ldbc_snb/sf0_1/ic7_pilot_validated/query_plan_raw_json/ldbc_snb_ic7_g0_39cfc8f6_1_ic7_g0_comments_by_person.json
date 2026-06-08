@@ -1,0 +1,233 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6.comments",
+    "parsedQuery": {
+      "creator_person_id": {
+        "$eq": "10995116278700"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "2E485C5A",
+    "planCacheShapeHash": "2E485C5A",
+    "planCacheKey": "8EB81C8F",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "PROJECTION_SIMPLE",
+      "transformBy": {
+        "comment_id": 1,
+        "creation_date": 1
+      },
+      "inputStage": {
+        "stage": "SORT",
+        "sortPattern": {
+          "creation_date": -1
+        },
+        "memLimit": 104857600,
+        "limitAmount": 20,
+        "type": "simple",
+        "inputStage": {
+          "stage": "FETCH",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "keyPattern": {
+              "creator_person_id": 1
+            },
+            "indexName": "creator_person_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "creator_person_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "creator_person_id": [
+                "[\"10995116278700\", \"10995116278700\"]"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "rejectedPlans": [
+      {
+        "isCached": false,
+        "stage": "LIMIT",
+        "limitAmount": 20,
+        "inputStage": {
+          "stage": "PROJECTION_SIMPLE",
+          "transformBy": {
+            "comment_id": 1,
+            "creation_date": 1
+          },
+          "inputStage": {
+            "stage": "FETCH",
+            "filter": {
+              "creator_person_id": {
+                "$eq": "10995116278700"
+              }
+            },
+            "inputStage": {
+              "stage": "IXSCAN",
+              "keyPattern": {
+                "creation_date": 1
+              },
+              "indexName": "creation_date_1",
+              "isMultiKey": false,
+              "multiKeyPaths": {
+                "creation_date": []
+              },
+              "isUnique": false,
+              "isSparse": false,
+              "isPartial": false,
+              "indexVersion": 2,
+              "direction": "backward",
+              "indexBounds": {
+                "creation_date": [
+                  "[MaxKey, MinKey]"
+                ]
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 20,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 42,
+    "totalDocsExamined": 42,
+    "executionStages": {
+      "isCached": false,
+      "stage": "PROJECTION_SIMPLE",
+      "nReturned": 20,
+      "executionTimeMillisEstimate": 0,
+      "works": 64,
+      "advanced": 20,
+      "needTime": 43,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "transformBy": {
+        "comment_id": 1,
+        "creation_date": 1
+      },
+      "inputStage": {
+        "stage": "SORT",
+        "nReturned": 20,
+        "executionTimeMillisEstimate": 0,
+        "works": 64,
+        "advanced": 20,
+        "needTime": 43,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "sortPattern": {
+          "creation_date": -1
+        },
+        "memLimit": 104857600,
+        "limitAmount": 20,
+        "type": "simple",
+        "totalDataSizeSorted": 8074,
+        "usedDisk": false,
+        "spills": 0,
+        "spilledDataStorageSize": 0,
+        "inputStage": {
+          "stage": "FETCH",
+          "nReturned": 42,
+          "executionTimeMillisEstimate": 0,
+          "works": 43,
+          "advanced": 42,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "docsExamined": 42,
+          "alreadyHasObj": 0,
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nReturned": 42,
+            "executionTimeMillisEstimate": 0,
+            "works": 43,
+            "advanced": 42,
+            "needTime": 0,
+            "needYield": 0,
+            "saveState": 0,
+            "restoreState": 0,
+            "isEOF": 1,
+            "keyPattern": {
+              "creator_person_id": 1
+            },
+            "indexName": "creator_person_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "creator_person_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "creator_person_id": [
+                "[\"10995116278700\", \"10995116278700\"]"
+              ]
+            },
+            "keysExamined": 42,
+            "seeks": 1,
+            "dupsTested": 0,
+            "dupsDropped": 0
+          }
+        }
+      }
+    }
+  },
+  "queryShapeHash": "9FA8D5E8664993DD6E68182952CC1685CF8DEFE73E2E61DA8BC6359FAEEF1EB5",
+  "command": {
+    "find": "comments",
+    "filter": {
+      "creator_person_id": "10995116278700"
+    },
+    "projection": {
+      "comment_id": 1,
+      "creation_date": 1
+    },
+    "sort": {
+      "creation_date": -1
+    },
+    "limit": 20,
+    "$db": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6"
+  },
+  "serverInfo": {
+    "host": "b5ca2d54e19c",
+    "port": 27017,
+    "version": "8.0.20",
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

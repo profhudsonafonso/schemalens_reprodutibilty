@@ -1,0 +1,2 @@
+timestamp,container,running,status,exit_code,oom_killed,mem_free_mb,mem_used_mb,mem_total_mb,mem_percent,disk_free_gb,disk_used_gb,docker_cpu,docker_mem,docker_mem_percent,docker_block_io,docker_pids
+2026-06-07T12:15:44-03:00,ldbc_mongodb_physical,true,running,0,false,27039.0,4740.0,63877.0,7.42,220.0,670.0,4.78%,1.481GiB / 62.38GiB,2.37%,106kB / 647MB,48

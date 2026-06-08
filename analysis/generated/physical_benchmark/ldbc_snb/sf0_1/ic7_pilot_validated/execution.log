@@ -1,0 +1,66 @@
+[2026-06-07 12:15:44,941] [INFO] LDBC SNB physical benchmark IC7 runner started
+[2026-06-07 12:15:44,941] [INFO] Command arguments: {
+  "manifest": "/home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf0_1_full_comparison_consolidated/materialization/physical_materialization_manifest.csv",
+  "results_dir": "/home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_benchmark/ic7_pilot_sf0_1_v4",
+  "official_id": "IC7",
+  "scale_label": "sf0.1",
+  "run_phase": "hot",
+  "sample_size": 5,
+  "warmup_runs": 3,
+  "benchmark_runs": 20,
+  "limit": 20,
+  "owner_ids": [
+    "10995116278700",
+    "2199023256181",
+    "8796093023143",
+    "4398046512521",
+    "10995116278286"
+  ],
+  "mongo_host": "127.0.0.1",
+  "mongo_port": 27018,
+  "mongo_username": "mongo",
+  "mongo_password": "mongo",
+  "mongo_auth_source": "admin",
+  "materialize_first": false,
+  "build_script": null,
+  "data_dir": null,
+  "artifacts_dir": null,
+  "execution_plan": "benchmark_execution_plan.csv",
+  "batch_size": 50000,
+  "resource_monitor": true,
+  "resource_monitor_interval_sec": 5,
+  "docker_container_name": "ldbc_mongodb_physical",
+  "mongo_data_dir": "/home/hudson/mongo_data/ldbc_physical",
+  "save_raw_explain": true
+}
+[2026-06-07 12:15:44,942] [INFO] Resource monitor started: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_benchmark/ic7_pilot_sf0_1_v4/resource_monitor.csv
+[2026-06-07 12:15:44,942] [INFO] Using manifest: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf0_1_full_comparison_consolidated/materialization/physical_materialization_manifest.csv
+[2026-06-07 12:15:44,947] [INFO] Ready candidates selected: 4
+[2026-06-07 12:15:44,949] [INFO]             candidate_id official_id g_class    benchmark_group                                      db_name
+ldbc_snb_ic7_g0_39cfc8f6         IC7      G0            primary ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6
+ldbc_snb_ic7_g3_d6d26f02         IC7      G3            primary ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g3_d6d26f02
+ldbc_snb_ic7_g4_5de4a081         IC7      G4 secondary_affected ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g4_5de4a081
+ldbc_snb_ic7_g6_084f8a43         IC7      G6 secondary_affected ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g6_084f8a43
+[2026-06-07 12:15:44,960] [INFO] MongoDB connection OK
+[2026-06-07 12:15:44,960] [INFO] IC7 parameter pool from --owner-ids: ['10995116278700', '2199023256181', '8796093023143', '4398046512521', '10995116278286']
+[2026-06-07 12:15:44,962] [INFO] Saved IC7 parameter pool: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_benchmark/ic7_pilot_sf0_1_v4/ic7_parameter_pool.csv
+[2026-06-07 12:15:44,962] [INFO] Benchmark candidate=ldbc_snb_ic7_g0_39cfc8f6 g_class=G0 db=ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6
+[2026-06-07 12:15:45,014] [INFO] Query plan candidate=ldbc_snb_ic7_g0_39cfc8f6
+[2026-06-07 12:15:45,017] [INFO] Query-plan owner selected for all candidates: 10995116278700 counts={'G0': 1, 'G3': 6, 'G4': 6, 'G6': 1}
+[2026-06-07 12:15:45,023] [INFO] Benchmark candidate=ldbc_snb_ic7_g3_d6d26f02 g_class=G3 db=ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g3_d6d26f02
+[2026-06-07 12:15:45,034] [INFO] Query plan candidate=ldbc_snb_ic7_g3_d6d26f02
+[2026-06-07 12:15:45,037] [INFO] Query-plan owner selected for all candidates: 10995116278700 counts={'G0': 1, 'G3': 6, 'G4': 6, 'G6': 1}
+[2026-06-07 12:15:45,039] [INFO] Benchmark candidate=ldbc_snb_ic7_g4_5de4a081 g_class=G4 db=ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g4_5de4a081
+[2026-06-07 12:15:45,052] [INFO] Query plan candidate=ldbc_snb_ic7_g4_5de4a081
+[2026-06-07 12:15:45,055] [INFO] Query-plan owner selected for all candidates: 10995116278700 counts={'G0': 1, 'G3': 6, 'G4': 6, 'G6': 1}
+[2026-06-07 12:15:45,057] [INFO] Benchmark candidate=ldbc_snb_ic7_g6_084f8a43 g_class=G6 db=ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g6_084f8a43
+[2026-06-07 12:15:45,070] [INFO] Query plan candidate=ldbc_snb_ic7_g6_084f8a43
+[2026-06-07 12:15:45,074] [INFO] Query-plan owner selected for all candidates: 10995116278700 counts={'G0': 1, 'G3': 6, 'G4': 6, 'G6': 1}
+[2026-06-07 12:15:45,085] [INFO] Saved benchmark_raw_results.csv
+[2026-06-07 12:15:45,085] [INFO] Saved benchmark_aggregate_results.csv
+[2026-06-07 12:15:45,085] [INFO] Saved query_plan_component_results.csv
+[2026-06-07 12:15:45,085] [INFO] Saved query_plan_summary_results.csv
+[2026-06-07 12:15:45,085] [INFO] Saved query_plan_status_summary.csv
+[2026-06-07 12:15:45,085] [INFO] Saved benchmark_run_manifest.json
+[2026-06-07 12:15:45,085] [INFO] Done. Results in: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_benchmark/ic7_pilot_sf0_1_v4
+[2026-06-07 12:15:46,010] [INFO] Resource monitor stopped

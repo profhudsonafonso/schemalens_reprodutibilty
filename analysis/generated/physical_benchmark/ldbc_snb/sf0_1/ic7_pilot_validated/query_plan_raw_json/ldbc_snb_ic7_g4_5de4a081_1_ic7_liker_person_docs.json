@@ -1,0 +1,175 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g4_5de4a081.persons",
+    "parsedQuery": {
+      "person_id": {
+        "$eq": "19791209300852"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "A3F51273",
+    "planCacheShapeHash": "A3F51273",
+    "planCacheKey": "F0ADA1CF",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "PROJECTION_SIMPLE",
+        "transformBy": {
+          "person_id": 1
+        },
+        "inputStage": {
+          "stage": "FETCH",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "keyPattern": {
+              "person_id": 1
+            },
+            "indexName": "person_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "person_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "person_id": [
+                "[\"19791209300852\", \"19791209300852\"]"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 1,
+    "totalDocsExamined": 1,
+    "executionStages": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0,
+      "works": 2,
+      "advanced": 1,
+      "needTime": 0,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "PROJECTION_SIMPLE",
+        "nReturned": 1,
+        "executionTimeMillisEstimate": 0,
+        "works": 2,
+        "advanced": 1,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "transformBy": {
+          "person_id": 1
+        },
+        "inputStage": {
+          "stage": "FETCH",
+          "nReturned": 1,
+          "executionTimeMillisEstimate": 0,
+          "works": 2,
+          "advanced": 1,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "docsExamined": 1,
+          "alreadyHasObj": 0,
+          "inputStage": {
+            "stage": "IXSCAN",
+            "nReturned": 1,
+            "executionTimeMillisEstimate": 0,
+            "works": 2,
+            "advanced": 1,
+            "needTime": 0,
+            "needYield": 0,
+            "saveState": 0,
+            "restoreState": 0,
+            "isEOF": 1,
+            "keyPattern": {
+              "person_id": 1
+            },
+            "indexName": "person_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "person_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "person_id": [
+                "[\"19791209300852\", \"19791209300852\"]"
+              ]
+            },
+            "keysExamined": 1,
+            "seeks": 1,
+            "dupsTested": 0,
+            "dupsDropped": 0
+          }
+        }
+      }
+    }
+  },
+  "queryShapeHash": "064D2A9EC6337943D2973EAC8AE798CD9CC084BE30CF6984B366A52C1EF1F07E",
+  "command": {
+    "find": "persons",
+    "filter": {
+      "person_id": {
+        "$in": [
+          "19791209300852"
+        ]
+      }
+    },
+    "projection": {
+      "person_id": 1
+    },
+    "limit": 20,
+    "$db": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g4_5de4a081"
+  },
+  "serverInfo": {
+    "host": "b5ca2d54e19c",
+    "port": 27017,
+    "version": "8.0.20",
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

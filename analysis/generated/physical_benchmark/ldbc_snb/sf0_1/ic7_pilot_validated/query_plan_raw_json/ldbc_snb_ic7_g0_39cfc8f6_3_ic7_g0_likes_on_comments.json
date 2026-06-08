@@ -1,0 +1,246 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6.person_likes_comment",
+    "parsedQuery": {
+      "comment_id": {
+        "$in": [
+          "1030792343266",
+          "1030792343481",
+          "1030792343498",
+          "1030792343629",
+          "1030792343828",
+          "1030792343838",
+          "1030792343878",
+          "1030792343955",
+          "1030792344207",
+          "1030792344347",
+          "893353390708",
+          "962072866520",
+          "962072866576",
+          "962072866578",
+          "962072866585",
+          "962072867156",
+          "962072867160",
+          "962072867166",
+          "962073020911",
+          "962073021177"
+        ]
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "8CF56035",
+    "planCacheShapeHash": "8CF56035",
+    "planCacheKey": "49AC8B62",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "SORT",
+      "sortPattern": {
+        "creation_date": -1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 20,
+      "type": "simple",
+      "inputStage": {
+        "stage": "FETCH",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "keyPattern": {
+            "comment_id": 1
+          },
+          "indexName": "comment_id_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "comment_id": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "comment_id": [
+              "[\"1030792343266\", \"1030792343266\"]",
+              "[\"1030792343481\", \"1030792343481\"]",
+              "[\"1030792343498\", \"1030792343498\"]",
+              "[\"1030792343629\", \"1030792343629\"]",
+              "[\"1030792343828\", \"1030792343828\"]",
+              "[\"1030792343838\", \"1030792343838\"]",
+              "[\"1030792343878\", \"1030792343878\"]",
+              "[\"1030792343955\", \"1030792343955\"]",
+              "[\"1030792344207\", \"1030792344207\"]",
+              "[\"1030792344347\", \"1030792344347\"]",
+              "[\"893353390708\", \"893353390708\"]",
+              "[\"962072866520\", \"962072866520\"]",
+              "[\"962072866576\", \"962072866576\"]",
+              "[\"962072866578\", \"962072866578\"]",
+              "[\"962072866585\", \"962072866585\"]",
+              "[\"962072867156\", \"962072867156\"]",
+              "[\"962072867160\", \"962072867160\"]",
+              "[\"962072867166\", \"962072867166\"]",
+              "[\"962073020911\", \"962073020911\"]",
+              "[\"962073021177\", \"962073021177\"]"
+            ]
+          }
+        }
+      }
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 0,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 8,
+    "totalDocsExamined": 0,
+    "executionStages": {
+      "isCached": false,
+      "stage": "SORT",
+      "nReturned": 0,
+      "executionTimeMillisEstimate": 0,
+      "works": 9,
+      "advanced": 0,
+      "needTime": 8,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "sortPattern": {
+        "creation_date": -1
+      },
+      "memLimit": 104857600,
+      "limitAmount": 20,
+      "type": "simple",
+      "totalDataSizeSorted": 0,
+      "usedDisk": false,
+      "spills": 0,
+      "spilledDataStorageSize": 0,
+      "inputStage": {
+        "stage": "FETCH",
+        "nReturned": 0,
+        "executionTimeMillisEstimate": 0,
+        "works": 8,
+        "advanced": 0,
+        "needTime": 7,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "docsExamined": 0,
+        "alreadyHasObj": 0,
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nReturned": 0,
+          "executionTimeMillisEstimate": 0,
+          "works": 8,
+          "advanced": 0,
+          "needTime": 7,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "keyPattern": {
+            "comment_id": 1
+          },
+          "indexName": "comment_id_1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "comment_id": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "comment_id": [
+              "[\"1030792343266\", \"1030792343266\"]",
+              "[\"1030792343481\", \"1030792343481\"]",
+              "[\"1030792343498\", \"1030792343498\"]",
+              "[\"1030792343629\", \"1030792343629\"]",
+              "[\"1030792343828\", \"1030792343828\"]",
+              "[\"1030792343838\", \"1030792343838\"]",
+              "[\"1030792343878\", \"1030792343878\"]",
+              "[\"1030792343955\", \"1030792343955\"]",
+              "[\"1030792344207\", \"1030792344207\"]",
+              "[\"1030792344347\", \"1030792344347\"]",
+              "[\"893353390708\", \"893353390708\"]",
+              "[\"962072866520\", \"962072866520\"]",
+              "[\"962072866576\", \"962072866576\"]",
+              "[\"962072866578\", \"962072866578\"]",
+              "[\"962072866585\", \"962072866585\"]",
+              "[\"962072867156\", \"962072867156\"]",
+              "[\"962072867160\", \"962072867160\"]",
+              "[\"962072867166\", \"962072867166\"]",
+              "[\"962073020911\", \"962073020911\"]",
+              "[\"962073021177\", \"962073021177\"]"
+            ]
+          },
+          "keysExamined": 8,
+          "seeks": 8,
+          "dupsTested": 0,
+          "dupsDropped": 0
+        }
+      }
+    }
+  },
+  "queryShapeHash": "F7F95F27782AD965C274466F98F67A3F34F13777A96132C9E316F3244EF9140A",
+  "command": {
+    "find": "person_likes_comment",
+    "filter": {
+      "comment_id": {
+        "$in": [
+          "1030792343481",
+          "1030792343629",
+          "1030792344207",
+          "1030792344347",
+          "1030792343878",
+          "1030792343828",
+          "1030792343838",
+          "1030792343266",
+          "1030792343498",
+          "1030792343955",
+          "962072866520",
+          "962072867166",
+          "962073020911",
+          "962073021177",
+          "962072867156",
+          "962072866585",
+          "962072867160",
+          "962072866576",
+          "962072866578",
+          "893353390708"
+        ]
+      }
+    },
+    "sort": {
+      "creation_date": -1
+    },
+    "limit": 20,
+    "$db": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g0_39cfc8f6"
+  },
+  "serverInfo": {
+    "host": "b5ca2d54e19c",
+    "port": 27017,
+    "version": "8.0.20",
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

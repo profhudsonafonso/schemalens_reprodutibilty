@@ -1,0 +1,71 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g3_d6d26f02.ic7_g3_person_recent_liker_summary",
+    "parsedQuery": {
+      "owner_person_id": {
+        "$eq": "10995116278700"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "DCE803D0",
+    "planCacheShapeHash": "DCE803D0",
+    "planCacheKey": "A67CC2BC",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "EXPRESS_IXSCAN",
+      "keyPattern": "{ owner_person_id: 1 }",
+      "indexName": "owner_person_id_1"
+    },
+    "rejectedPlans": []
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 1,
+    "totalDocsExamined": 1,
+    "executionStages": {
+      "isCached": false,
+      "stage": "EXPRESS_IXSCAN",
+      "keyPattern": "{ owner_person_id: 1 }",
+      "indexName": "owner_person_id_1",
+      "keysExamined": 1,
+      "docsExamined": 1,
+      "nReturned": 1
+    }
+  },
+  "queryShapeHash": "98BBD8A2CFC44A9B5695982C5EFEFE71FE922EFB5438255EC782F9B825A7127C",
+  "command": {
+    "find": "ic7_g3_person_recent_liker_summary",
+    "filter": {
+      "owner_person_id": "10995116278700"
+    },
+    "limit": 1,
+    "$db": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g3_d6d26f02"
+  },
+  "serverInfo": {
+    "host": "b5ca2d54e19c",
+    "port": 27017,
+    "version": "8.0.20",
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}

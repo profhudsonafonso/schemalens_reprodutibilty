@@ -1,0 +1,195 @@
+{
+  "explainVersion": "1",
+  "queryPlanner": {
+    "namespace": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g6_084f8a43.ic7_g6_owner_liker_reverse_index",
+    "parsedQuery": {
+      "owner_person_id": {
+        "$eq": "10995116278700"
+      }
+    },
+    "indexFilterSet": false,
+    "queryHash": "0D746EC1",
+    "planCacheShapeHash": "0D746EC1",
+    "planCacheKey": "A6DC0476",
+    "optimizationTimeMillis": 0,
+    "maxIndexedOrSolutionsReached": false,
+    "maxIndexedAndSolutionsReached": false,
+    "maxScansToExplodeReached": false,
+    "prunedSimilarIndexes": false,
+    "winningPlan": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "FETCH",
+        "inputStage": {
+          "stage": "IXSCAN",
+          "keyPattern": {
+            "owner_person_id": 1,
+            "latest_creation_date": -1
+          },
+          "indexName": "owner_person_id_1_latest_creation_date_-1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "owner_person_id": [],
+            "latest_creation_date": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "owner_person_id": [
+              "[\"10995116278700\", \"10995116278700\"]"
+            ],
+            "latest_creation_date": [
+              "[MaxKey, MinKey]"
+            ]
+          }
+        }
+      }
+    },
+    "rejectedPlans": [
+      {
+        "isCached": false,
+        "stage": "SORT",
+        "sortPattern": {
+          "latest_creation_date": -1
+        },
+        "memLimit": 104857600,
+        "limitAmount": 20,
+        "type": "simple",
+        "inputStage": {
+          "stage": "FETCH",
+          "inputStage": {
+            "stage": "IXSCAN",
+            "keyPattern": {
+              "owner_person_id": 1
+            },
+            "indexName": "owner_person_id_1",
+            "isMultiKey": false,
+            "multiKeyPaths": {
+              "owner_person_id": []
+            },
+            "isUnique": false,
+            "isSparse": false,
+            "isPartial": false,
+            "indexVersion": 2,
+            "direction": "forward",
+            "indexBounds": {
+              "owner_person_id": [
+                "[\"10995116278700\", \"10995116278700\"]"
+              ]
+            }
+          }
+        }
+      }
+    ]
+  },
+  "executionStats": {
+    "executionSuccess": true,
+    "nReturned": 1,
+    "executionTimeMillis": 0,
+    "totalKeysExamined": 1,
+    "totalDocsExamined": 1,
+    "executionStages": {
+      "isCached": false,
+      "stage": "LIMIT",
+      "nReturned": 1,
+      "executionTimeMillisEstimate": 0,
+      "works": 3,
+      "advanced": 1,
+      "needTime": 0,
+      "needYield": 0,
+      "saveState": 0,
+      "restoreState": 0,
+      "isEOF": 1,
+      "limitAmount": 20,
+      "inputStage": {
+        "stage": "FETCH",
+        "nReturned": 1,
+        "executionTimeMillisEstimate": 0,
+        "works": 3,
+        "advanced": 1,
+        "needTime": 0,
+        "needYield": 0,
+        "saveState": 0,
+        "restoreState": 0,
+        "isEOF": 1,
+        "docsExamined": 1,
+        "alreadyHasObj": 0,
+        "inputStage": {
+          "stage": "IXSCAN",
+          "nReturned": 1,
+          "executionTimeMillisEstimate": 0,
+          "works": 2,
+          "advanced": 1,
+          "needTime": 0,
+          "needYield": 0,
+          "saveState": 0,
+          "restoreState": 0,
+          "isEOF": 1,
+          "keyPattern": {
+            "owner_person_id": 1,
+            "latest_creation_date": -1
+          },
+          "indexName": "owner_person_id_1_latest_creation_date_-1",
+          "isMultiKey": false,
+          "multiKeyPaths": {
+            "owner_person_id": [],
+            "latest_creation_date": []
+          },
+          "isUnique": false,
+          "isSparse": false,
+          "isPartial": false,
+          "indexVersion": 2,
+          "direction": "forward",
+          "indexBounds": {
+            "owner_person_id": [
+              "[\"10995116278700\", \"10995116278700\"]"
+            ],
+            "latest_creation_date": [
+              "[MaxKey, MinKey]"
+            ]
+          },
+          "keysExamined": 1,
+          "seeks": 1,
+          "dupsTested": 0,
+          "dupsDropped": 0
+        }
+      }
+    }
+  },
+  "queryShapeHash": "C3724B20E15304EDC03EFC7E9D8FE8CAB0736CBC61F36B8E93F9F3171641834B",
+  "command": {
+    "find": "ic7_g6_owner_liker_reverse_index",
+    "filter": {
+      "owner_person_id": "10995116278700"
+    },
+    "sort": {
+      "latest_creation_date": -1
+    },
+    "limit": 20,
+    "$db": "ldbc_snb_phys_sf0_1_ldbc_snb_ic7_g6_084f8a43"
+  },
+  "serverInfo": {
+    "host": "b5ca2d54e19c",
+    "port": 27017,
+    "version": "8.0.20",
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827"
+  },
+  "serverParameters": {
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0,
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1
+  },
+  "ok": 1.0
+}
