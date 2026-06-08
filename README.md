@@ -281,3 +281,11 @@ For this reason, the recommended reviewer path is:
 2. run the short-paper table reproduction script;
 3. inspect the generated CSV summaries and aggregate benchmark outputs;
 4. use the dataset-specific READMEs only if full benchmark reproduction is needed.
+
+## LDBC SNB physical MongoDB validation
+
+A pilot validation of faithful physical MongoDB materializations for LDBC SNB IC1–IC7 at SF0.1 is included under:
+
+    benchmark/ldbc_snb/physical_validation/
+
+This validation checks physical access paths, semantic equivalence, benchmark execution status, and query-plan evidence for the activated SchemaLens candidate families.

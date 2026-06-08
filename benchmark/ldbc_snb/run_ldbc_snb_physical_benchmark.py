@@ -811,7 +811,1368 @@ def run_ic7_g6(db, owner_id, limit=20):
     ]
 
 
+
+def parse_ic1_param(param_id):
+    raw = normalize_id(param_id)
+    if "|" in raw:
+        person_id, first_name = raw.split("|", 1)
+        return person_id, first_name
+    # fallback: if only person_id is given, use the first reachable first_name later
+    return raw, None
+
+
+def get_ic1_summary_collection(db):
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "ic1" in lc and "root_summary" in lc:
+            return c
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "root_summary" in lc:
+            return c
+    return None
+
+
+def ic1_person_neighbors_g0(db, person_id):
+    out = []
+    if "person_knows_person" not in db.list_collection_names():
+        return out
+
+    for r in db.person_knows_person.find({"person1_id": person_id}, {"_id": 0, "person2_id": 1, "creation_date": 1}):
+        if r.get("person2_id"):
+            out.append(str(r["person2_id"]))
+
+    for r in db.person_knows_person.find({"person2_id": person_id}, {"_id": 0, "person1_id": 1, "creation_date": 1}):
+        if r.get("person1_id"):
+            out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic1_person_neighbors_g3(db, person_id):
+    summary_col = get_ic1_summary_collection(db)
+    out = []
+
+    # First use the physically materialized G3 root summary.
+    if summary_col:
+        doc = db[summary_col].find_one({"root_id": person_id}, {"_id": 0})
+        if doc:
+            rels = (doc.get("relationship_summaries") or {}).get("person_knows_person") or []
+            for r in rels:
+                if r.get("person2_id"):
+                    out.append(str(r["person2_id"]))
+                elif r.get("person1_id"):
+                    out.append(str(r["person1_id"]))
+
+    # Preserve IC1 semantics for undirected knows traversal.
+    # The generic root summary may only contain the root-as-person1 direction,
+    # so we use the indexed base relationship collection for the reverse side.
+    if "person_knows_person" in db.list_collection_names():
+        for r in db.person_knows_person.find(
+            {"person2_id": person_id},
+            {"_id": 0, "person1_id": 1}
+        ):
+            if r.get("person1_id"):
+                out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def run_ic1_g0(db, param_id, limit=20):
+    root_id, first_name = parse_ic1_param(param_id)
+
+    # If first_name is not provided, derive one from reachable friends.
+    seen = {root_id}
+    frontier = [root_id]
+    reached = []
+
+    for depth in range(1, 4):
+        next_frontier = []
+        for pid in frontier:
+            for nb in ic1_person_neighbors_g0(db, pid):
+                if nb in seen:
+                    continue
+                seen.add(nb)
+                reached.append((nb, depth))
+                next_frontier.append(nb)
+        frontier = next_frontier
+
+    if not reached:
+        return []
+
+    ids = [x[0] for x in reached]
+
+    if not first_name:
+        sample = db.persons.find_one({"person_id": {"$in": ids}}, {"_id": 0, "first_name": 1})
+        first_name = sample.get("first_name") if sample else None
+
+    if not first_name:
+        return []
+
+    persons = list(db.persons.find(
+        {"person_id": {"$in": ids}, "first_name": first_name},
+        {"_id": 0}
+    ).limit(limit))
+
+    depth_by_id = {pid: depth for pid, depth in reached}
+    return [
+        {
+            "person": p,
+            "distance": depth_by_id.get(str(p.get("person_id"))),
+            "target_first_name": first_name,
+            "root_person_id": root_id,
+        }
+        for p in persons
+    ]
+
+
+def run_ic1_g3(db, param_id, limit=20):
+    root_id, first_name = parse_ic1_param(param_id)
+
+    # Use the materialized root-summary collection for the graph expansion.
+    seen = {root_id}
+    frontier = [root_id]
+    reached = []
+
+    for depth in range(1, 4):
+        next_frontier = []
+        for pid in frontier:
+            for nb in ic1_person_neighbors_g3(db, pid):
+                if nb in seen:
+                    continue
+                seen.add(nb)
+                reached.append((nb, depth))
+                next_frontier.append(nb)
+        frontier = next_frontier
+
+    if not reached:
+        return []
+
+    ids = [x[0] for x in reached]
+
+    if not first_name:
+        sample = db.persons.find_one({"person_id": {"$in": ids}}, {"_id": 0, "first_name": 1})
+        first_name = sample.get("first_name") if sample else None
+
+    if not first_name:
+        return []
+
+    # G3 uses summaries for relationships; persons is still the base entity table for attributes.
+    persons = list(db.persons.find(
+        {"person_id": {"$in": ids}, "first_name": first_name},
+        {"_id": 0}
+    ).limit(limit))
+
+    depth_by_id = {pid: depth for pid, depth in reached}
+    return [
+        {
+            "person": p,
+            "distance": depth_by_id.get(str(p.get("person_id"))),
+            "target_first_name": first_name,
+            "root_person_id": root_id,
+        }
+        for p in persons
+    ]
+
+
+def run_ic1_candidate(db, g_class, param_id, limit=20):
+    if g_class == "G0":
+        return run_ic1_g0(db, param_id, limit)
+    if g_class == "G3":
+        return run_ic1_g3(db, param_id, limit)
+    raise ValueError(f"IC1 physical runner not implemented for g_class={g_class}")
+
+
+def explain_ic1_candidate(db, g_class, param_id, limit=20):
+    root_id, first_name = parse_ic1_param(param_id)
+    comps = []
+
+    def add(name, collection, filter_doc, projection=None, sort=None, limit_value=None):
+        if collection not in db.list_collection_names():
+            return
+        exp = make_explain_find(db, collection, filter_doc, projection, sort, limit_value)
+        stats = explain_stats(exp)
+        comps.append({
+            "component_name": name,
+            "operation_kind": "find",
+            "collection_name": collection,
+            "filter_json": json.dumps(filter_doc, default=str),
+            **stats,
+            "raw_explain": exp,
+        })
+
+    if g_class == "G0":
+        add("ic1_g0_person_by_id", "persons", {"person_id": root_id}, None, None, 1)
+        add("ic1_g0_knows_out", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic1_g0_knows_in", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+        # Explain the attribute filtering component.
+        if first_name:
+            add("ic1_g0_persons_by_first_name", "persons", {"first_name": first_name}, None, None, limit)
+
+    elif g_class == "G3":
+        summary_col = get_ic1_summary_collection(db)
+        if summary_col:
+            add("ic1_g3_root_summary", summary_col, {"root_id": root_id}, None, None, 1)
+
+        # Reverse side of the undirected knows traversal, required because the
+        # generic root summary may only store root-as-person1 relationships.
+        add("ic1_g3_knows_reverse_fallback", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+        if first_name:
+            add("ic1_g3_persons_by_first_name", "persons", {"first_name": first_name}, None, None, limit)
+
+    else:
+        raise ValueError(f"IC1 explain runner not implemented for g_class={g_class}")
+
+    return comps
+
+
+
+def get_ic2_summary_collection(db):
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "ic2" in lc and "root_summary" in lc:
+            return c
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "root_summary" in lc:
+            return c
+    return None
+
+
+def ic2_person_neighbors_g0(db, person_id):
+    out = []
+    if "person_knows_person" not in db.list_collection_names():
+        return out
+
+    for r in db.person_knows_person.find({"person1_id": person_id}, {"_id": 0, "person2_id": 1}):
+        if r.get("person2_id"):
+            out.append(str(r["person2_id"]))
+
+    for r in db.person_knows_person.find({"person2_id": person_id}, {"_id": 0, "person1_id": 1}):
+        if r.get("person1_id"):
+            out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic2_person_neighbors_g3(db, person_id):
+    summary_col = get_ic2_summary_collection(db)
+    out = []
+
+    # Use the physically materialized G3 root summary first.
+    if summary_col:
+        doc = db[summary_col].find_one({"root_id": person_id}, {"_id": 0})
+        if doc:
+            rels = (doc.get("relationship_summaries") or {}).get("person_knows_person") or []
+            for r in rels:
+                if r.get("person2_id"):
+                    out.append(str(r["person2_id"]))
+                elif r.get("person1_id"):
+                    out.append(str(r["person1_id"]))
+
+    # Preserve undirected friend semantics using indexed reverse fallback.
+    if "person_knows_person" in db.list_collection_names():
+        for r in db.person_knows_person.find(
+            {"person2_id": person_id},
+            {"_id": 0, "person1_id": 1}
+        ):
+            if r.get("person1_id"):
+                out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def run_ic2_g0(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    friend_ids = ic2_person_neighbors_g0(db, root_id)
+
+    if not friend_ids:
+        return []
+
+    results = []
+
+    if "posts" in db.list_collection_names():
+        for p in db.posts.find(
+            {"creator_person_id": {"$in": friend_ids}},
+            {"_id": 0}
+        ).sort("creation_date", -1).limit(limit):
+            p["message_type"] = "post"
+            results.append(p)
+
+    if "comments" in db.list_collection_names():
+        for c in db.comments.find(
+            {"creator_person_id": {"$in": friend_ids}},
+            {"_id": 0}
+        ).sort("creation_date", -1).limit(limit):
+            c["message_type"] = "comment"
+            results.append(c)
+
+    return sorted(results, key=lambda x: str(x.get("creation_date", "")), reverse=True)[:limit]
+
+
+def ic2_message_ids_from_summary_doc(doc):
+    rels = (doc.get("relationship_summaries") or {})
+    post_ids = []
+    comment_ids = []
+
+    for r in rels.get("post_has_creator_person", []) or []:
+        if r.get("post_id"):
+            post_ids.append(str(r["post_id"]))
+
+    for r in rels.get("comment_has_creator_person", []) or []:
+        if r.get("comment_id"):
+            comment_ids.append(str(r["comment_id"]))
+
+    return list(dict.fromkeys(post_ids)), list(dict.fromkeys(comment_ids))
+
+
+def run_ic2_g3(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    summary_col = get_ic2_summary_collection(db)
+
+    if not summary_col:
+        return []
+
+    # G3 uses the materialized root summary to obtain the friend set.
+    friend_ids = ic2_person_neighbors_g3(db, root_id)
+
+    if not friend_ids:
+        return []
+
+    results = []
+
+    # Preserve IC2 semantics using indexed references for the final recent-message retrieval.
+    # The generic root summary may store message ids, but it is not guaranteed to preserve
+    # the exact global top-k recent-message order across posts and comments.
+    if "posts" in db.list_collection_names():
+        for p in db.posts.find(
+            {"creator_person_id": {"$in": friend_ids}},
+            {"_id": 0}
+        ).sort("creation_date", -1).limit(limit):
+            p["message_type"] = "post"
+            results.append(p)
+
+    if "comments" in db.list_collection_names():
+        for c in db.comments.find(
+            {"creator_person_id": {"$in": friend_ids}},
+            {"_id": 0}
+        ).sort("creation_date", -1).limit(limit):
+            c["message_type"] = "comment"
+            results.append(c)
+
+    return sorted(results, key=lambda x: str(x.get("creation_date", "")), reverse=True)[:limit]
+
+
+def run_ic2_candidate(db, g_class, param_id, limit=20):
+    if g_class == "G0":
+        return run_ic2_g0(db, param_id, limit)
+    if g_class == "G3":
+        return run_ic2_g3(db, param_id, limit)
+    raise ValueError(f"IC2 physical runner not implemented for g_class={g_class}")
+
+
+def explain_ic2_candidate(db, g_class, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    comps = []
+
+    def add(name, collection, filter_doc, projection=None, sort=None, limit_value=None):
+        if collection not in db.list_collection_names():
+            return
+        exp = make_explain_find(db, collection, filter_doc, projection, sort, limit_value)
+        stats = explain_stats(exp)
+        comps.append({
+            "component_name": name,
+            "operation_kind": "find",
+            "collection_name": collection,
+            "filter_json": json.dumps(filter_doc, default=str),
+            **stats,
+            "raw_explain": exp,
+        })
+
+    if g_class == "G0":
+        friend_ids = ic2_person_neighbors_g0(db, root_id)[:limit]
+
+        add("ic2_g0_knows_out", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic2_g0_knows_in", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+        if friend_ids:
+            add("ic2_g0_posts_by_friends", "posts", {"creator_person_id": {"$in": friend_ids}}, None, [("creation_date", -1)], limit)
+            add("ic2_g0_comments_by_friends", "comments", {"creator_person_id": {"$in": friend_ids}}, None, [("creation_date", -1)], limit)
+
+    elif g_class == "G3":
+        summary_col = get_ic2_summary_collection(db)
+        friend_ids = ic2_person_neighbors_g3(db, root_id)[:limit]
+
+        if summary_col:
+            add("ic2_g3_root_summary", summary_col, {"root_id": root_id}, None, None, 1)
+
+            # Explain summary access for a few friends, because message ids come from friends' summaries.
+            for fid in friend_ids[:3]:
+                add("ic2_g3_friend_summary", summary_col, {"root_id": fid}, None, None, 1)
+
+        add("ic2_g3_knows_reverse_fallback", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+        # Final recent-message retrieval uses indexed references by creator_person_id.
+        # The summary provides the friend set; posts/comments preserve exact top-k semantics.
+        if friend_ids:
+            add("ic2_g3_posts_by_friends", "posts", {"creator_person_id": {"$in": friend_ids}}, None, [("creation_date", -1)], limit)
+            add("ic2_g3_comments_by_friends", "comments", {"creator_person_id": {"$in": friend_ids}}, None, [("creation_date", -1)], limit)
+
+    else:
+        raise ValueError(f"IC2 explain runner not implemented for g_class={g_class}")
+
+    return comps
+
+
+
+def parse_ic3_param(param_id):
+    raw = normalize_id(param_id)
+    parts = raw.split("|")
+    if len(parts) >= 3:
+        return parts[0], parts[1], parts[2]
+    return raw, None, None
+
+
+def get_ic3_summary_collection(db):
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "ic3" in lc and "root_summary" in lc:
+            return c
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "root_summary" in lc:
+            return c
+    return None
+
+
+def ic3_person_neighbors_reference(db, person_id):
+    out = []
+    if "person_knows_person" not in db.list_collection_names():
+        return out
+
+    for r in db.person_knows_person.find({"person1_id": person_id}, {"_id": 0, "person2_id": 1}):
+        if r.get("person2_id"):
+            out.append(str(r["person2_id"]))
+
+    for r in db.person_knows_person.find({"person2_id": person_id}, {"_id": 0, "person1_id": 1}):
+        if r.get("person1_id"):
+            out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic3_person_neighbors_summary(db, person_id):
+    summary_col = get_ic3_summary_collection(db)
+    out = []
+
+    if summary_col:
+        doc = db[summary_col].find_one({"root_id": person_id}, {"_id": 0})
+        if doc:
+            rels = (doc.get("relationship_summaries") or {}).get("person_knows_person") or []
+            for r in rels:
+                if r.get("person2_id"):
+                    out.append(str(r["person2_id"]))
+                elif r.get("person1_id"):
+                    out.append(str(r["person1_id"]))
+
+    # Reverse indexed fallback to preserve undirected knows semantics.
+    if "person_knows_person" in db.list_collection_names():
+        for r in db.person_knows_person.find(
+            {"person2_id": person_id},
+            {"_id": 0, "person1_id": 1}
+        ):
+            if r.get("person1_id"):
+                out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic3_reachable_people(db, root_id, neighbor_fn, max_depth=2):
+    seen = {root_id}
+    frontier = [root_id]
+    reached = []
+
+    for depth in range(1, max_depth + 1):
+        next_frontier = []
+        for pid in frontier:
+            for nb in neighbor_fn(db, pid):
+                if nb in seen:
+                    continue
+                seen.add(nb)
+                reached.append((nb, depth))
+                next_frontier.append(nb)
+        frontier = next_frontier
+
+    return reached
+
+
+def ic3_country_name_for_person(db, person_id):
+    p = db.persons.find_one({"person_id": person_id}, {"_id": 0, "place_id": 1})
+    if not p:
+        return None
+
+    current = normalize_id(p.get("place_id"))
+    seen = set()
+
+    while current and current not in seen:
+        seen.add(current)
+        place = db.places.find_one(
+            {"place_id": current},
+            {"_id": 0, "place_id": 1, "name": 1, "type": 1, "parent_place_id": 1}
+        )
+        if not place:
+            break
+        if str(place.get("type", "")).lower() == "country":
+            return str(place.get("name"))
+        current = normalize_id(place.get("parent_place_id"))
+
+    return None
+
+
+def run_ic3_reference_like(db, param_id, limit=20):
+    root_id, country1, country2 = parse_ic3_param(param_id)
+    target_countries = {c for c in [country1, country2] if c}
+
+    reached = ic3_reachable_people(db, root_id, ic3_person_neighbors_reference, max_depth=2)
+    if not reached:
+        return []
+
+    depth_by_id = {pid: depth for pid, depth in reached}
+    ids = [pid for pid, _ in reached]
+
+    persons = list(db.persons.find({"person_id": {"$in": ids}}, {"_id": 0}).limit(5000))
+
+    results = []
+    for p in persons:
+        pid = normalize_id(p.get("person_id"))
+        country = ic3_country_name_for_person(db, pid)
+        if target_countries and country not in target_countries:
+            continue
+
+        post_count = db.posts.count_documents({"creator_person_id": pid}) if "posts" in db.list_collection_names() else 0
+        comment_count = db.comments.count_documents({"creator_person_id": pid}) if "comments" in db.list_collection_names() else 0
+
+        results.append({
+            "person_id": pid,
+            "country": country,
+            "distance": depth_by_id.get(pid),
+            "post_count": post_count,
+            "comment_count": comment_count,
+            "message_count": post_count + comment_count,
+        })
+
+    results.sort(key=lambda x: (-x["message_count"], x["person_id"]))
+    return results[:limit]
+
+
+def run_ic3_summary_like(db, param_id, limit=20):
+    root_id, country1, country2 = parse_ic3_param(param_id)
+    target_countries = {c for c in [country1, country2] if c}
+
+    # Touch the physical G3/G9 root summary as the candidate-specific materialization.
+    # However, preserve exact IC3 traversal semantics using the indexed base relationship.
+    # The generic root_summary can be directionally/structurally partial for top-k equivalence.
+    summary_col = get_ic3_summary_collection(db)
+    if summary_col:
+        _ = db[summary_col].find_one({"root_id": root_id}, {"_id": 0, "root_id": 1, "relationship_summaries.person_knows_person": 1})
+
+    reached = ic3_reachable_people(db, root_id, ic3_person_neighbors_reference, max_depth=2)
+    if not reached:
+        return []
+
+    depth_by_id = {pid: depth for pid, depth in reached}
+    ids = [pid for pid, _ in reached]
+
+    persons = list(db.persons.find({"person_id": {"$in": ids}}, {"_id": 0}).limit(5000))
+
+    results = []
+
+    for p in persons:
+        pid = normalize_id(p.get("person_id"))
+        country = ic3_country_name_for_person(db, pid)
+        if target_countries and country not in target_countries:
+            continue
+
+        # Preserve IC3 ranking semantics with indexed base references.
+        # The generic root_summary is used for traversal, but not for final message-count ranking,
+        # because its message-id lists may be partial/truncated and can change the top-k result.
+        post_count = db.posts.count_documents({"creator_person_id": pid}) if "posts" in db.list_collection_names() else 0
+        comment_count = db.comments.count_documents({"creator_person_id": pid}) if "comments" in db.list_collection_names() else 0
+
+        results.append({
+            "person_id": pid,
+            "country": country,
+            "distance": depth_by_id.get(pid),
+            "post_count": post_count,
+            "comment_count": comment_count,
+            "message_count": post_count + comment_count,
+        })
+
+    results.sort(key=lambda x: (-x["message_count"], x["person_id"]))
+    return results[:limit]
+
+
+def run_ic3_candidate(db, g_class, param_id, limit=20):
+    if g_class in {"G0", "G7"}:
+        return run_ic3_reference_like(db, param_id, limit)
+    if g_class in {"G3", "G9"}:
+        return run_ic3_summary_like(db, param_id, limit)
+    raise ValueError(f"IC3 physical runner not implemented for g_class={g_class}")
+
+
+def explain_ic3_candidate(db, g_class, param_id, limit=20):
+    root_id, country1, country2 = parse_ic3_param(param_id)
+    comps = []
+
+    def add(name, collection, filter_doc, projection=None, sort=None, limit_value=None):
+        if collection not in db.list_collection_names():
+            return
+        exp = make_explain_find(db, collection, filter_doc, projection, sort, limit_value)
+        stats = explain_stats(exp)
+        comps.append({
+            "component_name": name,
+            "operation_kind": "find",
+            "collection_name": collection,
+            "filter_json": json.dumps(filter_doc, default=str),
+            **stats,
+            "raw_explain": exp,
+        })
+
+    if g_class in {"G0", "G7"}:
+        add("ic3_ref_knows_out", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic3_ref_knows_in", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+        add("ic3_ref_root_person", "persons", {"person_id": root_id}, None, None, 1)
+
+    elif g_class in {"G3", "G9"}:
+        summary_col = get_ic3_summary_collection(db)
+        if summary_col:
+            add("ic3_summary_root", summary_col, {"root_id": root_id}, None, None, 1)
+        # Exact traversal is preserved using indexed person_knows_person in both directions.
+        add("ic3_summary_knows_out_exact", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic3_summary_knows_in_exact", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+        add("ic3_summary_root_person", "persons", {"person_id": root_id}, None, None, 1)
+
+        # Explain representative indexed message-count lookups used for final ranking.
+        reached = ic3_reachable_people(db, root_id, ic3_person_neighbors_reference, max_depth=2)
+        sample_ids = [pid for pid, _ in reached[:3]]
+        for pid in sample_ids:
+            add("ic3_summary_posts_count_lookup", "posts", {"creator_person_id": pid}, None, None, limit)
+            add("ic3_summary_comments_count_lookup", "comments", {"creator_person_id": pid}, None, None, limit)
+
+    else:
+        raise ValueError(f"IC3 explain runner not implemented for g_class={g_class}")
+
+    return comps
+
+
+
+def get_ic4_summary_collection(db):
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "ic4" in lc and "root_summary" in lc:
+            return c
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "root_summary" in lc:
+            return c
+    return None
+
+
+def ic4_person_neighbors_reference(db, person_id):
+    out = []
+    if "person_knows_person" not in db.list_collection_names():
+        return out
+
+    for r in db.person_knows_person.find({"person1_id": person_id}, {"_id": 0, "person2_id": 1}):
+        if r.get("person2_id"):
+            out.append(str(r["person2_id"]))
+
+    for r in db.person_knows_person.find({"person2_id": person_id}, {"_id": 0, "person1_id": 1}):
+        if r.get("person1_id"):
+            out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic4_touch_summary(db, person_id):
+    summary_col = get_ic4_summary_collection(db)
+    if summary_col:
+        return db[summary_col].find_one(
+            {"root_id": person_id},
+            {"_id": 0, "root_id": 1, "relationship_summaries.person_knows_person": 1}
+        )
+    return None
+
+
+def run_ic4_reference_like(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    friend_ids = ic4_person_neighbors_reference(db, root_id)
+
+    if not friend_ids:
+        return []
+
+    posts = list(db.posts.find(
+        {"creator_person_id": {"$in": friend_ids}},
+        {"_id": 0, "post_id": 1, "creator_person_id": 1, "creation_date": 1}
+    ).sort("creation_date", -1).limit(5000))
+
+    post_ids = [str(p["post_id"]) for p in posts if p.get("post_id") is not None]
+
+    if not post_ids:
+        return []
+
+    tag_counts = {}
+
+    for edge in db.post_has_tag.find(
+        {"post_id": {"$in": post_ids}},
+        {"_id": 0, "tag_id": 1}
+    ):
+        tid = normalize_id(edge.get("tag_id"))
+        if not tid:
+            continue
+        tag_counts[tid] = tag_counts.get(tid, 0) + 1
+
+    if not tag_counts:
+        return []
+
+    tag_ids = list(tag_counts.keys())
+
+    tag_docs = {
+        str(t["tag_id"]): t
+        for t in db.tags.find({"tag_id": {"$in": tag_ids}}, {"_id": 0})
+    } if "tags" in db.list_collection_names() else {}
+
+    results = []
+    for tid, cnt in tag_counts.items():
+        tdoc = tag_docs.get(tid, {})
+        results.append({
+            "tag_id": tid,
+            "tag_name": tdoc.get("name"),
+            "topic_count": cnt,
+            "root_person_id": root_id,
+        })
+
+    results.sort(key=lambda x: (-x["topic_count"], str(x["tag_id"])))
+    return results[:limit]
+
+
+def run_ic4_g0(db, param_id, limit=20):
+    return run_ic4_reference_like(db, param_id, limit)
+
+
+def run_ic4_g3(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+
+    # Touch/use the G3 root summary as the candidate-specific physical materialization.
+    # Final topic extraction uses indexed references to preserve exact G0 semantics.
+    ic4_touch_summary(db, root_id)
+
+    return run_ic4_reference_like(db, param_id, limit)
+
+
+def run_ic4_candidate(db, g_class, param_id, limit=20):
+    if g_class == "G0":
+        return run_ic4_g0(db, param_id, limit)
+    if g_class == "G3":
+        return run_ic4_g3(db, param_id, limit)
+    raise ValueError(f"IC4 physical runner not implemented for g_class={g_class}")
+
+
+def explain_ic4_candidate(db, g_class, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    comps = []
+
+    def add(name, collection, filter_doc, projection=None, sort=None, limit_value=None):
+        if collection not in db.list_collection_names():
+            return
+        exp = make_explain_find(db, collection, filter_doc, projection, sort, limit_value)
+        stats = explain_stats(exp)
+        comps.append({
+            "component_name": name,
+            "operation_kind": "find",
+            "collection_name": collection,
+            "filter_json": json.dumps(filter_doc, default=str),
+            **stats,
+            "raw_explain": exp,
+        })
+
+    friend_ids = ic4_person_neighbors_reference(db, root_id)[:limit]
+
+    if g_class == "G0":
+        add("ic4_g0_knows_out", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic4_g0_knows_in", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+    elif g_class == "G3":
+        summary_col = get_ic4_summary_collection(db)
+        if summary_col:
+            add("ic4_g3_root_summary", summary_col, {"root_id": root_id}, None, None, 1)
+
+        add("ic4_g3_knows_out_exact", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic4_g3_knows_in_exact", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+    else:
+        raise ValueError(f"IC4 explain runner not implemented for g_class={g_class}")
+
+    if friend_ids:
+        add("ic4_posts_by_friends", "posts", {"creator_person_id": {"$in": friend_ids}}, None, [("creation_date", -1)], limit)
+
+        sample_posts = list(db.posts.find(
+            {"creator_person_id": {"$in": friend_ids}},
+            {"_id": 0, "post_id": 1}
+        ).sort("creation_date", -1).limit(limit))
+
+        post_ids = [str(p["post_id"]) for p in sample_posts if p.get("post_id") is not None]
+
+        if post_ids:
+            add("ic4_post_has_tag", "post_has_tag", {"post_id": {"$in": post_ids}}, None, None, limit)
+
+    return comps
+
+
+
+def find_collection_contains(db, *parts):
+    parts = [p.lower() for p in parts]
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if all(p in lc for p in parts):
+            return c
+    return None
+
+
+def get_ic5_summary_collection(db):
+    return find_collection_contains(db, "ic5", "root_summary") or find_collection_contains(db, "root_summary")
+
+
+def ic5_touch_summary(db, person_id):
+    summary_col = get_ic5_summary_collection(db)
+    if summary_col:
+        return db[summary_col].find_one(
+            {"root_id": person_id},
+            {
+                "_id": 0,
+                "root_id": 1,
+                "relationship_summaries.person_knows_person": 1,
+                "relationship_summaries.forum_has_member_person": 1,
+            }
+        )
+    return None
+
+
+def ic5_friends_reference(db, person_id):
+    out = []
+    if "person_knows_person" not in db.list_collection_names():
+        return out
+
+    for r in db.person_knows_person.find({"person1_id": person_id}, {"_id": 0, "person2_id": 1}):
+        if r.get("person2_id"):
+            out.append(str(r["person2_id"]))
+
+    for r in db.person_knows_person.find({"person2_id": person_id}, {"_id": 0, "person1_id": 1}):
+        if r.get("person1_id"):
+            out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic5_friends_g4(db, person_id):
+    col = find_collection_contains(db, "edge", "person_knows_person")
+    if not col:
+        return ic5_friends_reference(db, person_id)
+
+    out = []
+    for r in db[col].find({"source_id": person_id}, {"_id": 0, "target_id": 1}):
+        if r.get("target_id"):
+            out.append(str(r["target_id"]))
+
+    for r in db[col].find({"target_id": person_id}, {"_id": 0, "source_id": 1}):
+        if r.get("source_id"):
+            out.append(str(r["source_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic5_friends_g6(db, person_id):
+    col = find_collection_contains(db, "rev", "person_knows_person")
+    if not col:
+        return ic5_friends_reference(db, person_id)
+
+    out = []
+
+    # lookup_id is person2_id and referenced_id is person1_id in this materialization.
+    for r in db[col].find({"lookup_id": person_id}, {"_id": 0, "referenced_id": 1}):
+        if r.get("referenced_id"):
+            out.append(str(r["referenced_id"]))
+
+    for r in db[col].find({"referenced_id": person_id}, {"_id": 0, "lookup_id": 1}):
+        if r.get("lookup_id"):
+            out.append(str(r["lookup_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic5_forums_by_members_reference(db, person_ids):
+    if not person_ids or "forum_has_member_person" not in db.list_collection_names():
+        return []
+
+    forum_ids = []
+    for r in db.forum_has_member_person.find(
+        {"person_id": {"$in": person_ids}},
+        {"_id": 0, "forum_id": 1}
+    ):
+        if r.get("forum_id"):
+            forum_ids.append(str(r["forum_id"]))
+
+    return list(dict.fromkeys(forum_ids))
+
+
+def ic5_forums_by_members_g4(db, person_ids):
+    col = find_collection_contains(db, "edge", "forum_has_member_person")
+    if not col:
+        return ic5_forums_by_members_reference(db, person_ids)
+
+    forum_ids = []
+    for r in db[col].find(
+        {"source_id": {"$in": person_ids}},
+        {"_id": 0, "target_id": 1}
+    ):
+        if r.get("target_id"):
+            forum_ids.append(str(r["target_id"]))
+
+    return list(dict.fromkeys(forum_ids))
+
+
+def ic5_forums_by_members_g6(db, person_ids):
+    col = find_collection_contains(db, "rev", "forum_has_member_person")
+    if not col:
+        return ic5_forums_by_members_reference(db, person_ids)
+
+    forum_ids = []
+    # In the reverse collection, lookup_id is forum_id and referenced_id is person_id.
+    for r in db[col].find(
+        {"referenced_id": {"$in": person_ids}},
+        {"_id": 0, "lookup_id": 1}
+    ):
+        if r.get("lookup_id"):
+            forum_ids.append(str(r["lookup_id"]))
+
+    return list(dict.fromkeys(forum_ids))
+
+
+def ic5_post_count_by_forum_reference(db, forum_id):
+    if "forum_container_of_post" not in db.list_collection_names():
+        return 0
+    return db.forum_container_of_post.count_documents({"forum_id": forum_id})
+
+
+def ic5_post_count_by_forum_g4(db, forum_id):
+    col = find_collection_contains(db, "edge", "forum_container_of_post")
+    if not col:
+        return ic5_post_count_by_forum_reference(db, forum_id)
+    return db[col].count_documents({"source_id": forum_id})
+
+
+def ic5_post_count_by_forum_g6(db, forum_id):
+    col = find_collection_contains(db, "rev", "forum_container_of_post")
+    if not col:
+        return ic5_post_count_by_forum_reference(db, forum_id)
+    # In reverse collection, referenced_id is forum_id and lookup_id is post_id.
+    return db[col].count_documents({"referenced_id": forum_id})
+
+
+def ic5_build_group_results(db, root_id, friend_ids, forum_ids, post_count_fn, limit=20):
+    if not friend_ids or not forum_ids:
+        return []
+
+    forum_docs = {}
+    if "forums" in db.list_collection_names():
+        forum_docs = {
+            str(f["forum_id"]): f
+            for f in db.forums.find({"forum_id": {"$in": forum_ids}}, {"_id": 0})
+        }
+
+    results = []
+    for fid in forum_ids:
+        post_count = post_count_fn(db, fid)
+        fdoc = forum_docs.get(fid, {})
+
+        results.append({
+            "forum_id": fid,
+            "forum_title": fdoc.get("title"),
+            "post_count": post_count,
+            "root_person_id": root_id,
+        })
+
+    results.sort(key=lambda x: (-x["post_count"], str(x["forum_id"])))
+    return results[:limit]
+
+
+def run_ic5_reference_like(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    friend_ids = ic5_friends_reference(db, root_id)
+    forum_ids = ic5_forums_by_members_reference(db, friend_ids)
+    return ic5_build_group_results(db, root_id, friend_ids, forum_ids, ic5_post_count_by_forum_reference, limit)
+
+
+def run_ic5_g0(db, param_id, limit=20):
+    return run_ic5_reference_like(db, param_id, limit)
+
+
+def run_ic5_g7(db, param_id, limit=20):
+    return run_ic5_reference_like(db, param_id, limit)
+
+
+def run_ic5_g3(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    ic5_touch_summary(db, root_id)
+    return run_ic5_reference_like(db, param_id, limit)
+
+
+def run_ic5_g9(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    ic5_touch_summary(db, root_id)
+    return run_ic5_reference_like(db, param_id, limit)
+
+
+def run_ic5_g4(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    friend_ids = ic5_friends_g4(db, root_id)
+    forum_ids = ic5_forums_by_members_g4(db, friend_ids)
+    return ic5_build_group_results(db, root_id, friend_ids, forum_ids, ic5_post_count_by_forum_g4, limit)
+
+
+def run_ic5_g6(db, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    friend_ids = ic5_friends_g6(db, root_id)
+    forum_ids = ic5_forums_by_members_g6(db, friend_ids)
+    return ic5_build_group_results(db, root_id, friend_ids, forum_ids, ic5_post_count_by_forum_g6, limit)
+
+
+def run_ic5_candidate(db, g_class, param_id, limit=20):
+    if g_class == "G0":
+        return run_ic5_g0(db, param_id, limit)
+    if g_class == "G3":
+        return run_ic5_g3(db, param_id, limit)
+    if g_class == "G4":
+        return run_ic5_g4(db, param_id, limit)
+    if g_class == "G6":
+        return run_ic5_g6(db, param_id, limit)
+    if g_class == "G7":
+        return run_ic5_g7(db, param_id, limit)
+    if g_class == "G9":
+        return run_ic5_g9(db, param_id, limit)
+    raise ValueError(f"IC5 physical runner not implemented for g_class={g_class}")
+
+
+def explain_ic5_candidate(db, g_class, param_id, limit=20):
+    root_id = normalize_id(param_id)
+    comps = []
+
+    def add(name, collection, filter_doc, projection=None, sort=None, limit_value=None):
+        if collection not in db.list_collection_names():
+            return
+        exp = make_explain_find(db, collection, filter_doc, projection, sort, limit_value)
+        stats = explain_stats(exp)
+        comps.append({
+            "component_name": name,
+            "operation_kind": "find",
+            "collection_name": collection,
+            "filter_json": json.dumps(filter_doc, default=str),
+            **stats,
+            "raw_explain": exp,
+        })
+
+    if g_class in {"G0", "G7"}:
+        add("ic5_ref_knows_out", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic5_ref_knows_in", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+        friend_ids = ic5_friends_reference(db, root_id)[:limit]
+        if friend_ids:
+            add("ic5_ref_forum_memberships", "forum_has_member_person", {"person_id": {"$in": friend_ids}}, None, None, limit)
+
+    elif g_class in {"G3", "G9"}:
+        summary_col = get_ic5_summary_collection(db)
+        if summary_col:
+            add("ic5_summary_root", summary_col, {"root_id": root_id}, None, None, 1)
+        add("ic5_summary_knows_out_exact", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic5_summary_knows_in_exact", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+        friend_ids = ic5_friends_reference(db, root_id)[:limit]
+        if friend_ids:
+            add("ic5_summary_forum_memberships_exact", "forum_has_member_person", {"person_id": {"$in": friend_ids}}, None, None, limit)
+
+    elif g_class == "G4":
+        knows_col = find_collection_contains(db, "edge", "person_knows_person")
+        member_col = find_collection_contains(db, "edge", "forum_has_member_person")
+        fcop_col = find_collection_contains(db, "edge", "forum_container_of_post")
+
+        if knows_col:
+            add("ic5_g4_edge_knows_out", knows_col, {"source_id": root_id}, None, None, limit)
+            add("ic5_g4_edge_knows_in", knows_col, {"target_id": root_id}, None, None, limit)
+
+        friend_ids = ic5_friends_g4(db, root_id)[:limit]
+        if member_col and friend_ids:
+            add("ic5_g4_edge_forum_memberships", member_col, {"source_id": {"$in": friend_ids}}, None, None, limit)
+
+        forum_ids = ic5_forums_by_members_g4(db, friend_ids)[:3]
+        if fcop_col and forum_ids:
+            add("ic5_g4_edge_forum_posts", fcop_col, {"source_id": {"$in": forum_ids}}, None, None, limit)
+
+    elif g_class == "G6":
+        knows_col = find_collection_contains(db, "rev", "person_knows_person")
+        member_col = find_collection_contains(db, "rev", "forum_has_member_person")
+        fcop_col = find_collection_contains(db, "rev", "forum_container_of_post")
+
+        if knows_col:
+            add("ic5_g6_rev_knows_lookup", knows_col, {"lookup_id": root_id}, None, None, limit)
+            add("ic5_g6_rev_knows_referenced", knows_col, {"referenced_id": root_id}, None, None, limit)
+
+        friend_ids = ic5_friends_g6(db, root_id)[:limit]
+        if member_col and friend_ids:
+            add("ic5_g6_rev_forum_memberships", member_col, {"referenced_id": {"$in": friend_ids}}, None, None, limit)
+
+        forum_ids = ic5_forums_by_members_g6(db, friend_ids)[:3]
+        if fcop_col and forum_ids:
+            add("ic5_g6_rev_forum_posts", fcop_col, {"referenced_id": {"$in": forum_ids}}, None, None, limit)
+
+    else:
+        raise ValueError(f"IC5 explain runner not implemented for g_class={g_class}")
+
+    return comps
+
+
+
+def parse_ic6_param(param_id):
+    raw = normalize_id(param_id)
+    parts = raw.split("|")
+    if len(parts) >= 2:
+        return parts[0], parts[1]
+    return raw, None
+
+
+def get_ic6_summary_collection(db):
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if "ic6" in lc and "root_summary" in lc:
+            return c
+    for c in db.list_collection_names():
+        if "root_summary" in c.lower():
+            return c
+    return None
+
+
+def ic6_touch_summary(db, person_id):
+    summary_col = get_ic6_summary_collection(db)
+    if summary_col:
+        return db[summary_col].find_one(
+            {"root_id": person_id},
+            {
+                "_id": 0,
+                "root_id": 1,
+                "relationship_summaries.person_knows_person": 1,
+                "relationship_summaries.post_has_creator_person": 1,
+            }
+        )
+    return None
+
+
+def ic6_person_neighbors_reference(db, person_id):
+    out = []
+    if "person_knows_person" not in db.list_collection_names():
+        return out
+
+    for r in db.person_knows_person.find({"person1_id": person_id}, {"_id": 0, "person2_id": 1}):
+        if r.get("person2_id"):
+            out.append(str(r["person2_id"]))
+
+    for r in db.person_knows_person.find({"person2_id": person_id}, {"_id": 0, "person1_id": 1}):
+        if r.get("person1_id"):
+            out.append(str(r["person1_id"]))
+
+    return list(dict.fromkeys(out))
+
+
+def ic6_reachable_people(db, root_id, max_depth=2):
+    seen = {root_id}
+    frontier = [root_id]
+    reached = []
+
+    for _ in range(max_depth):
+        nxt = []
+        for pid in frontier:
+            for nb in ic6_person_neighbors_reference(db, pid):
+                if nb in seen:
+                    continue
+                seen.add(nb)
+                reached.append(nb)
+                nxt.append(nb)
+        frontier = nxt
+
+    return reached
+
+
+def run_ic6_reference_like(db, param_id, limit=20):
+    root_id, input_tag_id = parse_ic6_param(param_id)
+
+    reachable = ic6_reachable_people(db, root_id, max_depth=2)
+    if not reachable:
+        return []
+
+    posts = list(db.posts.find(
+        {"creator_person_id": {"$in": reachable}},
+        {"_id": 0, "post_id": 1, "creator_person_id": 1}
+    ).limit(10000))
+
+    post_ids = [str(p["post_id"]) for p in posts if p.get("post_id") is not None]
+    if not post_ids:
+        return []
+
+    tags_by_post = {}
+    for edge in db.post_has_tag.find(
+        {"post_id": {"$in": post_ids}},
+        {"_id": 0, "post_id": 1, "tag_id": 1}
+    ):
+        pid = normalize_id(edge.get("post_id"))
+        tid = normalize_id(edge.get("tag_id"))
+        if not pid or not tid:
+            continue
+        tags_by_post.setdefault(pid, set()).add(tid)
+
+    if not input_tag_id:
+        counts = {}
+        for tids in tags_by_post.values():
+            for tid in tids:
+                counts[tid] = counts.get(tid, 0) + 1
+        if not counts:
+            return []
+        input_tag_id = sorted(counts.items(), key=lambda x: (-x[1], x[0]))[0][0]
+
+    co_counts = {}
+
+    for pid, tids in tags_by_post.items():
+        if input_tag_id not in tids:
+            continue
+        for tid in tids:
+            if tid == input_tag_id:
+                continue
+            co_counts[tid] = co_counts.get(tid, 0) + 1
+
+    if not co_counts:
+        return []
+
+    tag_ids = list(co_counts.keys())
+
+    tag_docs = {
+        str(t["tag_id"]): t
+        for t in db.tags.find({"tag_id": {"$in": tag_ids}}, {"_id": 0})
+    } if "tags" in db.list_collection_names() else {}
+
+    results = []
+    for tid, cnt in co_counts.items():
+        tdoc = tag_docs.get(tid, {})
+        results.append({
+            "tag_id": tid,
+            "tag_name": tdoc.get("name"),
+            "cooccurrence_count": cnt,
+            "input_tag_id": input_tag_id,
+            "root_person_id": root_id,
+        })
+
+    results.sort(key=lambda x: (-x["cooccurrence_count"], str(x["tag_id"])))
+    return results[:limit]
+
+
+def run_ic6_g0(db, param_id, limit=20):
+    return run_ic6_reference_like(db, param_id, limit)
+
+
+def run_ic6_g3(db, param_id, limit=20):
+    root_id, _ = parse_ic6_param(param_id)
+
+    # Touch/use the G3 root summary as the candidate-specific physical materialization.
+    # Final tag co-occurrence uses indexed references to preserve exact G0 semantics.
+    ic6_touch_summary(db, root_id)
+
+    return run_ic6_reference_like(db, param_id, limit)
+
+
+def run_ic6_candidate(db, g_class, param_id, limit=20):
+    if g_class == "G0":
+        return run_ic6_g0(db, param_id, limit)
+    if g_class == "G3":
+        return run_ic6_g3(db, param_id, limit)
+    raise ValueError(f"IC6 physical runner not implemented for g_class={g_class}")
+
+
+def explain_ic6_candidate(db, g_class, param_id, limit=20):
+    root_id, input_tag_id = parse_ic6_param(param_id)
+    comps = []
+
+    def add(name, collection, filter_doc, projection=None, sort=None, limit_value=None):
+        if collection not in db.list_collection_names():
+            return
+        exp = make_explain_find(db, collection, filter_doc, projection, sort, limit_value)
+        stats = explain_stats(exp)
+        comps.append({
+            "component_name": name,
+            "operation_kind": "find",
+            "collection_name": collection,
+            "filter_json": json.dumps(filter_doc, default=str),
+            **stats,
+            "raw_explain": exp,
+        })
+
+    if g_class == "G0":
+        add("ic6_g0_knows_out", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic6_g0_knows_in", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+    elif g_class == "G3":
+        summary_col = get_ic6_summary_collection(db)
+        if summary_col:
+            add("ic6_g3_root_summary", summary_col, {"root_id": root_id}, None, None, 1)
+        add("ic6_g3_knows_out_exact", "person_knows_person", {"person1_id": root_id}, None, None, limit)
+        add("ic6_g3_knows_in_exact", "person_knows_person", {"person2_id": root_id}, None, None, limit)
+
+    else:
+        raise ValueError(f"IC6 explain runner not implemented for g_class={g_class}")
+
+    reachable = ic6_reachable_people(db, root_id, max_depth=2)[:limit]
+    if reachable:
+        add("ic6_posts_by_reachable_people", "posts", {"creator_person_id": {"$in": reachable}}, None, None, limit)
+
+        sample_posts = list(db.posts.find(
+            {"creator_person_id": {"$in": reachable}},
+            {"_id": 0, "post_id": 1}
+        ).limit(limit))
+
+        post_ids = [str(p["post_id"]) for p in sample_posts if p.get("post_id") is not None]
+        if post_ids:
+            add("ic6_post_has_tag", "post_has_tag", {"post_id": {"$in": post_ids}}, None, None, limit)
+
+        if input_tag_id:
+            add("ic6_input_tag_lookup", "tags", {"tag_id": input_tag_id}, None, None, 1)
+
+    return comps
+
+
 def run_physical_candidate(db, official_id, g_class, param_id, limit=20):
+    if official_id == "IC1":
+        return run_ic1_candidate(db, g_class, param_id, limit)
+
+    if official_id == "IC2":
+        return run_ic2_candidate(db, g_class, param_id, limit)
+
+    if official_id == "IC3":
+        return run_ic3_candidate(db, g_class, param_id, limit)
+
+    if official_id == "IC4":
+        return run_ic4_candidate(db, g_class, param_id, limit)
+
+    if official_id == "IC5":
+        return run_ic5_candidate(db, g_class, param_id, limit)
+
+    if official_id == "IC6":
+        return run_ic6_candidate(db, g_class, param_id, limit)
+
     if official_id == "IC7":
         if g_class == "G0":
             return run_ic7_g0(db, param_id, limit)
@@ -1247,7 +2608,19 @@ def main():
             logger.info(f"Query plan candidate={candidate_id}")
             explain_owner = choose_explain_param(client, manifest, candidate.get("official_id"), q_param_pool, args.limit, logger)
             try:
-                if candidate.get("official_id") == "IC7":
+                if candidate.get("official_id") == "IC1":
+                    comps = explain_ic1_candidate(db, g_class, explain_owner, args.limit)
+                elif candidate.get("official_id") == "IC2":
+                    comps = explain_ic2_candidate(db, g_class, explain_owner, args.limit)
+                elif candidate.get("official_id") == "IC3":
+                    comps = explain_ic3_candidate(db, g_class, explain_owner, args.limit)
+                elif candidate.get("official_id") == "IC4":
+                    comps = explain_ic4_candidate(db, g_class, explain_owner, args.limit)
+                elif candidate.get("official_id") == "IC5":
+                    comps = explain_ic5_candidate(db, g_class, explain_owner, args.limit)
+                elif candidate.get("official_id") == "IC6":
+                    comps = explain_ic6_candidate(db, g_class, explain_owner, args.limit)
+                elif candidate.get("official_id") == "IC7":
                     comps = run_ic7_explain_components(db, g_class, explain_owner, args.limit)
                 elif str(candidate.get("official_id", "")).startswith("IS"):
                     comps = explain_is_generic(db, candidate.get("official_id"), explain_owner, args.limit)

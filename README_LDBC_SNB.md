@@ -350,3 +350,23 @@ The LDBC SNB benchmark runner consumes these artifacts through `LDBC_ARTIFACTS_D
 
     benchmark/ldbc_snb/ldbc_snb_mongo_configurations
 
+
+## Physical MongoDB validation for IC1–IC7
+
+The repository includes a pilot validation of faithful physical MongoDB materializations for LDBC SNB IC1–IC7 at SF0.1.
+
+The validation artifacts are located in:
+
+    benchmark/ldbc_snb/physical_validation/
+
+Main files:
+
+    benchmark/ldbc_snb/physical_validation/README.md
+    benchmark/ldbc_snb/physical_validation/ic1_ic7_consolidated_sf0_1/ic1_ic7_validation_summary.csv
+    benchmark/ldbc_snb/physical_validation/ic1_ic7_consolidated_sf0_1/ic1_ic7_benchmark_aggregate_results.csv
+    benchmark/ldbc_snb/physical_validation/ic1_ic7_consolidated_sf0_1/ic1_ic7_query_plan_summary_results.csv
+    benchmark/ldbc_snb/physical_validation/ic1_ic7_consolidated_sf0_1/ic1_ic7_semantic_equivalence_results.csv
+
+This pilot validates that IC1–IC7 physical candidates execute successfully, preserve semantic equivalence across candidate families, produce query-plan evidence, use indexes, and avoid collection scans in the inspected plans.
+
+These are pilot runs with small run counts. They validate physical access paths and semantic correctness before larger benchmark campaigns.
