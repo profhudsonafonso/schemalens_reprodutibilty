@@ -410,3 +410,26 @@ This summary combines:
 The SF0.1 pilot validates 22 official LDBC SNB queries and 64 physical MongoDB candidates. The global summary reports all queries as validated, with zero failed runs, zero semantic warnings, and zero collection-scan query groups in the inspected evidence.
 
 This is a pilot validation phase. It validates physical correctness and execution evidence before larger benchmark campaigns over SF0.1, SF1, and SF3.
+
+## SF0.1 physical benchmark: 10 cold + 10 hot
+
+The repository includes the consolidated physical MongoDB benchmark results for LDBC SNB SF0.1 using the same phase protocol adopted for IMDb and FIBEN:
+
+- 10 measured `cold` repetitions;
+- 10 measured `hot` repetitions;
+- no additional warmup repetitions.
+
+Artifacts are located at:
+
+    benchmark/ldbc_snb/physical_benchmark/ldbc_snb_sf0_1_full_10cold_10hot/consolidated/
+
+Main files:
+
+- `ldbc_snb_sf0_1_10cold_10hot_benchmark_aggregate_results.csv`
+- `ldbc_snb_sf0_1_10cold_10hot_benchmark_raw_results.csv`
+- `ldbc_snb_sf0_1_10cold_10hot_query_write_plan_summary_results.csv`
+- `ldbc_snb_sf0_1_10cold_10hot_resource_monitor.csv`
+- `ldbc_snb_sf0_1_10cold_10hot_query_phase_summary.csv`
+- `ldbc_snb_sf0_1_10cold_10hot_global_summary.csv`
+
+The run covers 22 official LDBC SNB queries, 64 physical candidates, and 1280 measured executions. The validation reports zero failed runs, zero semantic warnings, and zero collection-scan rows in the inspected query/write-plan evidence.
