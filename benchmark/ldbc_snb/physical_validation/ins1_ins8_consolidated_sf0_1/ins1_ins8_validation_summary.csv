@@ -1,0 +1,9 @@
+official_id,query_name,candidate_count,g_classes,benchmark_groups,failed_runs_total,semantic_warning_count,documents_written_ok,write_plan_completed,has_COLLSCAN_any,physical_maintenance_ok,best_g_class_by_p95,best_group_by_p95,best_p95_latency_ms,validated,source_folders
+INS1,INS1_AddPerson,2,"G0,G3","primary,primary",0,0,True,True,False,True,G0,primary,1.5574374701827765,True,ins1_pilot_sf0_1_real_v1
+INS2,INS2_AddLikeToPost,2,"G4,G6","primary,primary",0,0,True,True,False,True,G6,primary,1.0601982939988377,True,ins2_pilot_sf0_1_real_v1
+INS3,INS3_AddLikeToComment,2,"G4,G6","primary,primary",0,0,True,True,False,True,G6,primary,1.1629224754869938,True,ins3_pilot_sf0_1_real_v1
+INS4,INS4_AddForum,2,"G0,G3","primary,primary",0,0,True,True,False,True,G0,primary,1.1026336811482906,True,ins4_pilot_sf0_1_real_v1
+INS5,INS5_AddForumMembership,2,"G4,G6","primary,primary",0,0,True,True,False,True,G6,primary,0.6187356077134609,True,ins5_pilot_sf0_1_real_v1
+INS6,INS6_AddPost,4,"G0,G3,G7,G9","primary,primary,secondary_affected,secondary_affected",0,0,True,True,False,True,G7,secondary_affected,0.8692691568285227,True,ins6_pilot_sf0_1_real_v1
+INS7,INS7_AddComment,4,"G0,G3,G7,G9","primary,primary,secondary_affected,secondary_affected",0,0,True,True,False,True,G7,secondary_affected,1.7156502231955528,True,ins7_pilot_sf0_1_real_v1
+INS8,INS8_AddFriendship,2,"G0,G3","primary,primary",0,0,True,True,False,True,G0,primary,0.529351644217968,True,ins8_pilot_sf0_1_real_v1

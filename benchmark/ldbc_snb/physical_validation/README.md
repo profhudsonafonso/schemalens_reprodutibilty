@@ -65,3 +65,22 @@ Main files:
 - `README_is1_is7_physical_validation.md`
 
 The validation confirms that IS1–IS7 physical candidates execute successfully, preserve semantic equivalence across candidate families, produce query-plan evidence, use indexes, and avoid collection scans in the inspected plans.
+
+## INS1–INS8 physical validation
+
+The folder also includes the pilot physical validation for LDBC SNB insert/update queries INS1–INS8 at SF0.1:
+
+    physical_validation/ins1_ins8_consolidated_sf0_1/
+
+Main files:
+
+- `ins1_ins8_validation_summary.csv`
+- `ins1_ins8_benchmark_aggregate_results.csv`
+- `ins1_ins8_write_plan_summary_results.csv`
+- `ins1_ins8_physical_maintenance_summary.csv`
+- `ins1_ins8_physical_maintenance_checks.csv`
+- `README_ins1_ins8_physical_validation.md`
+
+The validation confirms that INS1–INS8 physical candidates execute successfully, write documents, and maintain the expected base and derived physical structures.
+
+For write workloads, the artifact records synthetic `WRITE` evidence instead of read-style MongoDB `executionStats`.

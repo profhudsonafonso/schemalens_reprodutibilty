@@ -382,3 +382,15 @@ The validation artifacts are located in:
 This pilot validates that IS1–IS7 physical candidates execute successfully, preserve semantic equivalence across candidate families, produce query-plan evidence, use indexes, and avoid collection scans in the inspected plans.
 
 These are pilot runs with small run counts. They validate physical access paths and semantic correctness before larger benchmark campaigns.
+
+## Physical MongoDB validation for INS1–INS8
+
+The repository includes a pilot validation of faithful physical MongoDB materializations for LDBC SNB INS1–INS8 at SF0.1.
+
+The validation artifacts are located in:
+
+    benchmark/ldbc_snb/physical_validation/ins1_ins8_consolidated_sf0_1/
+
+This pilot validates that INS1–INS8 physical candidates execute successfully, write documents, and maintain the expected base and derived physical structures.
+
+Because INS workloads are write-oriented, the artifact records write-path evidence and physical-maintenance checks rather than treating these operations as read-style explain-plan workloads.

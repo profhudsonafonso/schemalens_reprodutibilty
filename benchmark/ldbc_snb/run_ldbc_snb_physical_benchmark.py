@@ -2154,6 +2154,409 @@ def explain_ic6_candidate(db, g_class, param_id, limit=20):
     return comps
 
 
+
+# --------------------------------------------------------------------
+# INS physical write runners
+# --------------------------------------------------------------------
+
+def ins_parts(param_id):
+    return str(param_id).split("|")
+
+
+def ins_now():
+    return utc_now()
+
+
+def ins_unique(base):
+    # Keep user-provided logical id visible, but avoid duplicate-key/logical collisions
+    # across warmup and benchmark repetitions.
+    return f"{base}_{int(time.time() * 1000000)}"
+
+
+def ins_find_collection(db, *parts):
+    parts = [str(p).lower() for p in parts]
+    for c in db.list_collection_names():
+        lc = c.lower()
+        if all(p in lc for p in parts):
+            return c
+    return None
+
+
+def ins_insert_if_collection(db, collection, doc):
+    if collection and collection in db.list_collection_names():
+        db[collection].insert_one(dict(doc))
+        return 1
+    return 0
+
+
+def ins_touch_root_summary(db, root_id, relationship_name, payload):
+    col = ins_find_collection(db, "root_summary")
+    if not col:
+        return 0
+
+    db[col].update_one(
+        {"root_id": str(root_id)},
+        {
+            "$setOnInsert": {
+                "root_id": str(root_id),
+                "root_collection": "unknown",
+                "root_pk": "unknown",
+            },
+            "$push": {
+                f"relationship_summaries.{relationship_name}": payload
+            },
+        },
+        upsert=True,
+    )
+    return 1
+
+
+def run_ins1_add_person(db, g_class, param_id, limit=20):
+    # new_person_id|place_id|tag_id
+    new_person_id, place_id, tag_id = (ins_parts(param_id) + [None, None, None])[:3]
+    pid = ins_unique(new_person_id)
+    now = ins_now()
+    written = 0
+
+    person_doc = {
+        "person_id": pid,
+        "first_name": "Synthetic",
+        "last_name": "INS1",
+        "gender": "unknown",
+        "birthday": "1990-01-01",
+        "creation_date": now,
+        "location_ip": "0.0.0.0",
+        "browser_used": "synthetic",
+        "place_id": str(place_id),
+    }
+
+    written += ins_insert_if_collection(db, "persons", person_doc)
+    written += ins_insert_if_collection(db, "person_is_located_in_place", {
+        "person_id": pid,
+        "place_id": str(place_id),
+    })
+    written += ins_insert_if_collection(db, "person_has_interest_tag", {
+        "person_id": pid,
+        "tag_id": str(tag_id),
+        "creation_date": now,
+    })
+
+    if g_class == "G3":
+        written += ins_touch_root_summary(db, pid, "person_has_interest_tag", {
+            "tag_id": str(tag_id),
+            "creation_date": now,
+            "root_field": "person_id",
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins2_like_post(db, g_class, param_id, limit=20):
+    # person_id|post_id
+    person_id, post_id = (ins_parts(param_id) + [None, None])[:2]
+    now = ins_now()
+    written = 0
+
+    base_doc = {
+        "person_id": str(person_id),
+        "post_id": str(post_id),
+        "creation_date": now,
+    }
+
+    written += ins_insert_if_collection(db, "person_likes_post", base_doc)
+
+    if g_class == "G4":
+        col = ins_find_collection(db, "edge", "person_likes_post")
+        written += ins_insert_if_collection(db, col, {
+            "source_id": str(person_id),
+            "target_id": str(post_id),
+            "relationship_name": "person_likes_post",
+            "source_field": "person_id",
+            "target_field": "post_id",
+            "creation_date": now,
+        })
+
+    if g_class == "G6":
+        col = ins_find_collection(db, "rev", "person_likes_post")
+        written += ins_insert_if_collection(db, col, {
+            "lookup_id": str(post_id),
+            "referenced_id": str(person_id),
+            "relationship_name": "person_likes_post",
+            "lookup_field": "post_id",
+            "referenced_field": "person_id",
+            "creation_date": now,
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins3_like_comment(db, g_class, param_id, limit=20):
+    # person_id|comment_id
+    person_id, comment_id = (ins_parts(param_id) + [None, None])[:2]
+    now = ins_now()
+    written = 0
+
+    base_doc = {
+        "person_id": str(person_id),
+        "comment_id": str(comment_id),
+        "creation_date": now,
+    }
+
+    written += ins_insert_if_collection(db, "person_likes_comment", base_doc)
+
+    if g_class == "G4":
+        col = ins_find_collection(db, "edge", "person_likes_comment")
+        written += ins_insert_if_collection(db, col, {
+            "source_id": str(person_id),
+            "target_id": str(comment_id),
+            "relationship_name": "person_likes_comment",
+            "source_field": "person_id",
+            "target_field": "comment_id",
+            "creation_date": now,
+        })
+
+    if g_class == "G6":
+        col = ins_find_collection(db, "rev", "person_likes_comment")
+        written += ins_insert_if_collection(db, col, {
+            "lookup_id": str(comment_id),
+            "referenced_id": str(person_id),
+            "relationship_name": "person_likes_comment",
+            "lookup_field": "comment_id",
+            "referenced_field": "person_id",
+            "creation_date": now,
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins4_add_forum(db, g_class, param_id, limit=20):
+    # new_forum_id|moderator_person_id|tag_id
+    forum_id_raw, moderator_id, tag_id = (ins_parts(param_id) + [None, None, None])[:3]
+    forum_id = ins_unique(forum_id_raw)
+    now = ins_now()
+    written = 0
+
+    written += ins_insert_if_collection(db, "forums", {
+        "forum_id": forum_id,
+        "title": f"Synthetic forum {forum_id}",
+        "creation_date": now,
+        "moderator_person_id": str(moderator_id),
+    })
+    written += ins_insert_if_collection(db, "forum_has_moderator_person", {
+        "forum_id": forum_id,
+        "person_id": str(moderator_id),
+        "creation_date": now,
+    })
+    written += ins_insert_if_collection(db, "forum_has_tag", {
+        "forum_id": forum_id,
+        "tag_id": str(tag_id),
+        "creation_date": now,
+    })
+
+    if g_class == "G3":
+        written += ins_touch_root_summary(db, forum_id, "forum_has_tag", {
+            "tag_id": str(tag_id),
+            "creation_date": now,
+            "root_field": "forum_id",
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins5_add_forum_membership(db, g_class, param_id, limit=20):
+    # forum_id|person_id
+    forum_id, person_id = (ins_parts(param_id) + [None, None])[:2]
+    now = ins_now()
+    written = 0
+
+    written += ins_insert_if_collection(db, "forum_has_member_person", {
+        "forum_id": str(forum_id),
+        "person_id": str(person_id),
+        "creation_date": now,
+    })
+
+    if g_class == "G4":
+        col = ins_find_collection(db, "edge", "forum_has_member_person")
+        written += ins_insert_if_collection(db, col, {
+            "source_id": str(person_id),
+            "target_id": str(forum_id),
+            "relationship_name": "forum_has_member_person",
+            "source_field": "person_id",
+            "target_field": "forum_id",
+            "creation_date": now,
+        })
+
+    if g_class == "G6":
+        col = ins_find_collection(db, "rev", "forum_has_member_person")
+        written += ins_insert_if_collection(db, col, {
+            "lookup_id": str(forum_id),
+            "referenced_id": str(person_id),
+            "relationship_name": "forum_has_member_person",
+            "lookup_field": "forum_id",
+            "referenced_field": "person_id",
+            "creation_date": now,
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins6_add_post(db, g_class, param_id, limit=20):
+    # new_post_id|forum_id|creator_person_id|place_id|tag_id
+    post_id_raw, forum_id, creator_id, place_id, tag_id = (ins_parts(param_id) + [None, None, None, None, None])[:5]
+    post_id = ins_unique(post_id_raw)
+    now = ins_now()
+    written = 0
+
+    written += ins_insert_if_collection(db, "posts", {
+        "post_id": post_id,
+        "forum_id": str(forum_id),
+        "creator_person_id": str(creator_id),
+        "place_id": str(place_id),
+        "creation_date": now,
+        "content": "Synthetic INS6 post",
+        "length": "19",
+        "browser_used": "synthetic",
+        "language": "en",
+        "location_ip": "0.0.0.0",
+    })
+    written += ins_insert_if_collection(db, "forum_container_of_post", {
+        "forum_id": str(forum_id),
+        "post_id": post_id,
+        "creation_date": now,
+    })
+    written += ins_insert_if_collection(db, "post_has_creator_person", {
+        "post_id": post_id,
+        "person_id": str(creator_id),
+        "creation_date": now,
+    })
+    written += ins_insert_if_collection(db, "post_has_tag", {
+        "post_id": post_id,
+        "tag_id": str(tag_id),
+        "creation_date": now,
+    })
+
+    if g_class in {"G3", "G9"}:
+        written += ins_touch_root_summary(db, str(creator_id), "post_has_creator_person", {
+            "post_id": post_id,
+            "creation_date": now,
+            "root_field": "person_id",
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins7_add_comment(db, g_class, param_id, limit=20):
+    # new_comment_id|reply_post_id|creator_person_id|place_id|tag_id
+    comment_id_raw, reply_post_id, creator_id, place_id, tag_id = (ins_parts(param_id) + [None, None, None, None, None])[:5]
+    comment_id = ins_unique(comment_id_raw)
+    now = ins_now()
+    written = 0
+
+    written += ins_insert_if_collection(db, "comments", {
+        "comment_id": comment_id,
+        "reply_post_id": str(reply_post_id),
+        "reply_comment_id": None,
+        "creator_person_id": str(creator_id),
+        "place_id": str(place_id),
+        "creation_date": now,
+        "content": "Synthetic INS7 comment",
+        "length": "22",
+        "browser_used": "synthetic",
+        "location_ip": "0.0.0.0",
+    })
+    written += ins_insert_if_collection(db, "comment_reply_of_post", {
+        "comment_id": comment_id,
+        "post_id": str(reply_post_id),
+        "creation_date": now,
+    })
+    written += ins_insert_if_collection(db, "comment_has_creator_person", {
+        "comment_id": comment_id,
+        "person_id": str(creator_id),
+        "creation_date": now,
+    })
+    written += ins_insert_if_collection(db, "comment_has_tag", {
+        "comment_id": comment_id,
+        "tag_id": str(tag_id),
+        "creation_date": now,
+    })
+
+    if g_class in {"G3", "G9"}:
+        written += ins_touch_root_summary(db, str(creator_id), "comment_has_creator_person", {
+            "comment_id": comment_id,
+            "creation_date": now,
+            "root_field": "person_id",
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins8_add_friendship(db, g_class, param_id, limit=20):
+    # person1_id|person2_id
+    person1_id, person2_id = (ins_parts(param_id) + [None, None])[:2]
+    now = ins_now()
+    written = 0
+
+    written += ins_insert_if_collection(db, "person_knows_person", {
+        "person1_id": str(person1_id),
+        "person2_id": str(person2_id),
+        "creation_date": now,
+    })
+
+    if g_class == "G3":
+        written += ins_touch_root_summary(db, str(person1_id), "person_knows_person", {
+            "person2_id": str(person2_id),
+            "creation_date": now,
+            "root_field": "person1_id",
+        })
+
+    return {"documents_returned": 0, "documents_written": written, "result": []}
+
+
+def run_ins_candidate(db, official_id, g_class, param_id, limit=20):
+    if official_id == "INS1":
+        return run_ins1_add_person(db, g_class, param_id, limit)
+    if official_id == "INS2":
+        return run_ins2_like_post(db, g_class, param_id, limit)
+    if official_id == "INS3":
+        return run_ins3_like_comment(db, g_class, param_id, limit)
+    if official_id == "INS4":
+        return run_ins4_add_forum(db, g_class, param_id, limit)
+    if official_id == "INS5":
+        return run_ins5_add_forum_membership(db, g_class, param_id, limit)
+    if official_id == "INS6":
+        return run_ins6_add_post(db, g_class, param_id, limit)
+    if official_id == "INS7":
+        return run_ins7_add_comment(db, g_class, param_id, limit)
+    if official_id == "INS8":
+        return run_ins8_add_friendship(db, g_class, param_id, limit)
+    raise ValueError(f"INS physical runner not implemented for official_id={official_id} g_class={g_class}")
+
+
+def explain_ins_candidate(db, official_id, g_class, param_id, limit=20):
+    # For write workloads, query-plan style executionStats is not directly comparable
+    # to read explains. We record a write-maintenance component instead.
+    return [{
+        "component_name": f"{official_id.lower()}_{str(g_class).lower()}_write_maintenance",
+        "operation_kind": "write",
+        "collection_name": "write_path",
+        "filter_json": "{}",
+        "executionTimeMillis": 0,
+        "nReturned": 0,
+        "totalDocsExamined": 0,
+        "totalKeysExamined": 0,
+        "all_stages": "WRITE",
+        "all_index_names": "",
+        "has_IXSCAN": False,
+        "has_COLLSCAN": False,
+        "has_FETCH": False,
+        "has_SORT": False,
+        "has_OR": False,
+        "has_LIMIT": False,
+        "execution_status": "completed",
+        "raw_explain": None,
+    }]
+
+
 def run_physical_candidate(db, official_id, g_class, param_id, limit=20):
     if official_id == "IC1":
         return run_ic1_candidate(db, g_class, param_id, limit)
@@ -2183,6 +2586,9 @@ def run_physical_candidate(db, official_id, g_class, param_id, limit=20):
         if g_class == "G6":
             return run_ic7_g6(db, param_id, limit)
         raise ValueError(f"IC7 physical runner not implemented for g_class={g_class}")
+
+    if str(official_id).startswith("INS"):
+        return run_ins_candidate(db, official_id, g_class, param_id, limit)
 
     if official_id.startswith("IS"):
         return run_is_generic(db, official_id, param_id, limit)
@@ -2366,6 +2772,38 @@ def write_csv(path, rows):
     df.to_csv(path, index=False)
 
 
+
+def normalize_benchmark_output(result):
+    """Normalize read and write runner outputs.
+
+    Read runners usually return a list of documents.
+    Write runners return a dict such as:
+        {"documents_returned": 0, "documents_written": 2, "result": []}
+    """
+    if isinstance(result, dict):
+        docs_returned = result.get("documents_returned")
+        docs_written = result.get("documents_written", 0)
+
+        if docs_returned is None:
+            payload = result.get("result", [])
+            if isinstance(payload, list):
+                docs_returned = len(payload)
+            elif payload is None:
+                docs_returned = 0
+            else:
+                docs_returned = 1
+
+        return int(docs_returned or 0), int(docs_written or 0)
+
+    if result is None:
+        return 0, 0
+
+    try:
+        return len(result), 0
+    except TypeError:
+        return 1, 0
+
+
 def aggregate_raw(raw_rows):
     df = pd.DataFrame(raw_rows)
     if df.empty:
@@ -2393,7 +2831,7 @@ def aggregate_raw(raw_rows):
             "min_latency_ms": min(lat) if lat else None,
             "max_latency_ms": max(lat) if lat else None,
             "avg_documents_returned": ok["documents_returned"].astype(float).mean() if len(ok) else None,
-            "documents_written": 0,
+            "documents_written": ok["documents_written"].astype(float).mean() if len(ok) and "documents_written" in ok.columns else None,
         })
         rows.append(item)
 
@@ -2404,6 +2842,39 @@ def summarize_query_plan(component_rows):
     df = pd.DataFrame(component_rows)
     if df.empty:
         return pd.DataFrame()
+
+    # Write-oriented INS components may not expose read executionStats fields.
+    # Fill missing fields so summary generation does not fail.
+    default_numeric_cols = [
+        "executionTimeMillis",
+        "nReturned",
+        "totalDocsExamined",
+        "totalKeysExamined",
+    ]
+    for col in default_numeric_cols:
+        if col not in df.columns:
+            df[col] = 0
+
+    default_bool_cols = [
+        "has_COLLSCAN",
+        "has_IXSCAN",
+        "has_FETCH",
+        "has_SORT",
+        "has_OR",
+        "has_LIMIT",
+    ]
+    for col in default_bool_cols:
+        if col not in df.columns:
+            df[col] = False
+
+    default_text_cols = [
+        "all_stages",
+        "all_index_names",
+        "execution_status",
+    ]
+    for col in default_text_cols:
+        if col not in df.columns:
+            df[col] = ""
 
     keys = [
         "candidate_id", "official_id", "query_name", "benchmark_group",
@@ -2573,9 +3044,10 @@ def main():
                 status = "completed"
                 error = ""
                 docs_returned = 0
+                docs_written = 0
                 try:
                     result = run_physical_candidate(db, candidate.get("official_id"), g_class, owner_id, args.limit)
-                    docs_returned = len(result)
+                    docs_returned, docs_written = normalize_benchmark_output(result)
                 except Exception as e:
                     status = "failed"
                     error = repr(e)
@@ -2599,7 +3071,7 @@ def main():
                     "parameter_id": owner_id,
                     "latency_ms": (end - start) * 1000.0,
                     "documents_returned": docs_returned,
-                    "documents_written": 0,
+                    "documents_written": docs_written,
                     "execution_status": status,
                     "error_message": error,
                 })
@@ -2622,6 +3094,8 @@ def main():
                     comps = explain_ic6_candidate(db, g_class, explain_owner, args.limit)
                 elif candidate.get("official_id") == "IC7":
                     comps = run_ic7_explain_components(db, g_class, explain_owner, args.limit)
+                elif str(candidate.get("official_id", "")).startswith("INS"):
+                    comps = explain_ins_candidate(db, candidate.get("official_id"), g_class, explain_owner, args.limit)
                 elif str(candidate.get("official_id", "")).startswith("IS"):
                     comps = explain_is_generic(db, candidate.get("official_id"), explain_owner, args.limit)
                 else:
