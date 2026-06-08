@@ -370,3 +370,15 @@ Main files:
 This pilot validates that IC1–IC7 physical candidates execute successfully, preserve semantic equivalence across candidate families, produce query-plan evidence, use indexes, and avoid collection scans in the inspected plans.
 
 These are pilot runs with small run counts. They validate physical access paths and semantic correctness before larger benchmark campaigns.
+
+## Physical MongoDB validation for IS1–IS7
+
+The repository includes a pilot validation of faithful physical MongoDB materializations for LDBC SNB IS1–IS7 at SF0.1.
+
+The validation artifacts are located in:
+
+    benchmark/ldbc_snb/physical_validation/is1_is7_consolidated_sf0_1/
+
+This pilot validates that IS1–IS7 physical candidates execute successfully, preserve semantic equivalence across candidate families, produce query-plan evidence, use indexes, and avoid collection scans in the inspected plans.
+
+These are pilot runs with small run counts. They validate physical access paths and semantic correctness before larger benchmark campaigns.
