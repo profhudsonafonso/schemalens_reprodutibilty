@@ -696,11 +696,11 @@ Total selected utility: 1.271550355966
 
 ### Purpose
 
-This phase assembles the first structural DBSR schema manifest from the ranked document utilities. It converts the ranked document structures into a schema-level manifest with collection names, root entities, embedded or included entities, utility values, and query/sequence coverage.
+This phase assembles the first structural DBSR schema manifest from the ranked document utilities. It converts ranked DBSR document structures into a schema-level manifest with deterministic collection names, document signatures, root entities, embedded or included entities, utility values, and query/sequence coverage.
 
 ### Important methodological note
 
-This is still a logical structural manifest. It does not create MongoDB collections and does not yet resolve all physical duplication or maintenance conflicts. Overlapping document structures are allowed at this stage because this manifest records the DBSR structural recommendation before physical materialization.
+This is a logical structural manifest, not a physical MongoDB schema yet. It does not create collections and does not resolve all duplication or maintenance conflicts. Overlapping document structures are allowed at this stage because the goal is to record the DBSR structural recommendation before physical materialization.
 
 ### Current implementation assumptions
 
@@ -723,4 +723,4 @@ DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.json
 DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.csv
 ```
 
-The materialization plan should define how each selected DBSR document structure can be loaded into MongoDB collections, but it should still be separated from actual benchmark execution.
+The materialization plan should define how each selected DBSR document structure can be loaded into MongoDB collections, while still remaining separate from actual benchmark execution.
