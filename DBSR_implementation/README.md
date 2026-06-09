@@ -903,3 +903,71 @@ Execution mode:
 ### Next phase
 
 Wait until the benchmark server is available, then run a small executed smoke materialization over FIBEN SF1 before full p95 benchmarking.
+
+## Phase 2i — Executed DBSR loader smoke test with synthetic FIBEN source DB
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/benchmark/fiben/create_synthetic_fiben_source_db.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_synthetic_source_manifest_sf1.json
+DBSR_implementation/generated/fiben/dbsr_loader_execution_manifest_sf1_executed.json
+```
+
+### Synthetic source validation
+
+```text
+Synthetic source status: executed
+Mongo access: True
+Mongo database: dbsr_fiben_synthetic_smoke
+Collections prepared: 12
+Documents prepared: 36
+Official benchmark: False
+```
+
+### Executed loader validation
+
+```text
+Loader status: executed
+Mongo access: True
+Benchmark execution: False
+Target collections: 15
+Completed collections: 15
+Failed collections: 0
+Root limit: 100
+Child limit: 100
+Drop target: True
+```
+
+### Purpose
+
+This phase validates the DBSR materialization loader with a synthetic minimal FIBEN source database. Since no real FIBEN MongoDB database was available on the server, the synthetic source database was created only to test the loader execution path.
+
+The test confirms that the loader can connect to MongoDB, read source collections, create DBSR target collections, insert materialized documents, and generate an execution manifest.
+
+### Important methodological note
+
+This is not an official benchmark and must not be used for p95 comparison. The synthetic database is minimal and only supports loader validation.
+
+The official DBSR-vs-SchemaLens comparison must later use the real FIBEN scale-factor data on the same server used for the SchemaLens benchmark.
+
+### Current implementation assumptions
+
+```text
+1. The synthetic source database is only for executed smoke testing.
+2. It is not a real FIBEN scale-factor database.
+3. It must not be used for latency, regret, or p95 comparison.
+4. The official benchmark requires real FIBEN data.
+5. The official benchmark must capture collection statistics before temporary databases are dropped.
+```
+
+### Next phase
+
+Prepare the official DBSR benchmark runner for FIBEN Q1--Q9, but keep execution blocked until the real FIBEN source data is available.

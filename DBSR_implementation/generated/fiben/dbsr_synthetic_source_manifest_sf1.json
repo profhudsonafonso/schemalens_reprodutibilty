@@ -1,0 +1,32 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf1",
+  "source_type": "synthetic_minimal_fiben_source_db",
+  "status": "executed",
+  "mongo_access": true,
+  "mongo_database": "dbsr_fiben_synthetic_smoke",
+  "collections_prepared": 12,
+  "documents_prepared": 36,
+  "loaded_counts": {
+    "fiben_corporations": 7,
+    "fiben_countries": 2,
+    "fiben_financial_service_accounts": 4,
+    "fiben_holdings": 2,
+    "fiben_industries": 2,
+    "fiben_listed_securities": 6,
+    "fiben_persons": 3,
+    "fiben_report_elements": 1,
+    "fiben_reports": 1,
+    "fiben_securities": 4,
+    "fiben_statement_elements": 1,
+    "fiben_transactions": 3
+  },
+  "official_benchmark": false,
+  "implementation_assumptions": [
+    "This creates a synthetic minimal source database for executed loader smoke tests only.",
+    "It is not a real FIBEN scale-factor database.",
+    "It must not be used for p95 benchmark comparison.",
+    "The official DBSR benchmark must later use the real FIBEN data on the same server used for SchemaLens."
+  ]
+}
