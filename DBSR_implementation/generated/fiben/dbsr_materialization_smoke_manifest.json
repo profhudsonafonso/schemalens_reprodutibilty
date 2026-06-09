@@ -1,0 +1,524 @@
+{
+  "summary": {
+    "baseline": "DBSR",
+    "dataset": "FIBEN",
+    "smoke_test_type": "materialization_plan_dry_run",
+    "status": "passed",
+    "target_collections": 15,
+    "passed_collections": 15,
+    "failed_collections": 0,
+    "warnings_count": 0,
+    "dry_run_operations": 36,
+    "plan_only": true,
+    "mongo_access": false,
+    "benchmark_execution": false
+  },
+  "collection_results": [
+    {
+      "rank": 1,
+      "target_collection": "dbsr_rank01_listedsecurity",
+      "document_signature": "ListedSecurity",
+      "root_entity": "ListedSecurity",
+      "source_views_count": 1,
+      "embedding_steps_count": 0,
+      "expected_operations": 1,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 2,
+      "target_collection": "dbsr_rank02_transaction_listedsecurity",
+      "document_signature": "Transaction|{ListedSecurity}",
+      "root_entity": "Transaction",
+      "source_views_count": 2,
+      "embedding_steps_count": 1,
+      "expected_operations": 2,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 3,
+      "target_collection": "dbsr_rank03_corporation",
+      "document_signature": "Corporation",
+      "root_entity": "Corporation",
+      "source_views_count": 1,
+      "embedding_steps_count": 0,
+      "expected_operations": 1,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 4,
+      "target_collection": "dbsr_rank04_person",
+      "document_signature": "Person",
+      "root_entity": "Person",
+      "source_views_count": 1,
+      "embedding_steps_count": 0,
+      "expected_operations": 1,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 5,
+      "target_collection": "dbsr_rank05_corporation_country",
+      "document_signature": "Corporation|{Country}",
+      "root_entity": "Corporation",
+      "source_views_count": 2,
+      "embedding_steps_count": 1,
+      "expected_operations": 2,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 6,
+      "target_collection": "dbsr_rank06_corporation_industry",
+      "document_signature": "Corporation|{Industry}",
+      "root_entity": "Corporation",
+      "source_views_count": 2,
+      "embedding_steps_count": 1,
+      "expected_operations": 2,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 7,
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Holding|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 8,
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "document_signature": "Corporation|{Security|{ListedSecurity}}",
+      "root_entity": "Corporation",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 9,
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Transaction|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 10,
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "document_signature": "Person|{FinancialServiceAccount|{Transaction}}",
+      "root_entity": "Person",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 11,
+      "target_collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "document_signature": "Person|{FinancialServiceAccount|{Holding}}",
+      "root_entity": "Person",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 12,
+      "target_collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "document_signature": "ListedSecurity|{Security|{Corporation}}",
+      "root_entity": "ListedSecurity",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 13,
+      "target_collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "document_signature": "FinancialReport|{ReportElement|{StatementElement}}",
+      "root_entity": "FinancialReport",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 14,
+      "target_collection": "dbsr_rank14_security_corporation_industry",
+      "document_signature": "Security|{Corporation|{Industry}}",
+      "root_entity": "Security",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "rank": 15,
+      "target_collection": "dbsr_rank15_security_corporation_country",
+      "document_signature": "Security|{Corporation|{Country}}",
+      "root_entity": "Security",
+      "source_views_count": 3,
+      "embedding_steps_count": 2,
+      "expected_operations": 3,
+      "errors_count": 0,
+      "warnings_count": 0,
+      "status": "passed",
+      "errors": [],
+      "warnings": []
+    }
+  ],
+  "dry_run_operations": [
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank01_listedsecurity",
+      "operation_type": "root_scan",
+      "source_view": "fiben_listed_securities",
+      "entity": "ListedSecurity",
+      "join_description": ""
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank02_transaction_listedsecurity",
+      "operation_type": "root_scan",
+      "source_view": "fiben_transactions",
+      "entity": "Transaction",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank02_transaction_listedsecurity",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "ListedSecurity",
+      "join_description": "Transaction.REFERSTO -> ListedSecurity.LISTEDSECURITYID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank03_corporation",
+      "operation_type": "root_scan",
+      "source_view": "fiben_corporations",
+      "entity": "Corporation",
+      "join_description": ""
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank04_person",
+      "operation_type": "root_scan",
+      "source_view": "fiben_persons",
+      "entity": "Person",
+      "join_description": ""
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank05_corporation_country",
+      "operation_type": "root_scan",
+      "source_view": "fiben_corporations",
+      "entity": "Corporation",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank05_corporation_country",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Country",
+      "join_description": "Corporation.ISDOMICILEDIN -> Country.COUNTRYID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank06_corporation_industry",
+      "operation_type": "root_scan",
+      "source_view": "fiben_corporations",
+      "entity": "Corporation",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank06_corporation_industry",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Industry",
+      "join_description": "Corporation.ISCLASSIFIEDBY -> Industry.INDUSTRYSECTORCLASSIFIERID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "operation_type": "root_scan",
+      "source_view": "fiben_financial_service_accounts",
+      "entity": "FinancialServiceAccount",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Holding",
+      "join_description": "FinancialServiceAccount.FINANCIALSERVICEACCOUNTID -> Holding.ISHELDBY"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "ListedSecurity",
+      "join_description": "Holding.REFERSTO -> ListedSecurity.LISTEDSECURITYID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "operation_type": "root_scan",
+      "source_view": "fiben_corporations",
+      "entity": "Corporation",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Security",
+      "join_description": "Corporation.CORPORATIONID -> Security.ISPROVIDEDBY"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "ListedSecurity",
+      "join_description": "Security.ISTRADEDON -> ListedSecurity.LISTEDSECURITYID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "operation_type": "root_scan",
+      "source_view": "fiben_financial_service_accounts",
+      "entity": "FinancialServiceAccount",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Transaction",
+      "join_description": "FinancialServiceAccount.FINANCIALSERVICEACCOUNTID -> Transaction.ISFACILITATEDBY"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "ListedSecurity",
+      "join_description": "Transaction.REFERSTO -> ListedSecurity.LISTEDSECURITYID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "operation_type": "root_scan",
+      "source_view": "fiben_persons",
+      "entity": "Person",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "FinancialServiceAccount",
+      "join_description": "Person.PERSONID -> FinancialServiceAccount.ISOWNEDBY"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Transaction",
+      "join_description": "FinancialServiceAccount.FINANCIALSERVICEACCOUNTID -> Transaction.ISFACILITATEDBY"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "operation_type": "root_scan",
+      "source_view": "fiben_persons",
+      "entity": "Person",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "FinancialServiceAccount",
+      "join_description": "Person.PERSONID -> FinancialServiceAccount.ISOWNEDBY"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Holding",
+      "join_description": "FinancialServiceAccount.FINANCIALSERVICEACCOUNTID -> Holding.ISHELDBY"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "operation_type": "root_scan",
+      "source_view": "fiben_listed_securities",
+      "entity": "ListedSecurity",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Security",
+      "join_description": "ListedSecurity.LISTEDSECURITYID -> Security.ISTRADEDON"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Corporation",
+      "join_description": "Security.ISPROVIDEDBY -> Corporation.CORPORATIONID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "operation_type": "root_scan",
+      "source_view": "fiben_reports",
+      "entity": "FinancialReport",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "ReportElement",
+      "join_description": "FinancialReport.FINANCIALREPORTID -> ReportElement.ISMEMBEROF"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "StatementElement",
+      "join_description": "ReportElement.ELEMENTSOFFINANCIALREPORTID -> StatementElement.ELEMENTOFFINANCIALSTATEMENTID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank14_security_corporation_industry",
+      "operation_type": "root_scan",
+      "source_view": "fiben_securities",
+      "entity": "Security",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank14_security_corporation_industry",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Corporation",
+      "join_description": "Security.ISPROVIDEDBY -> Corporation.CORPORATIONID"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank14_security_corporation_industry",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Industry",
+      "join_description": "Corporation.ISCLASSIFIEDBY -> Industry.INDUSTRYSECTORCLASSIFIERID"
+    },
+    {
+      "operation_order": 1,
+      "target_collection": "dbsr_rank15_security_corporation_country",
+      "operation_type": "root_scan",
+      "source_view": "fiben_securities",
+      "entity": "Security",
+      "join_description": ""
+    },
+    {
+      "operation_order": 2,
+      "target_collection": "dbsr_rank15_security_corporation_country",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Corporation",
+      "join_description": "Security.ISPROVIDEDBY -> Corporation.CORPORATIONID"
+    },
+    {
+      "operation_order": 3,
+      "target_collection": "dbsr_rank15_security_corporation_country",
+      "operation_type": "lookup_children_and_embed",
+      "source_view": "",
+      "entity": "Country",
+      "join_description": "Corporation.ISDOMICILEDIN -> Country.COUNTRYID"
+    }
+  ],
+  "implementation_assumptions": [
+    "This smoke test validates the DBSR materialization plan without connecting to MongoDB.",
+    "It checks required fields, source views, primary keys, embedding steps, and missing relationships.",
+    "It does not load data and does not measure p95 latency.",
+    "The official DBSR benchmark must later run on the same server used for SchemaLens p95 measurements."
+  ]
+}

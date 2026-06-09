@@ -784,3 +784,65 @@ DBSR_implementation/generated/fiben/dbsr_materialization_smoke_manifest.json
 ```
 
 The smoke test should load a tiny subset or dry-run the operations before full-scale benchmarking.
+
+## Phase 2g — DBSR materialization loader smoke test
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/benchmark/fiben/run_dbsr_materialization_smoke_test.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_materialization_smoke_manifest.json
+DBSR_implementation/generated/fiben/dbsr_materialization_smoke_manifest.csv
+DBSR_implementation/generated/fiben/dbsr_materialization_smoke_operations.csv
+```
+
+### Validation result
+
+```text
+Smoke status: passed
+Target collections: 15
+Passed collections: 15
+Failed collections: 0
+Warnings: 0
+Dry-run operations: 36
+Mongo access: False
+Benchmark execution: False
+```
+
+### Purpose
+
+This phase validates the DBSR structural materialization plan without connecting to MongoDB. It checks whether each planned target collection has the required root entity, source view, primary key, source collections, embedding steps, and relationship metadata.
+
+### Important methodological note
+
+This is a dry-run smoke test only. It does not load data, does not create MongoDB collections, and does not measure p95 latency.
+
+The official DBSR materialization and benchmark must later be executed on the same server used for the SchemaLens benchmark, after the current query-plan experiments finish, to keep the comparison fair.
+
+### Current implementation assumptions
+
+```text
+1. The smoke test reads dbsr_materialization_plan_structural.json.
+2. It validates the logical loading plan for each selected DBSR collection.
+3. It produces dry-run operations, but no data is loaded.
+4. MongoDB access is intentionally disabled in this phase.
+5. Benchmark execution is intentionally disabled in this phase.
+```
+
+### Next phase
+
+Implement the first real MongoDB materialization loader, but keep it disabled until the benchmark server is available.
+
+Expected next outputs:
+
+```text
+DBSR_implementation/benchmark/fiben/run_dbsr_materialization_loader.py
+DBSR_implementation/generated/fiben/dbsr_loader_execution_manifest_sf1.json
+```
