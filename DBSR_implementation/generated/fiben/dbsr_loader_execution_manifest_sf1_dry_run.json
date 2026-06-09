@@ -1,0 +1,161 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf1",
+  "loader_type": "dbsr_materialization_loader",
+  "status": "dry_run",
+  "execute": false,
+  "mongo_access": false,
+  "benchmark_execution": false,
+  "root_limit": 10,
+  "child_limit": 20,
+  "drop_target": false,
+  "target_collections": 15,
+  "completed_collections": 15,
+  "failed_collections": 0,
+  "execution_results": [
+    {
+      "target_collection": "dbsr_rank01_listedsecurity",
+      "root_source_view": "fiben_listed_securities",
+      "root_documents_loaded": 0,
+      "embedding_steps": 0,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank02_transaction_listedsecurity",
+      "root_source_view": "fiben_transactions",
+      "root_documents_loaded": 0,
+      "embedding_steps": 1,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank03_corporation",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 0,
+      "embedding_steps": 0,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank04_person",
+      "root_source_view": "fiben_persons",
+      "root_documents_loaded": 0,
+      "embedding_steps": 0,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank05_corporation_country",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 0,
+      "embedding_steps": 1,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank06_corporation_industry",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 0,
+      "embedding_steps": 1,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "root_source_view": "fiben_persons",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "root_source_view": "fiben_persons",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "root_source_view": "fiben_listed_securities",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "root_source_view": "fiben_reports",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank14_security_corporation_industry",
+      "root_source_view": "fiben_securities",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    },
+    {
+      "target_collection": "dbsr_rank15_security_corporation_country",
+      "root_source_view": "fiben_securities",
+      "root_documents_loaded": 0,
+      "embedding_steps": 2,
+      "inserted_documents": 0,
+      "elapsed_seconds": 0.0,
+      "status": "dry_run_not_executed"
+    }
+  ],
+  "collection_statistics": [],
+  "implementation_assumptions": [
+    "The default mode is dry-run and does not connect to MongoDB.",
+    "Real materialization requires --execute and --mongo-db.",
+    "This loader is intended first for smoke-scale validation.",
+    "Official DBSR p95 benchmark must run later on the same server used for SchemaLens.",
+    "Statistics are captured after materialization and before any target database is dropped."
+  ]
+}

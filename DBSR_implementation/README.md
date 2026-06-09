@@ -846,3 +846,60 @@ Expected next outputs:
 DBSR_implementation/benchmark/fiben/run_dbsr_materialization_loader.py
 DBSR_implementation/generated/fiben/dbsr_loader_execution_manifest_sf1.json
 ```
+
+## Phase 2h — DBSR MongoDB materialization loader skeleton
+
+Status: completed in dry-run mode.
+
+### Created files
+
+```text
+DBSR_implementation/benchmark/fiben/run_dbsr_materialization_loader.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_loader_execution_manifest_sf1_dry_run.json
+```
+
+### Validation result
+
+```text
+Loader status: dry_run
+Mongo access: False
+Benchmark execution: False
+Target collections: 15
+Completed collections: 15
+Failed collections: 0
+Root limit: 10
+Child limit: 20
+```
+
+### Purpose
+
+This phase adds the first real MongoDB materialization loader skeleton for the DBSR structural materialization plan. The loader is safe by default: it runs in dry-run mode unless `--execute` is explicitly provided.
+
+### Important methodological note
+
+This phase does not run the official benchmark. The dry-run output confirms that the loader can read the 15-collection DBSR materialization plan and prepare execution metadata without accessing MongoDB.
+
+The real materialization must later run on the same server used for the SchemaLens benchmark. That official execution should capture collection statistics before any temporary database is dropped.
+
+### Safe execution policy
+
+```text
+Default mode:
+  no MongoDB connection
+  no data loading
+  no benchmark execution
+
+Execution mode:
+  requires --execute
+  requires --mongo-db
+  may optionally use --drop-target
+```
+
+### Next phase
+
+Wait until the benchmark server is available, then run a small executed smoke materialization over FIBEN SF1 before full p95 benchmarking.
