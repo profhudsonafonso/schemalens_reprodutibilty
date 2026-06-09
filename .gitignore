@@ -1,2 +1,18 @@
 # Large raw MongoDB explain outputs
 analysis/generated/query_plan/**/query_plan_raw_json/
+# DBSR baseline implementation - keep generated heavy/private artifacts out
+DBSR_implementation/**/__pycache__/
+DBSR_implementation/**/*.pyc
+DBSR_implementation/**/.ipynb_checkpoints/
+
+# Do not commit raw data, dumps, or local DB exports
+DBSR_implementation/data/
+DBSR_implementation/raw/
+DBSR_implementation/dumps/
+DBSR_implementation/**/mongodb_dump/
+DBSR_implementation/**/query_plan_raw_json/
+
+# Keep only curated aggregate outputs unless explicitly reviewed
+DBSR_implementation/results/**/raw/
+DBSR_implementation/results/**/logs/
+DBSR_implementation/benchmark/**/logs/
