@@ -1,0 +1,528 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "plan_type": "structural_materialization_plan",
+  "version": "0.1-plan-only",
+  "source_schema_manifest": "structural_schema_manifest",
+  "summary": {
+    "target_collections": 10,
+    "embedding_steps_total": 11,
+    "missing_relationships_total": 0,
+    "source_views_used": 9,
+    "source_view_names": [
+      "fiben_corporations",
+      "fiben_countries",
+      "fiben_financial_service_accounts",
+      "fiben_holdings",
+      "fiben_industries",
+      "fiben_listed_securities",
+      "fiben_persons",
+      "fiben_securities",
+      "fiben_transactions"
+    ],
+    "plan_only": true
+  },
+  "collection_plans": [
+    {
+      "rank": 1,
+      "target_collection": "dbsr_rank01_listedsecurity",
+      "document_signature": "ListedSecurity",
+      "root_entity": "ListedSecurity",
+      "root_source_view": "fiben_listed_securities",
+      "root_primary_key": "LISTEDSECURITYID",
+      "tree_entities": [
+        "ListedSecurity"
+      ],
+      "source_collections": [
+        {
+          "entity": "ListedSecurity",
+          "source_view": "fiben_listed_securities",
+          "primary_key": "LISTEDSECURITYID"
+        }
+      ],
+      "embedding_steps": [],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_single_entity_collection",
+      "queries_covered": 7,
+      "sequences_covered": 11,
+      "total_utility": 0.24699892254,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 2,
+      "target_collection": "dbsr_rank02_transaction_listedsecurity",
+      "document_signature": "Transaction|{ListedSecurity}",
+      "root_entity": "Transaction",
+      "root_source_view": "fiben_transactions",
+      "root_primary_key": "SECURITIESTRANSACTIONID",
+      "tree_entities": [
+        "Transaction",
+        "ListedSecurity"
+      ],
+      "source_collections": [
+        {
+          "entity": "Transaction",
+          "source_view": "fiben_transactions",
+          "primary_key": "SECURITIESTRANSACTIONID"
+        },
+        {
+          "entity": "ListedSecurity",
+          "source_view": "fiben_listed_securities",
+          "primary_key": "LISTEDSECURITYID"
+        }
+      ],
+      "embedding_steps": [
+        {
+          "parent_entity": "Transaction",
+          "child_entity": "ListedSecurity",
+          "relationship_id": "transaction_refers_to_listed_security",
+          "relationship_direction": "forward",
+          "relationship_type": "direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "REFERSTO",
+          "child_join_column": "LISTEDSECURITYID",
+          "materialization_operation": "lookup_children_and_embed"
+        }
+      ],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_nested_embedding",
+      "queries_covered": 3,
+      "sequences_covered": 6,
+      "total_utility": 0.239945244797,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 3,
+      "target_collection": "dbsr_rank03_corporation",
+      "document_signature": "Corporation",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_primary_key": "CORPORATIONID",
+      "tree_entities": [
+        "Corporation"
+      ],
+      "source_collections": [
+        {
+          "entity": "Corporation",
+          "source_view": "fiben_corporations",
+          "primary_key": "CORPORATIONID"
+        }
+      ],
+      "embedding_steps": [],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_single_entity_collection",
+      "queries_covered": 4,
+      "sequences_covered": 6,
+      "total_utility": 0.181393169286,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 4,
+      "target_collection": "dbsr_rank04_person",
+      "document_signature": "Person",
+      "root_entity": "Person",
+      "root_source_view": "fiben_persons",
+      "root_primary_key": "PERSONID",
+      "tree_entities": [
+        "Person"
+      ],
+      "source_collections": [
+        {
+          "entity": "Person",
+          "source_view": "fiben_persons",
+          "primary_key": "PERSONID"
+        }
+      ],
+      "embedding_steps": [],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_single_entity_collection",
+      "queries_covered": 3,
+      "sequences_covered": 5,
+      "total_utility": 0.136620850758,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 5,
+      "target_collection": "dbsr_rank05_corporation_country",
+      "document_signature": "Corporation|{Country}",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_primary_key": "CORPORATIONID",
+      "tree_entities": [
+        "Corporation",
+        "Country"
+      ],
+      "source_collections": [
+        {
+          "entity": "Corporation",
+          "source_view": "fiben_corporations",
+          "primary_key": "CORPORATIONID"
+        },
+        {
+          "entity": "Country",
+          "source_view": "fiben_countries",
+          "primary_key": "COUNTRYID"
+        }
+      ],
+      "embedding_steps": [
+        {
+          "parent_entity": "Corporation",
+          "child_entity": "Country",
+          "relationship_id": "corporation_has_country",
+          "relationship_direction": "forward",
+          "relationship_type": "direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "ISDOMICILEDIN",
+          "child_join_column": "COUNTRYID",
+          "materialization_operation": "lookup_children_and_embed"
+        }
+      ],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_nested_embedding",
+      "queries_covered": 2,
+      "sequences_covered": 2,
+      "total_utility": 0.097529113658,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 6,
+      "target_collection": "dbsr_rank06_corporation_industry",
+      "document_signature": "Corporation|{Industry}",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_primary_key": "CORPORATIONID",
+      "tree_entities": [
+        "Corporation",
+        "Industry"
+      ],
+      "source_collections": [
+        {
+          "entity": "Corporation",
+          "source_view": "fiben_corporations",
+          "primary_key": "CORPORATIONID"
+        },
+        {
+          "entity": "Industry",
+          "source_view": "fiben_industries",
+          "primary_key": "INDUSTRYSECTORCLASSIFIERID"
+        }
+      ],
+      "embedding_steps": [
+        {
+          "parent_entity": "Corporation",
+          "child_entity": "Industry",
+          "relationship_id": "corporation_has_industry",
+          "relationship_direction": "forward",
+          "relationship_type": "direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "ISCLASSIFIEDBY",
+          "child_join_column": "INDUSTRYSECTORCLASSIFIERID",
+          "materialization_operation": "lookup_children_and_embed"
+        }
+      ],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_nested_embedding",
+      "queries_covered": 2,
+      "sequences_covered": 2,
+      "total_utility": 0.097529113658,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 7,
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Holding|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_primary_key": "FINANCIALSERVICEACCOUNTID",
+      "tree_entities": [
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity"
+      ],
+      "source_collections": [
+        {
+          "entity": "FinancialServiceAccount",
+          "source_view": "fiben_financial_service_accounts",
+          "primary_key": "FINANCIALSERVICEACCOUNTID"
+        },
+        {
+          "entity": "Holding",
+          "source_view": "fiben_holdings",
+          "primary_key": "HOLDINGID"
+        },
+        {
+          "entity": "ListedSecurity",
+          "source_view": "fiben_listed_securities",
+          "primary_key": "LISTEDSECURITYID"
+        }
+      ],
+      "embedding_steps": [
+        {
+          "parent_entity": "FinancialServiceAccount",
+          "child_entity": "Holding",
+          "relationship_id": "account_has_holding",
+          "relationship_direction": "forward",
+          "relationship_type": "reverse_direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "FINANCIALSERVICEACCOUNTID",
+          "child_join_column": "ISHELDBY",
+          "materialization_operation": "lookup_children_and_embed"
+        },
+        {
+          "parent_entity": "Holding",
+          "child_entity": "ListedSecurity",
+          "relationship_id": "holding_refers_to_listed_security",
+          "relationship_direction": "forward",
+          "relationship_type": "direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "REFERSTO",
+          "child_join_column": "LISTEDSECURITYID",
+          "materialization_operation": "lookup_children_and_embed"
+        }
+      ],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_nested_embedding",
+      "queries_covered": 2,
+      "sequences_covered": 2,
+      "total_utility": 0.074705073036,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 8,
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "document_signature": "Corporation|{Security|{ListedSecurity}}",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_primary_key": "CORPORATIONID",
+      "tree_entities": [
+        "Corporation",
+        "Security",
+        "ListedSecurity"
+      ],
+      "source_collections": [
+        {
+          "entity": "Corporation",
+          "source_view": "fiben_corporations",
+          "primary_key": "CORPORATIONID"
+        },
+        {
+          "entity": "Security",
+          "source_view": "fiben_securities",
+          "primary_key": "SECURITYID"
+        },
+        {
+          "entity": "ListedSecurity",
+          "source_view": "fiben_listed_securities",
+          "primary_key": "LISTEDSECURITYID"
+        }
+      ],
+      "embedding_steps": [
+        {
+          "parent_entity": "Corporation",
+          "child_entity": "Security",
+          "relationship_id": "corporation_has_security",
+          "relationship_direction": "forward",
+          "relationship_type": "reverse_direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "CORPORATIONID",
+          "child_join_column": "ISPROVIDEDBY",
+          "materialization_operation": "lookup_children_and_embed"
+        },
+        {
+          "parent_entity": "Security",
+          "child_entity": "ListedSecurity",
+          "relationship_id": "security_has_listed_security",
+          "relationship_direction": "forward",
+          "relationship_type": "direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "ISTRADEDON",
+          "child_join_column": "LISTEDSECURITYID",
+          "materialization_operation": "lookup_children_and_embed"
+        }
+      ],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_nested_embedding",
+      "queries_covered": 1,
+      "sequences_covered": 1,
+      "total_utility": 0.067796610169,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 9,
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Transaction|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_primary_key": "FINANCIALSERVICEACCOUNTID",
+      "tree_entities": [
+        "FinancialServiceAccount",
+        "Transaction",
+        "ListedSecurity"
+      ],
+      "source_collections": [
+        {
+          "entity": "FinancialServiceAccount",
+          "source_view": "fiben_financial_service_accounts",
+          "primary_key": "FINANCIALSERVICEACCOUNTID"
+        },
+        {
+          "entity": "Transaction",
+          "source_view": "fiben_transactions",
+          "primary_key": "SECURITIESTRANSACTIONID"
+        },
+        {
+          "entity": "ListedSecurity",
+          "source_view": "fiben_listed_securities",
+          "primary_key": "LISTEDSECURITYID"
+        }
+      ],
+      "embedding_steps": [
+        {
+          "parent_entity": "FinancialServiceAccount",
+          "child_entity": "Transaction",
+          "relationship_id": "account_records_transaction",
+          "relationship_direction": "forward",
+          "relationship_type": "reverse_direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "FINANCIALSERVICEACCOUNTID",
+          "child_join_column": "ISFACILITATEDBY",
+          "materialization_operation": "lookup_children_and_embed"
+        },
+        {
+          "parent_entity": "Transaction",
+          "child_entity": "ListedSecurity",
+          "relationship_id": "transaction_refers_to_listed_security",
+          "relationship_direction": "forward",
+          "relationship_type": "direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "REFERSTO",
+          "child_join_column": "LISTEDSECURITYID",
+          "materialization_operation": "lookup_children_and_embed"
+        }
+      ],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_nested_embedding",
+      "queries_covered": 2,
+      "sequences_covered": 4,
+      "total_utility": 0.064516129032,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    },
+    {
+      "rank": 10,
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "document_signature": "Person|{FinancialServiceAccount|{Transaction}}",
+      "root_entity": "Person",
+      "root_source_view": "fiben_persons",
+      "root_primary_key": "PERSONID",
+      "tree_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "Transaction"
+      ],
+      "source_collections": [
+        {
+          "entity": "Person",
+          "source_view": "fiben_persons",
+          "primary_key": "PERSONID"
+        },
+        {
+          "entity": "FinancialServiceAccount",
+          "source_view": "fiben_financial_service_accounts",
+          "primary_key": "FINANCIALSERVICEACCOUNTID"
+        },
+        {
+          "entity": "Transaction",
+          "source_view": "fiben_transactions",
+          "primary_key": "SECURITIESTRANSACTIONID"
+        }
+      ],
+      "embedding_steps": [
+        {
+          "parent_entity": "Person",
+          "child_entity": "FinancialServiceAccount",
+          "relationship_id": "person_owns_financial_service_account",
+          "relationship_direction": "forward",
+          "relationship_type": "reverse_direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "PERSONID",
+          "child_join_column": "ISOWNEDBY",
+          "materialization_operation": "lookup_children_and_embed"
+        },
+        {
+          "parent_entity": "FinancialServiceAccount",
+          "child_entity": "Transaction",
+          "relationship_id": "account_records_transaction",
+          "relationship_direction": "forward",
+          "relationship_type": "reverse_direct",
+          "dbsr_role": "join_edge",
+          "parent_join_column": "FINANCIALSERVICEACCOUNTID",
+          "child_join_column": "ISFACILITATEDBY",
+          "materialization_operation": "lookup_children_and_embed"
+        }
+      ],
+      "missing_relationships": [],
+      "materialization_strategy": "root_scan_then_nested_lookup_embedding",
+      "materialization_status": "planned_nested_embedding",
+      "queries_covered": 2,
+      "sequences_covered": 4,
+      "total_utility": 0.064516129032,
+      "notes": [
+        "This is a materialization plan only; it does not load MongoDB.",
+        "The physical loader must use this plan to create the target collection later.",
+        "Statistics must be captured before any temporary benchmark database is dropped."
+      ]
+    }
+  ],
+  "implementation_assumptions": [
+    "This phase creates a materialization plan but does not create MongoDB collections.",
+    "Each selected DBSR document signature becomes one target collection in this first plan.",
+    "Overlapping target collections are allowed because conflict resolution is deferred.",
+    "A later physical loader must implement root scans, child lookups, embedding, index creation, and statistics capture.",
+    "The plan is independent from SchemaLens G0-G9 templates."
+  ]
+}

@@ -724,3 +724,66 @@ DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.csv
 ```
 
 The materialization plan should define how each selected DBSR document structure can be loaded into MongoDB collections, while still remaining separate from actual benchmark execution.
+
+## Phase 2f — DBSR structural materialization plan
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/src/materialization/__init__.py
+DBSR_implementation/src/materialization/materialization_plan.py
+DBSR_implementation/src/fiben_adapter/build_dbsr_materialization_plan.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.json
+DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.csv
+DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural_summary.json
+```
+
+### Validation result
+
+```text
+Target collections: 10
+Embedding steps total: 11
+Missing relationships total: 0
+Source views used: 9
+Plan only: True
+```
+
+### Purpose
+
+This phase creates a materialization plan for the structural DBSR schema manifest. It defines how each selected DBSR document structure can later be loaded into MongoDB collections.
+
+The plan records the target collection name, root entity, source views, primary keys, embedding steps, relationship identifiers, join columns, and materialization status for each selected document structure.
+
+### Important methodological note
+
+This phase does not load data and does not create MongoDB collections. It only prepares the physical loading plan. This keeps the DBSR algorithmic recommendation separate from the experimental MongoDB materialization layer.
+
+### Current implementation assumptions
+
+```text
+1. Each selected DBSR document signature becomes one target collection in the first materialization plan.
+2. Overlapping target collections are allowed at this stage.
+3. Root scans and nested child lookups will be implemented by a later physical loader.
+4. The loader must capture collection statistics before dropping temporary benchmark databases.
+5. The materialization plan is generated independently from SchemaLens G0-G9 templates.
+```
+
+### Next phase
+
+Implement the first MongoDB loader skeleton for the DBSR materialization plan.
+
+Expected next outputs:
+
+```text
+DBSR_implementation/benchmark/fiben/run_dbsr_materialization_smoke_test.py
+DBSR_implementation/generated/fiben/dbsr_materialization_smoke_manifest.json
+```
+
+The smoke test should load a tiny subset or dry-run the operations before full-scale benchmarking.
