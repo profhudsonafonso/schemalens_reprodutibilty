@@ -171,3 +171,182 @@ Safe to commit:
 Scaffold created. No DBSR algorithm code has been implemented yet.
 
 Next step: implement the FIBEN input adapter to generate `dbsr_input_model.json` and `dbsr_workload.json`.
+
+
+## Progress log
+
+### Phase 0 — DBSR implementation scaffold
+
+Status: completed.
+
+This phase created an isolated `DBSR_implementation/` folder for the DBSR baseline implementation. The goal is to keep DBSR separate from the existing SchemaLens implementation and avoid treating DBSR as a direct mapping to SchemaLens G0--G9 templates.
+
+Created structure:
+
+```text
+DBSR_implementation/
+  input/fiben/
+  src/dbsr_core/
+  src/fiben_adapter/
+  src/materialization/
+  src/analysis/
+  generated/fiben/
+  benchmark/fiben/
+  results/fiben/
+  docs/
+```
+
+Main decisions:
+
+* DBSR will be implemented as an independent related-work baseline.
+* DBSR generation must not use SchemaLens G0--G9 templates, winners, p95 values, or activation scores.
+* MongoDB physical loading will be treated as a materialization layer, not as part of the DBSR core algorithm.
+* The implementation must record every missing paper detail as an implementation assumption.
+* The branch will remain a working branch until the DBSR comparison is complete.
+
+### Phase 1a — FIBEN input adapter
+
+Status: completed.
+
+Created script:
+
+```text
+DBSR_implementation/src/fiben_adapter/build_fiben_dbsr_input.py
+```
+
+Generated files:
+
+```text
+DBSR_implementation/generated/fiben/dbsr_input_model.json
+DBSR_implementation/generated/fiben/dbsr_workload.json
+```
+
+The adapter builds a first DBSR input model for FIBEN with:
+
+* FIBEN entities;
+* source views;
+* primary keys;
+* relationship hints;
+* DBSR run configuration;
+* initial read workload draft for Q1--Q9.
+
+The first workload file includes 9 read queries:
+
+```text
+Q1_CompanyProfileIBM
+Q2_CompanyWithIndustryCountryAndListedSecurities
+Q3_SecuritiesHeldInEachFinancialServiceAccount
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity
+Q5_ReportsAndMetricDataOfCompany
+Q6_TechUSListedSecuritiesWithHighLastTradedValue
+Q7_PersonsWhoBoughtMoreIBMThanSold
+Q8_IBMTransactionsBelowAverageSellingPrice
+Q9_PersonsWhoBoughtAndSoldSameStock
+```
+
+Important methodological note:
+
+The adapter uses the existing FIBEN benchmark plan only to bootstrap query metadata. It does not use SchemaLens winners, p95 values, G0--G9 selection, regret, or benchmark outcomes to generate DBSR inputs.
+
+All generated query sequences are marked as draft and require manual review before DBSR schema generation.
+
+### Phase 1b — Manual DBSR query-sequence review
+
+Status: in progress.
+
+Planned/created files:
+
+```text
+DBSR_implementation/input/fiben/query_sequence_overrides.json
+DBSR_implementation/src/fiben_adapter/apply_query_sequence_overrides.py
+DBSR_implementation/generated/fiben/dbsr_workload_reviewed.json
+```
+
+Purpose:
+
+The automatically inferred workload is only a bootstrap artifact. DBSR requires explicit read join sequences. Therefore, the manual override file defines reviewed DBSR sequences for Q1--Q9, such as:
+
+```text
+Q2:
+Corporation -> Industry
+Corporation -> Country
+Corporation -> Security -> ListedSecurity
+```
+
+The reviewed workload will preserve the automatically inferred sequence for traceability, but DBSR generation should use the manually reviewed `dbsr_sequences`.
+
+### Current next step
+
+Before implementing the DBSR core, validate and commit Phase 1a and Phase 1b artifacts.
+
+Required validation commands:
+
+```bash
+python -m py_compile DBSR_implementation/src/fiben_adapter/build_fiben_dbsr_input.py
+python -m json.tool DBSR_implementation/generated/fiben/dbsr_input_model.json > /tmp/dbsr_input_model_check.json
+python -m json.tool DBSR_implementation/generated/fiben/dbsr_workload.json > /tmp/dbsr_workload_check.json
+grep -RInE "Hudson|profhudson|/home/|/afs/|batistah|password|token|secret" DBSR_implementation || true
+```
+
+After Phase 1b:
+
+```bash
+python -m py_compile DBSR_implementation/src/fiben_adapter/apply_query_sequence_overrides.py
+python -m json.tool DBSR_implementation/generated/fiben/dbsr_workload_reviewed.json > /tmp/dbsr_workload_reviewed_check.json
+grep -n '"status": "manual_sequence_reviewed_draft"' DBSR_implementation/generated/fiben/dbsr_workload_reviewed.json | wc -l
+```
+
+Expected reviewed read queries:
+
+```text
+9
+```
+
+### Phase 1b — Manual DBSR query-sequence review
+
+Status: completed.
+
+Created files:
+
+```text
+DBSR_implementation/input/fiben/query_sequence_overrides.json
+DBSR_implementation/src/fiben_adapter/apply_query_sequence_overrides.py
+DBSR_implementation/generated/fiben/dbsr_workload_reviewed.json
+```
+
+This phase reviewed the automatically inferred FIBEN read workload and replaced the draft single-sequence representation with explicit DBSR-style read join sequences.
+
+The override file defines reviewed draft sequences for Q1--Q9. These sequences are still independent from SchemaLens G0--G9 and are intended to represent DBSR workload inputs.
+
+Validation result:
+
+```text
+Overrides applied: 9
+Queries without override: 0
+Reviewed workload queries marked as manual_sequence_reviewed_draft: 9
+```
+
+The reviewed workload keeps the automatically inferred sequence in `dbsr_sequence_inferred` for traceability, but DBSR generation should use the manually reviewed `dbsr_sequences`.
+
+Important limitation:
+
+The sequences are reviewed drafts based on FIBEN query names and known conceptual paths. Before final benchmarking, each sequence should still be checked against the exact FIBEN query implementation.
+
+Current generated workload:
+
+```text
+DBSR_implementation/generated/fiben/dbsr_workload_reviewed.json
+```
+
+Next phase:
+
+Implement the DBSR core model structures:
+
+```text
+DBSR_implementation/src/dbsr_core/model.py
+DBSR_implementation/src/dbsr_core/document_tree.py
+DBSR_implementation/src/dbsr_core/query_plan.py
+DBSR_implementation/src/dbsr_core/merge_rules.py
+```
+
+The goal of the next phase is not yet to benchmark MongoDB. The next phase only implements the internal DBSR representation of entities, relationships, document trees, query sequences, and query plans.
