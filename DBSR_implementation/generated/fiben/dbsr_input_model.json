@@ -1,0 +1,251 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "version": "0.1-draft-input-model",
+  "entities": [
+    {
+      "name": "Corporation",
+      "source_view": "fiben_corporations",
+      "primary_key": "CORPORATIONID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "Industry",
+      "source_view": "fiben_industries",
+      "primary_key": "INDUSTRYSECTORCLASSIFIERID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "Country",
+      "source_view": "fiben_countries",
+      "primary_key": "COUNTRYID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "Security",
+      "source_view": "fiben_securities",
+      "primary_key": "SECURITYID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "ListedSecurity",
+      "source_view": "fiben_listed_securities",
+      "primary_key": "LISTEDSECURITYID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "Person",
+      "source_view": "fiben_persons",
+      "primary_key": "PERSONID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "FinancialServiceAccount",
+      "source_view": "fiben_financial_service_accounts",
+      "primary_key": "FINANCIALSERVICEACCOUNTID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "Holding",
+      "source_view": "fiben_holdings",
+      "primary_key": "HOLDINGID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "Transaction",
+      "source_view": "fiben_transactions",
+      "primary_key": "SECURITIESTRANSACTIONID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "BuyTransaction",
+      "source_view": "fiben_transactions",
+      "primary_key": "SECURITIESTRANSACTIONID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "SellTransaction",
+      "source_view": "fiben_transactions",
+      "primary_key": "SECURITIESTRANSACTIONID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "FinancialReport",
+      "source_view": "fiben_reports",
+      "primary_key": "FINANCIALREPORTID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "ReportElement",
+      "source_view": "fiben_report_elements",
+      "primary_key": "ELEMENTSOFFINANCIALREPORTID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "StatementElement",
+      "source_view": "fiben_statement_elements",
+      "primary_key": "ELEMENTOFFINANCIALSTATEMENTID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    },
+    {
+      "name": "Disclosure",
+      "source_view": "fiben_disclosures",
+      "primary_key": "DISCLOSUREID",
+      "fields_policy": "all_fields_available_projection_refined_later"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "corporation_has_industry",
+      "type": "direct",
+      "source_entity": "Corporation",
+      "target_entity": "Industry",
+      "source_column": "ISCLASSIFIEDBY",
+      "target_column": "INDUSTRYSECTORCLASSIFIERID",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "corporation_has_country",
+      "type": "direct",
+      "source_entity": "Corporation",
+      "target_entity": "Country",
+      "source_column": "ISDOMICILEDIN",
+      "target_column": "COUNTRYID",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "corporation_has_security",
+      "type": "reverse_direct",
+      "source_entity": "Corporation",
+      "target_entity": "Security",
+      "source_column": "CORPORATIONID",
+      "target_column": "ISPROVIDEDBY",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "security_has_listed_security",
+      "type": "direct",
+      "source_entity": "Security",
+      "target_entity": "ListedSecurity",
+      "source_column": "ISTRADEDON",
+      "target_column": "LISTEDSECURITYID",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "person_owns_financial_service_account",
+      "type": "reverse_direct",
+      "source_entity": "Person",
+      "target_entity": "FinancialServiceAccount",
+      "source_column": "PERSONID",
+      "target_column": "ISOWNEDBY",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "account_has_holding",
+      "type": "reverse_direct",
+      "source_entity": "FinancialServiceAccount",
+      "target_entity": "Holding",
+      "source_column": "FINANCIALSERVICEACCOUNTID",
+      "target_column": "ISHELDBY",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "holding_refers_to_listed_security",
+      "type": "direct",
+      "source_entity": "Holding",
+      "target_entity": "ListedSecurity",
+      "source_column": "REFERSTO",
+      "target_column": "LISTEDSECURITYID",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "account_records_transaction",
+      "type": "reverse_direct",
+      "source_entity": "FinancialServiceAccount",
+      "target_entity": "Transaction",
+      "source_column": "FINANCIALSERVICEACCOUNTID",
+      "target_column": "ISFACILITATEDBY",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "transaction_refers_to_listed_security",
+      "type": "direct",
+      "source_entity": "Transaction",
+      "target_entity": "ListedSecurity",
+      "source_column": "REFERSTO",
+      "target_column": "LISTEDSECURITYID",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "buy_transaction_is_transaction",
+      "type": "subtype_alias",
+      "source_entity": "BuyTransaction",
+      "target_entity": "Transaction",
+      "source_column": "SECURITIESTRANSACTIONID",
+      "target_column": "SECURITIESTRANSACTIONID",
+      "dbsr_role": "subtype_alias"
+    },
+    {
+      "id": "sell_transaction_is_transaction",
+      "type": "subtype_alias",
+      "source_entity": "SellTransaction",
+      "target_entity": "Transaction",
+      "source_column": "SECURITIESTRANSACTIONID",
+      "target_column": "SECURITIESTRANSACTIONID",
+      "dbsr_role": "subtype_alias"
+    },
+    {
+      "id": "corporation_has_financial_report",
+      "type": "reverse_direct",
+      "source_entity": "Corporation",
+      "target_entity": "FinancialReport",
+      "source_column": "CORPORATIONID",
+      "target_column": "ISPROVIDEDBY",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "financial_report_contains_report_element",
+      "type": "reverse_direct",
+      "source_entity": "FinancialReport",
+      "target_entity": "ReportElement",
+      "source_column": "FINANCIALREPORTID",
+      "target_column": "ISMEMBEROF",
+      "dbsr_role": "join_edge"
+    },
+    {
+      "id": "report_element_has_statement_element",
+      "type": "direct",
+      "source_entity": "ReportElement",
+      "target_entity": "StatementElement",
+      "source_column": "ELEMENTSOFFINANCIALREPORTID",
+      "target_column": "ELEMENTOFFINANCIALSTATEMENTID",
+      "dbsr_role": "join_edge"
+    }
+  ],
+  "run_configuration": {
+    "max_document_height": 3,
+    "max_node_width": 2,
+    "max_iterations": 4000,
+    "query_plan_pruning_threshold": 30000,
+    "fitness_function": "non_linear",
+    "query_frequency_policy": "uniform_initially"
+  },
+  "implementation_assumptions": [
+    {
+      "id": "A01",
+      "text": "FIBEN Q1-Q9 are treated as DBSR read workload sequences."
+    },
+    {
+      "id": "A02",
+      "text": "Query frequencies are uniform unless explicit workload weights are later added."
+    },
+    {
+      "id": "A03",
+      "text": "MongoDB physical loading is a materialization layer, not part of the DBSR core algorithm."
+    },
+    {
+      "id": "A04",
+      "text": "DBSR generation must not use SchemaLens G0-G9 templates, winners, p95 values, or activation scores."
+    }
+  ]
+}

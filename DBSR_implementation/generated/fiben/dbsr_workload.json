@@ -1,0 +1,233 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "version": "0.1-draft-workload",
+  "scope": "read_queries_only",
+  "queries": [
+    {
+      "query_name": "Q1_CompanyProfileIBM",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Corporation"
+      ],
+      "root_entity": "Corporation",
+      "touched_entities": [
+        "Corporation"
+      ],
+      "generic_class_from_existing_metadata": "QG1",
+      "query_family_from_existing_metadata": "Local lookup",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Corporation",
+        "Industry",
+        "Country",
+        "ListedSecurity"
+      ],
+      "root_entity": "Corporation",
+      "touched_entities": [
+        "Corporation",
+        "Industry",
+        "Country",
+        "ListedSecurity"
+      ],
+      "generic_class_from_existing_metadata": "QG2",
+      "query_family_from_existing_metadata": "Shallow rooted retrieval",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Security"
+      ],
+      "root_entity": "FinancialServiceAccount",
+      "touched_entities": [
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Security"
+      ],
+      "generic_class_from_existing_metadata": "QG3",
+      "query_family_from_existing_metadata": "Associative retrieval",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Person",
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "root_entity": "Person",
+      "touched_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "generic_class_from_existing_metadata": "QG4",
+      "query_family_from_existing_metadata": "Deep traversal",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q5_ReportsAndMetricDataOfCompany",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Corporation",
+        "FinancialReport",
+        "ReportElement",
+        "StatementElement",
+        "Disclosure"
+      ],
+      "root_entity": "Corporation",
+      "touched_entities": [
+        "Corporation",
+        "FinancialReport",
+        "ReportElement",
+        "StatementElement",
+        "Disclosure"
+      ],
+      "generic_class_from_existing_metadata": "QG5",
+      "query_family_from_existing_metadata": "Containment retrieval",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "ListedSecurity",
+        "Corporation",
+        "Industry",
+        "Country"
+      ],
+      "root_entity": "ListedSecurity",
+      "touched_entities": [
+        "ListedSecurity",
+        "Corporation",
+        "Industry",
+        "Country"
+      ],
+      "generic_class_from_existing_metadata": "QG6",
+      "query_family_from_existing_metadata": "Filtered search / recommendation",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Corporation",
+        "Holding"
+      ],
+      "root_entity": "Person",
+      "touched_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Corporation",
+        "Holding"
+      ],
+      "generic_class_from_existing_metadata": "QG7",
+      "query_family_from_existing_metadata": "Aggregation / ranking",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Transaction",
+        "SellTransaction",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "root_entity": "Transaction",
+      "touched_entities": [
+        "Transaction",
+        "SellTransaction",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "generic_class_from_existing_metadata": "QG8",
+      "query_family_from_existing_metadata": "Aggregation / ranking",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    },
+    {
+      "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Holding"
+      ],
+      "root_entity": "Person",
+      "touched_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Holding"
+      ],
+      "generic_class_from_existing_metadata": "QG9",
+      "query_family_from_existing_metadata": "Associative retrieval + comparison",
+      "frequency": 1.0,
+      "status": "draft_review_required",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation."
+    }
+  ],
+  "manual_review_required": true,
+  "notes": [
+    "This file is a draft bootstrap artifact.",
+    "Before DBSR generation, each dbsr_sequence must be reviewed against the real FIBEN query semantics.",
+    "Q10 is excluded from this read-workload input and should be handled separately as an update/insert limitation or extension."
+  ]
+}
