@@ -665,3 +665,62 @@ DBSR_implementation/generated/fiben/dbsr_statistics_sf30.json
 ```
 
 before dropping any temporary database.
+
+## Phase 2e — Structural DBSR schema assembly
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/src/dbsr_core/schema_assembly.py
+DBSR_implementation/src/fiben_adapter/assemble_dbsr_schema.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_schema_manifest_structural.json
+DBSR_implementation/generated/fiben/dbsr_schema_manifest_structural.csv
+DBSR_implementation/generated/fiben/dbsr_schema_manifest_structural_summary.json
+```
+
+### Validation result
+
+```text
+Selected documents: 10
+Covered queries: 9
+Covered sequences: 15
+Total selected utility: 1.271550355966
+```
+
+### Purpose
+
+This phase assembles the first structural DBSR schema manifest from the ranked document utilities. It converts the ranked document structures into a schema-level manifest with collection names, root entities, embedded or included entities, utility values, and query/sequence coverage.
+
+### Important methodological note
+
+This is still a logical structural manifest. It does not create MongoDB collections and does not yet resolve all physical duplication or maintenance conflicts. Overlapping document structures are allowed at this stage because this manifest records the DBSR structural recommendation before physical materialization.
+
+### Current implementation assumptions
+
+```text
+1. The manifest is assembled from dbsr_ranked_schemas.csv.
+2. The default policy selects the top-k ranked documents.
+3. The generated collection names are deterministic and derived from document signatures.
+4. Physical materialization is deferred to a later phase.
+5. The schema manifest is generated independently from SchemaLens G0-G9 templates.
+```
+
+### Next phase
+
+Implement the DBSR MongoDB materialization plan.
+
+Expected next outputs:
+
+```text
+DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.json
+DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.csv
+```
+
+The materialization plan should define how each selected DBSR document structure can be loaded into MongoDB collections, but it should still be separated from actual benchmark execution.

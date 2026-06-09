@@ -1,0 +1,34 @@
+{
+  "selected_documents": 10,
+  "covered_queries": 9,
+  "covered_sequences": 15,
+  "total_selected_utility": 1.271550355966,
+  "query_names": [
+    "Q1_CompanyProfileIBM",
+    "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "Q5_ReportsAndMetricDataOfCompany",
+    "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "Q9_PersonsWhoBoughtAndSoldSameStock"
+  ],
+  "sequence_ids": [
+    "Q1_S1",
+    "Q2_S1",
+    "Q2_S2",
+    "Q2_S3",
+    "Q3_S1",
+    "Q4_S1",
+    "Q5_S1",
+    "Q6_S1",
+    "Q6_S2",
+    "Q7_S1",
+    "Q7_S2",
+    "Q8_S1",
+    "Q8_S2",
+    "Q9_S1",
+    "Q9_S2"
+  ]
+}
