@@ -1,0 +1,113 @@
+{
+  "dataset": "FIBEN",
+  "source": "official_csv_files",
+  "sample_size": 1000,
+  "results": [
+    {
+      "name": "Transaction_REFERSTO_to_ListedSecurity_LISTEDSECURITYID",
+      "parent_file": "SECURITIESTRANSACTION.csv",
+      "parent_col": 3,
+      "child_file": "LISTEDSECURITY.csv",
+      "child_col": 0,
+      "parent_sample_size": 1000,
+      "child_distinct_values": 2745,
+      "matched": 1000,
+      "match_ratio": 1.0,
+      "unmatched_examples": []
+    },
+    {
+      "name": "Holding_REFERSTO_to_ListedSecurity_LISTEDSECURITYID",
+      "parent_file": "HOLDING.csv",
+      "parent_col": 2,
+      "child_file": "LISTEDSECURITY.csv",
+      "child_col": 0,
+      "parent_sample_size": 1000,
+      "child_distinct_values": 2745,
+      "matched": 1000,
+      "match_ratio": 1.0,
+      "unmatched_examples": []
+    },
+    {
+      "name": "FinancialServiceAccount_to_Holding",
+      "parent_file": "FINANCIALSERVICEACCOUNT.csv",
+      "parent_col": 0,
+      "child_file": "HOLDING.csv",
+      "child_col": 1,
+      "parent_sample_size": 1000,
+      "child_distinct_values": 97270,
+      "matched": 1000,
+      "match_ratio": 1.0,
+      "unmatched_examples": []
+    },
+    {
+      "name": "FinancialServiceAccount_to_Transaction",
+      "parent_file": "FINANCIALSERVICEACCOUNT.csv",
+      "parent_col": 0,
+      "child_file": "SECURITIESTRANSACTION.csv",
+      "child_col": 1,
+      "parent_sample_size": 1000,
+      "child_distinct_values": 96730,
+      "matched": 988,
+      "match_ratio": 0.988,
+      "unmatched_examples": [
+        "150000000022",
+        "150000000034",
+        "150000000050",
+        "150000000245",
+        "150000000247",
+        "150000000463",
+        "150000000543",
+        "150000000561",
+        "150000000767",
+        "150000000811"
+      ]
+    },
+    {
+      "name": "Corporation_to_Security",
+      "parent_file": "CORPORATION.csv",
+      "parent_col": 0,
+      "child_file": "SECURITY.csv",
+      "child_col": 2,
+      "parent_sample_size": 1000,
+      "child_distinct_values": 2324,
+      "matched": 1000,
+      "match_ratio": 1.0,
+      "unmatched_examples": []
+    },
+    {
+      "name": "FinancialReport_to_ReportElement",
+      "parent_file": "FINANCIALREPORT.csv",
+      "parent_col": 0,
+      "child_file": "ELEMENTSOFFINANCIALREPORT.csv",
+      "child_col": 1,
+      "parent_sample_size": 1000,
+      "child_distinct_values": 48207,
+      "matched": 1000,
+      "match_ratio": 1.0,
+      "unmatched_examples": []
+    },
+    {
+      "name": "ReportElement_to_StatementElement",
+      "parent_file": "ELEMENTSOFFINANCIALREPORT.csv",
+      "parent_col": 0,
+      "child_file": "ELEMENTOFFINANCIALSTATEMENT.csv",
+      "child_col": 0,
+      "parent_sample_size": 1000,
+      "child_distinct_values": 443794,
+      "matched": 0,
+      "match_ratio": 0.0,
+      "unmatched_examples": [
+        "62063948",
+        "62063950",
+        "62063953",
+        "62063955",
+        "62065508",
+        "62063960",
+        "62063961",
+        "62063963",
+        "62063966",
+        "62063967"
+      ]
+    }
+  ]
+}

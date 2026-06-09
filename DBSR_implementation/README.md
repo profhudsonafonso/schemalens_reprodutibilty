@@ -971,3 +971,104 @@ The official DBSR-vs-SchemaLens comparison must later use the real FIBEN scale-f
 ### Next phase
 
 Prepare the official DBSR benchmark runner for FIBEN Q1--Q9, but keep execution blocked until the real FIBEN source data is available.
+
+## Phase 2j — Official FIBEN full source load and limited DBSR materialization
+
+Status: completed.
+
+### Created diagnostic and loading files
+
+```text
+DBSR_implementation/benchmark/fiben/probe_official_fiben_files.py
+DBSR_implementation/benchmark/fiben/load_official_fiben_source_db.py
+DBSR_implementation/benchmark/fiben/check_official_fiben_join_coverage.py
+DBSR_implementation/benchmark/fiben/find_fiben_report_statement_join.py
+DBSR_implementation/benchmark/fiben/find_fiben_element_id_across_files.py
+DBSR_implementation/benchmark/fiben/check_report_statement_full_intersection.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_official_fiben_source_load_manifest_sf1_full_source_executed.json
+DBSR_implementation/generated/fiben/dbsr_loader_execution_manifest_sf1_full_source_limited_materialization_executed.json
+DBSR_implementation/generated/fiben/dbsr_official_fiben_csv_join_coverage.json
+DBSR_implementation/generated/fiben/dbsr_report_statement_full_intersection.json
+```
+
+### Full source load validation
+
+```text
+Source load status: executed
+Mongo access: True
+Mongo database: dbsr_fiben_sf1_source_full
+Entities attempted: 12
+Entities loaded: 12
+Missing files: 0
+Total rows loaded: 9802537
+Max rows per file: 0
+```
+
+### Source collection counts
+
+```text
+fiben_corporations: 2324
+fiben_countries: 249
+fiben_financial_service_accounts: 97270
+fiben_holdings: 534473
+fiben_industries: 452
+fiben_listed_securities: 2745
+fiben_persons: 50100
+fiben_report_elements: 8120084
+fiben_reports: 48301
+fiben_securities: 2745
+fiben_statement_elements: 443794
+fiben_transactions: 500000
+```
+
+### Limited DBSR materialization validation
+
+```text
+Loader status: executed
+Mongo access: True
+Benchmark execution: False
+Target collections: 15
+Completed collections: 15
+Failed collections: 0
+Root limit: 100
+Child limit: 100
+Drop target: True
+```
+
+### Embedding validation over full source
+
+```text
+dbsr_rank02_transaction_listedsecurity -> listedSecurity=1
+dbsr_rank07_financialserviceaccount_holding_listedsecurity -> holding=2
+dbsr_rank08_corporation_security_listedsecurity -> security=1
+dbsr_rank09_financialserviceaccount_transaction_listedsecurity -> transaction=2
+dbsr_rank13_financialreport_reportelement_statementelement -> reportElement=100
+```
+
+### Report-statement full intersection
+
+```text
+Report elements total: 8120084
+Statement distinct ids: 443794
+Matched report elements: 443794
+Match ratio: 0.054653868112694404
+```
+
+### Purpose
+
+This phase validates the official FIBEN source loading path for DBSR. The full source load uses the real headerless FIBEN CSV files and assigns the column names required by the DBSR input model and materialization plan.
+
+It also validates a limited DBSR materialization over the full source database. This confirms that the DBSR loader can materialize root documents and nested documents over real FIBEN data, including the Q5 path from FinancialReport to ReportElement and StatementElement.
+
+### Important methodological note
+
+This is still not the p95 benchmark. The DBSR materialization was limited to 100 root documents and 100 child documents per nesting step. The next phase must run a cardinality and BSON-size preflight before full materialization to avoid MongoDB document-size failures.
+
+### Next phase
+
+Run full-materialization preflight checks, then run full DBSR materialization if the target documents are safe.
