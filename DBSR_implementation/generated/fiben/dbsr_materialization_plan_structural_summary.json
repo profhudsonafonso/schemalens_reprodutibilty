@@ -1,8 +1,8 @@
 {
-  "target_collections": 10,
-  "embedding_steps_total": 11,
+  "target_collections": 15,
+  "embedding_steps_total": 21,
   "missing_relationships_total": 0,
-  "source_views_used": 9,
+  "source_views_used": 12,
   "source_view_names": [
     "fiben_corporations",
     "fiben_countries",
@@ -11,7 +11,10 @@
     "fiben_industries",
     "fiben_listed_securities",
     "fiben_persons",
+    "fiben_report_elements",
+    "fiben_reports",
     "fiben_securities",
+    "fiben_statement_elements",
     "fiben_transactions"
   ],
   "plan_only": true

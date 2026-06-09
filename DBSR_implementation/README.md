@@ -666,11 +666,11 @@ DBSR_implementation/generated/fiben/dbsr_statistics_sf30.json
 
 before dropping any temporary database.
 
-## Phase 2e — Structural DBSR schema assembly
+## Phase 2e — Structural DBSR schema assembly with executable coverage closure
 
 Status: completed.
 
-### Created files
+### Created or updated files
 
 ```text
 DBSR_implementation/src/dbsr_core/schema_assembly.py
@@ -688,42 +688,39 @@ DBSR_implementation/generated/fiben/dbsr_schema_manifest_structural_summary.json
 ### Validation result
 
 ```text
-Selected documents: 10
-Covered queries: 9
-Covered sequences: 15
-Total selected utility: 1.271550355966
+Selected documents: 15
+Initial top-k documents: 10
+Added documents for executable coverage: 5
+Partial covered queries: 9
+Partial covered sequences: 15
+Executable queries: 9
+Executable sequences: 15/15
+Non-executable sequences: 0
+Total selected utility: 1.403427303847
 ```
 
 ### Purpose
 
-This phase assembles the first structural DBSR schema manifest from the ranked document utilities. It converts ranked DBSR document structures into a schema-level manifest with deterministic collection names, document signatures, root entities, embedded or included entities, utility values, and query/sequence coverage.
+This phase assembles the first structural DBSR schema manifest from the ranked document utilities. The manifest starts with the top-k ranked documents and then applies an executable-coverage closure step.
 
-### Important methodological note
+The closure step checks whether each reviewed workload sequence has at least one complete pruned query plan whose documents are all selected. If a sequence is not executable, the missing documents from the best pruned plan for that sequence are added to the manifest.
 
-This is a logical structural manifest, not a physical MongoDB schema yet. It does not create collections and does not resolve all duplication or maintenance conflicts. Overlapping document structures are allowed at this stage because the goal is to record the DBSR structural recommendation before physical materialization.
+### Important methodological correction
+
+This phase distinguishes partial document coverage from executable sequence coverage.
+
+Partial coverage means that at least one selected document is useful for a query. Executable coverage means that a full query sequence can be executed using only selected documents. The final manifest reports executable coverage for all 15 reviewed FIBEN read-workload sequences.
 
 ### Current implementation assumptions
 
 ```text
-1. The manifest is assembled from dbsr_ranked_schemas.csv.
+1. The manifest starts from dbsr_ranked_schemas.csv.
 2. The default policy selects the top-k ranked documents.
-3. The generated collection names are deterministic and derived from document signatures.
-4. Physical materialization is deferred to a later phase.
-5. The schema manifest is generated independently from SchemaLens G0-G9 templates.
+3. The executable-coverage closure uses dbsr_pruned_query_plans.csv.
+4. A sequence is executable when at least one pruned query plan can be expressed using only selected documents.
+5. Physical materialization is deferred to a later phase.
+6. The schema manifest is generated independently from SchemaLens G0-G9 templates.
 ```
-
-### Next phase
-
-Implement the DBSR MongoDB materialization plan.
-
-Expected next outputs:
-
-```text
-DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.json
-DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural.csv
-```
-
-The materialization plan should define how each selected DBSR document structure can be loaded into MongoDB collections, while still remaining separate from actual benchmark execution.
 
 ## Phase 2f — DBSR structural materialization plan
 
@@ -748,10 +745,10 @@ DBSR_implementation/generated/fiben/dbsr_materialization_plan_structural_summary
 ### Validation result
 
 ```text
-Target collections: 10
-Embedding steps total: 11
+Target collections: 15
+Embedding steps total: 21
 Missing relationships total: 0
-Source views used: 9
+Source views used: 12
 Plan only: True
 ```
 

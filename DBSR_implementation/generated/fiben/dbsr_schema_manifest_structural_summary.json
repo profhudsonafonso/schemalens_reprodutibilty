@@ -1,8 +1,14 @@
 {
-  "selected_documents": 10,
-  "covered_queries": 9,
-  "covered_sequences": 15,
-  "total_selected_utility": 1.271550355966,
+  "selected_documents": 15,
+  "initial_top_k_documents": 10,
+  "added_documents_for_executable_coverage": 5,
+  "partial_covered_queries": 9,
+  "partial_covered_sequences": 15,
+  "executable_queries": 9,
+  "executable_sequences": 15,
+  "total_sequences": 15,
+  "non_executable_sequences": [],
+  "total_selected_utility": 1.403427303847,
   "query_names": [
     "Q1_CompanyProfileIBM",
     "Q2_CompanyWithIndustryCountryAndListedSecurities",
