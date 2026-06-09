@@ -1,0 +1,128 @@
+query_name,sequence_id,document_signature,plan_signature,plan_structural_cost,plan_utility,document_utility_contribution
+Q1_CompanyProfileIBM,Q1_S1,Corporation,Corporation,11.0,0.083333333333,0.083333333333
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S1,Corporation|{Industry},Corporation|{Industry},12.5,0.074074074074,0.074074074074
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S1,Corporation,Corporation -> Industry,27.0,0.035714285714,0.017857142857
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S1,Industry,Corporation -> Industry,27.0,0.035714285714,0.017857142857
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S2,Corporation|{Country},Corporation|{Country},12.5,0.074074074074,0.074074074074
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S2,Corporation,Corporation -> Country,27.0,0.035714285714,0.017857142857
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S2,Country,Corporation -> Country,27.0,0.035714285714,0.017857142857
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,Corporation|{Security|{ListedSecurity}},Corporation|{Security|{ListedSecurity}},13.75,0.067796610169,0.067796610169
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,Corporation,Corporation -> Security|{ListedSecurity},28.5,0.033898305085,0.016949152542
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,Security|{ListedSecurity},Corporation -> Security|{ListedSecurity},28.5,0.033898305085,0.016949152542
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,Corporation|{Security},Corporation|{Security} -> ListedSecurity,28.5,0.033898305085,0.016949152542
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,ListedSecurity,Corporation|{Security} -> ListedSecurity,28.5,0.033898305085,0.016949152542
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,Corporation,Corporation -> Security -> ListedSecurity,43.0,0.022727272727,0.007575757576
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,Security,Corporation -> Security -> ListedSecurity,43.0,0.022727272727,0.007575757576
+Q2_CompanyWithIndustryCountryAndListedSecurities,Q2_S3,ListedSecurity,Corporation -> Security -> ListedSecurity,43.0,0.022727272727,0.007575757576
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,FinancialServiceAccount|{Holding|{ListedSecurity}},FinancialServiceAccount|{Holding|{ListedSecurity}},13.75,0.067796610169,0.067796610169
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,FinancialServiceAccount,FinancialServiceAccount -> Holding|{ListedSecurity},28.5,0.033898305085,0.016949152542
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,Holding|{ListedSecurity},FinancialServiceAccount -> Holding|{ListedSecurity},28.5,0.033898305085,0.016949152542
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,FinancialServiceAccount|{Holding},FinancialServiceAccount|{Holding} -> ListedSecurity,28.5,0.033898305085,0.016949152542
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,ListedSecurity,FinancialServiceAccount|{Holding} -> ListedSecurity,28.5,0.033898305085,0.016949152542
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,FinancialServiceAccount,FinancialServiceAccount -> Holding -> ListedSecurity,43.0,0.022727272727,0.007575757576
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,Holding,FinancialServiceAccount -> Holding -> ListedSecurity,43.0,0.022727272727,0.007575757576
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3_S1,ListedSecurity,FinancialServiceAccount -> Holding -> ListedSecurity,43.0,0.022727272727,0.007575757576
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Person|{FinancialServiceAccount|{Holding}},Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity|{Security|{Corporation}},32.5,0.029850746269,0.014925373135
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,ListedSecurity|{Security|{Corporation}},Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity|{Security|{Corporation}},32.5,0.029850746269,0.014925373135
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Person,Person -> FinancialServiceAccount|{Holding|{ListedSecurity}} -> Security|{Corporation},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,FinancialServiceAccount|{Holding|{ListedSecurity}},Person -> FinancialServiceAccount|{Holding|{ListedSecurity}} -> Security|{Corporation},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Security|{Corporation},Person -> FinancialServiceAccount|{Holding|{ListedSecurity}} -> Security|{Corporation},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Person,Person -> FinancialServiceAccount|{Holding} -> ListedSecurity|{Security|{Corporation}},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,FinancialServiceAccount|{Holding},Person -> FinancialServiceAccount|{Holding} -> ListedSecurity|{Security|{Corporation}},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,ListedSecurity|{Security|{Corporation}},Person -> FinancialServiceAccount|{Holding} -> ListedSecurity|{Security|{Corporation}},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Person|{FinancialServiceAccount|{Holding}},Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity -> Security|{Corporation},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,ListedSecurity,Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity -> Security|{Corporation},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Security|{Corporation},Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity -> Security|{Corporation},47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Person|{FinancialServiceAccount|{Holding}},Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity|{Security} -> Corporation,47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,ListedSecurity|{Security},Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity|{Security} -> Corporation,47.25,0.020725388601,0.006908462867
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4_S1,Corporation,Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity|{Security} -> Corporation,47.25,0.020725388601,0.006908462867
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,Corporation,Corporation -> FinancialReport|{ReportElement|{StatementElement}},29.75,0.032520325203,0.016260162602
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,FinancialReport|{ReportElement|{StatementElement}},Corporation -> FinancialReport|{ReportElement|{StatementElement}},29.75,0.032520325203,0.016260162602
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,Corporation|{FinancialReport|{ReportElement}},Corporation|{FinancialReport|{ReportElement}} -> StatementElement,29.75,0.032520325203,0.016260162602
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,StatementElement,Corporation|{FinancialReport|{ReportElement}} -> StatementElement,29.75,0.032520325203,0.016260162602
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,Corporation|{FinancialReport},Corporation|{FinancialReport} -> ReportElement|{StatementElement},30.0,0.032258064516,0.016129032258
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,ReportElement|{StatementElement},Corporation|{FinancialReport} -> ReportElement|{StatementElement},30.0,0.032258064516,0.016129032258
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,Corporation,Corporation -> FinancialReport -> ReportElement|{StatementElement},44.5,0.021978021978,0.007326007326
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,FinancialReport,Corporation -> FinancialReport -> ReportElement|{StatementElement},44.5,0.021978021978,0.007326007326
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,ReportElement|{StatementElement},Corporation -> FinancialReport -> ReportElement|{StatementElement},44.5,0.021978021978,0.007326007326
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,Corporation,Corporation -> FinancialReport|{ReportElement} -> StatementElement,44.5,0.021978021978,0.007326007326
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,FinancialReport|{ReportElement},Corporation -> FinancialReport|{ReportElement} -> StatementElement,44.5,0.021978021978,0.007326007326
+Q5_ReportsAndMetricDataOfCompany,Q5_S1,StatementElement,Corporation -> FinancialReport|{ReportElement} -> StatementElement,44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,ListedSecurity,ListedSecurity -> Security|{Corporation|{Industry}},29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,Security|{Corporation|{Industry}},ListedSecurity -> Security|{Corporation|{Industry}},29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,ListedSecurity|{Security|{Corporation}},ListedSecurity|{Security|{Corporation}} -> Industry,29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,Industry,ListedSecurity|{Security|{Corporation}} -> Industry,29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,ListedSecurity|{Security},ListedSecurity|{Security} -> Corporation|{Industry},30.0,0.032258064516,0.016129032258
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,Corporation|{Industry},ListedSecurity|{Security} -> Corporation|{Industry},30.0,0.032258064516,0.016129032258
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,ListedSecurity,ListedSecurity -> Security -> Corporation|{Industry},44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,Security,ListedSecurity -> Security -> Corporation|{Industry},44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,Corporation|{Industry},ListedSecurity -> Security -> Corporation|{Industry},44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,ListedSecurity,ListedSecurity -> Security|{Corporation} -> Industry,44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,Security|{Corporation},ListedSecurity -> Security|{Corporation} -> Industry,44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S1,Industry,ListedSecurity -> Security|{Corporation} -> Industry,44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,ListedSecurity,ListedSecurity -> Security|{Corporation|{Country}},29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,Security|{Corporation|{Country}},ListedSecurity -> Security|{Corporation|{Country}},29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,ListedSecurity|{Security|{Corporation}},ListedSecurity|{Security|{Corporation}} -> Country,29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,Country,ListedSecurity|{Security|{Corporation}} -> Country,29.75,0.032520325203,0.016260162602
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,ListedSecurity|{Security},ListedSecurity|{Security} -> Corporation|{Country},30.0,0.032258064516,0.016129032258
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,Corporation|{Country},ListedSecurity|{Security} -> Corporation|{Country},30.0,0.032258064516,0.016129032258
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,ListedSecurity,ListedSecurity -> Security -> Corporation|{Country},44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,Security,ListedSecurity -> Security -> Corporation|{Country},44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,Corporation|{Country},ListedSecurity -> Security -> Corporation|{Country},44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,ListedSecurity,ListedSecurity -> Security|{Corporation} -> Country,44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,Security|{Corporation},ListedSecurity -> Security|{Corporation} -> Country,44.5,0.021978021978,0.007326007326
+Q6_TechUSListedSecuritiesWithHighLastTradedValue,Q6_S2,Country,ListedSecurity -> Security|{Corporation} -> Country,44.5,0.021978021978,0.007326007326
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,Person,Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,FinancialServiceAccount|{Transaction|{ListedSecurity}},Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,Person|{FinancialServiceAccount|{Transaction}},Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,ListedSecurity,Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,Person|{FinancialServiceAccount},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,Transaction|{ListedSecurity},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,Person,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,FinancialServiceAccount,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,Transaction|{ListedSecurity},Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,Person,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,FinancialServiceAccount|{Transaction},Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S1,ListedSecurity,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,Person,Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,FinancialServiceAccount|{Transaction|{ListedSecurity}},Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,Person|{FinancialServiceAccount|{Transaction}},Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,ListedSecurity,Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,Person|{FinancialServiceAccount},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,Transaction|{ListedSecurity},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,Person,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,FinancialServiceAccount,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,Transaction|{ListedSecurity},Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,Person,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,FinancialServiceAccount|{Transaction},Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q7_PersonsWhoBoughtMoreIBMThanSold,Q7_S2,ListedSecurity,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8_S1,Transaction|{ListedSecurity},Transaction|{ListedSecurity},12.5,0.074074074074,0.074074074074
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8_S1,Transaction,Transaction -> ListedSecurity,27.0,0.035714285714,0.017857142857
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8_S1,ListedSecurity,Transaction -> ListedSecurity,27.0,0.035714285714,0.017857142857
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8_S2,Transaction|{ListedSecurity},Transaction|{ListedSecurity},12.75,0.072727272727,0.072727272727
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8_S2,Transaction,Transaction -> ListedSecurity,27.25,0.035398230088,0.017699115044
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8_S2,ListedSecurity,Transaction -> ListedSecurity,27.25,0.035398230088,0.017699115044
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,Person,Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,FinancialServiceAccount|{Transaction|{ListedSecurity}},Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,Person|{FinancialServiceAccount|{Transaction}},Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,ListedSecurity,Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,Person|{FinancialServiceAccount},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,Transaction|{ListedSecurity},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,Person,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,FinancialServiceAccount,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,Transaction|{ListedSecurity},Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,Person,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,FinancialServiceAccount|{Transaction},Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S1,ListedSecurity,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,Person,Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,FinancialServiceAccount|{Transaction|{ListedSecurity}},Person -> FinancialServiceAccount|{Transaction|{ListedSecurity}},30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,Person|{FinancialServiceAccount|{Transaction}},Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,ListedSecurity,Person|{FinancialServiceAccount|{Transaction}} -> ListedSecurity,30.0,0.032258064516,0.016129032258
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,Person|{FinancialServiceAccount},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,Transaction|{ListedSecurity},Person|{FinancialServiceAccount} -> Transaction|{ListedSecurity},30.25,0.032,0.016
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,Person,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,FinancialServiceAccount,Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,Transaction|{ListedSecurity},Person -> FinancialServiceAccount -> Transaction|{ListedSecurity},44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,Person,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,FinancialServiceAccount|{Transaction},Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499
+Q9_PersonsWhoBoughtAndSoldSameStock,Q9_S2,ListedSecurity,Person -> FinancialServiceAccount|{Transaction} -> ListedSecurity,44.75,0.021857923497,0.007285974499

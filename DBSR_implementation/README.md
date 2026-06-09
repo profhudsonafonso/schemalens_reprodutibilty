@@ -507,3 +507,78 @@ DBSR_implementation/generated/fiben/dbsr_pruned_query_plans.csv
 DBSR_implementation/generated/fiben/dbsr_document_utility_matrix.csv
 DBSR_implementation/generated/fiben/dbsr_ranked_schemas.csv
 ```
+
+## Phase 2c — Structural cost, pruning, and first utility ranking
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/src/dbsr_core/cost_model.py
+DBSR_implementation/src/dbsr_core/pruning.py
+DBSR_implementation/src/dbsr_core/utility.py
+DBSR_implementation/src/fiben_adapter/rank_dbsr_candidates.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_scored_query_plans.csv
+DBSR_implementation/generated/fiben/dbsr_pruned_query_plans.csv
+DBSR_implementation/generated/fiben/dbsr_document_utility_matrix.csv
+DBSR_implementation/generated/fiben/dbsr_ranked_schemas.csv
+DBSR_implementation/generated/fiben/dbsr_recommended_documents.csv
+DBSR_implementation/generated/fiben/dbsr_ranking_summary.json
+```
+
+### Validation result
+
+```text
+Input query plans: 90
+Scored query plans: 90
+Pruned query plans: 57
+Utility matrix rows: 127
+Ranked documents: 35
+Recommended documents: 10
+Near-best cost ratio: 1.2
+Max plans per sequence: 5
+Top-k recommended documents: 10
+```
+
+### Purpose
+
+This phase adds the first ranking layer after the iterative DBSR generator. The previous phase generated many possible query plans and document trees. This phase assigns a structural proxy cost to each query plan, prunes weaker plans, builds a document utility matrix, and produces a first ranking of recommended document structures.
+
+### Current implementation assumptions
+
+```text
+1. This is a structural proxy cost, not the final DBSR cost model.
+2. The cost rewards shorter query plans.
+3. The cost penalizes larger, deeper, and wider document trees.
+4. Cardinality, selectivity, physical object size, and MongoDB execution statistics are not used yet.
+5. Document utility is aggregated from pruned query plans.
+6. Full schema assembly from ranked documents is deferred to a later phase.
+```
+
+### Next phase
+
+Implement statistics-aware costing for FIBEN.
+
+Expected next inputs:
+
+```text
+FIBEN collection cardinalities by scale
+Average object/document sizes by scale
+Estimated selected records per query path
+Optional MongoDB executionStats from existing query-plan scripts
+```
+
+Expected next outputs:
+
+```text
+DBSR_implementation/generated/fiben/dbsr_statistics_sf1.json
+DBSR_implementation/generated/fiben/dbsr_statistics_sf10.json
+DBSR_implementation/generated/fiben/dbsr_statistics_sf30.json
+DBSR_implementation/generated/fiben/dbsr_stats_aware_ranked_schemas.csv
+```
