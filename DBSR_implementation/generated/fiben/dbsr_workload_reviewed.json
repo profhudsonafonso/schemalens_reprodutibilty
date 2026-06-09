@@ -359,7 +359,7 @@
       "frequency": 1.0,
       "status": "manual_sequence_reviewed_draft",
       "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
-      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "implementation_assumption": "BuyTransaction and SellTransaction are represented as subtype/filter conditions over Transaction in the DBSR read sequence, because the physical relationship path is FinancialServiceAccount -> Transaction -> ListedSecurity.",
       "dbsr_sequence_inferred": [
         "Person",
         "FinancialServiceAccount",
@@ -376,20 +376,26 @@
           "path": [
             "Person",
             "FinancialServiceAccount",
-            "BuyTransaction",
+            "Transaction",
             "ListedSecurity"
           ],
-          "intent": "person to buy transactions for listed security"
+          "intent": "person to buy transactions for listed security",
+          "filters": {
+            "transaction_subtype": "buy"
+          }
         },
         {
           "sequence_id": "Q7_S2",
           "path": [
             "Person",
             "FinancialServiceAccount",
-            "SellTransaction",
+            "Transaction",
             "ListedSecurity"
           ],
-          "intent": "person to sell transactions for listed security"
+          "intent": "person to sell transactions for listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
         }
       ],
       "review_status": "reviewed_draft",
@@ -426,7 +432,7 @@
       "frequency": 1.0,
       "status": "manual_sequence_reviewed_draft",
       "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
-      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "implementation_assumption": "SellTransaction is represented as a subtype/filter condition over Transaction in the DBSR read sequence.",
       "dbsr_sequence_inferred": [
         "Transaction",
         "SellTransaction",
@@ -445,10 +451,13 @@
         {
           "sequence_id": "Q8_S2",
           "path": [
-            "SellTransaction",
+            "Transaction",
             "ListedSecurity"
           ],
-          "intent": "selling-price comparison for IBM listed security"
+          "intent": "selling-price comparison for IBM listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
         }
       ],
       "review_status": "reviewed_draft",
@@ -491,7 +500,7 @@
       "frequency": 1.0,
       "status": "manual_sequence_reviewed_draft",
       "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
-      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "implementation_assumption": "BuyTransaction and SellTransaction are represented as subtype/filter conditions over Transaction in the DBSR read sequence.",
       "dbsr_sequence_inferred": [
         "Person",
         "FinancialServiceAccount",
@@ -507,20 +516,26 @@
           "path": [
             "Person",
             "FinancialServiceAccount",
-            "BuyTransaction",
+            "Transaction",
             "ListedSecurity"
           ],
-          "intent": "person buy path to listed security"
+          "intent": "person buy path to listed security",
+          "filters": {
+            "transaction_subtype": "buy"
+          }
         },
         {
           "sequence_id": "Q9_S2",
           "path": [
             "Person",
             "FinancialServiceAccount",
-            "SellTransaction",
+            "Transaction",
             "ListedSecurity"
           ],
-          "intent": "person sell path to listed security"
+          "intent": "person sell path to listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
         }
       ],
       "review_status": "reviewed_draft",

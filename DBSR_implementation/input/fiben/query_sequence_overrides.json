@@ -14,7 +14,9 @@
       "dbsr_sequences": [
         {
           "sequence_id": "Q1_S1",
-          "path": ["Corporation"],
+          "path": [
+            "Corporation"
+          ],
           "intent": "local company profile lookup"
         }
       ],
@@ -25,17 +27,27 @@
       "dbsr_sequences": [
         {
           "sequence_id": "Q2_S1",
-          "path": ["Corporation", "Industry"],
+          "path": [
+            "Corporation",
+            "Industry"
+          ],
           "intent": "company to industry descriptor"
         },
         {
           "sequence_id": "Q2_S2",
-          "path": ["Corporation", "Country"],
+          "path": [
+            "Corporation",
+            "Country"
+          ],
           "intent": "company to country descriptor"
         },
         {
           "sequence_id": "Q2_S3",
-          "path": ["Corporation", "Security", "ListedSecurity"],
+          "path": [
+            "Corporation",
+            "Security",
+            "ListedSecurity"
+          ],
           "intent": "company to listed securities"
         }
       ],
@@ -46,7 +58,11 @@
       "dbsr_sequences": [
         {
           "sequence_id": "Q3_S1",
-          "path": ["FinancialServiceAccount", "Holding", "ListedSecurity"],
+          "path": [
+            "FinancialServiceAccount",
+            "Holding",
+            "ListedSecurity"
+          ],
           "intent": "account to holdings and listed securities"
         }
       ],
@@ -57,7 +73,14 @@
       "dbsr_sequences": [
         {
           "sequence_id": "Q4_S1",
-          "path": ["Person", "FinancialServiceAccount", "Holding", "ListedSecurity", "Security", "Corporation"],
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Holding",
+            "ListedSecurity",
+            "Security",
+            "Corporation"
+          ],
           "intent": "person to accounts, holdings, listed securities, securities, and companies"
         }
       ],
@@ -68,7 +91,12 @@
       "dbsr_sequences": [
         {
           "sequence_id": "Q5_S1",
-          "path": ["Corporation", "FinancialReport", "ReportElement", "StatementElement"],
+          "path": [
+            "Corporation",
+            "FinancialReport",
+            "ReportElement",
+            "StatementElement"
+          ],
           "intent": "company to financial reports and metric data"
         }
       ],
@@ -80,12 +108,22 @@
       "dbsr_sequences": [
         {
           "sequence_id": "Q6_S1",
-          "path": ["ListedSecurity", "Security", "Corporation", "Industry"],
+          "path": [
+            "ListedSecurity",
+            "Security",
+            "Corporation",
+            "Industry"
+          ],
           "intent": "listed security to corporation and industry filter"
         },
         {
           "sequence_id": "Q6_S2",
-          "path": ["ListedSecurity", "Security", "Corporation", "Country"],
+          "path": [
+            "ListedSecurity",
+            "Security",
+            "Corporation",
+            "Country"
+          ],
           "intent": "listed security to corporation and country filter"
         }
       ],
@@ -96,49 +134,93 @@
       "dbsr_sequences": [
         {
           "sequence_id": "Q7_S1",
-          "path": ["Person", "FinancialServiceAccount", "BuyTransaction", "ListedSecurity"],
-          "intent": "person to buy transactions for listed security"
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person to buy transactions for listed security",
+          "filters": {
+            "transaction_subtype": "buy"
+          }
         },
         {
           "sequence_id": "Q7_S2",
-          "path": ["Person", "FinancialServiceAccount", "SellTransaction", "ListedSecurity"],
-          "intent": "person to sell transactions for listed security"
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person to sell transactions for listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
         }
       ],
       "frequency": 1.0,
-      "review_status": "reviewed_draft"
+      "review_status": "reviewed_draft",
+      "implementation_assumption": "BuyTransaction and SellTransaction are represented as subtype/filter conditions over Transaction in the DBSR read sequence, because the physical relationship path is FinancialServiceAccount -> Transaction -> ListedSecurity."
     },
     "Q8_IBMTransactionsBelowAverageSellingPrice": {
       "dbsr_sequences": [
         {
           "sequence_id": "Q8_S1",
-          "path": ["Transaction", "ListedSecurity"],
+          "path": [
+            "Transaction",
+            "ListedSecurity"
+          ],
           "intent": "transactions related to IBM listed security"
         },
         {
           "sequence_id": "Q8_S2",
-          "path": ["SellTransaction", "ListedSecurity"],
-          "intent": "selling-price comparison for IBM listed security"
+          "path": [
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "selling-price comparison for IBM listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
         }
       ],
       "frequency": 1.0,
-      "review_status": "reviewed_draft"
+      "review_status": "reviewed_draft",
+      "implementation_assumption": "SellTransaction is represented as a subtype/filter condition over Transaction in the DBSR read sequence."
     },
     "Q9_PersonsWhoBoughtAndSoldSameStock": {
       "dbsr_sequences": [
         {
           "sequence_id": "Q9_S1",
-          "path": ["Person", "FinancialServiceAccount", "BuyTransaction", "ListedSecurity"],
-          "intent": "person buy path to listed security"
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person buy path to listed security",
+          "filters": {
+            "transaction_subtype": "buy"
+          }
         },
         {
           "sequence_id": "Q9_S2",
-          "path": ["Person", "FinancialServiceAccount", "SellTransaction", "ListedSecurity"],
-          "intent": "person sell path to listed security"
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person sell path to listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
         }
       ],
       "frequency": 1.0,
-      "review_status": "reviewed_draft"
+      "review_status": "reviewed_draft",
+      "implementation_assumption": "BuyTransaction and SellTransaction are represented as subtype/filter conditions over Transaction in the DBSR read sequence."
     }
   }
 }

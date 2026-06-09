@@ -350,3 +350,108 @@ DBSR_implementation/src/dbsr_core/merge_rules.py
 ```
 
 The goal of the next phase is not yet to benchmark MongoDB. The next phase only implements the internal DBSR representation of entities, relationships, document trees, query sequences, and query plans.
+
+## Phase 2a — DBSR core representation and initial query plans
+
+Status: completed.
+
+### Created core files
+
+```text
+DBSR_implementation/src/dbsr_core/__init__.py
+DBSR_implementation/src/dbsr_core/model.py
+DBSR_implementation/src/dbsr_core/document_tree.py
+DBSR_implementation/src/dbsr_core/query_plan.py
+DBSR_implementation/src/dbsr_core/merge_rules.py
+```
+
+### Created FIBEN helper script
+
+```text
+DBSR_implementation/src/fiben_adapter/build_initial_dbsr_plans.py
+```
+
+### Generated initial DBSR artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_initial_documents.csv
+DBSR_implementation/generated/fiben/dbsr_initial_query_plans.csv
+DBSR_implementation/generated/fiben/dbsr_initial_plan_summary.json
+```
+
+### Validation result
+
+```text
+Sequences loaded: 15
+Initial documents: 12
+Initial query plans: 15
+Max initial plan steps: 6
+```
+
+### Interpretation
+
+The 15 sequences come from the manually reviewed DBSR read workload for FIBEN Q1--Q9. Some queries are decomposed into multiple read join sequences, such as Q2, Q6, Q7, Q8, and Q9.
+
+The 12 initial documents correspond to the unique single-level entities touched by the reviewed workload:
+
+```text
+Corporation
+Country
+FinancialReport
+FinancialServiceAccount
+Holding
+Industry
+ListedSecurity
+Person
+ReportElement
+Security
+StatementElement
+Transaction
+```
+
+The largest initial query plan is Q4, with 6 steps:
+
+```text
+Person -> FinancialServiceAccount -> Holding -> ListedSecurity -> Security -> Corporation
+```
+
+This phase follows the DBSR bottom-up process: it starts from single-level document structures and initial query plans before applying iterative document merges, pruning, and utility ranking.
+
+## Phase 2a correction — Transaction subtype paths
+
+During initial path validation, Q7, Q8, and Q9 failed because the reviewed sequences used `BuyTransaction` and `SellTransaction` as direct nodes between `FinancialServiceAccount` and `ListedSecurity`.
+
+The DBSR input model represents the physical relationship path as:
+
+```text
+FinancialServiceAccount -> Transaction -> ListedSecurity
+```
+
+Therefore, `BuyTransaction` and `SellTransaction` are represented in the reviewed workload as subtype/filter conditions over `Transaction`, not as separate relationship edges.
+
+Affected queries:
+
+```text
+Q7_PersonsWhoBoughtMoreIBMThanSold
+Q8_IBMTransactionsBelowAverageSellingPrice
+Q9_PersonsWhoBoughtAndSoldSameStock
+```
+
+This is recorded as an implementation assumption in:
+
+```text
+DBSR_implementation/input/fiben/query_sequence_overrides.json
+```
+
+### Next phase
+
+Implement the first iterative DBSR generator loop:
+
+```text
+1. Pop QueryPlanStack.
+2. Optimize query plan by merging adjacent document structures.
+3. Generate new documents.
+4. Generate shortened query plans.
+5. Notify/rewrite relevant query plans.
+6. Stop when stack is empty or max_iterations is reached.
+```
