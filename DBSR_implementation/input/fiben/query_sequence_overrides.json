@@ -1,0 +1,144 @@
+{
+  "dataset": "FIBEN",
+  "baseline": "DBSR",
+  "version": "0.1-reviewed-query-sequence-draft",
+  "status": "manual_review_draft",
+  "notes": [
+    "These query sequences are manually defined from the FIBEN query names and known conceptual paths.",
+    "They are DBSR read join sequences, not SchemaLens G0-G9 mappings.",
+    "Q10 is excluded because the first DBSR reproduction focuses on read queries Q1-Q9.",
+    "Each sequence should still be checked against the exact FIBEN query implementation before final benchmarking."
+  ],
+  "query_overrides": {
+    "Q1_CompanyProfileIBM": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q1_S1",
+          "path": ["Corporation"],
+          "intent": "local company profile lookup"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    },
+    "Q2_CompanyWithIndustryCountryAndListedSecurities": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q2_S1",
+          "path": ["Corporation", "Industry"],
+          "intent": "company to industry descriptor"
+        },
+        {
+          "sequence_id": "Q2_S2",
+          "path": ["Corporation", "Country"],
+          "intent": "company to country descriptor"
+        },
+        {
+          "sequence_id": "Q2_S3",
+          "path": ["Corporation", "Security", "ListedSecurity"],
+          "intent": "company to listed securities"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    },
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q3_S1",
+          "path": ["FinancialServiceAccount", "Holding", "ListedSecurity"],
+          "intent": "account to holdings and listed securities"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    },
+    "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q4_S1",
+          "path": ["Person", "FinancialServiceAccount", "Holding", "ListedSecurity", "Security", "Corporation"],
+          "intent": "person to accounts, holdings, listed securities, securities, and companies"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    },
+    "Q5_ReportsAndMetricDataOfCompany": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q5_S1",
+          "path": ["Corporation", "FinancialReport", "ReportElement", "StatementElement"],
+          "intent": "company to financial reports and metric data"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft",
+      "implementation_assumption": "Disclosure is not included in the first reviewed sequence unless the exact query implementation requires it."
+    },
+    "Q6_TechUSListedSecuritiesWithHighLastTradedValue": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q6_S1",
+          "path": ["ListedSecurity", "Security", "Corporation", "Industry"],
+          "intent": "listed security to corporation and industry filter"
+        },
+        {
+          "sequence_id": "Q6_S2",
+          "path": ["ListedSecurity", "Security", "Corporation", "Country"],
+          "intent": "listed security to corporation and country filter"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    },
+    "Q7_PersonsWhoBoughtMoreIBMThanSold": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q7_S1",
+          "path": ["Person", "FinancialServiceAccount", "BuyTransaction", "ListedSecurity"],
+          "intent": "person to buy transactions for listed security"
+        },
+        {
+          "sequence_id": "Q7_S2",
+          "path": ["Person", "FinancialServiceAccount", "SellTransaction", "ListedSecurity"],
+          "intent": "person to sell transactions for listed security"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    },
+    "Q8_IBMTransactionsBelowAverageSellingPrice": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q8_S1",
+          "path": ["Transaction", "ListedSecurity"],
+          "intent": "transactions related to IBM listed security"
+        },
+        {
+          "sequence_id": "Q8_S2",
+          "path": ["SellTransaction", "ListedSecurity"],
+          "intent": "selling-price comparison for IBM listed security"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    },
+    "Q9_PersonsWhoBoughtAndSoldSameStock": {
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q9_S1",
+          "path": ["Person", "FinancialServiceAccount", "BuyTransaction", "ListedSecurity"],
+          "intent": "person buy path to listed security"
+        },
+        {
+          "sequence_id": "Q9_S2",
+          "path": ["Person", "FinancialServiceAccount", "SellTransaction", "ListedSecurity"],
+          "intent": "person sell path to listed security"
+        }
+      ],
+      "frequency": 1.0,
+      "review_status": "reviewed_draft"
+    }
+  }
+}
