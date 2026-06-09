@@ -582,3 +582,86 @@ DBSR_implementation/generated/fiben/dbsr_statistics_sf10.json
 DBSR_implementation/generated/fiben/dbsr_statistics_sf30.json
 DBSR_implementation/generated/fiben/dbsr_stats_aware_ranked_schemas.csv
 ```
+
+## Phase 2d — Offline statistics contract for DBSR costing
+
+Status: completed as an offline contract.
+
+### Created files
+
+```text
+DBSR_implementation/input/fiben/statistics_template.json
+DBSR_implementation/src/fiben_adapter/validate_fiben_statistics.py
+```
+
+### Purpose
+
+The original plan for this phase was to extract MongoDB collection statistics with `collStats`. However, the existing FIBEN benchmark databases are not available in the current repository environment because the previous benchmark workflow created temporary MongoDB databases, measured p95 latency, and dropped those databases after the run.
+
+Therefore, this phase does not report statistics-aware DBSR ranking yet. Instead, it defines the offline statistics contract that future DBSR materialization and benchmark scripts must produce before any temporary database is removed.
+
+### Statistics contract
+
+```text
+DBSR_implementation/input/fiben/statistics_template.json
+```
+
+The template defines the expected per-entity/per-collection fields:
+
+```text
+entity
+collection
+count
+avg_object_size_bytes
+size_bytes
+storage_size_bytes
+total_index_size_bytes
+statistics_status
+```
+
+The template intentionally contains `null` values for measured quantities because no active benchmark database is available at this point.
+
+### Validation command
+
+```text
+python DBSR_implementation/src/fiben_adapter/validate_fiben_statistics.py \
+  --statistics DBSR_implementation/input/fiben/statistics_template.json \
+  --allow-template
+```
+
+Expected validation result:
+
+```text
+Statistics validation passed.
+Dataset: FIBEN
+Scale: sf1
+Collections: 12
+Status: template_not_measured
+```
+
+### Implementation assumption
+
+```text
+Statistics-aware DBSR ranking must only be reported after real collection statistics are captured during DBSR materialization or benchmark execution.
+```
+
+### Next phase
+
+Implement the DBSR schema assembly step from ranked documents.
+
+The next phase should produce a first recommended DBSR schema manifest, independent from SchemaLens G0--G9:
+
+```text
+DBSR_implementation/generated/fiben/dbsr_schema_manifest_structural.json
+DBSR_implementation/generated/fiben/dbsr_schema_manifest_structural.csv
+```
+
+Later, when DBSR schemas are materialized in MongoDB, the benchmark runner must capture real statistics files such as:
+
+```text
+DBSR_implementation/generated/fiben/dbsr_statistics_sf1.json
+DBSR_implementation/generated/fiben/dbsr_statistics_sf10.json
+DBSR_implementation/generated/fiben/dbsr_statistics_sf30.json
+```
+
+before dropping any temporary database.
