@@ -285,7 +285,7 @@ Required validation commands:
 python -m py_compile DBSR_implementation/src/fiben_adapter/build_fiben_dbsr_input.py
 python -m json.tool DBSR_implementation/generated/fiben/dbsr_input_model.json > /tmp/dbsr_input_model_check.json
 python -m json.tool DBSR_implementation/generated/fiben/dbsr_workload.json > /tmp/dbsr_workload_check.json
-grep -RInE "Hudson|profhudson|/home/|/afs/|batistah|password|token|secret" DBSR_implementation || true
+grep -RInE "personal_name|personal_email|local_username|/home/|/afs/|password|token|secret|credential" DBSR_implementation || true
 ```
 
 After Phase 1b:
@@ -454,4 +454,56 @@ Implement the first iterative DBSR generator loop:
 4. Generate shortened query plans.
 5. Notify/rewrite relevant query plans.
 6. Stop when stack is empty or max_iterations is reached.
+```
+
+## Phase 2b — First iterative DBSR generator loop
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/src/dbsr_core/generator.py
+DBSR_implementation/src/fiben_adapter/run_dbsr_generator.py
+```
+
+### Updated files
+
+```text
+DBSR_implementation/src/dbsr_core/query_plan.py
+DBSR_implementation/src/dbsr_core/merge_rules.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_generated_documents.csv
+DBSR_implementation/generated/fiben/dbsr_generated_query_plans.csv
+DBSR_implementation/generated/fiben/dbsr_generation_summary.json
+```
+
+### Purpose
+
+This phase implements the first iterative DBSR generator loop. Starting from the initial single-level query plans, the generator repeatedly tries to merge adjacent document structures, creates larger document trees, and generates shortened query plans.
+
+### Current implementation assumptions
+
+```text
+1. This phase implements an iterative per-plan merge loop.
+2. It does not yet implement full DBSR global notification of all relevant query plans when a novel document is generated.
+3. It does not yet implement cost-based pruning.
+4. It does not yet implement document utility ranking.
+5. DBSR MaxDim height is interpreted as document-tree height in nodes.
+```
+
+### Next phase
+
+Implement cost model, query-plan pruning, and first document utility ranking.
+
+Expected next outputs:
+
+```text
+DBSR_implementation/generated/fiben/dbsr_pruned_query_plans.csv
+DBSR_implementation/generated/fiben/dbsr_document_utility_matrix.csv
+DBSR_implementation/generated/fiben/dbsr_ranked_schemas.csv
 ```

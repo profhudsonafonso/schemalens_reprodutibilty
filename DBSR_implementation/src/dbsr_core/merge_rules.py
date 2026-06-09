@@ -8,17 +8,23 @@ from dbsr_core.model import DBSRModel
 from dbsr_core.query_plan import QueryPlan
 
 
-def _attach_child_to_first_matching_leaf(
+def _has_attachable_parent(node: DocumentNode, child_root_entity: str, model: DBSRModel) -> bool:
+    if model.relationship_between(node.entity, child_root_entity) is not None:
+        return True
+    return any(_has_attachable_parent(child, child_root_entity, model) for child in node.children)
+
+
+def _attach_to_first_relationship_node(
     node: DocumentNode,
-    parent_entity: str,
     child: DocumentNode,
+    model: DBSRModel,
 ) -> bool:
-    if node.entity == parent_entity:
+    if model.relationship_between(node.entity, child.entity) is not None:
         node.add_child(child)
         return True
 
     for existing_child in node.children:
-        if _attach_child_to_first_matching_leaf(existing_child, parent_entity, child):
+        if _attach_to_first_relationship_node(existing_child, child, model):
             return True
 
     return False
@@ -34,10 +40,10 @@ def can_merge_as_adjacent_path(
     if right.root_entity() in left.entity_set():
         return True
 
-    if model.relationship_between(left.root_entity(), right.root_entity()) is None:
+    if not _has_attachable_parent(left.root, right.root_entity(), model):
         return False
 
-    candidate = merge_as_adjacent_path(left, right)
+    candidate = merge_as_adjacent_path(left, right, model)
 
     if max_height_edges is not None and candidate.height_edges() > max_height_edges:
         return False
@@ -48,16 +54,27 @@ def can_merge_as_adjacent_path(
     return True
 
 
-def merge_as_adjacent_path(left: DocumentTree, right: DocumentTree) -> DocumentTree:
+def merge_as_adjacent_path(
+    left: DocumentTree,
+    right: DocumentTree,
+    model: DBSRModel,
+) -> DocumentTree:
     merged = left.clone()
 
     if right.root_entity() in merged.entity_set():
         return merged
 
-    # Minimal DBSR-faithful first implementation:
-    # merge the next document as an embedded child under the current root.
-    # Later phases will extend this to largest-overlap and leaf-to-root merge.
-    merged.root.add_child(right.root.clone())
+    attached = _attach_to_first_relationship_node(
+        node=merged.root,
+        child=right.root.clone(),
+        model=model,
+    )
+
+    if not attached:
+        raise ValueError(
+            f"Cannot merge {left.signature()} with {right.signature()}: no attachable relationship."
+        )
+
     return merged
 
 
@@ -74,6 +91,7 @@ def compact_plan(plan: QueryPlan) -> QueryPlan:
         sequence_id=plan.sequence_id,
         steps=compacted_steps,
         frequency=plan.frequency,
+        filters=dict(plan.filters),
         required_secondary_indexes=list(plan.required_secondary_indexes),
         origin=f"{plan.origin}+inner_compaction_simplified",
     )
@@ -101,7 +119,7 @@ def merge_adjacent_step(
     ):
         return None
 
-    merged_doc = merge_as_adjacent_path(left, right)
+    merged_doc = merge_as_adjacent_path(left, right, model)
     new_steps = plan.steps[:step_index] + [merged_doc] + plan.steps[step_index + 2:]
 
     return compact_plan(
@@ -110,6 +128,7 @@ def merge_adjacent_step(
             sequence_id=plan.sequence_id,
             steps=new_steps,
             frequency=plan.frequency,
+            filters=dict(plan.filters),
             required_secondary_indexes=list(plan.required_secondary_indexes),
             origin=f"{plan.origin}+merge_step_{step_index}",
         )
@@ -117,7 +136,9 @@ def merge_adjacent_step(
 
 
 def generate_one_step_merges(plan: QueryPlan, model: DBSRModel) -> List[QueryPlan]:
-    max_height_edges = model.max_document_height()
+    # DBSR's MaxDim height is interpreted as document-tree height in nodes.
+    # DocumentTree.height_edges() is therefore compared with max_height_nodes - 1.
+    max_height_edges = max(0, model.max_document_height() - 1)
     max_width = model.max_node_width()
 
     generated: List[QueryPlan] = []

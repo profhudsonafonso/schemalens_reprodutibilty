@@ -5,7 +5,7 @@ import csv
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple
+from typing import Any, Dict, Iterable, List
 
 from dbsr_core.document_tree import DocumentTree
 
@@ -17,6 +17,7 @@ class QuerySequence:
     path: List[str]
     frequency: float = 1.0
     intent: str = ""
+    filters: Dict[str, Any] = field(default_factory=dict)
 
     def length(self) -> int:
         return len(self.path)
@@ -28,6 +29,7 @@ class QueryPlan:
     sequence_id: str
     steps: List[DocumentTree]
     frequency: float = 1.0
+    filters: Dict[str, Any] = field(default_factory=dict)
     required_secondary_indexes: List[str] = field(default_factory=list)
     origin: str = "initial_single_level_documents"
 
@@ -50,6 +52,7 @@ class QueryPlan:
             "frequency": self.frequency,
             "step_count": self.step_count(),
             "plan_signature": self.signature(),
+            "filters_json": json.dumps(self.filters, ensure_ascii=False),
             "required_secondary_indexes": json.dumps(self.required_secondary_indexes),
             "origin": self.origin,
             "steps_json": json.dumps([step.to_dict() for step in self.steps], ensure_ascii=False),
@@ -74,6 +77,7 @@ def load_reviewed_sequences(path: Path) -> List[QuerySequence]:
                     path=list(seq["path"]),
                     frequency=frequency,
                     intent=seq.get("intent", ""),
+                    filters=seq.get("filters", {}),
                 )
             )
 
@@ -86,6 +90,7 @@ def initial_plan_for_sequence(sequence: QuerySequence) -> QueryPlan:
         sequence_id=sequence.sequence_id,
         steps=[DocumentTree.single(entity) for entity in sequence.path],
         frequency=sequence.frequency,
+        filters=dict(sequence.filters),
         required_secondary_indexes=[],
         origin="initial_single_level_documents",
     )
@@ -150,6 +155,7 @@ def write_query_plans_csv(plans: List[QueryPlan], path: Path) -> None:
                 "frequency",
                 "step_count",
                 "plan_signature",
+                "filters_json",
                 "required_secondary_indexes",
                 "origin",
                 "steps_json",
