@@ -1,0 +1,2 @@
+scale_label,phases,benchmark_runs_per_phase,query_count,expected_query_phase_folders,aggregate_rows,raw_rows,query_write_plan_rows,resource_monitor_rows,failed_runs_total,semantic_warning_total,collscan_rows
+sf1,"cold,hot",10,22,44,128,1280,128,338,0,0,0

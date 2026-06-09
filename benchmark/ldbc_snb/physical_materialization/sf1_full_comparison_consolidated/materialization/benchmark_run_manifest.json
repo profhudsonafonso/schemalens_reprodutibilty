@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-06-08T16:07:49.250214+00:00",
+  "script": "build_ldbc_snb_physical_materializations.py",
+  "command": "build_ldbc_snb_physical_materializations.py --data-dir data/sf1 --artifacts-dir ldbc_snb_sf0_1_mongo_benchmark_bundle --execution-plan benchmark_execution_plan.csv --results-dir results/physical_materialization/sf1_full_comparison_consolidated --scale-label sf1 --mongo-host 127.0.0.1 --mongo-port 27018 --mongo-username mongo --mongo-password mongo --mongo-auth-source admin --db-prefix ldbc_snb_phys_sf1 --batch-size 50000 --max-summary-items 5000 --force-rebuild-db --verbose",
+  "data_dir": "/home/hudson/Documents/framework_test/ldbc_snb_benchmark/data/sf1",
+  "artifacts_dir": "/home/hudson/Documents/framework_test/ldbc_snb_benchmark/ldbc_snb_sf0_1_mongo_benchmark_bundle",
+  "results_dir": "/home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf1_full_comparison_consolidated",
+  "scale_label": "sf1",
+  "execution_plan": "benchmark_execution_plan.csv",
+  "n_selected_rows": 64,
+  "n_manifest_rows": 64,
+  "n_ready": 64,
+  "n_unsupported": 0,
+  "artifact_manifest": {}
+}
