@@ -1219,3 +1219,83 @@ This probe does not execute the benchmark and does not measure p95. It only sele
 ### Next phase
 
 Implement the DBSR FIBEN Q1--Q9 query executor and run a one-repetition smoke benchmark.
+
+## Phase 2l — DBSR FIBEN parameter probe, secondary indexes, and smoke benchmark
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/benchmark/fiben/probe_dbsr_fiben_query_parameters.py
+DBSR_implementation/benchmark/fiben/create_dbsr_fiben_indexes.py
+DBSR_implementation/benchmark/fiben/run_dbsr_fiben_query_benchmark.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf1.json
+DBSR_implementation/generated/fiben/dbsr_fiben_index_manifest_sf1.json
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf1_smoke.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_smoke.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_manifest_sf1_smoke.json
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf1_smoke_indexed.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_smoke_indexed.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_manifest_sf1_smoke_indexed.json
+```
+
+### Query parameter probe validation
+
+```text
+Mongo database: dbsr_fiben_sf1_source_full
+Missing parameter samples: 0
+Q9 matched person: 400000008607
+Q9 matched stock: 1004673
+Q9 matched tx count: 3
+```
+
+### DBSR secondary index validation
+
+```text
+Collections indexed: 15
+Indexes requested: 44
+Indexes created or existing: 44
+Indexes failed: 0
+```
+
+### Indexed smoke benchmark validation
+
+```text
+Mongo database: dbsr_fiben_sf1_source_full
+Warmup runs: 1
+Hot runs: 1
+Failed executions: 0
+Official benchmark: False
+```
+
+### Indexed smoke hot p95 summary
+
+```text
+Q1_CompanyProfileIBM: p95_ms=0.161751, returned=1
+Q2_CompanyWithIndustryCountryAndListedSecurities: p95_ms=0.386507, returned=3
+Q3_SecuritiesHeldInEachFinancialServiceAccount: p95_ms=0.153466, returned=3
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity: p95_ms=0.395895, returned=5
+Q5_ReportsAndMetricDataOfCompany: p95_ms=0.320933, returned=169
+Q6_TechUSListedSecuritiesWithHighLastTradedValue: p95_ms=0.966398, returned=169
+Q7_PersonsWhoBoughtMoreIBMThanSold: p95_ms=0.191196, returned=1
+Q8_IBMTransactionsBelowAverageSellingPrice: p95_ms=1.244492, returned=101
+Q9_PersonsWhoBoughtAndSoldSameStock: p95_ms=0.148754, returned=1
+```
+
+### Purpose
+
+This phase prepares the DBSR FIBEN benchmark executor. It selects valid query parameters from the fully materialized DBSR collections, creates DBSR secondary indexes, and validates that Q1--Q9 execute successfully over the `dbsr_rank*` collections.
+
+### Important methodological note
+
+The smoke benchmark is not the official p95 comparison because it uses only one hot run. It only validates executor correctness, nonzero/valid parameters, and indexed execution before the official repeated benchmark.
+
+### Next phase
+
+Run the official DBSR FIBEN hot benchmark with a stable number of repetitions, then compare DBSR p95 against the existing SchemaLens FIBEN results.

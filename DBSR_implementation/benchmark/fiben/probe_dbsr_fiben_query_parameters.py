@@ -152,7 +152,7 @@ def main() -> None:
     q6_industry_doc = find_one(db, "dbsr_rank14_security_corporation_industry", {"corporation.0": {"$exists": True}})
     q6_country_doc = find_one(db, "dbsr_rank15_security_corporation_country", {"corporation.0": {"$exists": True}})
 
-    # Q7/Q9: person/account/transaction path.
+    # Q7: person/account/transaction path.
     q7_q9_doc = find_one(
         db,
         "dbsr_rank10_person_financialserviceaccount_transaction",
@@ -160,6 +160,28 @@ def main() -> None:
     )
     if not q7_q9_doc:
         q7_q9_doc = find_one(db, "dbsr_rank10_person_financialserviceaccount_transaction", {})
+
+    # Q9: choose a person who bought and sold the same stock.
+    q9_match_rows = list(db.dbsr_rank10_person_financialserviceaccount_transaction.aggregate([
+        {"$unwind": "$financialServiceAccount"},
+        {"$unwind": "$financialServiceAccount.transaction"},
+        {"$group": {
+            "_id": {
+                "person": "$PERSONID",
+                "stock": "$financialServiceAccount.transaction.REFERSTO",
+            },
+            "kinds": {"$addToSet": "$financialServiceAccount.transaction.TRANSACTIONKIND"},
+            "txCount": {"$sum": 1},
+        }},
+        {"$match": {"kinds.1": {"$exists": True}}},
+        {"$sort": {"txCount": -1}},
+        {"$limit": 1},
+    ], allowDiskUse=True))
+
+    q9_match = q9_match_rows[0] if q9_match_rows else None
+    q9_person_id = q9_match["_id"]["person"] if q9_match else first_value(q7_q9_doc, "PERSONID")
+    q9_stock_id = q9_match["_id"]["stock"] if q9_match else None
+    q9_doc = find_one(db, "dbsr_rank10_person_financialserviceaccount_transaction", {"PERSONID": q9_person_id}) if q9_person_id else q7_q9_doc
 
     # Q8: transaction with listed security.
     q8_doc = find_one(db, "dbsr_rank02_transaction_listedsecurity", {"listedSecurity.0": {"$exists": True}})
@@ -234,12 +256,14 @@ def main() -> None:
         },
         "Q9_PersonsWhoBoughtAndSoldSameStock": {
             "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
-            "person_id": first_value(q7_q9_doc, "PERSONID"),
-            "account_ids": first_values(q7_q9_doc, "financialServiceAccount.FINANCIALSERVICEACCOUNTID"),
-            "transaction_ids": first_values(q7_q9_doc, "financialServiceAccount.transaction.SECURITIESTRANSACTIONID"),
-            "listed_security_ids": first_values(q7_q9_doc, "financialServiceAccount.transaction.REFERSTO"),
-            "transaction_kinds": first_values(q7_q9_doc, "financialServiceAccount.transaction.TRANSACTIONKIND"),
-            "returned_sample": q7_q9_doc is not None,
+            "person_id": first_value(q9_doc, "PERSONID"),
+            "matched_stock_id": q9_stock_id,
+            "matched_tx_count": q9_match.get("txCount") if q9_match else None,
+            "account_ids": first_values(q9_doc, "financialServiceAccount.FINANCIALSERVICEACCOUNTID"),
+            "transaction_ids": first_values(q9_doc, "financialServiceAccount.transaction.SECURITIESTRANSACTIONID"),
+            "listed_security_ids": first_values(q9_doc, "financialServiceAccount.transaction.REFERSTO"),
+            "transaction_kinds": first_values(q9_doc, "financialServiceAccount.transaction.TRANSACTIONKIND"),
+            "returned_sample": q9_doc is not None and q9_match is not None,
         },
     }
 
