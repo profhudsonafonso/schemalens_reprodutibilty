@@ -1325,15 +1325,15 @@ Official benchmark: True
 ### Official hot p95 summary
 
 ```text
-Q1_CompanyProfileIBM: p95_ms=0.261594, avg_ms=0.200904, returned=1
-Q2_CompanyWithIndustryCountryAndListedSecurities: p95_ms=1.068566, avg_ms=0.804227, returned=3
-Q3_SecuritiesHeldInEachFinancialServiceAccount: p95_ms=0.195253, avg_ms=0.190328, returned=3
-Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity: p95_ms=0.434546, avg_ms=0.419942, returned=5
-Q5_ReportsAndMetricDataOfCompany: p95_ms=0.344668, avg_ms=0.331832, returned=169
-Q6_TechUSListedSecuritiesWithHighLastTradedValue: p95_ms=1.255224, avg_ms=1.20689, returned=169
-Q7_PersonsWhoBoughtMoreIBMThanSold: p95_ms=0.244635, avg_ms=0.214408, returned=1
-Q8_IBMTransactionsBelowAverageSellingPrice: p95_ms=1.219266, avg_ms=1.189969, returned=101
-Q9_PersonsWhoBoughtAndSoldSameStock: p95_ms=0.25446, avg_ms=0.245584, returned=1
+Q1_CompanyProfileIBM: p95_ms=0.261594, avg_ms=0.200904, p50_ms=0.190769, returned=1
+Q2_CompanyWithIndustryCountryAndListedSecurities: p95_ms=1.068566, avg_ms=0.804227, p50_ms=0.729346, returned=3
+Q3_SecuritiesHeldInEachFinancialServiceAccount: p95_ms=0.195253, avg_ms=0.190328, p50_ms=0.186936, returned=3
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity: p95_ms=0.434546, avg_ms=0.419942, p50_ms=0.41881, returned=5
+Q5_ReportsAndMetricDataOfCompany: p95_ms=0.344668, avg_ms=0.331832, p50_ms=0.329463, returned=169
+Q6_TechUSListedSecuritiesWithHighLastTradedValue: p95_ms=1.255224, avg_ms=1.20689, p50_ms=1.174261, returned=169
+Q7_PersonsWhoBoughtMoreIBMThanSold: p95_ms=0.244635, avg_ms=0.214408, p50_ms=0.208501, returned=1
+Q8_IBMTransactionsBelowAverageSellingPrice: p95_ms=1.219266, avg_ms=1.189969, p50_ms=1.190768, returned=101
+Q9_PersonsWhoBoughtAndSoldSameStock: p95_ms=0.25446, avg_ms=0.245584, p50_ms=0.244526, returned=1
 ```
 
 ### Purpose
@@ -1342,7 +1342,7 @@ This phase runs the official DBSR FIBEN SF1 hot benchmark over the fully materia
 
 ### Important methodological note
 
-This benchmark measures the DBSR baseline after faithful document-structure generation, physical MongoDB materialization, and DBSR secondary-index creation. It uses the materialized DBSR collections only; it does not use SchemaLens candidates or SchemaLens activation outputs during execution.
+This benchmark measures the DBSR baseline after faithful document-structure generation, physical MongoDB materialization, and DBSR secondary-index creation. It uses the materialized DBSR collections only and does not use SchemaLens activation outputs during execution.
 
 ### Next phase
 
