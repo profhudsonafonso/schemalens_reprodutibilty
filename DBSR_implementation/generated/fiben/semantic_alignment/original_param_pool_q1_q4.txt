@@ -1,0 +1,76 @@
+                doc["_candidate_id"] = candidate_id
+                doc["_design_pattern"] = candidate_spec.get("design_pattern")
+
+            inserted = safe_insert_many(coll, docs)
+            total += inserted
+            _log_collection_progress(collection_name, batch_no, len(docs), total)
+
+    root_pk = ENTITY_PK_MAP.get(root_entity)
+    if root_pk:
+        try:
+            coll.create_index(root_pk)
+        except Exception:
+            pass
+
+    try:
+        coll.create_index("_candidate_id")
+        coll.create_index("_benchmark_root_id")
+    except Exception:
+        pass
+
+    log(
+        f"[candidate-load] completed candidate={candidate_id} "
+        f"collection={collection_name} total_inserted={total}"
+    )
+
+    return {
+        "candidate_id": candidate_id,
+        "collection_name": collection_name,
+        "root_entity": root_entity,
+        "documents_inserted": total,
+    }
+
+
+# =========================================================
+# QUERY PARAMETER POOL
+# =========================================================
+
+_query_param_pool_cache = {}
+
+
+def build_query_parameter_pool(con, sample_size: int = 20) -> Dict[str, Any]:
+    cache_key = sample_size
+    if cache_key in _query_param_pool_cache:
+        return _query_param_pool_cache[cache_key]
+
+    log("Building FIBEN query parameter pool")
+    pool = {}
+
+    # Q1/Q2/Q5 use IBM-like corporation. Fallback to most connected corporation.
+    ibm_df = con.execute("""
+        SELECT CORPORATIONID, HASTICKERSYMBOL, HASLEGALNAME
+        FROM fiben_corporations
+        WHERE upper(COALESCE(HASTICKERSYMBOL, '')) = 'IBM'
+           OR upper(COALESCE(HASLEGALNAME, '')) LIKE '%IBM%'
+        LIMIT 1
+    """).df()
+
+    if ibm_df.empty:
+        ibm_df = con.execute("""
+            SELECT c.CORPORATIONID, c.HASTICKERSYMBOL, c.HASLEGALNAME
+            FROM fiben_corporations c
+            LEFT JOIN fiben_securities s ON c.CORPORATIONID = s.ISPROVIDEDBY
+            GROUP BY c.CORPORATIONID, c.HASTICKERSYMBOL, c.HASLEGALNAME
+            ORDER BY COUNT(s.SECURITYID) DESC, c.CORPORATIONID
+            LIMIT 1
+        """).df()
+
+    ibm_corporation_id = None if ibm_df.empty else ibm_df.iloc[0]["CORPORATIONID"]
+    pool["Q1_CompanyProfileIBM"] = [ibm_corporation_id]
+    pool["Q2_CompanyWithIndustryCountryAndListedSecurities"] = [ibm_corporation_id]
+    pool["Q5_ReportsAndMetricDataOfCompany"] = [ibm_corporation_id]
+
+    # Q3 accounts.
+    pool["Q3_SecuritiesHeldInEachFinancialServiceAccount"] = con.execute(f"""
+        SELECT FINANCIALSERVICEACCOUNTID
+        FROM fiben_financial_service_accounts

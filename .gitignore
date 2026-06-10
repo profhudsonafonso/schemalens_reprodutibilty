@@ -16,3 +16,4 @@ DBSR_implementation/**/query_plan_raw_json/
 DBSR_implementation/results/**/raw/
 DBSR_implementation/results/**/logs/
 DBSR_implementation/benchmark/**/logs/
+.venv/

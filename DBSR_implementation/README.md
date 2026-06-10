@@ -1526,3 +1526,11 @@ After alignment, DBSR wins Q1, Q3, and Q5, while SchemaLens wins Q2, Q4, Q6, Q7,
 ### Methodological note
 
 The earlier DBSR comparison was executable but not fully semantically comparable because several queries used fixed parameters or different returned-count policies. This final comparison replaces that preliminary result and should be used as the FIBEN SF1 DBSR baseline result.
+
+## Final FIBEN SF1 DBSR vs SchemaLens report
+
+A concise report summarizing the semantic-aligned DBSR vs SchemaLens comparison for FIBEN SF1 was added at:
+
+`DBSR_implementation/results/fiben/dbsr_vs_schemalens_fiben_sf1_report.md`
+
+This report includes both a Markdown version for the repository and an Overleaf/LaTeX version for the paper. It explains how the DBSR baseline was implemented, how query semantics and returned-count policies were aligned with the original FIBEN runner, and how the final per-query comparison should be interpreted.
