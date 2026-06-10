@@ -1,0 +1,168 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf1",
+  "probe_type": "dbsr_fiben_query_parameter_probe",
+  "mongo_database": "dbsr_fiben_sf1_source_full",
+  "mongo_access": true,
+  "official_benchmark": false,
+  "collection_counts": {
+    "dbsr_rank01_listedsecurity": 2745,
+    "dbsr_rank02_transaction_listedsecurity": 500000,
+    "dbsr_rank03_corporation": 2324,
+    "dbsr_rank04_person": 50100,
+    "dbsr_rank05_corporation_country": 2324,
+    "dbsr_rank06_corporation_industry": 2324,
+    "dbsr_rank07_financialserviceaccount_holding_listedsecurity": 97270,
+    "dbsr_rank08_corporation_security_listedsecurity": 2324,
+    "dbsr_rank09_financialserviceaccount_transaction_listedsecurity": 97270,
+    "dbsr_rank10_person_financialserviceaccount_transaction": 50100,
+    "dbsr_rank11_person_financialserviceaccount_holding": 50100,
+    "dbsr_rank12_listedsecurity_security_corporation": 2745,
+    "dbsr_rank13_financialreport_reportelement_statementelement": 48301,
+    "dbsr_rank14_security_corporation_industry": 2745,
+    "dbsr_rank15_security_corporation_country": 2745
+  },
+  "parameters": {
+    "Q1_CompanyProfileIBM": {
+      "collection": "dbsr_rank03_corporation",
+      "corporation_id": "2860",
+      "ticker_symbol": "IBM",
+      "name": "International Business Machines Corporation",
+      "returned_sample": true
+    },
+    "Q2_CompanyWithIndustryCountryAndListedSecurities": {
+      "main_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "corporation_id": "1000",
+      "ticker_symbol": "ACCL",
+      "security_ids": [
+        "1004222"
+      ],
+      "listed_security_ids": [
+        "1004222"
+      ],
+      "returned_sample": true
+    },
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount": {
+      "collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "financial_service_account_id": "150000000000",
+      "holding_ids": [
+        "500000000000",
+        "500000000001"
+      ],
+      "listed_security_ids": [
+        "1003507",
+        "1005113"
+      ],
+      "returned_sample": true
+    },
+    "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity": {
+      "collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "person_id": "400000000000",
+      "financial_service_account_ids": [
+        "150000000000"
+      ],
+      "holding_ids": [
+        "500000000000",
+        "500000000001"
+      ],
+      "listed_security_ids": [
+        "1003507",
+        "1005113"
+      ],
+      "returned_sample": true
+    },
+    "Q5_ReportsAndMetricDataOfCompany": {
+      "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "financial_report_id": "1001821",
+      "corporation_id": "1693",
+      "report_element_ids": [
+        "1082205",
+        "1089233",
+        "1098285",
+        "1097427",
+        "1098010",
+        "1104926",
+        "1103936",
+        "1127609",
+        "1137271",
+        "1145710"
+      ],
+      "statement_element_ids": [
+        "1127609",
+        "1349936",
+        "1581736",
+        "1577024",
+        "1628425",
+        "1628426",
+        "1651173",
+        "1887819"
+      ],
+      "returned_sample": true
+    },
+    "Q6_TechUSListedSecuritiesWithHighLastTradedValue": {
+      "industry_collection": "dbsr_rank14_security_corporation_industry",
+      "country_collection": "dbsr_rank15_security_corporation_country",
+      "industry_security_id": "1001000",
+      "country_security_id": "1001000",
+      "industry_ids": [
+        "7372"
+      ],
+      "country_ids": [
+        "237"
+      ],
+      "returned_sample": true
+    },
+    "Q7_PersonsWhoBoughtMoreIBMThanSold": {
+      "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "person_id": "400000000000",
+      "account_ids": [
+        "150000000000"
+      ],
+      "transaction_ids": [
+        "600000223274",
+        "600000491222"
+      ],
+      "transaction_kinds": [
+        "1",
+        "2"
+      ],
+      "listed_security_ids": [
+        "1002183",
+        "1004783"
+      ],
+      "returned_sample": true
+    },
+    "Q8_IBMTransactionsBelowAverageSellingPrice": {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "transaction_id": "600000000000",
+      "listed_security_id": "1003213",
+      "transaction_kind": "2",
+      "amount": "+2.48800000000000E+003",
+      "ticker_symbol": "OMI",
+      "returned_sample": true
+    },
+    "Q9_PersonsWhoBoughtAndSoldSameStock": {
+      "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "person_id": "400000000000",
+      "account_ids": [
+        "150000000000"
+      ],
+      "transaction_ids": [
+        "600000223274",
+        "600000491222"
+      ],
+      "listed_security_ids": [
+        "1002183",
+        "1004783"
+      ],
+      "transaction_kinds": [
+        "1",
+        "2"
+      ],
+      "returned_sample": true
+    }
+  },
+  "missing_parameter_samples": [],
+  "implementation_note": "This probe only selects real parameter samples from the materialized DBSR collections. It does not measure latency and does not affect schema selection."
+}

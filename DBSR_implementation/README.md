@@ -1174,3 +1174,48 @@ The next phase must implement and run the DBSR query executor for FIBEN Q1--Q9 o
 ### Next phase
 
 Prepare the DBSR FIBEN Q1--Q9 query executor and benchmark runner.
+
+## Phase 2l.1 — DBSR FIBEN query-parameter probe
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/benchmark/fiben/probe_dbsr_fiben_query_parameters.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf1.json
+```
+
+### Validation result
+
+```text
+Mongo database: dbsr_fiben_sf1_source_full
+Collections counted: 15
+Missing parameter samples: 0
+Q1_CompanyProfileIBM: returned_sample=True
+Q2_CompanyWithIndustryCountryAndListedSecurities: returned_sample=True
+Q3_SecuritiesHeldInEachFinancialServiceAccount: returned_sample=True
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity: returned_sample=True
+Q5_ReportsAndMetricDataOfCompany: returned_sample=True
+Q6_TechUSListedSecuritiesWithHighLastTradedValue: returned_sample=True
+Q7_PersonsWhoBoughtMoreIBMThanSold: returned_sample=True
+Q8_IBMTransactionsBelowAverageSellingPrice: returned_sample=True
+Q9_PersonsWhoBoughtAndSoldSameStock: returned_sample=True
+```
+
+### Purpose
+
+This phase selects real query parameters from the fully materialized DBSR FIBEN collections. It prepares the future Q1--Q9 DBSR query executor and avoids benchmark runs with invalid or zero-result parameters.
+
+### Important methodological note
+
+This probe does not execute the benchmark and does not measure p95. It only selects valid parameters from the materialized DBSR collections and does not affect schema selection.
+
+### Next phase
+
+Implement the DBSR FIBEN Q1--Q9 query executor and run a one-repetition smoke benchmark.
