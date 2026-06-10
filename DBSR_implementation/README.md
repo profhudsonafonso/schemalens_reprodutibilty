@@ -1075,3 +1075,102 @@ This is still not the p95 benchmark. The DBSR materialization was limited to 100
 ### Next phase
 
 Run full-materialization preflight checks, then run full DBSR materialization if the target documents are safe.
+
+## Phase 2k — Full DBSR materialization over official FIBEN source
+
+Status: completed.
+
+### Created files
+
+```text
+DBSR_implementation/benchmark/fiben/run_dbsr_full_materialization_preflight.py
+```
+
+### Generated artifacts
+
+```text
+DBSR_implementation/generated/fiben/dbsr_full_materialization_preflight_sf1_full_source.json
+DBSR_implementation/generated/fiben/dbsr_full_materialization_preflight_sf1_full_source.csv
+DBSR_implementation/generated/fiben/dbsr_loader_execution_manifest_sf1_full_materialization_executed.json
+DBSR_implementation/generated/fiben/dbsr_full_materialization_collection_stats_sf1.json
+```
+
+### Preflight validation
+
+```text
+Check type: full_materialization_preflight
+Mongo database: dbsr_fiben_sf1_source_full
+Threshold MB: 16.0
+Risk counts: {'low_risk': 15}
+High-risk collections: 0
+```
+
+### Full materialization validation
+
+```text
+Loader status: executed
+Mongo access: True
+Benchmark execution: False
+Target collections: 15
+Completed collections: 15
+Failed collections: 0
+Root limit: 0
+Child limit: 0
+Drop target: True
+```
+
+### Inserted documents by DBSR target collection
+
+```text
+dbsr_rank01_listedsecurity: 2745 docs, 0.033594 s
+dbsr_rank02_transaction_listedsecurity: 500000 docs, 92.840086 s
+dbsr_rank03_corporation: 2324 docs, 0.024924 s
+dbsr_rank04_person: 50100 docs, 0.355258 s
+dbsr_rank05_corporation_country: 2324 docs, 0.483705 s
+dbsr_rank06_corporation_industry: 2324 docs, 0.37986 s
+dbsr_rank07_financialserviceaccount_holding_listedsecurity: 97270 docs, 116.657993 s
+dbsr_rank08_corporation_security_listedsecurity: 2324 docs, 0.969133 s
+dbsr_rank09_financialserviceaccount_transaction_listedsecurity: 97270 docs, 107.732933 s
+dbsr_rank10_person_financialserviceaccount_transaction: 50100 docs, 30.807044 s
+dbsr_rank11_person_financialserviceaccount_holding: 50100 docs, 29.353388 s
+dbsr_rank12_listedsecurity_security_corporation: 2745 docs, 0.890311 s
+dbsr_rank13_financialreport_reportelement_statementelement: 48301 docs, 1381.565382 s
+dbsr_rank14_security_corporation_industry: 2745 docs, 0.960531 s
+dbsr_rank15_security_corporation_country: 2745 docs, 1.07106 s
+```
+
+### MongoDB collection statistics after full materialization
+
+```text
+dbsr_rank01_listedsecurity: count=2745, avgObjSize=210, size=577172, storageSize=192512
+dbsr_rank02_transaction_listedsecurity: count=500000, avgObjSize=519, size=259537010, storageSize=73129984
+dbsr_rank03_corporation: count=2324, avgObjSize=176, size=409769, storageSize=147456
+dbsr_rank04_person: count=50100, avgObjSize=263, size=13213147, storageSize=4669440
+dbsr_rank05_corporation_country: count=2324, avgObjSize=315, size=733796, storageSize=188416
+dbsr_rank06_corporation_industry: count=2324, avgObjSize=444, size=1032520, storageSize=282624
+dbsr_rank07_financialserviceaccount_holding_listedsecurity: count=97270, avgObjSize=2596, size=252602760, storageSize=70995968
+dbsr_rank08_corporation_security_listedsecurity: count=2324, avgObjSize=645, size=1499437, storageSize=397312
+dbsr_rank09_financialserviceaccount_transaction_listedsecurity: count=97270, avgObjSize=2921, size=284189801, storageSize=80048128
+dbsr_rank10_person_financialserviceaccount_transaction: count=50100, avgObjSize=3634, size=182070748, storageSize=50987008
+dbsr_rank11_person_financialserviceaccount_holding: count=50100, avgObjSize=2842, size=142403421, storageSize=39907328
+dbsr_rank12_listedsecurity_security_corporation: count=2745, avgObjSize=573, size=1573094, storageSize=405504
+dbsr_rank13_financialreport_reportelement_statementelement: count=48301, avgObjSize=29215, size=1411118674, storageSize=267341824
+dbsr_rank14_security_corporation_industry: count=2745, avgObjSize=614, size=1685752, storageSize=413696
+dbsr_rank15_security_corporation_country: count=2745, avgObjSize=484, size=1329153, storageSize=278528
+```
+
+### Purpose
+
+This phase physically materializes the full DBSR-recommended document structures over the official FIBEN source database. Unlike the previous smoke tests, this run uses no root or child limits.
+
+The preflight check estimated document-size risk before execution and found no high-risk collection under the MongoDB 16 MB document limit. The full materialization then completed successfully for all 15 DBSR target collections.
+
+### Important methodological note
+
+This phase is still not the p95 benchmark. It validates that the DBSR baseline can be physically materialized in MongoDB over the official FIBEN source data.
+
+The next phase must implement and run the DBSR query executor for FIBEN Q1--Q9 over the materialized `dbsr_rank*` collections, then calculate hot p95 and compare with the existing SchemaLens results.
+
+### Next phase
+
+Prepare the DBSR FIBEN Q1--Q9 query executor and benchmark runner.
