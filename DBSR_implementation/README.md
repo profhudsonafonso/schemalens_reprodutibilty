@@ -1452,3 +1452,77 @@ The semantic-aligned comparison is more reliable for Q1, Q5, Q7, and Q8. Q2, Q3,
 ### Next phase
 
 Decide whether to further align Q2--Q4 and Q9 with the original FIBEN parameter-pool policy, or report the current semantic-aligned comparison with explicit returned-count caveats.
+
+## Phase 2p — Final semantic-aligned DBSR vs SchemaLens comparison on FIBEN SF1
+
+Status: completed.
+
+### Final official DBSR benchmark
+
+```text
+Scale label: sf1_official_semantic_v3_20hot
+Mongo database: dbsr_fiben_sf1_source_full
+Warmup runs: 3
+Hot runs: 20
+Failed executions: 0
+Official benchmark: True
+```
+
+### Final generated artifacts
+
+```text
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf1_official_semantic_v3_20hot.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_official_semantic_v3_20hot.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_manifest_sf1_official_semantic_v3_20hot.json
+DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf1_semantic_aligned_v3_comparison.csv
+DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf1_semantic_aligned_v3_summary.json
+```
+
+### Final DBSR hot p95 summary
+
+```text
+Q1_CompanyProfileIBM: p95_ms=0.223937, avg_ms=0.206229, returned=1
+Q2_CompanyWithIndustryCountryAndListedSecurities: p95_ms=0.77193, avg_ms=0.752427, returned=1
+Q3_SecuritiesHeldInEachFinancialServiceAccount: p95_ms=0.316656, avg_ms=0.295069, returned=11.5
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity: p95_ms=1.022164, avg_ms=0.984618, returned=52.35
+Q5_ReportsAndMetricDataOfCompany: p95_ms=11.895783, avg_ms=8.281884, returned=6818
+Q6_TechUSListedSecuritiesWithHighLastTradedValue: p95_ms=1.382489, avg_ms=1.190261, returned=169
+Q7_PersonsWhoBoughtMoreIBMThanSold: p95_ms=1.552802, avg_ms=1.526114, returned=97
+Q8_IBMTransactionsBelowAverageSellingPrice: p95_ms=1.569095, avg_ms=1.550249, returned=87
+Q9_PersonsWhoBoughtAndSoldSameStock: p95_ms=2.014441, avg_ms=1.816272, returned=0.25
+```
+
+### Final DBSR vs SchemaLens summary
+
+```text
+Queries compared: 9
+Missing queries: []
+DBSR wins: 3
+SchemaLens wins: 6
+DBSR near SchemaLens within 5 percent: 4
+Average DBSR regret vs SchemaLens: 1.076379
+```
+
+### Final per-query comparison
+
+```text
+Q1: SL_p95=0.233373, DBSR_p95=0.223937, best=DBSR, SL_returned=1.0, DBSR_returned=1.0, ratio=1.0, warning=
+Q2: SL_p95=0.117117, DBSR_p95=0.77193, best=SchemaLens, SL_returned=1.0, DBSR_returned=1.0, ratio=1.0, warning=
+Q3: SL_p95=0.434946, DBSR_p95=0.316656, best=DBSR, SL_returned=10.6, DBSR_returned=11.5, ratio=1.084906, warning=
+Q4: SL_p95=1.002833, DBSR_p95=1.022164, best=SchemaLens, SL_returned=53.6, DBSR_returned=52.35, ratio=0.976679, warning=
+Q5: SL_p95=37.626791, DBSR_p95=11.895783, best=DBSR, SL_returned=6801.0, DBSR_returned=6818.0, ratio=1.0025, warning=
+Q6: SL_p95=0.385924, DBSR_p95=1.382489, best=SchemaLens, SL_returned=100.0, DBSR_returned=169.0, ratio=1.69, warning=
+Q7: SL_p95=1.186999, DBSR_p95=1.552802, best=SchemaLens, SL_returned=97.0, DBSR_returned=97.0, ratio=1.0, warning=
+Q8: SL_p95=0.863551, DBSR_p95=1.569095, best=SchemaLens, SL_returned=88.0, DBSR_returned=87.0, ratio=0.988636, warning=
+Q9: SL_p95=0.851476, DBSR_p95=2.014441, best=SchemaLens, SL_returned=0.3, DBSR_returned=0.25, ratio=0.833333, warning=
+```
+
+### Interpretation
+
+The final semantic-aligned comparison uses the original FIBEN/SchemaLens parameter and returned-count policy as closely as possible for Q1--Q9. Q2 was corrected to return one logical corporation-with-context result. Q3, Q4, and Q9 were corrected to use repetition-based parameter pools. Q5, Q7, and Q8 were corrected to follow the original corporation/security/transaction traversal semantics.
+
+After alignment, DBSR wins Q1, Q3, and Q5, while SchemaLens wins Q2, Q4, Q6, Q7, Q8, and Q9. DBSR is especially strong in Q5, where the materialized report/document structure reduces p95 substantially while preserving returned-count parity. SchemaLens remains stronger in Q2 and in transaction-oriented queries Q7--Q9. Q6 should be interpreted with care because DBSR returns more documents than SchemaLens, although the ratio remains within the comparison warning threshold.
+
+### Methodological note
+
+The earlier DBSR comparison was executable but not fully semantically comparable because several queries used fixed parameters or different returned-count policies. This final comparison replaces that preliminary result and should be used as the FIBEN SF1 DBSR baseline result.

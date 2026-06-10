@@ -1,0 +1,91 @@
+        FROM fiben_financial_service_accounts
+        WHERE FINANCIALSERVICEACCOUNTID IS NOT NULL
+        ORDER BY FINANCIALSERVICEACCOUNTID
+        LIMIT {sample_size}
+    """).df()["FINANCIALSERVICEACCOUNTID"].tolist()
+
+    # Q4 persons with a complete reachable-company path.
+    # Correct physical path:
+    # Person -> FinancialServiceAccount -> Holding -> Security -> Corporation.
+    # HOLDING.REFERSTO references SECURITY.SECURITYID.
+    q4_persons_df = con.execute(f"""
+        SELECT
+            p.PERSONID,
+            COUNT(DISTINCT c.CORPORATIONID) AS n_reachable_corporations,
+            COUNT(DISTINCT h.HOLDINGID) AS n_holdings
+        FROM fiben_persons p
+        JOIN fiben_financial_service_accounts a
+          ON p.PERSONID = a.ISOWNEDBY
+        JOIN fiben_holdings h
+          ON a.FINANCIALSERVICEACCOUNTID = h.ISHELDBY
+        JOIN fiben_securities s
+          ON regexp_extract(CAST(h.REFERSTO AS VARCHAR), '([0-9]+)$') = regexp_extract(CAST(s.SECURITYID AS VARCHAR), '([0-9]+)$')
+        JOIN fiben_corporations c
+          ON s.ISPROVIDEDBY = c.CORPORATIONID
+        GROUP BY p.PERSONID
+        ORDER BY n_reachable_corporations DESC, n_holdings DESC, p.PERSONID
+        LIMIT {sample_size}
+    """).df()
+
+    pool["Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity"] = (
+        q4_persons_df["PERSONID"].apply(bson_safe).tolist()
+        if not q4_persons_df.empty
+        else []
+    )
+
+    log(
+        f"Q4 parameter pool selected "
+        f"{len(pool['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity'])} "
+        f"persons with complete account-holding-security-corporation paths."
+    )
+
+    # Q6 filtered search parameters.
+    pool["Q6_TechUSListedSecuritiesWithHighLastTradedValue"] = [{
+        "industry_keyword": "tech",
+        "country_name": "United States",
+        "min_last_traded_value": 100,
+    }]
+
+    # Q7/Q8/Q9 transaction-heavy parameters.
+    pool["Q7_PersonsWhoBoughtMoreIBMThanSold"] = [ibm_corporation_id]
+    pool["Q8_IBMTransactionsBelowAverageSellingPrice"] = [ibm_corporation_id]
+    pool["Q9_PersonsWhoBoughtAndSoldSameStock"] = con.execute(f"""
+        SELECT REFERSTO AS listed_security_id
+        FROM fiben_transactions
+        WHERE REFERSTO IS NOT NULL
+        GROUP BY REFERSTO
+        ORDER BY COUNT(*) DESC, REFERSTO
+        LIMIT {sample_size}
+    """).df()["listed_security_id"].tolist()
+
+    # Q10 insertion parameters.
+    q10_persons = pool["Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity"]
+    q10_secs = con.execute(f"""
+        SELECT LISTEDSECURITYID
+        FROM fiben_listed_securities
+        WHERE LISTEDSECURITYID IS NOT NULL
+        ORDER BY LISTEDSECURITYID
+        LIMIT {sample_size}
+    """).df()["LISTEDSECURITYID"].tolist()
+
+    pool["Q10_CreateAccountHoldingAndBuyTransaction"] = [
+        {
+            "person_id": q10_persons[i % len(q10_persons)] if q10_persons else None,
+            "listed_security_id": q10_secs[i % len(q10_secs)] if q10_secs else None,
+        }
+        for i in range(max(len(q10_persons), len(q10_secs), 1))
+    ]
+
+    _query_param_pool_cache[cache_key] = pool
+    log("FIBEN query parameter pool ready")
+    return pool
+
+
+def pick_param_for_run(pool: Dict[str, Any], query_name: str, repetition: int):
+    values = pool.get(query_name, [])
+    if not values:
+        return None
+    return bson_safe(values[(repetition - 1) % len(values)])
+
+
+# =========================================================

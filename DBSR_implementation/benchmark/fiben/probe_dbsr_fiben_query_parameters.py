@@ -188,6 +188,69 @@ def main() -> None:
     if not q8_doc:
         q8_doc = find_one(db, "dbsr_rank02_transaction_listedsecurity", {})
 
+
+    # Parameter pools aligned with the original FIBEN runner.
+    q3_account_pool = [
+        safe_value(doc.get("FINANCIALSERVICEACCOUNTID"))
+        for doc in db.dbsr_rank07_financialserviceaccount_holding_listedsecurity.find(
+            {"FINANCIALSERVICEACCOUNTID": {"$ne": None}},
+            {"FINANCIALSERVICEACCOUNTID": 1},
+        ).sort("FINANCIALSERVICEACCOUNTID", 1).limit(20)
+    ]
+
+    q4_pool_rows = list(db.dbsr_rank11_person_financialserviceaccount_holding.aggregate([
+        {"$unwind": "$financialServiceAccount"},
+        {"$unwind": "$financialServiceAccount.holding"},
+        {"$project": {
+            "PERSONID": 1,
+            "holding_id": "$financialServiceAccount.holding.HOLDINGID",
+            "security_id": {"$toString": "$financialServiceAccount.holding.REFERSTO"},
+        }},
+        {"$lookup": {
+            "from": "dbsr_rank12_listedsecurity_security_corporation",
+            "localField": "security_id",
+            "foreignField": "LISTEDSECURITYID",
+            "as": "security_docs",
+        }},
+        {"$unwind": "$security_docs"},
+        {"$unwind": "$security_docs.security"},
+        {"$unwind": "$security_docs.security.corporation"},
+        {"$group": {
+            "_id": "$PERSONID",
+            "corporation_ids": {"$addToSet": "$security_docs.security.corporation.CORPORATIONID"},
+            "holding_ids": {"$addToSet": "$holding_id"},
+        }},
+        {"$project": {
+            "person_id": "$_id",
+            "n_reachable_corporations": {"$size": "$corporation_ids"},
+            "n_holdings": {"$size": "$holding_ids"},
+        }},
+        {"$sort": {
+            "n_reachable_corporations": -1,
+            "n_holdings": -1,
+            "person_id": 1,
+        }},
+        {"$limit": 20},
+    ], allowDiskUse=True))
+
+    q4_person_pool = [safe_value(row.get("person_id")) for row in q4_pool_rows]
+
+    q9_security_pool = [
+        safe_value(row.get("_id"))
+        for row in db.dbsr_rank02_transaction_listedsecurity.aggregate([
+            {"$match": {"REFERSTO": {"$ne": None}}},
+            {"$group": {
+                "_id": "$REFERSTO",
+                "tx_count": {"$sum": 1},
+            }},
+            {"$sort": {
+                "tx_count": -1,
+                "_id": 1,
+            }},
+            {"$limit": 20},
+        ], allowDiskUse=True)
+    ]
+
     parameters = {
         "Q1_CompanyProfileIBM": {
             "collection": "dbsr_rank03_corporation",
@@ -198,26 +261,31 @@ def main() -> None:
         },
         "Q2_CompanyWithIndustryCountryAndListedSecurities": {
             "main_collection": "dbsr_rank08_corporation_security_listedsecurity",
-            "corporation_id": first_value(q2_doc, "CORPORATIONID"),
-            "ticker_symbol": first_value(q2_doc, "TICKERSYMBOL"),
+            "corporation_id": first_value(q1_doc, "CORPORATIONID"),
+            "ticker_symbol": first_value(q1_doc, "TICKERSYMBOL"),
             "security_ids": first_values(q2_doc, "security.SECURITYID"),
             "listed_security_ids": first_values(q2_doc, "security.listedSecurity.LISTEDSECURITYID"),
-            "returned_sample": q2_doc is not None,
+            "returned_sample": q2_doc is not None and q1_doc is not None,
         },
         "Q3_SecuritiesHeldInEachFinancialServiceAccount": {
             "collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
-            "financial_service_account_id": first_value(q3_doc, "FINANCIALSERVICEACCOUNTID"),
+            "financial_service_account_id": q3_account_pool[0] if q3_account_pool else first_value(q3_doc, "FINANCIALSERVICEACCOUNTID"),
+            "financial_service_account_id_pool": q3_account_pool,
+            "pool_size": len(q3_account_pool),
             "holding_ids": first_values(q3_doc, "holding.HOLDINGID"),
             "listed_security_ids": first_values(q3_doc, "holding.listedSecurity.LISTEDSECURITYID"),
-            "returned_sample": q3_doc is not None,
+            "returned_sample": bool(q3_account_pool) or q3_doc is not None,
         },
         "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity": {
             "collection": "dbsr_rank11_person_financialserviceaccount_holding",
-            "person_id": first_value(q4_doc, "PERSONID"),
+            "person_id": q4_person_pool[0] if q4_person_pool else first_value(q4_doc, "PERSONID"),
+            "person_id_pool": q4_person_pool,
+            "pool_size": len(q4_person_pool),
+            "pool_diagnostics": q4_pool_rows,
             "financial_service_account_ids": first_values(q4_doc, "financialServiceAccount.FINANCIALSERVICEACCOUNTID"),
             "holding_ids": first_values(q4_doc, "financialServiceAccount.holding.HOLDINGID"),
             "listed_security_ids": first_values(q4_doc, "financialServiceAccount.holding.REFERSTO"),
-            "returned_sample": q4_doc is not None,
+            "returned_sample": bool(q4_person_pool) or q4_doc is not None,
         },
         "Q5_ReportsAndMetricDataOfCompany": {
             "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
@@ -259,15 +327,17 @@ def main() -> None:
             "returned_sample": q8_doc is not None and q1_doc is not None,
         },
         "Q9_PersonsWhoBoughtAndSoldSameStock": {
-            "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
-            "person_id": first_value(q9_doc, "PERSONID"),
-            "matched_stock_id": q9_stock_id,
+            "collection": "dbsr_rank02_transaction_listedsecurity",
+            "person_id": q9_person_id,
+            "matched_stock_id": q9_security_pool[0] if q9_security_pool else q9_stock_id,
+            "listed_security_id_pool": q9_security_pool,
+            "pool_size": len(q9_security_pool),
             "matched_tx_count": q9_match.get("txCount") if q9_match else None,
             "account_ids": first_values(q9_doc, "financialServiceAccount.FINANCIALSERVICEACCOUNTID"),
             "transaction_ids": first_values(q9_doc, "financialServiceAccount.transaction.SECURITIESTRANSACTIONID"),
             "listed_security_ids": first_values(q9_doc, "financialServiceAccount.transaction.REFERSTO"),
             "transaction_kinds": first_values(q9_doc, "financialServiceAccount.transaction.TRANSACTIONKIND"),
-            "returned_sample": q9_doc is not None and q9_match is not None,
+            "returned_sample": bool(q9_security_pool) or q9_doc is not None,
         },
     }
 

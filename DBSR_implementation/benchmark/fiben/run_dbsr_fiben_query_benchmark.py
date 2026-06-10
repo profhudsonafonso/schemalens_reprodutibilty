@@ -147,41 +147,84 @@ def q1_company_profile(db, params: Dict[str, Any]) -> int:
 
 
 def q2_company_with_context(db, params: Dict[str, Any]) -> int:
-    corp_id = get_param(params, "Q2_CompanyWithIndustryCountryAndListedSecurities", "corporation_id")
+    # Semantic-aligned with the original FIBEN runner:
+    # Q2 returns one logical corporation result when the company-with-context
+    # query is answered from the selected candidate/document layout.
+    corporation_id = get_param(params, "Q2_CompanyWithIndustryCountryAndListedSecurities", "corporation_id")
 
-    docs = 0
-    docs += len(list(db.dbsr_rank05_corporation_country.find({"CORPORATIONID": corp_id}).limit(10)))
-    docs += len(list(db.dbsr_rank06_corporation_industry.find({"CORPORATIONID": corp_id}).limit(10)))
-    docs += len(list(db.dbsr_rank08_corporation_security_listedsecurity.find({"CORPORATIONID": corp_id}).limit(10)))
+    corp_doc = db.dbsr_rank03_corporation.find_one({"CORPORATIONID": corporation_id})
+    if corp_doc is None:
+        return 0
 
-    return docs
+    # Touch related DBSR materialized structures so latency includes resolving
+    # industry, country, and listed-security context under the DBSR layout.
+    db.dbsr_rank05_corporation_country.find_one({"CORPORATIONID": corporation_id})
+    db.dbsr_rank06_corporation_industry.find_one({"CORPORATIONID": corporation_id})
+    list(db.dbsr_rank08_corporation_security_listedsecurity.find({"CORPORATIONID": corporation_id}))
+
+    return 1
 
 
 def q3_account_holdings(db, params: Dict[str, Any]) -> int:
+    # Semantic-aligned with the original FIBEN runner:
+    # Q3 receives one FinancialServiceAccount id per repetition and returns
+    # account + holdings + listed securities.
     account_id = get_param(params, "Q3_SecuritiesHeldInEachFinancialServiceAccount", "financial_service_account_id")
+
     doc = db.dbsr_rank07_financialserviceaccount_holding_listedsecurity.find_one(
         {"FINANCIALSERVICEACCOUNTID": account_id}
     )
     if not doc:
         return 0
-    return 1 + len(doc.get("holding", []))
+
+    holdings = doc.get("holding", [])
+    listed_count = 0
+
+    for holding in holdings:
+        listed = holding.get("listedSecurity", [])
+        if isinstance(listed, list):
+            listed_count += len(listed)
+        elif listed:
+            listed_count += 1
+
+    return 1 + len(holdings) + listed_count
 
 
 def q4_person_to_companies(db, params: Dict[str, Any]) -> int:
+    # Semantic-aligned with the original FIBEN runner:
+    # Q4 receives one Person id per repetition and returns the number of
+    # corporations reachable through Person -> Account -> Holding -> Security -> Corporation.
     person_id = get_param(params, "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity", "person_id")
 
     person_doc = db.dbsr_rank11_person_financialserviceaccount_holding.find_one({"PERSONID": person_id})
     if not person_doc:
         return 0
 
-    listed_security_ids = list_values(person_doc, "financialServiceAccount.holding.REFERSTO")
-    company_docs = list(
+    security_ids = [str(v) for v in list_values(person_doc, "financialServiceAccount.holding.REFERSTO")]
+
+    if not security_ids:
+        return 0
+
+    security_docs = list(
         db.dbsr_rank12_listedsecurity_security_corporation.find(
-            {"LISTEDSECURITYID": {"$in": listed_security_ids}}
-        ).limit(100)
+            {"LISTEDSECURITYID": {"$in": security_ids}}
+        )
     )
 
-    return 1 + len(listed_security_ids) + len(company_docs)
+    corporation_ids = set()
+
+    for doc in security_docs:
+        for security in doc.get("security", []):
+            corporations = security.get("corporation", [])
+            if isinstance(corporations, dict):
+                corporations = [corporations]
+
+            for corporation in corporations:
+                corporation_id = corporation.get("CORPORATIONID")
+                if corporation_id is not None:
+                    corporation_ids.add(str(corporation_id))
+
+    return len(corporation_ids)
 
 
 def q5_reports_and_metric_data(db, params: Dict[str, Any]) -> int:
@@ -446,6 +489,48 @@ def aggregate_rows(raw_rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return output
 
 
+
+def params_for_repetition(params: Dict[str, Any], query_name: str, repetition: int) -> Dict[str, Any]:
+    # Reproduce the original FIBEN runner policy:
+    # pick values[(repetition - 1) % len(values)] from the query-specific pool.
+    query_params = params.get("parameters", {}).get(query_name, {})
+
+    pool_mappings = {
+        "Q3_SecuritiesHeldInEachFinancialServiceAccount": (
+            "financial_service_account_id_pool",
+            "financial_service_account_id",
+        ),
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity": (
+            "person_id_pool",
+            "person_id",
+        ),
+        "Q9_PersonsWhoBoughtAndSoldSameStock": (
+            "listed_security_id_pool",
+            "matched_stock_id",
+        ),
+    }
+
+    if query_name not in pool_mappings:
+        return params
+
+    pool_key, target_key = pool_mappings[query_name]
+    pool = query_params.get(pool_key, [])
+
+    if not pool:
+        return params
+
+    selected = pool[(repetition - 1) % len(pool)]
+
+    # JSON round-trip is enough here because the parameter probe is JSON-safe.
+    local_params = json.loads(json.dumps(params))
+    local_query_params = local_params.setdefault("parameters", {}).setdefault(query_name, {})
+    local_query_params[target_key] = selected
+    local_query_params["_selected_pool_key"] = pool_key
+    local_query_params["_selected_pool_index"] = (repetition - 1) % len(pool)
+
+    return local_params
+
+
 def run_once(db, params: Dict[str, Any], query_name: str, fn, phase: str, repetition: int, scale_label: str) -> Dict[str, Any]:
     start = time.perf_counter()
     status = "completed"
@@ -453,7 +538,8 @@ def run_once(db, params: Dict[str, Any], query_name: str, fn, phase: str, repeti
     returned_count = 0
 
     try:
-        returned_count = fn(db, params)
+        run_params = params_for_repetition(params, query_name, repetition)
+        returned_count = fn(db, run_params)
     except Exception as exc:
         status = "failed"
         error = repr(exc)
