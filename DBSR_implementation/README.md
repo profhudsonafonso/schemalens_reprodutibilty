@@ -1299,3 +1299,51 @@ The smoke benchmark is not the official p95 comparison because it uses only one 
 ### Next phase
 
 Run the official DBSR FIBEN hot benchmark with a stable number of repetitions, then compare DBSR p95 against the existing SchemaLens FIBEN results.
+
+## Phase 2m — Official DBSR FIBEN SF1 hot benchmark
+
+Status: completed.
+
+### Generated artifacts
+
+```text
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf1_official_20hot.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_official_20hot.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_manifest_sf1_official_20hot.json
+```
+
+### Benchmark configuration
+
+```text
+Mongo database: dbsr_fiben_sf1_source_full
+Warmup runs: 3
+Hot runs: 20
+Failed executions: 0
+Official benchmark: True
+```
+
+### Official hot p95 summary
+
+```text
+Q1_CompanyProfileIBM: p95_ms=0.261594, avg_ms=0.200904, returned=1
+Q2_CompanyWithIndustryCountryAndListedSecurities: p95_ms=1.068566, avg_ms=0.804227, returned=3
+Q3_SecuritiesHeldInEachFinancialServiceAccount: p95_ms=0.195253, avg_ms=0.190328, returned=3
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity: p95_ms=0.434546, avg_ms=0.419942, returned=5
+Q5_ReportsAndMetricDataOfCompany: p95_ms=0.344668, avg_ms=0.331832, returned=169
+Q6_TechUSListedSecuritiesWithHighLastTradedValue: p95_ms=1.255224, avg_ms=1.20689, returned=169
+Q7_PersonsWhoBoughtMoreIBMThanSold: p95_ms=0.244635, avg_ms=0.214408, returned=1
+Q8_IBMTransactionsBelowAverageSellingPrice: p95_ms=1.219266, avg_ms=1.189969, returned=101
+Q9_PersonsWhoBoughtAndSoldSameStock: p95_ms=0.25446, avg_ms=0.245584, returned=1
+```
+
+### Purpose
+
+This phase runs the official DBSR FIBEN SF1 hot benchmark over the fully materialized and indexed `dbsr_rank*` MongoDB collections.
+
+### Important methodological note
+
+This benchmark measures the DBSR baseline after faithful document-structure generation, physical MongoDB materialization, and DBSR secondary-index creation. It uses the materialized DBSR collections only; it does not use SchemaLens candidates or SchemaLens activation outputs during execution.
+
+### Next phase
+
+Compare DBSR hot p95 against the existing SchemaLens FIBEN hot p95 results and compute per-query regret.
