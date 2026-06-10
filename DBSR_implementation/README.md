@@ -1347,3 +1347,108 @@ This benchmark measures the DBSR baseline after faithful document-structure gene
 ### Next phase
 
 Compare DBSR hot p95 against the existing SchemaLens FIBEN hot p95 results and compute per-query regret.
+
+## Phase 2o — Semantic-aligned DBSR FIBEN benchmark and comparison
+
+Status: completed.
+
+### Modified files
+
+```text
+DBSR_implementation/benchmark/fiben/probe_dbsr_fiben_query_parameters.py
+DBSR_implementation/benchmark/fiben/run_dbsr_fiben_query_benchmark.py
+DBSR_implementation/src/analysis/compare_dbsr_vs_schemalens_fiben.py
+```
+
+### Generated semantic-alignment evidence
+
+```text
+DBSR_implementation/generated/fiben/semantic_alignment/original_execute_q7.txt
+DBSR_implementation/generated/fiben/semantic_alignment/original_execute_q8.txt
+DBSR_implementation/generated/fiben/semantic_alignment/original_execute_q9.txt
+```
+
+### Generated benchmark artifacts
+
+```text
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf1_smoke_semantic_q5.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_smoke_semantic_q5.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_manifest_sf1_smoke_semantic_q5.json
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf1_smoke_semantic_aligned.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_smoke_semantic_aligned.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_manifest_sf1_smoke_semantic_aligned.json
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf1_official_semantic_20hot.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_official_semantic_20hot.csv
+DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_manifest_sf1_official_semantic_20hot.json
+```
+
+### Generated comparison artifacts
+
+```text
+DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf1_semantic_aligned_comparison.csv
+DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf1_semantic_aligned_summary.json
+```
+
+### Official semantic-aligned benchmark configuration
+
+```text
+Mongo database: dbsr_fiben_sf1_source_full
+Warmup runs: 3
+Hot runs: 20
+Failed executions: 0
+Official benchmark: True
+```
+
+### Official semantic-aligned hot p95 summary
+
+```text
+Q1_CompanyProfileIBM: p95_ms=0.216783, returned=1
+Q2_CompanyWithIndustryCountryAndListedSecurities: p95_ms=0.647604, returned=3
+Q3_SecuritiesHeldInEachFinancialServiceAccount: p95_ms=0.197758, returned=3
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity: p95_ms=0.431342, returned=5
+Q5_ReportsAndMetricDataOfCompany: p95_ms=13.291501, returned=6818
+Q6_TechUSListedSecuritiesWithHighLastTradedValue: p95_ms=1.293337, returned=169
+Q7_PersonsWhoBoughtMoreIBMThanSold: p95_ms=1.309375, returned=97
+Q8_IBMTransactionsBelowAverageSellingPrice: p95_ms=1.255964, returned=87
+Q9_PersonsWhoBoughtAndSoldSameStock: p95_ms=1.037808, returned=1
+```
+
+### DBSR vs SchemaLens semantic-aligned summary
+
+```text
+Queries compared: 9
+Missing queries: []
+DBSR wins: 4
+SchemaLens wins: 5
+DBSR near SchemaLens within 5 percent: 4
+Average DBSR regret vs SchemaLens: 0.647123
+Queries with returned-count warnings: ['Q2', 'Q3', 'Q4', 'Q9']
+```
+
+### Per-query comparison
+
+```text
+Q1: SchemaLens_p95=0.233373, DBSR_p95=0.216783, best=DBSR, SL_returned=1.0, DBSR_returned=1.0, warning=
+Q2: SchemaLens_p95=0.117117, DBSR_p95=0.647604, best=SchemaLens, SL_returned=1.0, DBSR_returned=3.0, warning=returned_count_differs_substantially
+Q3: SchemaLens_p95=0.434946, DBSR_p95=0.197758, best=DBSR, SL_returned=10.6, DBSR_returned=3.0, warning=returned_count_differs_substantially
+Q4: SchemaLens_p95=1.002833, DBSR_p95=0.431342, best=DBSR, SL_returned=53.6, DBSR_returned=5.0, warning=returned_count_differs_substantially
+Q5: SchemaLens_p95=37.626791, DBSR_p95=13.291501, best=DBSR, SL_returned=6801.0, DBSR_returned=6818.0, warning=
+Q6: SchemaLens_p95=0.385924, DBSR_p95=1.293337, best=SchemaLens, SL_returned=100.0, DBSR_returned=169.0, warning=
+Q7: SchemaLens_p95=1.186999, DBSR_p95=1.309375, best=SchemaLens, SL_returned=97.0, DBSR_returned=97.0, warning=
+Q8: SchemaLens_p95=0.863551, DBSR_p95=1.255964, best=SchemaLens, SL_returned=88.0, DBSR_returned=87.0, warning=
+Q9: SchemaLens_p95=0.851476, DBSR_p95=1.037808, best=SchemaLens, SL_returned=0.3, DBSR_returned=1.0, warning=returned_count_differs_substantially
+```
+
+### Purpose
+
+This phase corrects the DBSR FIBEN executor to better match the original SchemaLens/FIBEN benchmark semantics. In particular, Q5, Q7, Q8, and Q9 were aligned with the original runner semantics: Q5 now uses the IBM corporation-level parameter and counts reports, report elements, and statement elements; Q7 and Q8 use the corporation-to-security-to-transaction path; Q9 uses a listed/security identifier and counts accounts with both buy and sell transactions.
+
+### Important methodological note
+
+The first DBSR p95 comparison was executable but not fully semantically comparable because returned-count values differed substantially for several queries. This phase introduces a semantic-aligned executor and adds returned-count parity fields to the comparison output.
+
+The semantic-aligned comparison is more reliable for Q1, Q5, Q7, and Q8. Q2, Q3, Q4, and Q9 still show returned-count differences and should be interpreted cautiously unless further parameter-pool alignment is implemented.
+
+### Next phase
+
+Decide whether to further align Q2--Q4 and Q9 with the original FIBEN parameter-pool policy, or report the current semantic-aligned comparison with explicit returned-count caveats.

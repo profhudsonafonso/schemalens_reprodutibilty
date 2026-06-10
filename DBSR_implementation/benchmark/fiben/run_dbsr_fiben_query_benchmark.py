@@ -69,6 +69,49 @@ def as_float(value: Any) -> float:
         return 0.0
 
 
+
+def tx_type_value(tx: Dict[str, Any]) -> str:
+    return str(
+        tx.get("HASTYPE")
+        or tx.get("TRANSACTIONKIND")
+        or tx.get("TRANSACTIONTYPEID")
+        or ""
+    )
+
+
+def tx_price_value(tx: Dict[str, Any]) -> float:
+    return as_float(tx.get("HASPRICE") or tx.get("AMOUNT"))
+
+
+def tx_count_value(tx: Dict[str, Any]) -> float:
+    value = tx.get("HASCOUNT")
+    if value is not None:
+        return as_float(value)
+    return 1.0
+
+
+def security_ids_for_corporation(db, corporation_id: Any) -> List[str]:
+    docs = db.dbsr_rank12_listedsecurity_security_corporation.find(
+        {"security.corporation.CORPORATIONID": corporation_id},
+        {
+            "LISTEDSECURITYID": 1,
+            "security.SECURITYID": 1,
+        },
+    )
+
+    ids = set()
+
+    for doc in docs:
+        if doc.get("LISTEDSECURITYID") is not None:
+            ids.add(str(doc.get("LISTEDSECURITYID")))
+
+        for security in doc.get("security", []):
+            if security.get("SECURITYID") is not None:
+                ids.add(str(security.get("SECURITYID")))
+
+    return sorted(ids)
+
+
 def list_values(doc: Dict[str, Any], path: str) -> List[Any]:
     parts = path.split(".")
 
@@ -142,21 +185,29 @@ def q4_person_to_companies(db, params: Dict[str, Any]) -> int:
 
 
 def q5_reports_and_metric_data(db, params: Dict[str, Any]) -> int:
-    report_id = get_param(params, "Q5_ReportsAndMetricDataOfCompany", "financial_report_id")
+    # Semantic-aligned with the original FIBEN runner:
+    # Q5 uses a corporation id and returns all financial reports of that company,
+    # plus their report elements and statement elements.
+    corporation_id = get_param(params, "Q5_ReportsAndMetricDataOfCompany", "corporation_id")
 
-    doc = db.dbsr_rank13_financialreport_reportelement_statementelement.find_one(
-        {"FINANCIALREPORTID": report_id}
+    reports = list(
+        db.dbsr_rank13_financialreport_reportelement_statementelement.find(
+            {"REPORTSOF": corporation_id}
+        )
     )
-    if not doc:
-        return 0
 
-    report_elements = doc.get("reportElement", [])
-    statement_elements = 0
+    report_count = len(reports)
+    report_element_count = 0
+    statement_element_count = 0
 
-    for element in report_elements:
-        statement_elements += len(element.get("statementElement", []))
+    for report in reports:
+        report_elements = report.get("reportElement", [])
+        report_element_count += len(report_elements)
 
-    return 1 + len(report_elements) + statement_elements
+        for element in report_elements:
+            statement_element_count += len(element.get("statementElement", []))
+
+    return report_count + report_element_count + statement_element_count
 
 
 def q6_listed_securities_by_industry_country(db, params: Dict[str, Any]) -> int:
@@ -183,86 +234,122 @@ def q6_listed_securities_by_industry_country(db, params: Dict[str, Any]) -> int:
 
 
 def q7_person_bought_more_than_sold(db, params: Dict[str, Any]) -> int:
-    person_id = get_param(params, "Q7_PersonsWhoBoughtMoreIBMThanSold", "person_id")
-    listed_ids = get_param(params, "Q7_PersonsWhoBoughtMoreIBMThanSold", "listed_security_ids", [])
+    # Semantic-aligned with the original FIBEN runner:
+    # Q7 receives a corporation id, finds securities issued by the corporation,
+    # scans related transactions, and counts accounts where buy count > sell count.
+    corporation_id = get_param(params, "Q7_PersonsWhoBoughtMoreIBMThanSold", "corporation_id")
+    if corporation_id is None:
+        corporation_id = get_param(params, "Q1_CompanyProfileIBM", "corporation_id")
 
-    doc = db.dbsr_rank10_person_financialserviceaccount_transaction.find_one({"PERSONID": person_id})
-    if not doc:
-        return 0
+    security_ids = security_ids_for_corporation(db, corporation_id)
 
-    target_security = listed_ids[0] if listed_ids else None
-    buy_amount = 0.0
-    sell_amount = 0.0
-    transaction_count = 0
+    transactions = list(
+        db.dbsr_rank02_transaction_listedsecurity.find(
+            {"REFERSTO": {"$in": security_ids}}
+        )
+    ) if security_ids else []
 
-    for account in doc.get("financialServiceAccount", []):
-        for trx in account.get("transaction", []):
-            if target_security and trx.get("REFERSTO") != target_security:
-                continue
+    buy_values = {"1"}
+    sell_values = {"2"}
 
-            transaction_count += 1
-            amount = as_float(trx.get("AMOUNT"))
+    by_account: Dict[str, Dict[str, float]] = {}
 
-            if str(trx.get("TRANSACTIONKIND")) == "1":
-                buy_amount += amount
-            else:
-                sell_amount += amount
+    for tx in transactions:
+        account = tx.get("ISFACILITATEDBY")
+        if account is None:
+            continue
 
-    return 1 if buy_amount >= sell_amount and transaction_count > 0 else transaction_count
+        key = str(account)
+        by_account.setdefault(key, {"buy": 0.0, "sell": 0.0})
+
+        kind = tx_type_value(tx)
+        count = tx_count_value(tx)
+
+        if kind in buy_values:
+            by_account[key]["buy"] += count
+        elif kind in sell_values:
+            by_account[key]["sell"] += count
+
+    winners = [
+        account for account, values in by_account.items()
+        if values["buy"] > values["sell"]
+    ]
+
+    return len(winners)
 
 
 def q8_transactions_below_average(db, params: Dict[str, Any]) -> int:
-    listed_id = get_param(params, "Q8_IBMTransactionsBelowAverageSellingPrice", "listed_security_id")
+    # Semantic-aligned with the original FIBEN runner:
+    # Q8 receives a corporation id, finds securities issued by the corporation,
+    # computes the average sell price, and returns transactions below that average.
+    corporation_id = get_param(params, "Q8_IBMTransactionsBelowAverageSellingPrice", "corporation_id")
+    if corporation_id is None:
+        corporation_id = get_param(params, "Q1_CompanyProfileIBM", "corporation_id")
 
-    pipeline = [
-        {"$match": {"REFERSTO": listed_id}},
-        {"$addFields": {"amount_numeric": {"$toDouble": "$AMOUNT"}}},
-        {
-            "$group": {
-                "_id": "$REFERSTO",
-                "avg_amount": {"$avg": "$amount_numeric"},
-                "transactions": {"$push": {"id": "$SECURITIESTRANSACTIONID", "amount": "$amount_numeric"}},
-            }
-        },
-        {
-            "$project": {
-                "below_avg": {
-                    "$filter": {
-                        "input": "$transactions",
-                        "as": "t",
-                        "cond": {"$lt": ["$$t.amount", "$avg_amount"]},
-                    }
-                }
-            }
-        },
-        {"$limit": 1},
+    security_ids = security_ids_for_corporation(db, corporation_id)
+
+    txs = list(
+        db.dbsr_rank02_transaction_listedsecurity.find(
+            {"REFERSTO": {"$in": security_ids}}
+        )
+    ) if security_ids else []
+
+    sell_values = {"2"}
+
+    sell_prices = [
+        tx_price_value(tx)
+        for tx in txs
+        if tx_type_value(tx) in sell_values
     ]
 
-    rows = list(db.dbsr_rank02_transaction_listedsecurity.aggregate(pipeline, allowDiskUse=True))
-    if not rows:
-        return 0
+    avg_sell = statistics.mean(sell_prices) if sell_prices else 0.0
 
-    return len(rows[0].get("below_avg", []))
+    below = [
+        tx for tx in txs
+        if tx_price_value(tx) < avg_sell
+    ]
+
+    return len(below)
 
 
 def q9_person_bought_and_sold_same_stock(db, params: Dict[str, Any]) -> int:
-    person_id = get_param(params, "Q9_PersonsWhoBoughtAndSoldSameStock", "person_id")
+    # Semantic-aligned with the original FIBEN runner:
+    # Q9 receives a listed/security id and counts accounts that both bought and sold it.
+    listed_security_id = get_param(params, "Q9_PersonsWhoBoughtAndSoldSameStock", "matched_stock_id")
+    if listed_security_id is None:
+        listed_security_id = get_param(params, "Q9_PersonsWhoBoughtAndSoldSameStock", "listed_security_ids", [None])[0]
 
-    doc = db.dbsr_rank10_person_financialserviceaccount_transaction.find_one({"PERSONID": person_id})
-    if not doc:
-        return 0
+    txs = list(
+        db.dbsr_rank02_transaction_listedsecurity.find(
+            {"REFERSTO": listed_security_id}
+        )
+    ) if listed_security_id is not None else []
 
-    by_stock: Dict[str, set] = {}
+    buy_values = {"1"}
+    sell_values = {"2"}
 
-    for account in doc.get("financialServiceAccount", []):
-        for trx in account.get("transaction", []):
-            stock = trx.get("REFERSTO")
-            kind = str(trx.get("TRANSACTIONKIND"))
-            if stock:
-                by_stock.setdefault(stock, set()).add(kind)
+    account_types: Dict[str, set] = {}
 
-    matched = [stock for stock, kinds in by_stock.items() if len(kinds) >= 2]
-    return len(matched)
+    for tx in txs:
+        account = tx.get("ISFACILITATEDBY")
+        if account is None:
+            continue
+
+        key = str(account)
+        kind = tx_type_value(tx)
+
+        if kind in buy_values:
+            account_types.setdefault(key, set()).add("buy")
+        elif kind in sell_values:
+            account_types.setdefault(key, set()).add("sell")
+
+    accounts = [
+        account for account, types in account_types.items()
+        if "buy" in types and "sell" in types
+    ]
+
+    return len(accounts)
+
 
 
 QUERY_FUNCTIONS: List[Tuple[str, Callable[[Any, Dict[str, Any]], int]]] = [

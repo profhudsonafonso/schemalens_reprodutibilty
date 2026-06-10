@@ -1,0 +1,40 @@
+def execute_q8(db, cfg, param, sell_type_values):
+    corporation_id = param
+    t0 = time.perf_counter()
+
+    securities = list(normalized_collection(db, "Security").find({"ISPROVIDEDBY": corporation_id}))
+
+    # Correct FIBEN physical join:
+    # SECURITIESTRANSACTION.REFERSTO references SECURITY.SECURITYID.
+    security_ids = [
+        normalize_join_key(s.get("SECURITYID"))
+        for s in securities
+        if s.get("SECURITYID") is not None
+    ]
+
+    txs = list(normalized_collection(db, "Transaction").find({
+        "_norm_REFERSTO": {"$in": security_ids}
+    })) if security_ids else []
+
+    sell_prices = [
+        float(t.get("HASPRICE") or 0)
+        for t in txs
+        if t.get("HASTYPE") in sell_type_values
+    ]
+    avg_sell = float(np.mean(sell_prices)) if sell_prices else 0.0
+
+    below = [
+        t for t in txs
+        if float(t.get("HASPRICE") or 0) < avg_sell
+    ]
+
+    latency_ms = (time.perf_counter() - t0) * 1000
+    return {
+        "latency_ms": latency_ms,
+        "success": True,
+        "documents_returned": len(below),
+        "documents_written": 0,
+    }
+
+
+def execute_q9(db, cfg, param, buy_type_values, sell_type_values):
