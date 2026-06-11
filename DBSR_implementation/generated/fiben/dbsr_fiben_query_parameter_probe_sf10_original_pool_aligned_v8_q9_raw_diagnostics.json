@@ -1,0 +1,20 @@
+{
+  "dataset": "FIBEN",
+  "scale_label": "sf10",
+  "method": "original_pool_aligned_with_q9_raw_count_alignment",
+  "base_probe": "DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf10_original_pool_aligned_v2.json",
+  "q9_source_probe": "DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf10_raw_aligned_v1.json",
+  "note": "Q1-Q8 use the reconstructed original SchemaLens parameter pool. Q9 uses the raw-count-aligned pool because the reconstructed pool did not reproduce the final low-cardinality raw returned-count sequence.",
+  "q9_pool": [
+    "1001538",
+    "LISTEDSECURITYID",
+    "1001001",
+    "1001004",
+    "1001006",
+    "1001007",
+    "1001008",
+    "1001009",
+    "1001011",
+    "1001000"
+  ]
+}

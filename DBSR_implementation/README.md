@@ -1534,3 +1534,35 @@ A concise report summarizing the semantic-aligned DBSR vs SchemaLens comparison 
 `DBSR_implementation/results/fiben/dbsr_vs_schemalens_fiben_sf1_report.md`
 
 This report includes both a Markdown version for the repository and an Overleaf/LaTeX version for the paper. It explains how the DBSR baseline was implemented, how query semantics and returned-count policies were aligned with the original FIBEN runner, and how the final per-query comparison should be interpreted.
+
+## FIBEN SF10 DBSR vs SchemaLens result
+
+The FIBEN SF10 comparison has been completed using a full physical DBSR materialization in MongoDB.
+
+Final protocol:
+
+- MongoDB database: `dbsr_fiben_sf10_source_full`
+- DBSR collections: full `dbsr_rank*` materialization
+- Query set: FIBEN Q1–Q9
+- Q10: excluded from read-query comparison because it is an insert/update workload
+- Parameter alignment: original SchemaLens parameter pool
+- Q9: raw returned-count alignment due to low-cardinality buy/sell behavior
+- Failed executions: 0
+
+Final result:
+
+- DBSR wins: 3/9
+- SchemaLens wins: 6/9
+- DBSR near SchemaLens within 5%: 3/9
+- Average DBSR regret vs SchemaLens: 31.033760
+
+Key interpretation:
+
+DBSR performs well for Q1, Q5, and Q6, but SchemaLens is stronger across the full workload, especially for associative and deep traversal queries such as Q3 and Q4. The result supports the use of benchmark-aware design-space reduction rather than relying on a single generated document tree.
+
+Main output files:
+
+- `DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf10_official_semantic_v8_original_pool_q9_raw_10hot.csv`
+- `DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf10_semantic_aligned_v8_original_pool_q9_raw_comparison.csv`
+- `DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf10_semantic_aligned_v8_original_pool_q9_raw_summary.json`
+- `DBSR_implementation/results/fiben/dbsr_vs_schemalens_fiben_sf10_report.md`

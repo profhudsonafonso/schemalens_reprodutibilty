@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import re
 import statistics
 import time
 from pathlib import Path
@@ -140,6 +141,35 @@ def get_param(params: Dict[str, Any], query_name: str, key: str, default: Any = 
     return params["parameters"].get(query_name, {}).get(key, default)
 
 
+
+def numeric_suffix(value: Any) -> str:
+    if value is None:
+        return ""
+    m = re.search(r"([0-9]+)$", str(value))
+    return m.group(1) if m else str(value)
+
+
+def suffix_regex_conditions(field: str, values: List[Any]) -> List[Dict[str, Any]]:
+    conditions = []
+    seen = set()
+
+    for value in values:
+        suffix = numeric_suffix(value)
+        if not suffix or suffix in seen:
+            continue
+        seen.add(suffix)
+        conditions.append({field: {"$regex": f"(^|_){re.escape(suffix)}$"}})
+
+    return conditions
+
+
+def find_by_numeric_suffix(collection, field: str, values: List[Any], projection=None):
+    conditions = suffix_regex_conditions(field, values)
+    if not conditions:
+        return []
+    return list(collection.find({"$or": conditions}, projection or {}))
+
+
 def q1_company_profile(db, params: Dict[str, Any]) -> int:
     corp_id = get_param(params, "Q1_CompanyProfileIBM", "corporation_id")
     doc = db.dbsr_rank03_corporation.find_one({"CORPORATIONID": corp_id})
@@ -166,63 +196,96 @@ def q2_company_with_context(db, params: Dict[str, Any]) -> int:
 
 
 def q3_account_holdings(db, params: Dict[str, Any]) -> int:
-    # Semantic-aligned with the original FIBEN runner:
-    # Q3 receives one FinancialServiceAccount id per repetition and returns
-    # account + holdings + listed securities.
-    account_id = get_param(params, "Q3_SecuritiesHeldInEachFinancialServiceAccount", "financial_service_account_id")
+    # Original-pool-aligned Q3:
+    # FinancialServiceAccount -> Holding -> ListedSecurity.
+    # Match Holding.REFERSTO to ListedSecurity id by numeric suffix,
+    # following the final SchemaLens/FIBEN runner semantics.
+    account_id = get_param(
+        params,
+        "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+        "financial_service_account_id",
+    )
 
-    doc = db.dbsr_rank07_financialserviceaccount_holding_listedsecurity.find_one(
+    account_doc = db.dbsr_rank07_financialserviceaccount_holding_listedsecurity.find_one(
         {"FINANCIALSERVICEACCOUNTID": account_id}
     )
-    if not doc:
+
+    if not account_doc:
         return 0
 
-    holdings = doc.get("holding", [])
-    listed_count = 0
+    holdings = account_doc.get("holding", [])
+    if isinstance(holdings, dict):
+        holdings = [holdings]
 
-    for holding in holdings:
-        listed = holding.get("listedSecurity", [])
-        if isinstance(listed, list):
-            listed_count += len(listed)
-        elif listed:
-            listed_count += 1
+    security_ids = [
+        h.get("REFERSTO")
+        for h in holdings
+        if isinstance(h, dict) and h.get("REFERSTO") is not None
+    ]
 
-    return 1 + len(holdings) + listed_count
+    listed = find_by_numeric_suffix(
+        db.dbsr_rank01_listedsecurity,
+        "LISTEDSECURITYID",
+        security_ids,
+        {"LISTEDSECURITYID": 1},
+    )
+
+    return int(account_doc is not None) + len(holdings) + len(listed)
 
 
 def q4_person_to_companies(db, params: Dict[str, Any]) -> int:
-    # Semantic-aligned with the original FIBEN runner:
-    # Q4 receives one Person id per repetition and returns the number of
-    # corporations reachable through Person -> Account -> Holding -> Security -> Corporation.
-    person_id = get_param(params, "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity", "person_id")
+    # Original-pool-aligned Q4:
+    # Person -> FinancialServiceAccount -> Holding -> Security -> Corporation.
+    # Match Holding.REFERSTO to Security.SECURITYID by numeric suffix,
+    # reproducing the final SchemaLens/FIBEN runner semantics.
+    person_id = get_param(
+        params,
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "person_id",
+    )
 
-    person_doc = db.dbsr_rank11_person_financialserviceaccount_holding.find_one({"PERSONID": person_id})
+    person_doc = db.dbsr_rank11_person_financialserviceaccount_holding.find_one(
+        {"PERSONID": person_id}
+    )
+
     if not person_doc:
         return 0
 
-    security_ids = [str(v) for v in list_values(person_doc, "financialServiceAccount.holding.REFERSTO")]
-
+    security_ids = list_values(person_doc, "financialServiceAccount.holding.REFERSTO")
     if not security_ids:
         return 0
 
-    security_docs = list(
-        db.dbsr_rank12_listedsecurity_security_corporation.find(
-            {"LISTEDSECURITYID": {"$in": security_ids}}
-        )
+    wanted_suffixes = {
+        numeric_suffix(x)
+        for x in security_ids
+        if numeric_suffix(x)
+    }
+
+    security_docs = find_by_numeric_suffix(
+        db.dbsr_rank12_listedsecurity_security_corporation,
+        "security.SECURITYID",
+        security_ids,
     )
 
     corporation_ids = set()
 
     for doc in security_docs:
-        for security in doc.get("security", []):
+        securities = doc.get("security", [])
+        if isinstance(securities, dict):
+            securities = [securities]
+
+        for security in securities:
+            if numeric_suffix(security.get("SECURITYID")) not in wanted_suffixes:
+                continue
+
             corporations = security.get("corporation", [])
             if isinstance(corporations, dict):
                 corporations = [corporations]
 
             for corporation in corporations:
-                corporation_id = corporation.get("CORPORATIONID")
-                if corporation_id is not None:
-                    corporation_ids.add(str(corporation_id))
+                cid = corporation.get("CORPORATIONID")
+                if cid is not None:
+                    corporation_ids.add(str(cid))
 
     return len(corporation_ids)
 
@@ -254,26 +317,40 @@ def q5_reports_and_metric_data(db, params: Dict[str, Any]) -> int:
 
 
 def q6_listed_securities_by_industry_country(db, params: Dict[str, Any]) -> int:
+    # Semantic-aligned with the original FIBEN runner:
+    # Q6 returns listed/security documents that satisfy both the industry and
+    # country predicates. The previous implementation summed two independent
+    # limit(100) queries, which could return 200 and break semantic parity.
     industry_ids = get_param(params, "Q6_TechUSListedSecuritiesWithHighLastTradedValue", "industry_ids", [])
     country_ids = get_param(params, "Q6_TechUSListedSecuritiesWithHighLastTradedValue", "country_ids", [])
 
-    docs = 0
+    if not industry_ids or not country_ids:
+        return 0
 
-    if industry_ids:
-        docs += len(list(
-            db.dbsr_rank14_security_corporation_industry.find(
-                {"corporation.industry.INDUSTRYSECTORCLASSIFIERID": {"$in": industry_ids}}
-            ).limit(100)
-        ))
+    industry_docs = db.dbsr_rank14_security_corporation_industry.find(
+        {"corporation.industry.INDUSTRYSECTORCLASSIFIERID": {"$in": industry_ids}},
+        {"SECURITYID": 1},
+    )
 
-    if country_ids:
-        docs += len(list(
-            db.dbsr_rank15_security_corporation_country.find(
-                {"corporation.country.COUNTRYID": {"$in": country_ids}}
-            ).limit(100)
-        ))
+    security_ids = [
+        doc.get("SECURITYID")
+        for doc in industry_docs
+        if doc.get("SECURITYID") is not None
+    ]
 
-    return docs
+    if not security_ids:
+        return 0
+
+    docs = list(
+        db.dbsr_rank15_security_corporation_country.find(
+            {
+                "SECURITYID": {"$in": security_ids},
+                "corporation.country.COUNTRYID": {"$in": country_ids},
+            }
+        ).limit(100)
+    )
+
+    return len(docs)
 
 
 def q7_person_bought_more_than_sold(db, params: Dict[str, Any]) -> int:

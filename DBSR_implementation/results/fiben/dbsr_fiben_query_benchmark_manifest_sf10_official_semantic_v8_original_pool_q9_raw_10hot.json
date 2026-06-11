@@ -1,0 +1,24 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf10_official_semantic_v8_original_pool_q9_raw_10hot",
+  "mongo_database": "dbsr_fiben_sf10_source_full",
+  "warmup": 3,
+  "hot_runs": 10,
+  "queries": [
+    "Q1_CompanyProfileIBM",
+    "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "Q5_ReportsAndMetricDataOfCompany",
+    "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "Q9_PersonsWhoBoughtAndSoldSameStock"
+  ],
+  "raw_results": "DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_raw_sf10_official_semantic_v8_original_pool_q9_raw_10hot.csv",
+  "aggregate_results": "DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf10_official_semantic_v8_original_pool_q9_raw_10hot.csv",
+  "failed_executions": 0,
+  "official_benchmark": true,
+  "implementation_note": "This DBSR executor runs over the physically materialized dbsr_rank* collections. Small hot_runs values are smoke tests; official comparison should use a stable hot-run count and the same server as SchemaLens."
+}
