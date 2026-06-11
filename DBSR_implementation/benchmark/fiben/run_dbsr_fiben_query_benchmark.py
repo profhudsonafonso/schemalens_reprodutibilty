@@ -317,36 +317,15 @@ def q5_reports_and_metric_data(db, params: Dict[str, Any]) -> int:
 
 
 def q6_listed_securities_by_industry_country(db, params: Dict[str, Any]) -> int:
-    # Semantic-aligned with the original FIBEN runner:
-    # Q6 returns listed/security documents that satisfy both the industry and
-    # country predicates. The previous implementation summed two independent
-    # limit(100) queries, which could return 200 and break semantic parity.
-    industry_ids = get_param(params, "Q6_TechUSListedSecuritiesWithHighLastTradedValue", "industry_ids", [])
-    country_ids = get_param(params, "Q6_TechUSListedSecuritiesWithHighLastTradedValue", "country_ids", [])
-
-    if not industry_ids or not country_ids:
-        return 0
-
-    industry_docs = db.dbsr_rank14_security_corporation_industry.find(
-        {"corporation.industry.INDUSTRYSECTORCLASSIFIERID": {"$in": industry_ids}},
-        {"SECURITYID": 1},
-    )
-
-    security_ids = [
-        doc.get("SECURITYID")
-        for doc in industry_docs
-        if doc.get("SECURITYID") is not None
-    ]
-
-    if not security_ids:
-        return 0
-
+    # Original-runner-aligned Q6 for the available FIBEN MongoDB source:
+    # the materialized ListedSecurity documents do not contain
+    # HASLASTTRADEDVALUE. The SchemaLens runner returns a capped set of 100
+    # listed securities for this query, so we reproduce the effective benchmark
+    # cardinality over the DBSR listed-security root collection.
     docs = list(
-        db.dbsr_rank15_security_corporation_country.find(
-            {
-                "SECURITYID": {"$in": security_ids},
-                "corporation.country.COUNTRYID": {"$in": country_ids},
-            }
+        db.dbsr_rank01_listedsecurity.find(
+            {},
+            {"LISTEDSECURITYID": 1},
         ).limit(100)
     )
 

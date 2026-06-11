@@ -1,0 +1,303 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf1_full_materialization_streaming",
+  "loader_type": "dbsr_materialization_loader_streaming",
+  "status": "executed",
+  "execute": true,
+  "mongo_access": true,
+  "benchmark_execution": false,
+  "root_limit": 0,
+  "child_limit": 0,
+  "batch_size": 100000,
+  "progress_interval": 50000,
+  "target_collection_filter": null,
+  "drop_target": true,
+  "skip_existing": false,
+  "target_collections": 15,
+  "completed_collections": 15,
+  "failed_collections": 0,
+  "execution_results": [
+    {
+      "target_collection": "dbsr_rank01_listedsecurity",
+      "root_source_view": "fiben_listed_securities",
+      "root_documents_loaded": 2745,
+      "embedding_steps": 0,
+      "inserted_documents": 2745,
+      "elapsed_seconds": 0.029749,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank02_transaction_listedsecurity",
+      "root_source_view": "fiben_transactions",
+      "root_documents_loaded": 500000,
+      "embedding_steps": 1,
+      "inserted_documents": 500000,
+      "elapsed_seconds": 92.030597,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank03_corporation",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 2324,
+      "embedding_steps": 0,
+      "inserted_documents": 2324,
+      "elapsed_seconds": 0.025614,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank04_person",
+      "root_source_view": "fiben_persons",
+      "root_documents_loaded": 50100,
+      "embedding_steps": 0,
+      "inserted_documents": 50100,
+      "elapsed_seconds": 0.430836,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank05_corporation_country",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 2324,
+      "embedding_steps": 1,
+      "inserted_documents": 2324,
+      "elapsed_seconds": 0.49079,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank06_corporation_industry",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 2324,
+      "embedding_steps": 1,
+      "inserted_documents": 2324,
+      "elapsed_seconds": 0.37358,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_documents_loaded": 97270,
+      "embedding_steps": 2,
+      "inserted_documents": 97270,
+      "elapsed_seconds": 116.190647,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "root_source_view": "fiben_corporations",
+      "root_documents_loaded": 2324,
+      "embedding_steps": 2,
+      "inserted_documents": 2324,
+      "elapsed_seconds": 1.03614,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_documents_loaded": 97270,
+      "embedding_steps": 2,
+      "inserted_documents": 97270,
+      "elapsed_seconds": 107.884659,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "root_source_view": "fiben_persons",
+      "root_documents_loaded": 50100,
+      "embedding_steps": 2,
+      "inserted_documents": 50100,
+      "elapsed_seconds": 31.472585,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "root_source_view": "fiben_persons",
+      "root_documents_loaded": 50100,
+      "embedding_steps": 2,
+      "inserted_documents": 50100,
+      "elapsed_seconds": 32.027469,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "root_source_view": "fiben_listed_securities",
+      "root_documents_loaded": 2745,
+      "embedding_steps": 2,
+      "inserted_documents": 2745,
+      "elapsed_seconds": 1.103262,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "root_source_view": "fiben_reports",
+      "root_documents_loaded": 48301,
+      "embedding_steps": 2,
+      "inserted_documents": 48301,
+      "elapsed_seconds": 1374.73958,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank14_security_corporation_industry",
+      "root_source_view": "fiben_securities",
+      "root_documents_loaded": 2745,
+      "embedding_steps": 2,
+      "inserted_documents": 2745,
+      "elapsed_seconds": 1.13341,
+      "status": "completed"
+    },
+    {
+      "target_collection": "dbsr_rank15_security_corporation_country",
+      "root_source_view": "fiben_securities",
+      "root_documents_loaded": 2745,
+      "embedding_steps": 2,
+      "inserted_documents": 2745,
+      "elapsed_seconds": 0.986625,
+      "status": "completed"
+    }
+  ],
+  "collection_statistics": [
+    {
+      "collection": "dbsr_rank01_listedsecurity",
+      "exists": true,
+      "count": 2745,
+      "avg_object_size_bytes": 210,
+      "size_bytes": 577172,
+      "storage_size_bytes": 192512,
+      "total_index_size_bytes": 57344
+    },
+    {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "exists": true,
+      "count": 500000,
+      "avg_object_size_bytes": 519,
+      "size_bytes": 259537010,
+      "storage_size_bytes": 74870784,
+      "total_index_size_bytes": 5447680
+    },
+    {
+      "collection": "dbsr_rank03_corporation",
+      "exists": true,
+      "count": 2324,
+      "avg_object_size_bytes": 176,
+      "size_bytes": 409769,
+      "storage_size_bytes": 147456,
+      "total_index_size_bytes": 49152
+    },
+    {
+      "collection": "dbsr_rank04_person",
+      "exists": true,
+      "count": 50100,
+      "avg_object_size_bytes": 263,
+      "size_bytes": 13213147,
+      "storage_size_bytes": 4673536,
+      "total_index_size_bytes": 520192
+    },
+    {
+      "collection": "dbsr_rank05_corporation_country",
+      "exists": true,
+      "count": 2324,
+      "avg_object_size_bytes": 315,
+      "size_bytes": 733796,
+      "storage_size_bytes": 188416,
+      "total_index_size_bytes": 49152
+    },
+    {
+      "collection": "dbsr_rank06_corporation_industry",
+      "exists": true,
+      "count": 2324,
+      "avg_object_size_bytes": 444,
+      "size_bytes": 1032520,
+      "storage_size_bytes": 282624,
+      "total_index_size_bytes": 49152
+    },
+    {
+      "collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "exists": true,
+      "count": 97270,
+      "avg_object_size_bytes": 2596,
+      "size_bytes": 252602760,
+      "storage_size_bytes": 71049216,
+      "total_index_size_bytes": 983040
+    },
+    {
+      "collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "exists": true,
+      "count": 2324,
+      "avg_object_size_bytes": 645,
+      "size_bytes": 1499437,
+      "storage_size_bytes": 397312,
+      "total_index_size_bytes": 49152
+    },
+    {
+      "collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "exists": true,
+      "count": 97270,
+      "avg_object_size_bytes": 2921,
+      "size_bytes": 284189801,
+      "storage_size_bytes": 79888384,
+      "total_index_size_bytes": 970752
+    },
+    {
+      "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "exists": true,
+      "count": 50100,
+      "avg_object_size_bytes": 3634,
+      "size_bytes": 182070748,
+      "storage_size_bytes": 50855936,
+      "total_index_size_bytes": 520192
+    },
+    {
+      "collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "exists": true,
+      "count": 50100,
+      "avg_object_size_bytes": 2842,
+      "size_bytes": 142403421,
+      "storage_size_bytes": 39931904,
+      "total_index_size_bytes": 520192
+    },
+    {
+      "collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "exists": true,
+      "count": 2745,
+      "avg_object_size_bytes": 573,
+      "size_bytes": 1573094,
+      "storage_size_bytes": 405504,
+      "total_index_size_bytes": 57344
+    },
+    {
+      "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "exists": true,
+      "count": 48301,
+      "avg_object_size_bytes": 29215,
+      "size_bytes": 1411118674,
+      "storage_size_bytes": 219025408,
+      "total_index_size_bytes": 147456
+    },
+    {
+      "collection": "dbsr_rank14_security_corporation_industry",
+      "exists": true,
+      "count": 2745,
+      "avg_object_size_bytes": 614,
+      "size_bytes": 1685752,
+      "storage_size_bytes": 4096,
+      "total_index_size_bytes": 4096
+    },
+    {
+      "collection": "dbsr_rank15_security_corporation_country",
+      "exists": true,
+      "count": 2745,
+      "avg_object_size_bytes": 484,
+      "size_bytes": 1329153,
+      "storage_size_bytes": 4096,
+      "total_index_size_bytes": 4096
+    }
+  ],
+  "implementation_assumptions": [
+    "This loader materializes DBSR target collections in streaming batches.",
+    "Large roots are not loaded fully into Python memory before insertion.",
+    "Progress logs report inserted root documents, approximate rate, and ETA.",
+    "Use --target-collection to materialize one or more collections independently.",
+    "Use --skip-existing to resume already completed target collections.",
+    "Official DBSR p95 benchmark must run later on the same server used for SchemaLens.",
+    "Statistics are captured after materialization and before any target database is dropped."
+  ]
+}
