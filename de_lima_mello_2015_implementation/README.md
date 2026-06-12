@@ -204,3 +204,92 @@ Query-level interpretation:
 Main interpretation:
 
 Lima & Mello's workload-driven materialization produces very selective access paths for several local or path-oriented queries. However, its faithful SF1 materialization is less robust for Q6, where the query starts from transactions and the plan falls back to COLLSCAN over a larger transaction collection. SchemaLens also uses COLLSCAN in Q6, but examines about four times fewer documents. Therefore, this comparison should be reported as a mixed result: Lima & Mello is highly competitive and sometimes better for specific path-oriented reads, while SchemaLens is stronger on the dominant high-cost Q6 case and has a lower total document-examination count across Q1--Q9.
+
+## FIBEN SF1 p95 benchmark comparison
+
+After the query-plan comparison, we also executed a real MongoDB latency benchmark for the Lima & Mello 2015 materialization over FIBEN SF1.
+
+The benchmark executed FIBEN read queries Q1--Q9 with:
+
+- 3 warmup runs;
+- 5 cold runs;
+- 20 hot runs;
+- MongoDB aggregation execution over `lmm_fiben_sf1_source_full`;
+- Q10 excluded because it is an insert/update workload and requires an isolated reset/rollback strategy.
+
+Main command:
+
+    python de_lima_mello_2015_implementation/benchmark/fiben/run_lmm_fiben_benchmark.py \
+      --db-name lmm_fiben_sf1_source_full \
+      --scale sf1 \
+      --queries Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9 \
+      --warmup-runs 3 \
+      --cold-runs 5 \
+      --hot-runs 20 \
+      --result-limit 1000 \
+      --max-time-ms 180000
+
+Main output folder:
+
+    de_lima_mello_2015_implementation/results/fiben/benchmark/sf1/lmm_fiben_sf1_source_full
+
+Important files:
+
+    lmm_fiben_benchmark_raw_results.csv
+    lmm_fiben_benchmark_aggregate_results.csv
+    lmm_fiben_benchmark_manifest.json
+
+The benchmark completed 225 executions successfully.
+
+### Lima & Mello hot p95 results
+
+| Query | Hot p95 ms |
+|---|---:|
+| Q1 | 0.309 |
+| Q2 | 0.598 |
+| Q3 | 0.290 |
+| Q4 | 0.877 |
+| Q5 | 10.276 |
+| Q6 | 744.705 |
+| Q7 | 0.457 |
+| Q8 | 1.228 |
+| Q9 | 0.352 |
+
+### Lima & Mello vs SchemaLens p95 comparison
+
+The p95 comparison against SchemaLens is stored in:
+
+    de_lima_mello_2015_implementation/results/fiben/reports
+
+Files:
+
+    lmm_vs_schemalens_fiben_benchmark_p95_comparison_sf1.csv
+    lmm_vs_schemalens_fiben_benchmark_p95_summary_sf1.csv
+    lmm_vs_schemalens_fiben_benchmark_p95_report_sf1.md
+
+Hot-phase winner summary:
+
+| Winner | Number of queries |
+|---|---:|
+| Lima & Mello 2015 | 5 |
+| SchemaLens | 4 |
+
+Query-level p95 winners:
+
+| Query | Winner | Lima & Mello p95 ms | SchemaLens p95 ms | Ratio LMM / SchemaLens |
+|---|---|---:|---:|---:|
+| Q1 | SchemaLens | 0.309 | 0.233 | 1.325 |
+| Q2 | SchemaLens | 0.598 | 0.117 | 5.105 |
+| Q3 | Lima & Mello | 0.290 | 0.435 | 0.666 |
+| Q4 | Lima & Mello | 0.877 | 1.003 | 0.874 |
+| Q5 | Lima & Mello | 10.276 | 37.627 | 0.273 |
+| Q6 | SchemaLens | 744.705 | 0.386 | 1929.668 |
+| Q7 | Lima & Mello | 0.457 | 1.187 | 0.385 |
+| Q8 | SchemaLens | 1.228 | 0.864 | 1.422 |
+| Q9 | Lima & Mello | 0.352 | 0.851 | 0.414 |
+
+Main interpretation:
+
+Lima & Mello is highly competitive on several path-oriented queries, winning Q3, Q4, Q5, Q7, and Q9 by p95 latency. However, SchemaLens is substantially stronger on Q6, where Lima & Mello reaches 744.705 ms p95 while SchemaLens reaches 0.386 ms p95. Therefore, the result is mixed: Lima & Mello provides strong local materialization benefits, but SchemaLens better controls the dominant high-cost case.
+
+This p95 evidence complements the query-plan evidence. The query-plan comparison showed that Q6 is also the dominant problematic case for Lima & Mello, because it examines many more documents and uses COLLSCAN plus lookup over the transaction-oriented access path.
