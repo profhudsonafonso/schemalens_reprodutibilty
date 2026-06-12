@@ -1,0 +1,11 @@
+candidate_groups,g_classes,has_any_collscan,has_any_group,max_components,min_components,n_candidates,n_completed,n_failed,n_skipped,query_name,scale_label,total_docs_examined,total_estimated_docs_examined_bytes,total_keys_examined
+baseline,DBSR,False,False,1.0,1.0,1,0,0,1,Q10_CreateAccountHoldingAndBuyTransaction,sf1,0.0,0.0,0.0
+baseline,DBSR,False,False,1.0,1.0,1,1,0,0,Q1_CompanyProfileIBM,sf1,1.0,176.0,1.0
+baseline,DBSR,False,False,4.0,4.0,1,1,0,0,Q2_CompanyWithIndustryCountryAndListedSecurities,sf1,4.0,1580.0,4.0
+baseline,DBSR,False,False,2.0,2.0,1,1,0,0,Q3_SecuritiesHeldInEachFinancialServiceAccount,sf1,5.8,3604.0,2746.0
+baseline,DBSR,False,False,2.0,2.0,1,1,0,0,Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,sf1,2746.0,1575727.0,2746.0
+baseline,DBSR,False,False,1.0,1.0,1,1,0,0,Q5_ReportsAndMetricDataOfCompany,sf1,24.0,701160.0,24.0
+baseline,DBSR,True,False,1.0,1.0,1,1,0,0,Q6_TechUSListedSecuritiesWithHighLastTradedValue,sf1,100.0,21000.0,0.0
+baseline,DBSR,False,False,2.0,2.0,1,1,0,0,Q7_PersonsWhoBoughtMoreIBMThanSold,sf1,180.0,93474.0,180.0
+baseline,DBSR,False,False,2.0,2.0,1,1,0,0,Q8_IBMTransactionsBelowAverageSellingPrice,sf1,180.0,93474.0,180.0
+baseline,DBSR,False,False,1.0,1.0,1,1,0,0,Q9_PersonsWhoBoughtAndSoldSameStock,sf1,223.4,115944.6,223.4

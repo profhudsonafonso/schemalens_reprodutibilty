@@ -1,0 +1,11 @@
+execution_status,n_candidates,query_name,scale_label
+skipped,1,Q10_CreateAccountHoldingAndBuyTransaction,sf1
+completed,1,Q1_CompanyProfileIBM,sf1
+completed,1,Q2_CompanyWithIndustryCountryAndListedSecurities,sf1
+completed,1,Q3_SecuritiesHeldInEachFinancialServiceAccount,sf1
+completed,1,Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,sf1
+completed,1,Q5_ReportsAndMetricDataOfCompany,sf1
+completed,1,Q6_TechUSListedSecuritiesWithHighLastTradedValue,sf1
+completed,1,Q7_PersonsWhoBoughtMoreIBMThanSold,sf1
+completed,1,Q8_IBMTransactionsBelowAverageSellingPrice,sf1
+completed,1,Q9_PersonsWhoBoughtAndSoldSameStock,sf1
