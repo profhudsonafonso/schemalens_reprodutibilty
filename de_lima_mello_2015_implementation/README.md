@@ -293,3 +293,31 @@ Main interpretation:
 Lima & Mello is highly competitive on several path-oriented queries, winning Q3, Q4, Q5, Q7, and Q9 by p95 latency. However, SchemaLens is substantially stronger on Q6, where Lima & Mello reaches 744.705 ms p95 while SchemaLens reaches 0.386 ms p95. Therefore, the result is mixed: Lima & Mello provides strong local materialization benefits, but SchemaLens better controls the dominant high-cost case.
 
 This p95 evidence complements the query-plan evidence. The query-plan comparison showed that Q6 is also the dominant problematic case for Lima & Mello, because it examines many more documents and uses COLLSCAN plus lookup over the transaction-oriented access path.
+
+## Integrated SF1 p95 and query-plan comparison
+
+We also generated an integrated comparison combining p95 latency and MongoDB query-plan evidence for the same SF1 comparison.
+
+Output files:
+
+    de_lima_mello_2015_implementation/results/fiben/reports/lmm_vs_schemalens_fiben_integrated_p95_query_plan_sf1.csv
+    de_lima_mello_2015_implementation/results/fiben/reports/lmm_vs_schemalens_fiben_integrated_summary_sf1.csv
+    de_lima_mello_2015_implementation/results/fiben/reports/lmm_vs_schemalens_fiben_integrated_report_sf1.md
+
+The integrated table confirms that Lima & Mello wins five queries by hot p95 latency: Q3, Q4, Q5, Q7, and Q9. SchemaLens wins Q1, Q2, Q6, and Q8.
+
+The most important case is Q6. Lima & Mello reaches 744.705 ms p95, while SchemaLens reaches 0.386 ms p95. The query-plan evidence explains this gap: Lima & Mello examines 22,006 documents and uses COLLSCAN plus LOOKUP, while SchemaLens examines 5,514 documents and avoids LOOKUP. Thus, although Lima & Mello is highly competitive on several path-oriented queries, SchemaLens better controls the dominant high-cost case.
+
+Query-level integrated summary:
+
+| Query | p95 winner | LMM p95 ms | SchemaLens p95 ms | LMM docs | SchemaLens docs | Main observation |
+|---|---|---:|---:|---:|---:|---|
+| Q1 | SchemaLens | 0.309 | 0.233 | 1 | 1 | Same docs; SchemaLens lower p95. |
+| Q2 | SchemaLens | 0.598 | 0.117 | 4 | 4 | Same docs; LMM uses LOOKUP. |
+| Q3 | Lima & Mello | 0.290 | 0.435 | 1 | 7 | LMM is more selective. |
+| Q4 | Lima & Mello | 0.877 | 1.003 | 3 | 2453 | LMM avoids SchemaLens COLLSCAN case. |
+| Q5 | Lima & Mello | 10.276 | 37.627 | 1 | 6718 | LMM benefits from materialized report path. |
+| Q6 | SchemaLens | 744.705 | 0.386 | 22006 | 5514 | Dominant high-cost case; SchemaLens strongly better. |
+| Q7 | Lima & Mello | 0.457 | 1.187 | 1 | 359 | LMM is more selective. |
+| Q8 | SchemaLens | 1.228 | 0.864 | 392 | 359 | SchemaLens slightly better. |
+| Q9 | Lima & Mello | 0.352 | 0.851 | 1 | 458 | LMM is more selective. |

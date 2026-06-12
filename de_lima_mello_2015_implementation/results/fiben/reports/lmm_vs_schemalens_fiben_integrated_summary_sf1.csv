@@ -1,0 +1,2 @@
+scale,n_queries,lmm_p95_wins,schemalens_p95_wins,sum_lmm_p95_ms,sum_schemalens_p95_ms,mean_lmm_p95_ms,mean_schemalens_p95_ms,sum_lmm_docs_examined,sum_schemalens_docs_examined,sum_p95_ratio_lmm_over_schemalens
+sf1,9,5,4,759.0910156723112,42.70301052602008,84.34344618581235,4.744778947335565,22410,15873.0,17.776053873526713
