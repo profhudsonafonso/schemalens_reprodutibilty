@@ -1,0 +1,262 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf30_full_source",
+  "source_type": "official_fiben_csv_source",
+  "status": "executed",
+  "execute": true,
+  "mongo_access": true,
+  "mongo_database": "dbsr_fiben_sf30_source_full",
+  "official_benchmark": false,
+  "data_dir_recorded": false,
+  "max_rows_per_file": 0,
+  "entities_attempted": 12,
+  "entities_loaded": 12,
+  "missing_files": [],
+  "total_rows_loaded": 136154113,
+  "load_results": [
+    {
+      "entity": "Corporation",
+      "source_view": "fiben_corporations",
+      "file": "CORPORATION.csv",
+      "status": "loaded",
+      "rows_loaded": 69721,
+      "columns_assigned": [
+        "CORPORATIONID",
+        "ISCLASSIFIEDBY",
+        "ISDOMICILEDIN",
+        "TICKERSYMBOL",
+        "NAME"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "Industry",
+      "source_view": "fiben_industries",
+      "file": "INDUSTRYSECTORCLASSIFIER.csv",
+      "status": "loaded",
+      "rows_loaded": 453,
+      "columns_assigned": [
+        "INDUSTRYSECTORCLASSIFIERID",
+        "PARENTID",
+        "CLASSIFICATIONCODE",
+        "CLASSIFICATIONNAME",
+        "SECTORCODE",
+        "SECTORNAME"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "Country",
+      "source_view": "fiben_countries",
+      "file": "COUNTRY.csv",
+      "status": "loaded",
+      "rows_loaded": 250,
+      "columns_assigned": [
+        "COUNTRYID",
+        "NAME",
+        "REGIONID"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "Security",
+      "source_view": "fiben_securities",
+      "file": "SECURITY.csv",
+      "status": "loaded",
+      "rows_loaded": 82351,
+      "columns_assigned": [
+        "SECURITYID",
+        "FINANCIALMARKETID",
+        "ISPROVIDEDBY"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "ListedSecurity",
+      "source_view": "fiben_listed_securities",
+      "file": "LISTEDSECURITY.csv",
+      "status": "loaded",
+      "rows_loaded": 82351,
+      "columns_assigned": [
+        "LISTEDSECURITYID",
+        "FINANCIALMARKETID",
+        "FIRSTTRADEDATE",
+        "TICKERSYMBOL",
+        "NAME"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "Person",
+      "source_view": "fiben_persons",
+      "file": "PERSON.csv",
+      "status": "loaded",
+      "rows_loaded": 1503001,
+      "columns_assigned": [
+        "PERSONID",
+        "COUNTRYID",
+        "RESIDENCEID",
+        "GENDER",
+        "BIRTHDATE",
+        "FULLNAME",
+        "LASTNAME",
+        "FIRSTNAME",
+        "CITY"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "FinancialServiceAccount",
+      "source_view": "fiben_financial_service_accounts",
+      "file": "FINANCIALSERVICEACCOUNT.csv",
+      "status": "loaded",
+      "rows_loaded": 2918101,
+      "columns_assigned": [
+        "FINANCIALSERVICEACCOUNTID",
+        "ISOWNEDBY",
+        "BROKERID",
+        "ACCOUNTNUMBER",
+        "OPENDATE"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "Holding",
+      "source_view": "fiben_holdings",
+      "file": "HOLDING.csv",
+      "status": "loaded",
+      "rows_loaded": 16034191,
+      "columns_assigned": [
+        "HOLDINGID",
+        "ISHELDBY",
+        "REFERSTO",
+        "DESCRIPTION",
+        "QUANTITY"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "Transaction",
+      "source_view": "fiben_transactions",
+      "file": "SECURITIESTRANSACTION.csv",
+      "status": "loaded",
+      "rows_loaded": 19500001,
+      "columns_assigned": [
+        "SECURITIESTRANSACTIONID",
+        "ISFACILITATEDBY",
+        "TRANSACTIONTYPEID",
+        "REFERSTO",
+        "TRANSACTIONKIND",
+        "TRANSACTIONDATE",
+        "AMOUNT"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "FinancialReport",
+      "source_view": "fiben_reports",
+      "file": "FINANCIALREPORT.csv",
+      "status": "loaded",
+      "rows_loaded": 1449031,
+      "columns_assigned": [
+        "FINANCIALREPORTID",
+        "REPORTSOF",
+        "ACCESSIONNUMBER"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "ReportElement",
+      "source_view": "fiben_report_elements",
+      "file": "ELEMENTSOFFINANCIALREPORT.csv",
+      "status": "loaded",
+      "rows_loaded": 81200841,
+      "columns_assigned": [
+        "ELEMENTSOFFINANCIALREPORTID",
+        "ISMEMBEROF"
+      ],
+      "max_rows": 0
+    },
+    {
+      "entity": "StatementElement",
+      "source_view": "fiben_statement_elements",
+      "file": "ELEMENTOFFINANCIALSTATEMENT.csv",
+      "status": "loaded",
+      "rows_loaded": 13313821,
+      "columns_assigned": [
+        "ELEMENTOFFINANCIALSTATEMENTID",
+        "FISCALYEAR",
+        "PERIODENDDATE",
+        "FORMTYPE",
+        "FISCALPERIOD",
+        "CURRENCY",
+        "PERIODTYPE",
+        "CONCEPT",
+        "INSTANTDATE",
+        "ISSEGMENTED",
+        "NUMERICVALUE",
+        "FISCALYEAR_DUP",
+        "NAMESPACE",
+        "SOURCEFILE",
+        "QUARTER"
+      ],
+      "max_rows": 0
+    }
+  ],
+  "indexes": {
+    "fiben_corporations": [
+      "CORPORATIONID",
+      "ISCLASSIFIEDBY",
+      "ISDOMICILEDIN"
+    ],
+    "fiben_countries": [
+      "COUNTRYID"
+    ],
+    "fiben_financial_service_accounts": [
+      "FINANCIALSERVICEACCOUNTID",
+      "ISOWNEDBY"
+    ],
+    "fiben_holdings": [
+      "HOLDINGID",
+      "ISHELDBY",
+      "REFERSTO"
+    ],
+    "fiben_industries": [
+      "INDUSTRYSECTORCLASSIFIERID"
+    ],
+    "fiben_listed_securities": [
+      "LISTEDSECURITYID"
+    ],
+    "fiben_persons": [
+      "PERSONID"
+    ],
+    "fiben_report_elements": [
+      "ELEMENTSOFFINANCIALREPORTID",
+      "ISMEMBEROF"
+    ],
+    "fiben_reports": [
+      "FINANCIALREPORTID"
+    ],
+    "fiben_securities": [
+      "ISPROVIDEDBY",
+      "ISTRADEDON",
+      "SECURITYID"
+    ],
+    "fiben_statement_elements": [
+      "ELEMENTOFFINANCIALSTATEMENTID"
+    ],
+    "fiben_transactions": [
+      "ISFACILITATEDBY",
+      "REFERSTO",
+      "SECURITIESTRANSACTIONID"
+    ]
+  },
+  "implementation_assumptions": [
+    "The official FIBEN CSV files are headerless; column names are assigned by this loader.",
+    "BuyTransaction and SellTransaction are treated as Transaction-level subtypes/filters.",
+    "Disclosure is not required by the current DBSR Q1-Q9 manifest.",
+    "This source load is not a p95 benchmark by itself.",
+    "The official DBSR-vs-SchemaLens p95 comparison must use the same benchmark server and real scale settings."
+  ]
+}

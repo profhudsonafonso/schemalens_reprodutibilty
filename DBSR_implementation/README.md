@@ -1599,3 +1599,38 @@ Main output files:
 - `DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf1_semantic_aligned_v9_original_pool_ibm2860_comparison.csv`
 - `DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf1_semantic_aligned_v9_original_pool_ibm2860_summary.json`
 - `DBSR_implementation/results/fiben/dbsr_vs_schemalens_fiben_sf1_report.md`
+
+## FIBEN SF30 DBSR vs SchemaLens result
+
+The FIBEN SF30 comparison has been completed using the final semantic-alignment protocol.
+
+Final protocol:
+
+- MongoDB database: `dbsr_fiben_sf30_source_full`
+- DBSR collections: full `dbsr_rank*` materialization
+- Query set: FIBEN Q1–Q9
+- Q10: excluded from read-query comparison because it is an insert/update workload
+- Parameter alignment: original-pool alignment
+- IBM-compatible corporation parameter: `2860`
+- Q4: raw-sequence-aligned person pool
+- Q9: raw-count-aligned security pool
+- Q6: effective-runner alignment over capped listed-security retrieval
+- Failed executions: 0
+
+Final result:
+
+- DBSR wins: 3/9
+- SchemaLens wins: 6/9
+- DBSR near SchemaLens within 5%: 3/9
+- Average DBSR regret vs SchemaLens: 33.179445
+
+Main interpretation:
+
+DBSR is competitive for Q1, Q5, and Q6, but SchemaLens remains stronger across the full SF30 workload. Q3 and Q4 show the largest SchemaLens advantages under exact returned-count parity, indicating that the difference is caused by physical access paths rather than semantic mismatch.
+
+Main output files:
+
+- `DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf30_official_semantic_v11_original_pool_ibm2860_q4q9raw_10hot.csv`
+- `DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf30_semantic_aligned_v11_original_pool_ibm2860_q4q9raw_comparison.csv`
+- `DBSR_implementation/results/fiben/dbsr_vs_schemalens_sf30_semantic_aligned_v11_original_pool_ibm2860_q4q9raw_summary.json`
+- `DBSR_implementation/results/fiben/dbsr_vs_schemalens_fiben_sf30_report.md`

@@ -581,6 +581,20 @@ def params_for_repetition(params: Dict[str, Any], query_name: str, repetition: i
     local_params = json.loads(json.dumps(params))
     local_query_params = local_params.setdefault("parameters", {}).setdefault(query_name, {})
     local_query_params[target_key] = selected
+
+    # Q9 has several historical aliases in the probes. Keep all aliases aligned
+    # with the selected pool value so the benchmark cannot keep using the fixed
+    # first security id across repetitions.
+    if query_name == "Q9_PersonsWhoBoughtAndSoldSameStock":
+        for alias in [
+            "matched_stock_id",
+            "listed_security_id",
+            "security_id",
+            "REFERSTO",
+            "refersto",
+        ]:
+            local_query_params[alias] = selected
+
     local_query_params["_selected_pool_key"] = pool_key
     local_query_params["_selected_pool_index"] = (repetition - 1) % len(pool)
 
