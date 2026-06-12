@@ -1,0 +1,83 @@
+query_id,conceptual_type,type_kind,query_gaf,n_access_steps,operation_names
+Q1,Corporation,entity,1.0,1,['Q1_CompanyProfileIBM']
+Q10,BuyTransaction,entity,3.992015968063871,1,['Q10b_CreateAccountAndBuyTransaction']
+Q10,Holding,entity,3.992015968063871,1,['Q10a_CreateAccountAndHolding']
+Q10,ListedSecurity,entity,3.992015968063871,1,['Q10a_CreateAccountAndHolding']
+Q10,Transaction,entity,3.992015968063871,1,['Q10b_CreateAccountAndBuyTransaction']
+Q10,account_has_holding,relationship,3.992015968063871,1,['Q10a_CreateAccountAndHolding']
+Q10,account_records_transaction,relationship,3.992015968063871,1,['Q10b_CreateAccountAndBuyTransaction']
+Q10,buy_transaction_is_transaction,relationship,3.992015968063871,1,['Q10b_CreateAccountAndBuyTransaction']
+Q10,holding_refers_to_listed_security,relationship,3.992015968063871,1,['Q10a_CreateAccountAndHolding']
+Q10,FinancialServiceAccount,entity,3.883033932135728,2,"['Q10a_CreateAccountAndHolding', 'Q10b_CreateAccountAndBuyTransaction']"
+Q10,person_owns_financial_service_account,relationship,3.883033932135728,2,"['Q10a_CreateAccountAndHolding', 'Q10b_CreateAccountAndBuyTransaction']"
+Q10,Person,entity,2.0,2,"['Q10a_CreateAccountAndHolding', 'Q10b_CreateAccountAndBuyTransaction']"
+Q2,Corporation,entity,3.0,3,"['Q2a_CompanyIndustry', 'Q2b_CompanyCountry', 'Q2c_CompanyListedSecurities']"
+Q2,Country,entity,1.0,1,['Q2b_CompanyCountry']
+Q2,Industry,entity,1.0,1,['Q2a_CompanyIndustry']
+Q2,ListedSecurity,entity,1.0,1,['Q2c_CompanyListedSecurities']
+Q2,corporation_has_country,relationship,1.0,1,['Q2b_CompanyCountry']
+Q2,corporation_has_industry,relationship,1.0,1,['Q2a_CompanyIndustry']
+Q2,corporation_has_listed_security,relationship,1.0,1,['Q2c_CompanyListedSecurities']
+Q3,Holding,entity,2.056132414927521,1,['Q3_SecuritiesHeldInEachFinancialServiceAccount']
+Q3,ListedSecurity,entity,2.056132414927521,1,['Q3_SecuritiesHeldInEachFinancialServiceAccount']
+Q3,Security,entity,2.056132414927521,1,['Q3_SecuritiesHeldInEachFinancialServiceAccount']
+Q3,account_has_holding,relationship,2.056132414927521,1,['Q3_SecuritiesHeldInEachFinancialServiceAccount']
+Q3,holding_refers_to_listed_security,relationship,2.056132414927521,1,['Q3_SecuritiesHeldInEachFinancialServiceAccount']
+Q3,listed_security_represents_security,relationship,2.056132414927521,1,['Q3_SecuritiesHeldInEachFinancialServiceAccount']
+Q3,FinancialServiceAccount,entity,1.0,1,['Q3_SecuritiesHeldInEachFinancialServiceAccount']
+Q4,Corporation,entity,3.992015968063871,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,Holding,entity,3.992015968063871,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,ListedSecurity,entity,3.992015968063871,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,account_has_holding,relationship,3.992015968063871,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,corporation_has_listed_security,relationship,3.992015968063871,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,holding_refers_to_listed_security,relationship,3.992015968063871,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,FinancialServiceAccount,entity,1.941516966067864,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,person_owns_financial_service_account,relationship,1.941516966067864,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q4,Person,entity,1.0,1,['Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity']
+Q5,ReportElement,entity,86.05851979345955,1,['Q5a_ReportsAndStatementMetricDataOfCompany']
+Q5,StatementElement,entity,86.05851979345955,1,['Q5a_ReportsAndStatementMetricDataOfCompany']
+Q5,financial_report_contains_report_element,relationship,86.05851979345955,1,['Q5a_ReportsAndStatementMetricDataOfCompany']
+Q5,report_element_has_statement_element,relationship,86.05851979345955,1,['Q5a_ReportsAndStatementMetricDataOfCompany']
+Q5,FinancialReport,entity,41.5671256454389,2,"['Q5a_ReportsAndStatementMetricDataOfCompany', 'Q5b_ReportsAndDisclosuresOfCompany']"
+Q5,corporation_has_financial_report,relationship,41.5671256454389,2,"['Q5a_ReportsAndStatementMetricDataOfCompany', 'Q5b_ReportsAndDisclosuresOfCompany']"
+Q5,Disclosure,entity,20.78356282271945,1,['Q5b_ReportsAndDisclosuresOfCompany']
+Q5,financial_report_contains_disclosure,relationship,20.78356282271945,1,['Q5b_ReportsAndDisclosuresOfCompany']
+Q5,Corporation,entity,2.0,2,"['Q5a_ReportsAndStatementMetricDataOfCompany', 'Q5b_ReportsAndDisclosuresOfCompany']"
+Q6,Corporation,entity,3.0,3,"['Q6a_TechIndustryFilter', 'Q6b_USCountryFilter', 'Q6c_ListedSecurityHighValueFilter']"
+Q6,Country,entity,1.0,1,['Q6b_USCountryFilter']
+Q6,Industry,entity,1.0,1,['Q6a_TechIndustryFilter']
+Q6,ListedSecurity,entity,1.0,1,['Q6c_ListedSecurityHighValueFilter']
+Q6,corporation_has_country,relationship,1.0,1,['Q6b_USCountryFilter']
+Q6,corporation_has_industry,relationship,1.0,1,['Q6a_TechIndustryFilter']
+Q6,corporation_has_listed_security,relationship,1.0,1,['Q6c_ListedSecurityHighValueFilter']
+Q7,Corporation,entity,7.984031936127742,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,ListedSecurity,entity,7.984031936127742,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,Transaction,entity,7.984031936127742,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,account_records_transaction,relationship,7.984031936127742,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,corporation_has_listed_security,relationship,7.984031936127742,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,transaction_refers_to_listed_security,relationship,7.984031936127742,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,BuyTransaction,entity,3.992015968063871,1,['Q7a_PersonBoughtIBM']
+Q7,SellTransaction,entity,3.992015968063871,1,['Q7b_PersonSoldIBM']
+Q7,buy_transaction_is_transaction,relationship,3.992015968063871,1,['Q7a_PersonBoughtIBM']
+Q7,sell_transaction_is_transaction,relationship,3.992015968063871,1,['Q7b_PersonSoldIBM']
+Q7,FinancialServiceAccount,entity,3.883033932135728,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,person_owns_financial_service_account,relationship,3.883033932135728,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q7,Person,entity,2.0,2,"['Q7a_PersonBoughtIBM', 'Q7b_PersonSoldIBM']"
+Q8,SellTransaction,entity,72.85974499089254,1,['Q8_IBMTransactionsBelowAverageSellingPrice']
+Q8,Transaction,entity,72.85974499089254,1,['Q8_IBMTransactionsBelowAverageSellingPrice']
+Q8,sell_transaction_is_transaction,relationship,72.85974499089254,1,['Q8_IBMTransactionsBelowAverageSellingPrice']
+Q8,transaction_refers_to_listed_security,relationship,72.85974499089254,1,['Q8_IBMTransactionsBelowAverageSellingPrice']
+Q8,Corporation,entity,1.0,1,['Q8_IBMTransactionsBelowAverageSellingPrice']
+Q8,ListedSecurity,entity,1.0,1,['Q8_IBMTransactionsBelowAverageSellingPrice']
+Q8,corporation_has_listed_security,relationship,1.0,1,['Q8_IBMTransactionsBelowAverageSellingPrice']
+Q9,ListedSecurity,entity,7.984031936127742,2,"['Q9a_PersonBoughtStock', 'Q9b_PersonSoldStock']"
+Q9,Transaction,entity,7.984031936127742,2,"['Q9a_PersonBoughtStock', 'Q9b_PersonSoldStock']"
+Q9,account_records_transaction,relationship,7.984031936127742,2,"['Q9a_PersonBoughtStock', 'Q9b_PersonSoldStock']"
+Q9,transaction_refers_to_listed_security,relationship,7.984031936127742,2,"['Q9a_PersonBoughtStock', 'Q9b_PersonSoldStock']"
+Q9,BuyTransaction,entity,3.992015968063871,1,['Q9a_PersonBoughtStock']
+Q9,SellTransaction,entity,3.992015968063871,1,['Q9b_PersonSoldStock']
+Q9,buy_transaction_is_transaction,relationship,3.992015968063871,1,['Q9a_PersonBoughtStock']
+Q9,sell_transaction_is_transaction,relationship,3.992015968063871,1,['Q9b_PersonSoldStock']
+Q9,FinancialServiceAccount,entity,3.883033932135728,2,"['Q9a_PersonBoughtStock', 'Q9b_PersonSoldStock']"
+Q9,person_owns_financial_service_account,relationship,3.883033932135728,2,"['Q9a_PersonBoughtStock', 'Q9b_PersonSoldStock']"
+Q9,Person,entity,2.0,2,"['Q9a_PersonBoughtStock', 'Q9b_PersonSoldStock']"

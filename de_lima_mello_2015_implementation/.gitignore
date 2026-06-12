@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+
+README.md.bak_*
+artefacts_schemalens_methodology.gz
+
+generated/fiben/schemalens_artifacts/
+
+results/fiben/materialization/sf1/lmm_fiben_sf1_smoke/
+results/fiben/materialization/sf1/lmm_fiben_sf1_smoke_v2/
+results/fiben/materialization/sf1/lmm_fiben_sf1_smoke_v3/
+results/fiben/materialization/sf1/lmm_fiben_sf1_smoke_v3_small/
+results/fiben/materialization/sf1/lmm_fiben_sf1_smoke_v4/
+
+results/fiben/query_plan_probe_q4_q9/

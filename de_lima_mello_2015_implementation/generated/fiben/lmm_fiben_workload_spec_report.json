@@ -1,0 +1,29 @@
+{
+  "branching_policy": "decompose_branching_queries_into_elementary_access_paths",
+  "frequency_policy": "uniform_frequency_1_0",
+  "n_benchmark_query_ids": 10,
+  "n_operations": 18,
+  "operation_kind_counts": {
+    "insert": 2,
+    "read": 16
+  },
+  "output_files": {
+    "access_paths_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_workload_access_paths.csv",
+    "operations_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_workload_operations.json",
+    "report_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_workload_spec_report.json",
+    "summary_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_workload_summary.csv"
+  },
+  "query_ids": [
+    "Q1",
+    "Q10",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9"
+  ],
+  "status": "completed"
+}

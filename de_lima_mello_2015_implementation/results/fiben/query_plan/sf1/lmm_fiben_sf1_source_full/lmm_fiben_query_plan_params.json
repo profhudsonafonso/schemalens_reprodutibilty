@@ -1,0 +1,11 @@
+{
+  "account_id": 150000000000,
+  "buy_type": 1,
+  "corporation_id": 2860,
+  "corporation_ticker": "IBM",
+  "high_value_threshold": 4500,
+  "listed_security_id": 1001000,
+  "person_id": 400000000000,
+  "sell_type": 2,
+  "transaction_refersto": 1003213
+}

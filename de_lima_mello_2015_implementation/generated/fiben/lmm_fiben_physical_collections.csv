@@ -1,0 +1,12 @@
+root_entity,collection_name,root_gaf,root_relevant_by_maf,is_top_entity_in_decisions,is_reference_target,is_maf_relevant_entity,embedded_entities,referenced_entities,hierarchy_or_merged_entities,n_embedded_edges,n_reference_edges,n_hierarchy_edges,suggested_indexes
+Corporation,lmm_corporation,21.976047904191613,True,True,True,True,"['Country', 'FinancialReport', 'Industry']",[],[],3,0,0,"['_id', 'corporationid', 'isprovidedby', 'isdomiciledin', 'countryid', 'isclassifiedby', 'industrysectorclassifierid', 'listedsecurityid', 'istradedon']"
+Disclosure,lmm_disclosure,20.78356282271945,True,False,True,True,[],[],[],0,0,0,"['_id', 'hasuniqueidentifier']"
+FinancialReport,lmm_financial_report,41.5671256454389,True,True,False,True,['ReportElement'],['Disclosure'],[],1,1,0,"['_id', 'financialreportid', 'ismemberof', 'corporationid', 'isprovidedby', 'hasuniqueidentifier']"
+FinancialServiceAccount,lmm_financial_service_account,14.590618762475048,True,True,False,True,"['Holding', 'Transaction']",[],[],2,0,0,"['_id', 'financialserviceaccountid', 'isfacilitatedby', 'personid', 'isownedby', 'isheldby']"
+ListedSecurity,lmm_listed_security,29.00822822331075,True,True,False,True,['Holding'],"['Corporation', 'Security']",[],1,2,0,"['_id', 'refersto', 'listedsecurityid', 'corporationid', 'isprovidedby', 'istradedon']"
+Person,lmm_person,7.0,False,True,False,False,['FinancialServiceAccount'],[],[],1,0,0,"['_id', 'personid', 'isownedby']"
+ReportElement,lmm_report_element,86.05851979345955,True,True,False,True,[],['StatementElement'],[],0,1,0,"['_id', 'financialreportid', 'ismemberof', 'elementsoffinancialreportid', 'elementoffinancialstatementid']"
+Security,lmm_security,2.056132414927521,False,False,True,False,[],[],[],0,0,0,"['_id', 'listedsecurityid', 'istradedon']"
+SellTransaction,lmm_sell_transaction,80.84377692702027,True,False,False,True,[],[],[],0,0,0,"['_id', 'securitiestransactionid']"
+StatementElement,lmm_statement_element,86.05851979345955,True,False,True,True,[],[],[],0,0,0,"['_id', 'elementsoffinancialreportid', 'elementoffinancialstatementid']"
+Transaction,lmm_transaction,92.81982483121187,True,True,False,True,['ListedSecurity'],[],"['BuyTransaction', 'SellTransaction']",1,0,2,"['_id', 'securitiestransactionid', 'refersto', 'listedsecurityid', 'financialserviceaccountid', 'isfacilitatedby']"

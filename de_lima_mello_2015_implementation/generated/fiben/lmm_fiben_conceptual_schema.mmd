@@ -1,0 +1,87 @@
+erDiagram
+    Corporation {
+        string id PK
+    }
+
+    Industry {
+        string id PK
+    }
+
+    Country {
+        string id PK
+    }
+
+    Security {
+        string id PK
+    }
+
+    ListedSecurity {
+        string id PK
+    }
+
+    Person {
+        string id PK
+    }
+
+    FinancialServiceAccount {
+        string id PK
+    }
+
+    Holding {
+        string id PK
+    }
+
+    Transaction {
+        string id PK
+    }
+
+    BuyTransaction {
+        string id PK
+    }
+
+    SellTransaction {
+        string id PK
+    }
+
+    FinancialReport {
+        string id PK
+    }
+
+    ReportElement {
+        string id PK
+    }
+
+    StatementElement {
+        string id PK
+    }
+
+    Disclosure {
+        string id PK
+    }
+
+    %% Corporation profile descriptors
+    Corporation }o--|| Industry : has_industry
+    Corporation }o--|| Country : has_country
+
+    %% Securities and listing structure
+    Corporation ||--o{ ListedSecurity : has_listed_security
+    ListedSecurity }o--|| Security : represents_security
+
+    %% Person, account, holding structure
+    Person ||--o{ FinancialServiceAccount : owns_account
+    FinancialServiceAccount ||--o{ Holding : has_holding
+    Holding }o--|| ListedSecurity : refers_to_listed_security
+
+    %% Transactions
+    FinancialServiceAccount ||--o{ Transaction : records_transaction
+    Transaction }o--|| ListedSecurity : refers_to_listed_security
+
+    %% Transaction subtypes
+    Transaction ||--o| BuyTransaction : specialized_as_buy
+    Transaction ||--o| SellTransaction : specialized_as_sell
+
+    %% Financial reporting structure
+    Corporation ||--o{ FinancialReport : has_financial_report
+    FinancialReport ||--o{ ReportElement : contains_report_element
+    ReportElement ||--o{ StatementElement : has_statement_element
+    FinancialReport ||--o{ Disclosure : contains_disclosure

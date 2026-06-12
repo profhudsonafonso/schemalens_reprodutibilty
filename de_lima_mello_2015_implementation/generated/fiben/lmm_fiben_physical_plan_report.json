@@ -1,0 +1,41 @@
+{
+  "collections": [
+    "lmm_corporation",
+    "lmm_disclosure",
+    "lmm_financial_report",
+    "lmm_financial_service_account",
+    "lmm_listed_security",
+    "lmm_person",
+    "lmm_report_element",
+    "lmm_security",
+    "lmm_sell_transaction",
+    "lmm_statement_element",
+    "lmm_transaction"
+  ],
+  "entities_with_duplicate_materialization_risk": [
+    "FinancialReport",
+    "FinancialServiceAccount",
+    "ListedSecurity",
+    "ReportElement",
+    "Transaction"
+  ],
+  "important_note": "Inspect duplicate materialization risks before loading MongoDB. They may be valid denormalization choices, but must be documented.",
+  "n_collections": 11,
+  "n_entities_with_duplicate_materialization_risk": 5,
+  "n_physical_edges": 15,
+  "output_files": {
+    "duplicate_materialization_risk_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_duplicate_materialization_risk.csv",
+    "entity_role_summary_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_entity_role_summary.csv",
+    "physical_collections_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_physical_collections.csv",
+    "physical_edges_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_physical_edges.csv",
+    "physical_plan_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_physical_plan.json",
+    "report_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_physical_plan_report.json"
+  },
+  "physical_role_counts": {
+    "embed": 9,
+    "reference": 4,
+    "specialize_or_fold": 2
+  },
+  "status": "completed",
+  "target_database": "lmm_fiben_sf1_source_full"
+}

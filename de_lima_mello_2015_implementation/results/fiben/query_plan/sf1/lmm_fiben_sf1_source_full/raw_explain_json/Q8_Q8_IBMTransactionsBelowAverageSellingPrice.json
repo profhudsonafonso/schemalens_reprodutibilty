@@ -1,0 +1,361 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf1_source_full",
+    "aggregate": "lmm_transaction",
+    "cursor": {},
+    "maxTimeMS": 180000,
+    "pipeline": [
+      {
+        "$match": {
+          "REFERSTO": 1001000,
+          "TRANSACTIONTYPE": 2
+        }
+      },
+      {
+        "$group": {
+          "_id": "$REFERSTO",
+          "avg_sell_value": {
+            "$avg": "$VALUE"
+          },
+          "transactions": {
+            "$push": {
+              "SECURITIESTRANSACTIONID": "$SECURITIESTRANSACTIONID",
+              "VALUE": "$VALUE"
+            }
+          }
+        }
+      },
+      {
+        "$unwind": "$transactions"
+      },
+      {
+        "$match": {
+          "$expr": {
+            "$lt": [
+              "$transactions.VALUE",
+              "$avg_sell_value"
+            ]
+          }
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "2",
+  "ok": 1.0,
+  "queryShapeHash": "4F87596CCF6D1754E7EC49EE21D1FC5CE2DC744C9A753622007226B64C97250E",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "closes": 1,
+            "executionTimeMillisEstimate": 1,
+            "inputStage": {
+              "closes": 1,
+              "executionTimeMillisEstimate": 1,
+              "inputStage": {
+                "closes": 1,
+                "executionTimeMillisEstimate": 1,
+                "expressions": {
+                  "16": "aggDoubleDoubleSum(s10) ",
+                  "17": "sum(\n    if ((typeMatch(s10, 1088) ?: true) || !(isNumber(s10))) \n    then 0ll \n    else 1ll \n) ",
+                  "18": "addToArrayCapped(newObj(\"SECURITIESTRANSACTIONID\", s9, \"VALUE\", s10), 104857600) ",
+                  "initExprs": {
+                    "16": null,
+                    "17": null,
+                    "18": null
+                  }
+                },
+                "groupBySlots": [
+                  15
+                ],
+                "inputStage": {
+                  "closes": 1,
+                  "executionTimeMillisEstimate": 1,
+                  "inputStage": {
+                    "closes": 1,
+                    "executionTimeMillisEstimate": 1,
+                    "filter": "traverseF(s11, lambda(l2.0) { ((move(l2.0) == 2) ?: false) }, false) ",
+                    "inputStage": {
+                      "closes": 1,
+                      "collectionScans": 0,
+                      "collectionSeeks": 196,
+                      "executionTimeMillisEstimate": 1,
+                      "indexScans": 0,
+                      "indexSeeks": 1,
+                      "indexesUsed": [
+                        "REFERSTO_1"
+                      ],
+                      "innerCloses": 1,
+                      "innerOpens": 196,
+                      "innerStage": {
+                        "closes": 1,
+                        "executionTimeMillisEstimate": 1,
+                        "inputStage": {
+                          "closes": 1,
+                          "executionTimeMillisEstimate": 1,
+                          "indexIdentSlot": 3,
+                          "indexKeyPatternSlot": 5,
+                          "indexKeySlot": 4,
+                          "isEOF": 0,
+                          "nReturned": 196,
+                          "numReads": 196,
+                          "opens": 196,
+                          "planNodeId": 2,
+                          "recordIdSlot": 7,
+                          "recordSlot": 6,
+                          "restoreState": 1,
+                          "saveState": 1,
+                          "scanFieldNames": [
+                            "REFERSTO",
+                            "SECURITIESTRANSACTIONID",
+                            "VALUE",
+                            "TRANSACTIONTYPE"
+                          ],
+                          "scanFieldSlots": [
+                            8,
+                            9,
+                            10,
+                            11
+                          ],
+                          "seekRecordIdSlot": 1,
+                          "snapshotIdSlot": 2,
+                          "stage": "seek"
+                        },
+                        "isEOF": 1,
+                        "limit": 1,
+                        "nReturned": 196,
+                        "opens": 196,
+                        "planNodeId": 2,
+                        "restoreState": 1,
+                        "saveState": 1,
+                        "stage": "limit"
+                      },
+                      "isEOF": 1,
+                      "nReturned": 196,
+                      "opens": 1,
+                      "outerCorrelated": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                      ],
+                      "outerProjects": [],
+                      "outerStage": {
+                        "closes": 1,
+                        "executionTimeMillisEstimate": 0,
+                        "indexIdentSlot": 3,
+                        "indexKeySlot": 4,
+                        "indexKeysToInclude": "00000000000000000000000000000000",
+                        "indexName": "REFERSTO_1",
+                        "isEOF": 1,
+                        "keysExamined": 196,
+                        "nReturned": 196,
+                        "numReads": 197,
+                        "opens": 1,
+                        "outputSlots": [],
+                        "planNodeId": 1,
+                        "recordIdSlot": 1,
+                        "restoreState": 1,
+                        "saveState": 1,
+                        "seekKeyHigh": "KS(2D1E8C50FE04) ",
+                        "seekKeyLow": "KS(2D1E8C500104) ",
+                        "seeks": 1,
+                        "snapshotIdSlot": 2,
+                        "stage": "ixseek"
+                      },
+                      "planNodeId": 2,
+                      "restoreState": 1,
+                      "saveState": 1,
+                      "stage": "nlj",
+                      "totalDocsExamined": 196,
+                      "totalKeysExamined": 196
+                    },
+                    "isEOF": 1,
+                    "nReturned": 89,
+                    "numTested": 196,
+                    "opens": 1,
+                    "planNodeId": 2,
+                    "restoreState": 1,
+                    "saveState": 1,
+                    "stage": "filter"
+                  },
+                  "isEOF": 1,
+                  "nReturned": 89,
+                  "opens": 1,
+                  "planNodeId": 4,
+                  "projections": {
+                    "15": "(s8 ?: null) "
+                  },
+                  "restoreState": 1,
+                  "saveState": 1,
+                  "stage": "project"
+                },
+                "isEOF": 1,
+                "mergingExprs": {
+                  "12": "aggMergeDoubleDoubleSums(s12) ",
+                  "13": "sum(s13) ",
+                  "14": "aggConcatArraysCapped(s14, 104857600) "
+                },
+                "nReturned": 1,
+                "opens": 1,
+                "planNodeId": 4,
+                "restoreState": 1,
+                "saveState": 1,
+                "spilledBytes": 0,
+                "spilledDataStorageSize": 0,
+                "spilledRecords": 0,
+                "spills": 0,
+                "stage": "group",
+                "usedDisk": false
+              },
+              "isEOF": 1,
+              "nReturned": 1,
+              "opens": 1,
+              "planNodeId": 4,
+              "projections": {
+                "19": "\n    if (s17 == 0ll) \n    then null \n    else (doubleDoubleSumFinalize(s16) / s17) \n",
+                "20": "getElement(s18, 0) "
+              },
+              "restoreState": 1,
+              "saveState": 1,
+              "stage": "project"
+            },
+            "isEOF": 1,
+            "nReturned": 1,
+            "opens": 1,
+            "planNodeId": 4,
+            "projections": {
+              "21": "newObj(\"_id\", s15, \"avg_sell_value\", s19, \"transactions\", s20) "
+            },
+            "restoreState": 1,
+            "saveState": 1,
+            "stage": "project"
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 1,
+          "nReturned": 1,
+          "totalDocsExamined": 196,
+          "totalKeysExamined": 196
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf1_source_full.lmm_transaction",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "$and": [
+              {
+                "REFERSTO": {
+                  "$eq": 1001000
+                }
+              },
+              {
+                "TRANSACTIONTYPE": {
+                  "$eq": 2
+                }
+              }
+            ]
+          },
+          "planCacheKey": "19E6F3CC",
+          "planCacheShapeHash": "B78B995B",
+          "prunedSimilarIndexes": false,
+          "queryHash": "B78B995B",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "isCached": false,
+            "queryPlan": {
+              "inputStage": {
+                "filter": {
+                  "TRANSACTIONTYPE": {
+                    "$eq": 2
+                  }
+                },
+                "inputStage": {
+                  "direction": "forward",
+                  "indexBounds": {
+                    "REFERSTO": [
+                      "[1001000, 1001000]"
+                    ]
+                  },
+                  "indexName": "REFERSTO_1",
+                  "indexVersion": 2,
+                  "isMultiKey": false,
+                  "isPartial": false,
+                  "isSparse": false,
+                  "isUnique": false,
+                  "keyPattern": {
+                    "REFERSTO": 1
+                  },
+                  "multiKeyPaths": {
+                    "REFERSTO": []
+                  },
+                  "planNodeId": 1,
+                  "stage": "IXSCAN"
+                },
+                "planNodeId": 2,
+                "stage": "FETCH"
+              },
+              "planNodeId": 4,
+              "stage": "GROUP"
+            },
+            "slotBasedPlan": {
+              "slots": "$$RESULT=s21 env: { s5 = {\"REFERSTO\" : 1} }",
+              "stages": "[4] project [s21 = newObj(\"_id\", s15, \"avg_sell_value\", s19, \"transactions\", s20)] \n[4] project [s19 = \n    if (s17 == 0ll) \n    then null \n    else (doubleDoubleSumFinalize(s16) / s17) \n, s20 = getElement(s18, 0)] \n[4] group [s15] [s16 = aggDoubleDoubleSum(s10), s17 = sum(\n    if ((typeMatch(s10, 1088) ?: true) || !(isNumber(s10))) \n    then 0ll \n    else 1ll \n), s18 = addToArrayCapped(newObj(\"SECURITIESTRANSACTIONID\", s9, \"VALUE\", s10), 104857600)] spillSlots[s12, s13, s14] mergingExprs[aggMergeDoubleDoubleSums(s12), sum(s13), aggConcatArraysCapped(s14, 104857600)] \n[4] project [s15 = (s8 ?: null)] \n[2] filter {traverseF(s11, lambda(l2.0) { ((move(l2.0) == 2) ?: false) }, false)} \n[2] nlj inner [] [s1, s2, s3, s4, s5] \n    left \n        [1] ixseek KS(2D1E8C500104) KS(2D1E8C50FE04) s4 s1 s2 s3 [] @\"a8307572-a86c-4dc3-bbfe-49c5d373963d\" @\"REFERSTO_1\" true \n    right \n        [2] limit 1ll \n        [2] seek s1 s6 s7 s2 s3 s4 s5 none none [s8 = REFERSTO, s9 = SECURITIESTRANSACTIONID, s10 = VALUE, s11 = TRANSACTIONTYPE] @\"a8307572-a86c-4dc3-bbfe-49c5d373963d\" true false \n"
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 1
+    },
+    {
+      "$unwind": {
+        "path": "$transactions"
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 89
+    },
+    {
+      "$match": {
+        "$expr": {
+          "$lt": [
+            "$transactions.VALUE",
+            "$avg_sell_value"
+          ]
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 46
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 46
+    }
+  ]
+}

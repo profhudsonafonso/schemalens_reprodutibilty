@@ -1,0 +1,318 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf1_source_full",
+    "aggregate": "lmm_person",
+    "cursor": {},
+    "maxTimeMS": 180000,
+    "pipeline": [
+      {
+        "$match": {
+          "PERSONID": 400000000000
+        }
+      },
+      {
+        "$unwind": "$financial_service_account"
+      },
+      {
+        "$unwind": "$financial_service_account.transaction"
+      },
+      {
+        "$match": {
+          "financial_service_account.transaction.REFERSTO": 1001000
+        }
+      },
+      {
+        "$group": {
+          "_id": "$PERSONID",
+          "buy_total": {
+            "$sum": {
+              "$cond": [
+                {
+                  "$eq": [
+                    "$financial_service_account.transaction.TRANSACTIONTYPE",
+                    1
+                  ]
+                },
+                "$financial_service_account.transaction.VALUE",
+                0
+              ]
+            }
+          },
+          "sell_total": {
+            "$sum": {
+              "$cond": [
+                {
+                  "$eq": [
+                    "$financial_service_account.transaction.TRANSACTIONTYPE",
+                    2
+                  ]
+                },
+                "$financial_service_account.transaction.VALUE",
+                0
+              ]
+            }
+          }
+        }
+      },
+      {
+        "$match": {
+          "$expr": {
+            "$gt": [
+              "$buy_total",
+              "$sell_total"
+            ]
+          }
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "1",
+  "ok": 1.0,
+  "queryShapeHash": "BD06504FEA6B46F844E5B6AEB101F3C3D830419AC91063550B95620174319CCC",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "advanced": 1,
+            "executionTimeMillisEstimate": 0,
+            "inputStage": {
+              "advanced": 1,
+              "alreadyHasObj": 0,
+              "docsExamined": 1,
+              "executionTimeMillisEstimate": 0,
+              "inputStage": {
+                "advanced": 1,
+                "direction": "forward",
+                "dupsDropped": 0,
+                "dupsTested": 0,
+                "executionTimeMillisEstimate": 0,
+                "indexBounds": {
+                  "PERSONID": [
+                    "[400000000000, 400000000000]"
+                  ]
+                },
+                "indexName": "PERSONID_1",
+                "indexVersion": 2,
+                "isEOF": 1,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "PERSONID": 1
+                },
+                "keysExamined": 1,
+                "multiKeyPaths": {
+                  "PERSONID": []
+                },
+                "nReturned": 1,
+                "needTime": 0,
+                "needYield": 0,
+                "restoreState": 1,
+                "saveState": 1,
+                "seeks": 1,
+                "stage": "IXSCAN",
+                "works": 2
+              },
+              "isEOF": 1,
+              "nReturned": 1,
+              "needTime": 0,
+              "needYield": 0,
+              "restoreState": 1,
+              "saveState": 1,
+              "stage": "FETCH",
+              "works": 2
+            },
+            "isCached": false,
+            "isEOF": 1,
+            "nReturned": 1,
+            "needTime": 0,
+            "needYield": 0,
+            "restoreState": 1,
+            "saveState": 1,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "PERSONID": 1,
+              "_id": 0,
+              "financial_service_account": 1
+            },
+            "works": 2
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 0,
+          "nReturned": 1,
+          "totalDocsExamined": 1,
+          "totalKeysExamined": 1
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf1_source_full.lmm_person",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "PERSONID": {
+              "$eq": 400000000000
+            }
+          },
+          "planCacheKey": "4FD6BC34",
+          "planCacheShapeHash": "5F164A1F",
+          "prunedSimilarIndexes": false,
+          "queryHash": "5F164A1F",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "inputStage": {
+              "inputStage": {
+                "direction": "forward",
+                "indexBounds": {
+                  "PERSONID": [
+                    "[400000000000, 400000000000]"
+                  ]
+                },
+                "indexName": "PERSONID_1",
+                "indexVersion": 2,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "PERSONID": 1
+                },
+                "multiKeyPaths": {
+                  "PERSONID": []
+                },
+                "stage": "IXSCAN"
+              },
+              "stage": "FETCH"
+            },
+            "isCached": false,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "PERSONID": 1,
+              "_id": 0,
+              "financial_service_account": 1
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 1
+    },
+    {
+      "$unwind": {
+        "path": "$financial_service_account"
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 1
+    },
+    {
+      "$unwind": {
+        "path": "$financial_service_account.transaction"
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 2
+    },
+    {
+      "$match": {
+        "financial_service_account.transaction.REFERSTO": {
+          "$eq": 1001000
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 0
+    },
+    {
+      "$group": {
+        "_id": "$PERSONID",
+        "buy_total": {
+          "$sum": {
+            "$cond": [
+              {
+                "$eq": [
+                  "$financial_service_account.transaction.TRANSACTIONTYPE",
+                  {
+                    "$const": 1
+                  }
+                ]
+              },
+              "$financial_service_account.transaction.VALUE",
+              {
+                "$const": 0
+              }
+            ]
+          }
+        },
+        "sell_total": {
+          "$sum": {
+            "$cond": [
+              {
+                "$eq": [
+                  "$financial_service_account.transaction.TRANSACTIONTYPE",
+                  {
+                    "$const": 2
+                  }
+                ]
+              },
+              "$financial_service_account.transaction.VALUE",
+              {
+                "$const": 0
+              }
+            ]
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "maxAccumulatorMemoryUsageBytes": {
+        "buy_total": 0,
+        "sell_total": 0
+      },
+      "nReturned": 0,
+      "numBytesSpilledEstimate": 0,
+      "spilledDataStorageSize": 0,
+      "spilledRecords": 0,
+      "spills": 0,
+      "totalOutputDataSizeBytes": 0,
+      "usedDisk": false
+    },
+    {
+      "$match": {
+        "$expr": {
+          "$gt": [
+            "$buy_total",
+            "$sell_total"
+          ]
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 0
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 0
+    }
+  ]
+}

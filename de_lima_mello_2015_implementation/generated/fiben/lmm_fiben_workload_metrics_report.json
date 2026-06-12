@@ -1,0 +1,130 @@
+{
+  "important_note": "Missing/no-observed relationship cardinalities are not corrected. They use fallback multiplier 1.0 and remain explicitly flagged in the access-volume trace.",
+  "input_files": {
+    "access_paths": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_workload_access_paths.csv",
+    "relationship_cardinalities": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_relationship_cardinalities.csv"
+  },
+  "methodological_mode": "lima_mello_gaf_maf_from_schemalens_artifact_consistent_inputs",
+  "metrics": {
+    "estimated_total_access_volume": 1249.4464234336538,
+    "interpretation": "Concepts with GAF >= MAF are considered relevant by the Lima & Mello threshold.",
+    "load_coverage": 0.8,
+    "maf": 14.368633869487018,
+    "maf_percentage": 0.0115,
+    "observed_total_access_volume": 999.557138746923
+  },
+  "multiplier_status_counts": {
+    "entity_inherits_previous_relationship_volume": 45,
+    "first_step_frequency": 18,
+    "missing_source_to_target_avg_fallback_1_0": 6,
+    "missing_target_to_source_avg_fallback_1_0": 3,
+    "observed_source_to_target_avg": 25,
+    "observed_source_to_target_avg_via_supertype": 4,
+    "observed_target_to_source_avg": 7
+  },
+  "n_access_volume_rows": 108,
+  "n_gaf_concepts": 30,
+  "n_relevant_concepts_by_maf": 17,
+  "output_files": {
+    "access_volume_trace_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_access_volume_trace.csv",
+    "gaf_by_concept_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_gaf_by_concept.csv",
+    "gaf_by_query_concept_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_gaf_by_query_concept.csv",
+    "maf_summary_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_maf_summary.json",
+    "report_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_workload_metrics_report.json",
+    "top_gaf_concepts_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_top_gaf_concepts.csv"
+  },
+  "parameters": {
+    "fallback_multiplier": 1.0,
+    "load_coverage": 0.8,
+    "maf_percentage": 0.0115
+  },
+  "relationship_confidence_status_counts": {
+    "high_confidence_observed": 60,
+    "needs_review_medium_hint_confidence": 12,
+    "needs_review_no_observed_match": 18,
+    "not_applicable": 18
+  },
+  "status": "completed",
+  "top_10_gaf_concepts": [
+    {
+      "conceptual_type": "Transaction",
+      "gaf": 92.81982483121189,
+      "gaf_over_maf": 6.459892128528827,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "entity"
+    },
+    {
+      "conceptual_type": "transaction_refers_to_listed_security",
+      "gaf": 88.82780886314802,
+      "gaf_over_maf": 6.182063630404086,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "relationship"
+    },
+    {
+      "conceptual_type": "ReportElement",
+      "gaf": 86.05851979345955,
+      "gaf_over_maf": 5.989332080916331,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "entity"
+    },
+    {
+      "conceptual_type": "StatementElement",
+      "gaf": 86.05851979345955,
+      "gaf_over_maf": 5.989332080916331,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "entity"
+    },
+    {
+      "conceptual_type": "financial_report_contains_report_element",
+      "gaf": 86.05851979345955,
+      "gaf_over_maf": 5.989332080916331,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "relationship"
+    },
+    {
+      "conceptual_type": "report_element_has_statement_element",
+      "gaf": 86.05851979345955,
+      "gaf_over_maf": 5.989332080916331,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "relationship"
+    },
+    {
+      "conceptual_type": "SellTransaction",
+      "gaf": 80.84377692702027,
+      "gaf_over_maf": 5.626406634154602,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "entity"
+    },
+    {
+      "conceptual_type": "sell_transaction_is_transaction",
+      "gaf": 80.84377692702027,
+      "gaf_over_maf": 5.626406634154602,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "relationship"
+    },
+    {
+      "conceptual_type": "FinancialReport",
+      "gaf": 41.5671256454389,
+      "gaf_over_maf": 2.892907288403397,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "entity"
+    },
+    {
+      "conceptual_type": "corporation_has_financial_report",
+      "gaf": 41.5671256454389,
+      "gaf_over_maf": 2.892907288403397,
+      "is_relevant_by_maf": true,
+      "maf": 14.368633869487018,
+      "type_kind": "relationship"
+    }
+  ]
+}

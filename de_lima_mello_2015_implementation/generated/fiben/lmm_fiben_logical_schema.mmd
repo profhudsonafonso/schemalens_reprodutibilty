@@ -1,0 +1,48 @@
+flowchart TD
+    %% Logical schema generated from Lima & Mello 2015 rules
+    %% Main comparison mode: SchemaLens-consistent cardinality evidence
+
+    Corporation["Collection: Corporation"]
+    Industry["Embedded: Industry"]
+    Country["Embedded: Country"]
+    FinancialReport["Embedded/Collection: FinancialReport"]
+    ListedSecurity["Collection: ListedSecurity"]
+    CorporationRef["Reference: Corporation"]
+
+    Person["Collection: Person"]
+    FinancialServiceAccount["Embedded/Collection: FinancialServiceAccount"]
+    Holding["Embedded/Collection: Holding"]
+
+    Transaction["Collection: Transaction"]
+    BuyTransaction["Folded into Transaction: BuyTransaction"]
+    SellTransaction["Specialization: SellTransaction"]
+
+    ReportElement["Embedded/Collection: ReportElement"]
+    StatementElement["Reference: StatementElement"]
+    Disclosure["Reference: Disclosure"]
+    Security["Reference: Security"]
+
+    %% Corporation-centered decisions
+    Corporation -->|RULE_5 descriptor: corporation_has_industry| Industry
+    Corporation -->|RULE_5 descriptor: corporation_has_country| Country
+    Corporation -->|RULE_5 containment: corporation_has_financial_report| FinancialReport
+    ListedSecurity -.->|RULE_6 reference: corporation_has_listed_security| CorporationRef
+
+    %% Reporting decisions
+    FinancialReport -->|RULE_5 containment: financial_report_contains_report_element| ReportElement
+    FinancialReport -.->|RULE_6 reference: financial_report_contains_disclosure| Disclosure
+    ReportElement -.->|RULE_6 reference: report_element_has_statement_element| StatementElement
+
+    %% Person/account/holding decisions
+    Person -->|RULE_5 ownership: person_owns_financial_service_account| FinancialServiceAccount
+    FinancialServiceAccount -->|RULE_5 containment: account_has_holding| Holding
+    FinancialServiceAccount -->|RULE_5 containment: account_records_transaction| Transaction
+
+    %% Security/transaction decisions
+    Transaction -->|RULE_5 association: transaction_refers_to_listed_security| ListedSecurity
+    ListedSecurity -->|RULE_5 association: holding_refers_to_listed_security| Holding
+    ListedSecurity -.->|RULE_6 reference: listed_security_represents_security| Security
+
+    %% Generalization decisions
+    Transaction -->|RULE_1 fold subclass| BuyTransaction
+    Transaction -->|RULE_3 preserve specialization| SellTransaction

@@ -1,0 +1,5 @@
+relationship_name,parent_collection,reference_field,source_field,status,elapsed_seconds,note
+report_element_has_statement_element,lmm_report_element,statement_element_ref,ELEMENTSOFFINANCIALREPORTID,completed,106.56092929840088,
+financial_report_contains_disclosure,lmm_financial_report,disclosure_ref,HASUNIQUEIDENTIFIER,completed,4.029788494110107,
+corporation_has_listed_security,lmm_listed_security,corporation_ref,,skipped_bridge_reference,,Bridge references are preserved through existing FK columns and handled by query runner if needed.
+listed_security_represents_security,lmm_listed_security,security_ref,LISTEDSECURITYID,completed,0.36582326889038086,

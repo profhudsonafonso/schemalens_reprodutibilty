@@ -1,0 +1,39 @@
+{
+  "important_note": "This is the logical decision layer. It should be inspected before implementing MongoDB physical materialization.",
+  "logical_collections": [
+    "Corporation",
+    "Disclosure",
+    "FinancialReport",
+    "FinancialServiceAccount",
+    "ListedSecurity",
+    "Person",
+    "ReportElement",
+    "Security",
+    "SellTransaction",
+    "StatementElement",
+    "Transaction"
+  ],
+  "logical_representation_counts": {
+    "fold_subclass_into_superclass_or_discriminator": 1,
+    "hierarchical_embedding_or_inner_block": 9,
+    "preserve_subtype_as_logical_specialization": 1,
+    "reference_due_to_missing_or_no_observed_cardinality": 4
+  },
+  "methodological_mode": "lima_mello_conversion_rules_from_schemalens_consistent_inputs",
+  "n_logical_collections": 11,
+  "n_relationship_decisions": 15,
+  "output_files": {
+    "conversion_decisions_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_conversion_decisions.csv",
+    "logical_collections_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_logical_collections.json",
+    "logical_schema_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_logical_schema.json",
+    "report_json": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_conversion_report.json",
+    "rule_summary_csv": "de_lima_mello_2015_implementation/generated/fiben/lmm_fiben_conversion_rule_summary.csv"
+  },
+  "rule_counts": {
+    "RULE_1_SUPERCLASS_FOCUSED": 1,
+    "RULE_3_HIERARCHY_FOCUSED": 1,
+    "RULE_5_HIERARCHY": 9,
+    "RULE_6_REFERENCES": 4
+  },
+  "status": "completed"
+}

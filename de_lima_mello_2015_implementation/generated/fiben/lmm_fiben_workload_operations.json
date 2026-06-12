@@ -1,0 +1,713 @@
+{
+  "frequency_policy": "uniform_frequency_1_0",
+  "methodological_mode": "lima_mello_elementary_workload_operations",
+  "notes": [
+    "Branching benchmark queries are decomposed into elementary access paths.",
+    "This avoids artificial conceptual transitions when computing GAF.",
+    "Q10 is included for logical-design workload but will be skipped in read-query query-plan comparison."
+  ],
+  "operations": [
+    {
+      "description": "Show the profile of company IBM.",
+      "frequency": 1.0,
+      "name": "Q1_CompanyProfileIBM",
+      "operation_kind": "read",
+      "query_id": "Q1",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show IBM with its industry.",
+      "frequency": 1.0,
+      "name": "Q2a_CompanyIndustry",
+      "operation_kind": "read",
+      "query_id": "Q2",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_industry",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Industry",
+          "order": 3,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show IBM with its country.",
+      "frequency": 1.0,
+      "name": "Q2b_CompanyCountry",
+      "operation_kind": "read",
+      "query_id": "Q2",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_country",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Country",
+          "order": 3,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show IBM with its listed securities.",
+      "frequency": 1.0,
+      "name": "Q2c_CompanyListedSecurities",
+      "operation_kind": "read",
+      "query_id": "Q2",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_listed_security",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 3,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show the securities held in each financial service account.",
+      "frequency": 1.0,
+      "name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+      "operation_kind": "read",
+      "query_id": "Q3",
+      "steps": [
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_has_holding",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Holding",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "holding_refers_to_listed_security",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "listed_security_represents_security",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Security",
+          "order": 7,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show the companies reached from a person through account, holding, and listed security.",
+      "frequency": 1.0,
+      "name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+      "operation_kind": "read",
+      "query_id": "Q4",
+      "steps": [
+        {
+          "conceptual_type": "Person",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "person_owns_financial_service_account",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_has_holding",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Holding",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "holding_refers_to_listed_security",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 7,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_listed_security",
+          "order": 8,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Corporation",
+          "order": 9,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show the financial reports of a company and the statement metric data contained in each report.",
+      "frequency": 1.0,
+      "name": "Q5a_ReportsAndStatementMetricDataOfCompany",
+      "operation_kind": "read",
+      "query_id": "Q5",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_financial_report",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialReport",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "financial_report_contains_report_element",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ReportElement",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "report_element_has_statement_element",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "StatementElement",
+          "order": 7,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show the financial reports of a company and the disclosure data contained in each report.",
+      "frequency": 1.0,
+      "name": "Q5b_ReportsAndDisclosuresOfCompany",
+      "operation_kind": "read",
+      "query_id": "Q5",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_financial_report",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialReport",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "financial_report_contains_disclosure",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Disclosure",
+          "order": 5,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Filter companies by technology industry.",
+      "frequency": 1.0,
+      "name": "Q6a_TechIndustryFilter",
+      "operation_kind": "read",
+      "query_id": "Q6",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_industry",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Industry",
+          "order": 3,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Filter companies by US country.",
+      "frequency": 1.0,
+      "name": "Q6b_USCountryFilter",
+      "operation_kind": "read",
+      "query_id": "Q6",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_country",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Country",
+          "order": 3,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Return listed securities with high last traded value.",
+      "frequency": 1.0,
+      "name": "Q6c_ListedSecurityHighValueFilter",
+      "operation_kind": "read",
+      "query_id": "Q6",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_listed_security",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 3,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Find persons with IBM buy transactions.",
+      "frequency": 1.0,
+      "name": "Q7a_PersonBoughtIBM",
+      "operation_kind": "read",
+      "query_id": "Q7",
+      "steps": [
+        {
+          "conceptual_type": "Person",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "person_owns_financial_service_account",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_records_transaction",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Transaction",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "buy_transaction_is_transaction",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "BuyTransaction",
+          "order": 7,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "transaction_refers_to_listed_security",
+          "order": 8,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 9,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_listed_security",
+          "order": 10,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Corporation",
+          "order": 11,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Find persons with IBM sell transactions.",
+      "frequency": 1.0,
+      "name": "Q7b_PersonSoldIBM",
+      "operation_kind": "read",
+      "query_id": "Q7",
+      "steps": [
+        {
+          "conceptual_type": "Person",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "person_owns_financial_service_account",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_records_transaction",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Transaction",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "sell_transaction_is_transaction",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "SellTransaction",
+          "order": 7,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "transaction_refers_to_listed_security",
+          "order": 8,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 9,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_listed_security",
+          "order": 10,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Corporation",
+          "order": 11,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Show each transaction for IBM whose price is less than the average selling price.",
+      "frequency": 1.0,
+      "name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+      "operation_kind": "read",
+      "query_id": "Q8",
+      "steps": [
+        {
+          "conceptual_type": "Corporation",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "corporation_has_listed_security",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "transaction_refers_to_listed_security",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Transaction",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "sell_transaction_is_transaction",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "SellTransaction",
+          "order": 7,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Find persons who bought a stock.",
+      "frequency": 1.0,
+      "name": "Q9a_PersonBoughtStock",
+      "operation_kind": "read",
+      "query_id": "Q9",
+      "steps": [
+        {
+          "conceptual_type": "Person",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "person_owns_financial_service_account",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_records_transaction",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Transaction",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "buy_transaction_is_transaction",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "BuyTransaction",
+          "order": 7,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "transaction_refers_to_listed_security",
+          "order": 8,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 9,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Find persons who sold a stock.",
+      "frequency": 1.0,
+      "name": "Q9b_PersonSoldStock",
+      "operation_kind": "read",
+      "query_id": "Q9",
+      "steps": [
+        {
+          "conceptual_type": "Person",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "person_owns_financial_service_account",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_records_transaction",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Transaction",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "sell_transaction_is_transaction",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "SellTransaction",
+          "order": 7,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "transaction_refers_to_listed_security",
+          "order": 8,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 9,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Create an account for a person and add a holding for a listed security.",
+      "frequency": 1.0,
+      "name": "Q10a_CreateAccountAndHolding",
+      "operation_kind": "insert",
+      "query_id": "Q10",
+      "steps": [
+        {
+          "conceptual_type": "Person",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "person_owns_financial_service_account",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_has_holding",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Holding",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "holding_refers_to_listed_security",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "ListedSecurity",
+          "order": 7,
+          "type_kind": "entity"
+        }
+      ]
+    },
+    {
+      "description": "Create an account for a person and register a buy transaction.",
+      "frequency": 1.0,
+      "name": "Q10b_CreateAccountAndBuyTransaction",
+      "operation_kind": "insert",
+      "query_id": "Q10",
+      "steps": [
+        {
+          "conceptual_type": "Person",
+          "order": 1,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "person_owns_financial_service_account",
+          "order": 2,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "FinancialServiceAccount",
+          "order": 3,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "account_records_transaction",
+          "order": 4,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "Transaction",
+          "order": 5,
+          "type_kind": "entity"
+        },
+        {
+          "conceptual_type": "buy_transaction_is_transaction",
+          "order": 6,
+          "type_kind": "relationship"
+        },
+        {
+          "conceptual_type": "BuyTransaction",
+          "order": 7,
+          "type_kind": "entity"
+        }
+      ]
+    }
+  ]
+}

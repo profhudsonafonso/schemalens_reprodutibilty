@@ -1,0 +1,109 @@
+operation_name,query_id,operation_kind,frequency,description,step_order,conceptual_type,type_kind
+Q1_CompanyProfileIBM,Q1,read,1.0,Show the profile of company IBM.,1,Corporation,entity
+Q2a_CompanyIndustry,Q2,read,1.0,Show IBM with its industry.,1,Corporation,entity
+Q2a_CompanyIndustry,Q2,read,1.0,Show IBM with its industry.,2,corporation_has_industry,relationship
+Q2a_CompanyIndustry,Q2,read,1.0,Show IBM with its industry.,3,Industry,entity
+Q2b_CompanyCountry,Q2,read,1.0,Show IBM with its country.,1,Corporation,entity
+Q2b_CompanyCountry,Q2,read,1.0,Show IBM with its country.,2,corporation_has_country,relationship
+Q2b_CompanyCountry,Q2,read,1.0,Show IBM with its country.,3,Country,entity
+Q2c_CompanyListedSecurities,Q2,read,1.0,Show IBM with its listed securities.,1,Corporation,entity
+Q2c_CompanyListedSecurities,Q2,read,1.0,Show IBM with its listed securities.,2,corporation_has_listed_security,relationship
+Q2c_CompanyListedSecurities,Q2,read,1.0,Show IBM with its listed securities.,3,ListedSecurity,entity
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3,read,1.0,Show the securities held in each financial service account.,1,FinancialServiceAccount,entity
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3,read,1.0,Show the securities held in each financial service account.,2,account_has_holding,relationship
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3,read,1.0,Show the securities held in each financial service account.,3,Holding,entity
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3,read,1.0,Show the securities held in each financial service account.,4,holding_refers_to_listed_security,relationship
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3,read,1.0,Show the securities held in each financial service account.,5,ListedSecurity,entity
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3,read,1.0,Show the securities held in each financial service account.,6,listed_security_represents_security,relationship
+Q3_SecuritiesHeldInEachFinancialServiceAccount,Q3,read,1.0,Show the securities held in each financial service account.,7,Security,entity
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",1,Person,entity
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",2,person_owns_financial_service_account,relationship
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",3,FinancialServiceAccount,entity
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",4,account_has_holding,relationship
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",5,Holding,entity
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",6,holding_refers_to_listed_security,relationship
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",7,ListedSecurity,entity
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",8,corporation_has_listed_security,relationship
+Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity,Q4,read,1.0,"Show the companies reached from a person through account, holding, and listed security.",9,Corporation,entity
+Q5a_ReportsAndStatementMetricDataOfCompany,Q5,read,1.0,Show the financial reports of a company and the statement metric data contained in each report.,1,Corporation,entity
+Q5a_ReportsAndStatementMetricDataOfCompany,Q5,read,1.0,Show the financial reports of a company and the statement metric data contained in each report.,2,corporation_has_financial_report,relationship
+Q5a_ReportsAndStatementMetricDataOfCompany,Q5,read,1.0,Show the financial reports of a company and the statement metric data contained in each report.,3,FinancialReport,entity
+Q5a_ReportsAndStatementMetricDataOfCompany,Q5,read,1.0,Show the financial reports of a company and the statement metric data contained in each report.,4,financial_report_contains_report_element,relationship
+Q5a_ReportsAndStatementMetricDataOfCompany,Q5,read,1.0,Show the financial reports of a company and the statement metric data contained in each report.,5,ReportElement,entity
+Q5a_ReportsAndStatementMetricDataOfCompany,Q5,read,1.0,Show the financial reports of a company and the statement metric data contained in each report.,6,report_element_has_statement_element,relationship
+Q5a_ReportsAndStatementMetricDataOfCompany,Q5,read,1.0,Show the financial reports of a company and the statement metric data contained in each report.,7,StatementElement,entity
+Q5b_ReportsAndDisclosuresOfCompany,Q5,read,1.0,Show the financial reports of a company and the disclosure data contained in each report.,1,Corporation,entity
+Q5b_ReportsAndDisclosuresOfCompany,Q5,read,1.0,Show the financial reports of a company and the disclosure data contained in each report.,2,corporation_has_financial_report,relationship
+Q5b_ReportsAndDisclosuresOfCompany,Q5,read,1.0,Show the financial reports of a company and the disclosure data contained in each report.,3,FinancialReport,entity
+Q5b_ReportsAndDisclosuresOfCompany,Q5,read,1.0,Show the financial reports of a company and the disclosure data contained in each report.,4,financial_report_contains_disclosure,relationship
+Q5b_ReportsAndDisclosuresOfCompany,Q5,read,1.0,Show the financial reports of a company and the disclosure data contained in each report.,5,Disclosure,entity
+Q6a_TechIndustryFilter,Q6,read,1.0,Filter companies by technology industry.,1,Corporation,entity
+Q6a_TechIndustryFilter,Q6,read,1.0,Filter companies by technology industry.,2,corporation_has_industry,relationship
+Q6a_TechIndustryFilter,Q6,read,1.0,Filter companies by technology industry.,3,Industry,entity
+Q6b_USCountryFilter,Q6,read,1.0,Filter companies by US country.,1,Corporation,entity
+Q6b_USCountryFilter,Q6,read,1.0,Filter companies by US country.,2,corporation_has_country,relationship
+Q6b_USCountryFilter,Q6,read,1.0,Filter companies by US country.,3,Country,entity
+Q6c_ListedSecurityHighValueFilter,Q6,read,1.0,Return listed securities with high last traded value.,1,Corporation,entity
+Q6c_ListedSecurityHighValueFilter,Q6,read,1.0,Return listed securities with high last traded value.,2,corporation_has_listed_security,relationship
+Q6c_ListedSecurityHighValueFilter,Q6,read,1.0,Return listed securities with high last traded value.,3,ListedSecurity,entity
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,1,Person,entity
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,2,person_owns_financial_service_account,relationship
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,3,FinancialServiceAccount,entity
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,4,account_records_transaction,relationship
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,5,Transaction,entity
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,6,buy_transaction_is_transaction,relationship
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,7,BuyTransaction,entity
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,8,transaction_refers_to_listed_security,relationship
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,9,ListedSecurity,entity
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,10,corporation_has_listed_security,relationship
+Q7a_PersonBoughtIBM,Q7,read,1.0,Find persons with IBM buy transactions.,11,Corporation,entity
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,1,Person,entity
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,2,person_owns_financial_service_account,relationship
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,3,FinancialServiceAccount,entity
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,4,account_records_transaction,relationship
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,5,Transaction,entity
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,6,sell_transaction_is_transaction,relationship
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,7,SellTransaction,entity
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,8,transaction_refers_to_listed_security,relationship
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,9,ListedSecurity,entity
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,10,corporation_has_listed_security,relationship
+Q7b_PersonSoldIBM,Q7,read,1.0,Find persons with IBM sell transactions.,11,Corporation,entity
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8,read,1.0,Show each transaction for IBM whose price is less than the average selling price.,1,Corporation,entity
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8,read,1.0,Show each transaction for IBM whose price is less than the average selling price.,2,corporation_has_listed_security,relationship
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8,read,1.0,Show each transaction for IBM whose price is less than the average selling price.,3,ListedSecurity,entity
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8,read,1.0,Show each transaction for IBM whose price is less than the average selling price.,4,transaction_refers_to_listed_security,relationship
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8,read,1.0,Show each transaction for IBM whose price is less than the average selling price.,5,Transaction,entity
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8,read,1.0,Show each transaction for IBM whose price is less than the average selling price.,6,sell_transaction_is_transaction,relationship
+Q8_IBMTransactionsBelowAverageSellingPrice,Q8,read,1.0,Show each transaction for IBM whose price is less than the average selling price.,7,SellTransaction,entity
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,1,Person,entity
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,2,person_owns_financial_service_account,relationship
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,3,FinancialServiceAccount,entity
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,4,account_records_transaction,relationship
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,5,Transaction,entity
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,6,buy_transaction_is_transaction,relationship
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,7,BuyTransaction,entity
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,8,transaction_refers_to_listed_security,relationship
+Q9a_PersonBoughtStock,Q9,read,1.0,Find persons who bought a stock.,9,ListedSecurity,entity
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,1,Person,entity
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,2,person_owns_financial_service_account,relationship
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,3,FinancialServiceAccount,entity
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,4,account_records_transaction,relationship
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,5,Transaction,entity
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,6,sell_transaction_is_transaction,relationship
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,7,SellTransaction,entity
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,8,transaction_refers_to_listed_security,relationship
+Q9b_PersonSoldStock,Q9,read,1.0,Find persons who sold a stock.,9,ListedSecurity,entity
+Q10a_CreateAccountAndHolding,Q10,insert,1.0,Create an account for a person and add a holding for a listed security.,1,Person,entity
+Q10a_CreateAccountAndHolding,Q10,insert,1.0,Create an account for a person and add a holding for a listed security.,2,person_owns_financial_service_account,relationship
+Q10a_CreateAccountAndHolding,Q10,insert,1.0,Create an account for a person and add a holding for a listed security.,3,FinancialServiceAccount,entity
+Q10a_CreateAccountAndHolding,Q10,insert,1.0,Create an account for a person and add a holding for a listed security.,4,account_has_holding,relationship
+Q10a_CreateAccountAndHolding,Q10,insert,1.0,Create an account for a person and add a holding for a listed security.,5,Holding,entity
+Q10a_CreateAccountAndHolding,Q10,insert,1.0,Create an account for a person and add a holding for a listed security.,6,holding_refers_to_listed_security,relationship
+Q10a_CreateAccountAndHolding,Q10,insert,1.0,Create an account for a person and add a holding for a listed security.,7,ListedSecurity,entity
+Q10b_CreateAccountAndBuyTransaction,Q10,insert,1.0,Create an account for a person and register a buy transaction.,1,Person,entity
+Q10b_CreateAccountAndBuyTransaction,Q10,insert,1.0,Create an account for a person and register a buy transaction.,2,person_owns_financial_service_account,relationship
+Q10b_CreateAccountAndBuyTransaction,Q10,insert,1.0,Create an account for a person and register a buy transaction.,3,FinancialServiceAccount,entity
+Q10b_CreateAccountAndBuyTransaction,Q10,insert,1.0,Create an account for a person and register a buy transaction.,4,account_records_transaction,relationship
+Q10b_CreateAccountAndBuyTransaction,Q10,insert,1.0,Create an account for a person and register a buy transaction.,5,Transaction,entity
+Q10b_CreateAccountAndBuyTransaction,Q10,insert,1.0,Create an account for a person and register a buy transaction.,6,buy_transaction_is_transaction,relationship
+Q10b_CreateAccountAndBuyTransaction,Q10,insert,1.0,Create an account for a person and register a buy transaction.,7,BuyTransaction,entity

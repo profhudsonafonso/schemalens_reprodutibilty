@@ -1,0 +1,277 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf1_source_full",
+    "aggregate": "lmm_person",
+    "cursor": {},
+    "maxTimeMS": 180000,
+    "pipeline": [
+      {
+        "$match": {
+          "PERSONID": 400000000000
+        }
+      },
+      {
+        "$unwind": "$financial_service_account"
+      },
+      {
+        "$unwind": "$financial_service_account.holding"
+      },
+      {
+        "$lookup": {
+          "as": "listed_security",
+          "foreignField": "LISTEDSECURITYID",
+          "from": "lmm_listed_security",
+          "localField": "financial_service_account.holding.REFERSTO"
+        }
+      },
+      {
+        "$unwind": "$listed_security"
+      },
+      {
+        "$lookup": {
+          "as": "corporation",
+          "foreignField": "CORPORATIONID",
+          "from": "lmm_corporation",
+          "localField": "listed_security.ISPROVIDEDBY"
+        }
+      },
+      {
+        "$project": {
+          "PERSONID": 1,
+          "corporation.CORPORATIONID": 1,
+          "corporation.NAME": 1,
+          "financial_service_account.FINANCIALSERVICEACCOUNTID": 1,
+          "listed_security.LISTEDSECURITYID": 1
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "1",
+  "ok": 1.0,
+  "queryShapeHash": "D3D6876DAACF8D0E96CA96966E85296AEF1A8DAB8901443BC31AC9753045666E",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "advanced": 1,
+            "executionTimeMillisEstimate": 0,
+            "inputStage": {
+              "advanced": 1,
+              "alreadyHasObj": 0,
+              "docsExamined": 1,
+              "executionTimeMillisEstimate": 0,
+              "inputStage": {
+                "advanced": 1,
+                "direction": "forward",
+                "dupsDropped": 0,
+                "dupsTested": 0,
+                "executionTimeMillisEstimate": 0,
+                "indexBounds": {
+                  "PERSONID": [
+                    "[400000000000, 400000000000]"
+                  ]
+                },
+                "indexName": "PERSONID_1",
+                "indexVersion": 2,
+                "isEOF": 1,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "PERSONID": 1
+                },
+                "keysExamined": 1,
+                "multiKeyPaths": {
+                  "PERSONID": []
+                },
+                "nReturned": 1,
+                "needTime": 0,
+                "needYield": 0,
+                "restoreState": 1,
+                "saveState": 1,
+                "seeks": 1,
+                "stage": "IXSCAN",
+                "works": 2
+              },
+              "isEOF": 1,
+              "nReturned": 1,
+              "needTime": 0,
+              "needYield": 0,
+              "restoreState": 1,
+              "saveState": 1,
+              "stage": "FETCH",
+              "works": 2
+            },
+            "isCached": false,
+            "isEOF": 1,
+            "nReturned": 1,
+            "needTime": 0,
+            "needYield": 0,
+            "restoreState": 1,
+            "saveState": 1,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "PERSONID": 1,
+              "_id": 1,
+              "financial_service_account": 1
+            },
+            "works": 2
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 0,
+          "nReturned": 1,
+          "totalDocsExamined": 1,
+          "totalKeysExamined": 1
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf1_source_full.lmm_person",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "PERSONID": {
+              "$eq": 400000000000
+            }
+          },
+          "planCacheKey": "C469346D",
+          "planCacheShapeHash": "1820E211",
+          "prunedSimilarIndexes": false,
+          "queryHash": "1820E211",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "inputStage": {
+              "inputStage": {
+                "direction": "forward",
+                "indexBounds": {
+                  "PERSONID": [
+                    "[400000000000, 400000000000]"
+                  ]
+                },
+                "indexName": "PERSONID_1",
+                "indexVersion": 2,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "PERSONID": 1
+                },
+                "multiKeyPaths": {
+                  "PERSONID": []
+                },
+                "stage": "IXSCAN"
+              },
+              "stage": "FETCH"
+            },
+            "isCached": false,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "PERSONID": 1,
+              "_id": 1,
+              "financial_service_account": 1
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 1
+    },
+    {
+      "$unwind": {
+        "path": "$financial_service_account"
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 1
+    },
+    {
+      "$unwind": {
+        "path": "$financial_service_account.holding"
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 2
+    },
+    {
+      "$lookup": {
+        "as": "listed_security",
+        "foreignField": "LISTEDSECURITYID",
+        "from": "lmm_listed_security",
+        "localField": "financial_service_account.holding.REFERSTO",
+        "unwinding": {
+          "preserveNullAndEmptyArrays": false
+        }
+      },
+      "collectionScans": 0,
+      "executionTimeMillisEstimate": 1,
+      "indexesUsed": [
+        "LISTEDSECURITYID_1"
+      ],
+      "nReturned": 2,
+      "totalDocsExamined": 2,
+      "totalKeysExamined": 2
+    },
+    {
+      "$lookup": {
+        "as": "corporation",
+        "foreignField": "CORPORATIONID",
+        "from": "lmm_corporation",
+        "localField": "listed_security.ISPROVIDEDBY"
+      },
+      "collectionScans": 0,
+      "executionTimeMillisEstimate": 1,
+      "indexesUsed": [
+        "CORPORATIONID_1"
+      ],
+      "nReturned": 2,
+      "totalDocsExamined": 0,
+      "totalKeysExamined": 0
+    },
+    {
+      "$project": {
+        "PERSONID": true,
+        "_id": true,
+        "corporation": {
+          "CORPORATIONID": true,
+          "NAME": true
+        },
+        "financial_service_account": {
+          "FINANCIALSERVICEACCOUNTID": true
+        },
+        "listed_security": {
+          "LISTEDSECURITYID": true
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 2
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 2
+    }
+  ]
+}

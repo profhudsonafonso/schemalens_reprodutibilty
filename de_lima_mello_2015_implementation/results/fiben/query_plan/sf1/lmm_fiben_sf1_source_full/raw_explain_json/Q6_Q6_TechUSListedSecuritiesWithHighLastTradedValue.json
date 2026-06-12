@@ -1,0 +1,215 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf1_source_full",
+    "aggregate": "lmm_transaction",
+    "cursor": {},
+    "maxTimeMS": 180000,
+    "pipeline": [
+      {
+        "$match": {
+          "VALUE": {
+            "$gte": 4500
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "as": "listed_security",
+          "foreignField": "LISTEDSECURITYID",
+          "from": "lmm_listed_security",
+          "localField": "REFERSTO"
+        }
+      },
+      {
+        "$unwind": "$listed_security"
+      },
+      {
+        "$lookup": {
+          "as": "corporation",
+          "foreignField": "CORPORATIONID",
+          "from": "lmm_corporation",
+          "localField": "listed_security.ISPROVIDEDBY"
+        }
+      },
+      {
+        "$project": {
+          "REFERSTO": 1,
+          "SECURITIESTRANSACTIONID": 1,
+          "VALUE": 1,
+          "corporation.CORPORATIONID": 1,
+          "corporation.NAME": 1,
+          "listed_security": 1
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "1",
+  "ok": 1.0,
+  "queryShapeHash": "2A5C7AC857404F9E12143DC5F40BE79300F8BE66B1B0197FAC9523E4BD6E1B8D",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "advanced": 2016,
+            "executionTimeMillisEstimate": 0,
+            "inputStage": {
+              "advanced": 2016,
+              "direction": "forward",
+              "docsExamined": 20521,
+              "executionTimeMillisEstimate": 0,
+              "filter": {
+                "VALUE": {
+                  "$gte": 4500
+                }
+              },
+              "isEOF": 0,
+              "nReturned": 2016,
+              "needTime": 18505,
+              "needYield": 0,
+              "restoreState": 10,
+              "saveState": 11,
+              "stage": "COLLSCAN",
+              "works": 20521
+            },
+            "isCached": false,
+            "isEOF": 0,
+            "nReturned": 2016,
+            "needTime": 18505,
+            "needYield": 0,
+            "restoreState": 10,
+            "saveState": 11,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "VALUE": 1,
+              "_id": 1
+            },
+            "works": 20521
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 219,
+          "nReturned": 2016,
+          "totalDocsExamined": 20521,
+          "totalKeysExamined": 0
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf1_source_full.lmm_transaction",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "VALUE": {
+              "$gte": 4500
+            }
+          },
+          "planCacheKey": "53399889",
+          "planCacheShapeHash": "5B65825D",
+          "prunedSimilarIndexes": false,
+          "queryHash": "5B65825D",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "inputStage": {
+              "direction": "forward",
+              "filter": {
+                "VALUE": {
+                  "$gte": 4500
+                }
+              },
+              "stage": "COLLSCAN"
+            },
+            "isCached": false,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "VALUE": 1,
+              "_id": 1
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 1000
+    },
+    {
+      "$lookup": {
+        "as": "listed_security",
+        "foreignField": "LISTEDSECURITYID",
+        "from": "lmm_listed_security",
+        "localField": "REFERSTO",
+        "unwinding": {
+          "preserveNullAndEmptyArrays": false
+        }
+      },
+      "collectionScans": 0,
+      "executionTimeMillisEstimate": 95,
+      "indexesUsed": [
+        "LISTEDSECURITYID_1"
+      ],
+      "nReturned": 1000,
+      "totalDocsExamined": 1000,
+      "totalKeysExamined": 1000
+    },
+    {
+      "$lookup": {
+        "as": "corporation",
+        "foreignField": "CORPORATIONID",
+        "from": "lmm_corporation",
+        "localField": "listed_security.ISPROVIDEDBY"
+      },
+      "collectionScans": 0,
+      "executionTimeMillisEstimate": 219,
+      "indexesUsed": [
+        "CORPORATIONID_1"
+      ],
+      "nReturned": 1000,
+      "totalDocsExamined": 485,
+      "totalKeysExamined": 485
+    },
+    {
+      "$project": {
+        "REFERSTO": true,
+        "SECURITIESTRANSACTIONID": true,
+        "VALUE": true,
+        "_id": true,
+        "corporation": {
+          "CORPORATIONID": true,
+          "NAME": true
+        },
+        "listed_security": true
+      },
+      "executionTimeMillisEstimate": 219,
+      "nReturned": 1000
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 219,
+      "nReturned": 1000
+    }
+  ]
+}

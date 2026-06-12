@@ -1,0 +1,16 @@
+entity,collection_name,is_root_collection,embedded_in_collections,referenced_by_collections,specialized_or_folded_in_collections,n_embedded_in,n_referenced_by,n_specialized_or_folded_in,has_duplicate_materialization_risk,role_note
+BuyTransaction,lmm_buy_transaction,False,[],[],['lmm_transaction'],0,0,1,False,hierarchy_or_specialization
+Corporation,lmm_corporation,True,[],['lmm_listed_security'],[],0,1,0,False,root_collection;reference_target
+Country,lmm_country,False,['lmm_corporation'],[],[],1,0,0,False,embedded_elsewhere
+Disclosure,lmm_disclosure,True,[],['lmm_financial_report'],[],0,1,0,False,root_collection;reference_target
+FinancialReport,lmm_financial_report,True,['lmm_corporation'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+FinancialServiceAccount,lmm_financial_service_account,True,['lmm_person'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+Holding,lmm_holding,False,"['lmm_financial_service_account', 'lmm_listed_security']",[],[],2,0,0,False,embedded_elsewhere
+Industry,lmm_industry,False,['lmm_corporation'],[],[],1,0,0,False,embedded_elsewhere
+ListedSecurity,lmm_listed_security,True,['lmm_transaction'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+Person,lmm_person,True,[],[],[],0,0,0,False,root_collection
+ReportElement,lmm_report_element,True,['lmm_financial_report'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+Security,lmm_security,True,[],['lmm_listed_security'],[],0,1,0,False,root_collection;reference_target
+SellTransaction,lmm_sell_transaction,True,[],[],['lmm_transaction'],0,0,1,False,root_collection;hierarchy_or_specialization
+StatementElement,lmm_statement_element,True,[],['lmm_report_element'],[],0,1,0,False,root_collection;reference_target
+Transaction,lmm_transaction,True,['lmm_financial_service_account'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design

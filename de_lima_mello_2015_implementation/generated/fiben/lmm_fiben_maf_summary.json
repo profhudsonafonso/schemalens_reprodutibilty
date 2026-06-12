@@ -1,0 +1,8 @@
+{
+  "estimated_total_access_volume": 1249.4464234336538,
+  "interpretation": "Concepts with GAF >= MAF are considered relevant by the Lima & Mello threshold.",
+  "load_coverage": 0.8,
+  "maf": 14.368633869487018,
+  "maf_percentage": 0.0115,
+  "observed_total_access_volume": 999.557138746923
+}

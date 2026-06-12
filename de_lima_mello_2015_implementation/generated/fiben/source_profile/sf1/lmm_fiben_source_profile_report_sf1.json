@@ -1,0 +1,18 @@
+{
+  "count_rows": false,
+  "data_dir": "/home/hudson/Documents/framework_test/fiben/data full",
+  "n_discovered_files": 152,
+  "n_matched_views": 15,
+  "n_required_views": 15,
+  "n_unmatched_views": 0,
+  "next_step": "If all required views are matched, run the MongoDB materialization script. If some views are unmatched, add aliases to DEFAULT_VIEW_CANDIDATES.",
+  "output_files": {
+    "discovered_source_files_csv": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf1/lmm_fiben_discovered_source_files_sf1.csv",
+    "report_json": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf1/lmm_fiben_source_profile_report_sf1.json",
+    "source_file_mapping_csv": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf1/lmm_fiben_source_file_mapping_sf1.csv",
+    "source_table_profile_csv": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf1/lmm_fiben_source_table_profile_sf1.csv"
+  },
+  "scale": "sf1",
+  "status": "completed",
+  "unmatched_views": []
+}

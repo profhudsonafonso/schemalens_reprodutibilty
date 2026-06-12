@@ -1,0 +1,6 @@
+entity,collection_name,is_root_collection,embedded_in_collections,referenced_by_collections,specialized_or_folded_in_collections,n_embedded_in,n_referenced_by,n_specialized_or_folded_in,has_duplicate_materialization_risk,role_note
+FinancialReport,lmm_financial_report,True,['lmm_corporation'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+FinancialServiceAccount,lmm_financial_service_account,True,['lmm_person'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+ListedSecurity,lmm_listed_security,True,['lmm_transaction'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+ReportElement,lmm_report_element,True,['lmm_financial_report'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design
+Transaction,lmm_transaction,True,['lmm_financial_service_account'],[],[],1,0,0,True,root_collection;embedded_elsewhere;duplication_expected_document_design

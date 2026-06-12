@@ -1,0 +1,219 @@
+{
+  "collections": {
+    "Corporation": {
+      "embedded_entities": [
+        {
+          "entity": "FinancialReport",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "corporation_has_financial_report"
+        },
+        {
+          "entity": "Country",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "corporation_has_country"
+        },
+        {
+          "entity": "Industry",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "corporation_has_industry"
+        }
+      ],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [],
+      "root_entity": "Corporation",
+      "root_gaf": 21.976047904191613,
+      "root_relevant_by_maf": true,
+      "source_decisions": [
+        "corporation_has_financial_report",
+        "corporation_has_country",
+        "corporation_has_industry"
+      ]
+    },
+    "Disclosure": {
+      "embedded_entities": [],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [],
+      "root_entity": "Disclosure",
+      "root_gaf": 20.78356282271945,
+      "root_relevant_by_maf": true,
+      "source_decisions": []
+    },
+    "FinancialReport": {
+      "embedded_entities": [
+        {
+          "entity": "ReportElement",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "financial_report_contains_report_element"
+        }
+      ],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [
+        {
+          "entity": "Disclosure",
+          "reason": "No observed cardinality evidence was available. The main comparison preserves SchemaLens artifact-consistent evidence and uses references.",
+          "relationship": "financial_report_contains_disclosure"
+        }
+      ],
+      "root_entity": "FinancialReport",
+      "root_gaf": 41.5671256454389,
+      "root_relevant_by_maf": true,
+      "source_decisions": [
+        "financial_report_contains_report_element",
+        "financial_report_contains_disclosure"
+      ]
+    },
+    "FinancialServiceAccount": {
+      "embedded_entities": [
+        {
+          "entity": "Transaction",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "account_records_transaction"
+        },
+        {
+          "entity": "Holding",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "account_has_holding"
+        }
+      ],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [],
+      "root_entity": "FinancialServiceAccount",
+      "root_gaf": 14.590618762475048,
+      "root_relevant_by_maf": true,
+      "source_decisions": [
+        "account_records_transaction",
+        "account_has_holding"
+      ]
+    },
+    "ListedSecurity": {
+      "embedded_entities": [
+        {
+          "entity": "Holding",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "holding_refers_to_listed_security"
+        }
+      ],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [
+        {
+          "entity": "Corporation",
+          "reason": "No observed cardinality evidence was available. The main comparison preserves SchemaLens artifact-consistent evidence and uses references.",
+          "relationship": "corporation_has_listed_security"
+        },
+        {
+          "entity": "Security",
+          "reason": "No observed cardinality evidence was available. The main comparison preserves SchemaLens artifact-consistent evidence and uses references.",
+          "relationship": "listed_security_represents_security"
+        }
+      ],
+      "root_entity": "ListedSecurity",
+      "root_gaf": 29.00822822331075,
+      "root_relevant_by_maf": true,
+      "source_decisions": [
+        "holding_refers_to_listed_security",
+        "corporation_has_listed_security",
+        "listed_security_represents_security"
+      ]
+    },
+    "Person": {
+      "embedded_entities": [
+        {
+          "entity": "FinancialServiceAccount",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "person_owns_financial_service_account"
+        }
+      ],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [],
+      "root_entity": "Person",
+      "root_gaf": 7.0,
+      "root_relevant_by_maf": false,
+      "source_decisions": [
+        "person_owns_financial_service_account"
+      ]
+    },
+    "ReportElement": {
+      "embedded_entities": [],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [
+        {
+          "entity": "StatementElement",
+          "reason": "No observed cardinality evidence was available. The main comparison preserves SchemaLens artifact-consistent evidence and uses references.",
+          "relationship": "report_element_has_statement_element"
+        }
+      ],
+      "root_entity": "ReportElement",
+      "root_gaf": 86.05851979345955,
+      "root_relevant_by_maf": true,
+      "source_decisions": [
+        "report_element_has_statement_element"
+      ]
+    },
+    "Security": {
+      "embedded_entities": [],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [],
+      "root_entity": "Security",
+      "root_gaf": 2.056132414927521,
+      "root_relevant_by_maf": false,
+      "source_decisions": []
+    },
+    "SellTransaction": {
+      "embedded_entities": [],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [],
+      "root_entity": "SellTransaction",
+      "root_gaf": 80.84377692702027,
+      "root_relevant_by_maf": true,
+      "source_decisions": []
+    },
+    "StatementElement": {
+      "embedded_entities": [],
+      "merged_or_specialized_entities": [],
+      "referenced_entities": [],
+      "root_entity": "StatementElement",
+      "root_gaf": 86.05851979345955,
+      "root_relevant_by_maf": true,
+      "source_decisions": []
+    },
+    "Transaction": {
+      "embedded_entities": [
+        {
+          "entity": "ListedSecurity",
+          "reason": "The relationship is binary 1:N in the conceptual model. For containment, ownership, and descriptor relationships, the conceptual source entity is preserved as the top/root. For ordinary associations, the top entity is chosen by higher GAF.",
+          "relationship": "transaction_refers_to_listed_security"
+        }
+      ],
+      "merged_or_specialized_entities": [
+        {
+          "entity": "BuyTransaction",
+          "reason": "Subclass is not relevant by MAF, so the superclass-centered representation is preferred.",
+          "relationship": "buy_transaction_is_transaction",
+          "representation": "fold_subclass_into_superclass_or_discriminator"
+        },
+        {
+          "entity": "SellTransaction",
+          "reason": "Both superclass and subclass are relevant by MAF.",
+          "relationship": "sell_transaction_is_transaction",
+          "representation": "preserve_subtype_as_logical_specialization"
+        }
+      ],
+      "referenced_entities": [],
+      "root_entity": "Transaction",
+      "root_gaf": 92.81982483121187,
+      "root_relevant_by_maf": true,
+      "source_decisions": [
+        "buy_transaction_is_transaction",
+        "sell_transaction_is_transaction",
+        "transaction_refers_to_listed_security"
+      ]
+    }
+  },
+  "logical_schema_name": "Lima_Mello_2015_FIBEN_logical_schema",
+  "notes": [
+    "This schema is generated from GAF/MAF, conceptual cardinalities, and SchemaLens-consistent observed evidence.",
+    "Relationships with no observed cardinality evidence are represented as references in the main comparison mode.",
+    "Physical MongoDB materialization will be implemented in a later phase."
+  ],
+  "schema_status": "logical_decision_layer_not_physical_materialization"
+}

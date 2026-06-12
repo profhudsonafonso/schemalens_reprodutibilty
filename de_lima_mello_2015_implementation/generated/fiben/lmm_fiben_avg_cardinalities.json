@@ -1,0 +1,150 @@
+{
+  "avg_cardinalities": {
+    "BuyTransaction|buy_transaction_is_transaction|Transaction": 1.0,
+    "Corporation|corporation_has_country|Country": 1.0,
+    "Corporation|corporation_has_financial_report|FinancialReport": 20.78356282271945,
+    "Corporation|corporation_has_industry|Industry": 1.0,
+    "Country|corporation_has_country|Corporation": 116.2,
+    "FinancialReport|corporation_has_financial_report|Corporation": 20.78356282271945,
+    "FinancialReport|financial_report_contains_report_element|ReportElement": 4.140701020682801,
+    "FinancialServiceAccount|account_has_holding|Holding": 2.0561324149275215,
+    "FinancialServiceAccount|account_records_transaction|Transaction": 2.0561324149275215,
+    "FinancialServiceAccount|person_owns_financial_service_account|Person": 1.9454,
+    "Holding|account_has_holding|FinancialServiceAccount": 5.487721223761833,
+    "Holding|holding_refers_to_listed_security|ListedSecurity": 1.0,
+    "Industry|corporation_has_industry|Corporation": 6.4916201117318435,
+    "ListedSecurity|holding_refers_to_listed_security|Holding": 72.85974499089254,
+    "ListedSecurity|transaction_refers_to_listed_security|Transaction": 72.85974499089254,
+    "Person|person_owns_financial_service_account|FinancialServiceAccount": 1.9415169660678642,
+    "ReportElement|financial_report_contains_report_element|FinancialReport": 55.77244841048522,
+    "SellTransaction|sell_transaction_is_transaction|Transaction": 1.0,
+    "Transaction|account_records_transaction|FinancialServiceAccount": 2.3574341686508404,
+    "Transaction|buy_transaction_is_transaction|BuyTransaction": 1.0,
+    "Transaction|sell_transaction_is_transaction|SellTransaction": 1.0,
+    "Transaction|transaction_refers_to_listed_security|ListedSecurity": 1.0
+  },
+  "description": "Avg values derived from SchemaLens FIBEN observed cardinality artifacts. No low-confidence relationship was corrected in the main comparison mode.",
+  "methodological_mode": "schemalens_artifact_consistent",
+  "relationship_confidence": {
+    "account_has_holding": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "FinancialServiceAccount",
+      "target_entity": "Holding"
+    },
+    "account_records_transaction": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "FinancialServiceAccount",
+      "target_entity": "Transaction"
+    },
+    "buy_transaction_is_transaction": {
+      "avg_derivation_method": "subtype_or_observed_1_to_1",
+      "hint_confidence": "medium",
+      "lmm_confidence_status": "needs_review_medium_hint_confidence",
+      "observed_cardinality": "observed_1_to_1",
+      "source_entity": "BuyTransaction",
+      "target_entity": "Transaction"
+    },
+    "corporation_has_country": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "Corporation",
+      "target_entity": "Country"
+    },
+    "corporation_has_financial_report": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "Corporation",
+      "target_entity": "FinancialReport"
+    },
+    "corporation_has_industry": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "Corporation",
+      "target_entity": "Industry"
+    },
+    "corporation_has_listed_security": {
+      "avg_derivation_method": "not_derived_no_observed_match",
+      "hint_confidence": "medium",
+      "lmm_confidence_status": "needs_review_no_observed_match",
+      "observed_cardinality": "no_observed_matches",
+      "source_entity": "Corporation",
+      "target_entity": "ListedSecurity"
+    },
+    "financial_report_contains_disclosure": {
+      "avg_derivation_method": "not_derived_no_observed_match",
+      "hint_confidence": "low",
+      "lmm_confidence_status": "needs_review_no_observed_match",
+      "observed_cardinality": "no_observed_matches",
+      "source_entity": "FinancialReport",
+      "target_entity": "Disclosure"
+    },
+    "financial_report_contains_report_element": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "FinancialReport",
+      "target_entity": "ReportElement"
+    },
+    "holding_refers_to_listed_security": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "Holding",
+      "target_entity": "ListedSecurity"
+    },
+    "listed_security_represents_security": {
+      "avg_derivation_method": "not_derived_no_observed_match",
+      "hint_confidence": "medium",
+      "lmm_confidence_status": "needs_review_no_observed_match",
+      "observed_cardinality": "no_observed_matches",
+      "source_entity": "ListedSecurity",
+      "target_entity": "Security"
+    },
+    "person_owns_financial_service_account": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "Person",
+      "target_entity": "FinancialServiceAccount"
+    },
+    "report_element_has_statement_element": {
+      "avg_derivation_method": "not_derived_no_observed_match",
+      "hint_confidence": "low",
+      "lmm_confidence_status": "needs_review_no_observed_match",
+      "observed_cardinality": "no_observed_matches",
+      "source_entity": "ReportElement",
+      "target_entity": "StatementElement"
+    },
+    "sell_transaction_is_transaction": {
+      "avg_derivation_method": "subtype_or_observed_1_to_1",
+      "hint_confidence": "medium",
+      "lmm_confidence_status": "needs_review_medium_hint_confidence",
+      "observed_cardinality": "observed_1_to_1",
+      "source_entity": "SellTransaction",
+      "target_entity": "Transaction"
+    },
+    "transaction_refers_to_listed_security": {
+      "avg_derivation_method": "direct_fk_observed_join",
+      "hint_confidence": "high",
+      "lmm_confidence_status": "high_confidence_observed",
+      "observed_cardinality": "observed_N_to_M",
+      "source_entity": "Transaction",
+      "target_entity": "ListedSecurity"
+    }
+  }
+}
