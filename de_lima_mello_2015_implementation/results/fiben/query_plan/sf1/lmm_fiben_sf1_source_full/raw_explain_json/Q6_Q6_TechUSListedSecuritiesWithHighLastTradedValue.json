@@ -3,7 +3,7 @@
     "$db": "lmm_fiben_sf1_source_full",
     "aggregate": "lmm_transaction",
     "cursor": {},
-    "maxTimeMS": 180000,
+    "maxTimeMS": 600000,
     "pipeline": [
       {
         "$match": {
@@ -73,12 +73,12 @@
         "executionStats": {
           "executionStages": {
             "advanced": 2016,
-            "executionTimeMillisEstimate": 0,
+            "executionTimeMillisEstimate": 4,
             "inputStage": {
               "advanced": 2016,
               "direction": "forward",
               "docsExamined": 20521,
-              "executionTimeMillisEstimate": 0,
+              "executionTimeMillisEstimate": 4,
               "filter": {
                 "VALUE": {
                   "$gte": 4500
@@ -110,7 +110,7 @@
             "works": 20521
           },
           "executionSuccess": true,
-          "executionTimeMillis": 219,
+          "executionTimeMillis": 242,
           "nReturned": 2016,
           "totalDocsExamined": 20521,
           "totalKeysExamined": 0
@@ -153,7 +153,7 @@
           }
         }
       },
-      "executionTimeMillisEstimate": 1,
+      "executionTimeMillisEstimate": 4,
       "nReturned": 1000
     },
     {
@@ -167,7 +167,7 @@
         }
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 95,
+      "executionTimeMillisEstimate": 93,
       "indexesUsed": [
         "LISTEDSECURITYID_1"
       ],
@@ -183,7 +183,7 @@
         "localField": "listed_security.ISPROVIDEDBY"
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 219,
+      "executionTimeMillisEstimate": 242,
       "indexesUsed": [
         "CORPORATIONID_1"
       ],
@@ -203,12 +203,12 @@
         },
         "listed_security": true
       },
-      "executionTimeMillisEstimate": 219,
+      "executionTimeMillisEstimate": 242,
       "nReturned": 1000
     },
     {
       "$limit": 1000,
-      "executionTimeMillisEstimate": 219,
+      "executionTimeMillisEstimate": 242,
       "nReturned": 1000
     }
   ]

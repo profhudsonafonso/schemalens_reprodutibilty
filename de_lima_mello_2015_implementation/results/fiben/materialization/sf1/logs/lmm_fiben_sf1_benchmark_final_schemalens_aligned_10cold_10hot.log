@@ -1,0 +1,219 @@
+[2026-06-13 13:21:59] Running Lima & Mello FIBEN benchmark on lmm_fiben_sf1_source_full
+[2026-06-13 13:21:59] Queries: Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9
+[2026-06-13 13:21:59] Params: {"corporation_id": 2860, "corporation_ticker": "IBM", "person_id": 400000035163, "account_id": 150000000000, "listed_security_id": 1001538, "transaction_refersto": 1001538, "corporation_security_ids": [1002518], "high_value_threshold": 4500, "buy_type": 1, "sell_type": 2, "buy_type_values": [1, "1"], "sell_type_values": [2, "2"]}
+[2026-06-13 13:21:59] Warmup Q1: Q1_CompanyProfile
+[2026-06-13 13:21:59] cold Q1 repetition 1/10
+[2026-06-13 13:21:59] cold Q1 repetition 2/10
+[2026-06-13 13:21:59] cold Q1 repetition 3/10
+[2026-06-13 13:21:59] cold Q1 repetition 4/10
+[2026-06-13 13:21:59] cold Q1 repetition 5/10
+[2026-06-13 13:21:59] cold Q1 repetition 6/10
+[2026-06-13 13:21:59] cold Q1 repetition 7/10
+[2026-06-13 13:21:59] cold Q1 repetition 8/10
+[2026-06-13 13:21:59] cold Q1 repetition 9/10
+[2026-06-13 13:21:59] cold Q1 repetition 10/10
+[2026-06-13 13:21:59] hot Q1 repetition 1/10
+[2026-06-13 13:21:59] hot Q1 repetition 2/10
+[2026-06-13 13:21:59] hot Q1 repetition 3/10
+[2026-06-13 13:21:59] hot Q1 repetition 4/10
+[2026-06-13 13:21:59] hot Q1 repetition 5/10
+[2026-06-13 13:21:59] hot Q1 repetition 6/10
+[2026-06-13 13:21:59] hot Q1 repetition 7/10
+[2026-06-13 13:21:59] hot Q1 repetition 8/10
+[2026-06-13 13:21:59] hot Q1 repetition 9/10
+[2026-06-13 13:21:59] hot Q1 repetition 10/10
+[2026-06-13 13:21:59] Warmup Q2: Q2_CompanyWithIndustryCountryAndListedSecurities
+[2026-06-13 13:21:59] cold Q2 repetition 1/10
+[2026-06-13 13:21:59] cold Q2 repetition 2/10
+[2026-06-13 13:21:59] cold Q2 repetition 3/10
+[2026-06-13 13:21:59] cold Q2 repetition 4/10
+[2026-06-13 13:21:59] cold Q2 repetition 5/10
+[2026-06-13 13:21:59] cold Q2 repetition 6/10
+[2026-06-13 13:21:59] cold Q2 repetition 7/10
+[2026-06-13 13:21:59] cold Q2 repetition 8/10
+[2026-06-13 13:21:59] cold Q2 repetition 9/10
+[2026-06-13 13:21:59] cold Q2 repetition 10/10
+[2026-06-13 13:21:59] hot Q2 repetition 1/10
+[2026-06-13 13:21:59] hot Q2 repetition 2/10
+[2026-06-13 13:21:59] hot Q2 repetition 3/10
+[2026-06-13 13:21:59] hot Q2 repetition 4/10
+[2026-06-13 13:21:59] hot Q2 repetition 5/10
+[2026-06-13 13:21:59] hot Q2 repetition 6/10
+[2026-06-13 13:21:59] hot Q2 repetition 7/10
+[2026-06-13 13:21:59] hot Q2 repetition 8/10
+[2026-06-13 13:21:59] hot Q2 repetition 9/10
+[2026-06-13 13:21:59] hot Q2 repetition 10/10
+[2026-06-13 13:21:59] Warmup Q3: Q3_SecuritiesHeldInEachFinancialServiceAccount
+[2026-06-13 13:21:59] cold Q3 repetition 1/10
+[2026-06-13 13:21:59] cold Q3 repetition 2/10
+[2026-06-13 13:21:59] cold Q3 repetition 3/10
+[2026-06-13 13:21:59] cold Q3 repetition 4/10
+[2026-06-13 13:21:59] cold Q3 repetition 5/10
+[2026-06-13 13:21:59] cold Q3 repetition 6/10
+[2026-06-13 13:21:59] cold Q3 repetition 7/10
+[2026-06-13 13:21:59] cold Q3 repetition 8/10
+[2026-06-13 13:21:59] cold Q3 repetition 9/10
+[2026-06-13 13:21:59] cold Q3 repetition 10/10
+[2026-06-13 13:21:59] hot Q3 repetition 1/10
+[2026-06-13 13:21:59] hot Q3 repetition 2/10
+[2026-06-13 13:21:59] hot Q3 repetition 3/10
+[2026-06-13 13:21:59] hot Q3 repetition 4/10
+[2026-06-13 13:21:59] hot Q3 repetition 5/10
+[2026-06-13 13:21:59] hot Q3 repetition 6/10
+[2026-06-13 13:21:59] hot Q3 repetition 7/10
+[2026-06-13 13:21:59] hot Q3 repetition 8/10
+[2026-06-13 13:21:59] hot Q3 repetition 9/10
+[2026-06-13 13:21:59] hot Q3 repetition 10/10
+[2026-06-13 13:21:59] Warmup Q4: Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity
+[2026-06-13 13:21:59] cold Q4 repetition 1/10
+[2026-06-13 13:21:59] cold Q4 repetition 2/10
+[2026-06-13 13:21:59] cold Q4 repetition 3/10
+[2026-06-13 13:21:59] cold Q4 repetition 4/10
+[2026-06-13 13:21:59] cold Q4 repetition 5/10
+[2026-06-13 13:21:59] cold Q4 repetition 6/10
+[2026-06-13 13:21:59] cold Q4 repetition 7/10
+[2026-06-13 13:21:59] cold Q4 repetition 8/10
+[2026-06-13 13:21:59] cold Q4 repetition 9/10
+[2026-06-13 13:21:59] cold Q4 repetition 10/10
+[2026-06-13 13:21:59] hot Q4 repetition 1/10
+[2026-06-13 13:21:59] hot Q4 repetition 2/10
+[2026-06-13 13:21:59] hot Q4 repetition 3/10
+[2026-06-13 13:21:59] hot Q4 repetition 4/10
+[2026-06-13 13:21:59] hot Q4 repetition 5/10
+[2026-06-13 13:21:59] hot Q4 repetition 6/10
+[2026-06-13 13:21:59] hot Q4 repetition 7/10
+[2026-06-13 13:21:59] hot Q4 repetition 8/10
+[2026-06-13 13:21:59] hot Q4 repetition 9/10
+[2026-06-13 13:21:59] hot Q4 repetition 10/10
+[2026-06-13 13:21:59] Warmup Q5: Q5_ReportsAndMetricDataOfCompany
+[2026-06-13 13:21:59] cold Q5 repetition 1/10
+[2026-06-13 13:21:59] cold Q5 repetition 2/10
+[2026-06-13 13:21:59] cold Q5 repetition 3/10
+[2026-06-13 13:21:59] cold Q5 repetition 4/10
+[2026-06-13 13:21:59] cold Q5 repetition 5/10
+[2026-06-13 13:21:59] cold Q5 repetition 6/10
+[2026-06-13 13:21:59] cold Q5 repetition 7/10
+[2026-06-13 13:21:59] cold Q5 repetition 8/10
+[2026-06-13 13:21:59] cold Q5 repetition 9/10
+[2026-06-13 13:21:59] cold Q5 repetition 10/10
+[2026-06-13 13:21:59] hot Q5 repetition 1/10
+[2026-06-13 13:21:59] hot Q5 repetition 2/10
+[2026-06-13 13:21:59] hot Q5 repetition 3/10
+[2026-06-13 13:21:59] hot Q5 repetition 4/10
+[2026-06-13 13:21:59] hot Q5 repetition 5/10
+[2026-06-13 13:21:59] hot Q5 repetition 6/10
+[2026-06-13 13:21:59] hot Q5 repetition 7/10
+[2026-06-13 13:21:59] hot Q5 repetition 8/10
+[2026-06-13 13:21:59] hot Q5 repetition 9/10
+[2026-06-13 13:21:59] hot Q5 repetition 10/10
+[2026-06-13 13:21:59] Warmup Q6: Q6_TechUSListedSecuritiesWithHighLastTradedValue
+[2026-06-13 13:21:59] cold Q6 repetition 1/10
+[2026-06-13 13:22:00] cold Q6 repetition 2/10
+[2026-06-13 13:22:01] cold Q6 repetition 3/10
+[2026-06-13 13:22:01] cold Q6 repetition 4/10
+[2026-06-13 13:22:02] cold Q6 repetition 5/10
+[2026-06-13 13:22:02] cold Q6 repetition 6/10
+[2026-06-13 13:22:03] cold Q6 repetition 7/10
+[2026-06-13 13:22:04] cold Q6 repetition 8/10
+[2026-06-13 13:22:05] cold Q6 repetition 9/10
+[2026-06-13 13:22:05] cold Q6 repetition 10/10
+[2026-06-13 13:22:06] hot Q6 repetition 1/10
+[2026-06-13 13:22:07] hot Q6 repetition 2/10
+[2026-06-13 13:22:08] hot Q6 repetition 3/10
+[2026-06-13 13:22:08] hot Q6 repetition 4/10
+[2026-06-13 13:22:09] hot Q6 repetition 5/10
+[2026-06-13 13:22:10] hot Q6 repetition 6/10
+[2026-06-13 13:22:10] hot Q6 repetition 7/10
+[2026-06-13 13:22:11] hot Q6 repetition 8/10
+[2026-06-13 13:22:11] hot Q6 repetition 9/10
+[2026-06-13 13:22:12] hot Q6 repetition 10/10
+[2026-06-13 13:22:13] Warmup Q7: Q7_PersonsWhoBoughtMoreIBMThanSold
+[2026-06-13 13:22:13] cold Q7 repetition 1/10
+[2026-06-13 13:22:13] cold Q7 repetition 2/10
+[2026-06-13 13:22:13] cold Q7 repetition 3/10
+[2026-06-13 13:22:13] cold Q7 repetition 4/10
+[2026-06-13 13:22:13] cold Q7 repetition 5/10
+[2026-06-13 13:22:13] cold Q7 repetition 6/10
+[2026-06-13 13:22:13] cold Q7 repetition 7/10
+[2026-06-13 13:22:13] cold Q7 repetition 8/10
+[2026-06-13 13:22:13] cold Q7 repetition 9/10
+[2026-06-13 13:22:13] cold Q7 repetition 10/10
+[2026-06-13 13:22:13] hot Q7 repetition 1/10
+[2026-06-13 13:22:13] hot Q7 repetition 2/10
+[2026-06-13 13:22:13] hot Q7 repetition 3/10
+[2026-06-13 13:22:13] hot Q7 repetition 4/10
+[2026-06-13 13:22:13] hot Q7 repetition 5/10
+[2026-06-13 13:22:13] hot Q7 repetition 6/10
+[2026-06-13 13:22:13] hot Q7 repetition 7/10
+[2026-06-13 13:22:13] hot Q7 repetition 8/10
+[2026-06-13 13:22:13] hot Q7 repetition 9/10
+[2026-06-13 13:22:13] hot Q7 repetition 10/10
+[2026-06-13 13:22:13] Warmup Q8: Q8_IBMTransactionsBelowAverageSellingPrice
+[2026-06-13 13:22:13] cold Q8 repetition 1/10
+[2026-06-13 13:22:13] cold Q8 repetition 2/10
+[2026-06-13 13:22:13] cold Q8 repetition 3/10
+[2026-06-13 13:22:13] cold Q8 repetition 4/10
+[2026-06-13 13:22:13] cold Q8 repetition 5/10
+[2026-06-13 13:22:13] cold Q8 repetition 6/10
+[2026-06-13 13:22:13] cold Q8 repetition 7/10
+[2026-06-13 13:22:13] cold Q8 repetition 8/10
+[2026-06-13 13:22:13] cold Q8 repetition 9/10
+[2026-06-13 13:22:13] cold Q8 repetition 10/10
+[2026-06-13 13:22:13] hot Q8 repetition 1/10
+[2026-06-13 13:22:13] hot Q8 repetition 2/10
+[2026-06-13 13:22:13] hot Q8 repetition 3/10
+[2026-06-13 13:22:13] hot Q8 repetition 4/10
+[2026-06-13 13:22:13] hot Q8 repetition 5/10
+[2026-06-13 13:22:13] hot Q8 repetition 6/10
+[2026-06-13 13:22:13] hot Q8 repetition 7/10
+[2026-06-13 13:22:13] hot Q8 repetition 8/10
+[2026-06-13 13:22:13] hot Q8 repetition 9/10
+[2026-06-13 13:22:13] hot Q8 repetition 10/10
+[2026-06-13 13:22:13] Warmup Q9: Q9_PersonsWhoBoughtAndSoldSameStock
+[2026-06-13 13:22:13] cold Q9 repetition 1/10
+[2026-06-13 13:22:13] cold Q9 repetition 2/10
+[2026-06-13 13:22:13] cold Q9 repetition 3/10
+[2026-06-13 13:22:13] cold Q9 repetition 4/10
+[2026-06-13 13:22:13] cold Q9 repetition 5/10
+[2026-06-13 13:22:13] cold Q9 repetition 6/10
+[2026-06-13 13:22:13] cold Q9 repetition 7/10
+[2026-06-13 13:22:13] cold Q9 repetition 8/10
+[2026-06-13 13:22:13] cold Q9 repetition 9/10
+[2026-06-13 13:22:13] cold Q9 repetition 10/10
+[2026-06-13 13:22:13] hot Q9 repetition 1/10
+[2026-06-13 13:22:13] hot Q9 repetition 2/10
+[2026-06-13 13:22:13] hot Q9 repetition 3/10
+[2026-06-13 13:22:13] hot Q9 repetition 4/10
+[2026-06-13 13:22:13] hot Q9 repetition 5/10
+[2026-06-13 13:22:13] hot Q9 repetition 6/10
+[2026-06-13 13:22:13] hot Q9 repetition 7/10
+[2026-06-13 13:22:13] hot Q9 repetition 8/10
+[2026-06-13 13:22:13] hot Q9 repetition 9/10
+[2026-06-13 13:22:13] hot Q9 repetition 10/10
+[2026-06-13 13:22:13] Done.
+{
+  "aggregate_csv": "de_lima_mello_2015_implementation/results/fiben/benchmark/sf1/lmm_fiben_sf1_source_full/lmm_fiben_benchmark_aggregate_results.csv",
+  "cold_runs": 10,
+  "database": "lmm_fiben_sf1_source_full",
+  "dataset": "FIBEN",
+  "hot_runs": 10,
+  "important_note": "Q10 is excluded because it is an insert/update workload and requires isolated reset/rollback benchmarking.",
+  "max_time_ms": 600000,
+  "method": "lima_mello_2015",
+  "queries": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9"
+  ],
+  "raw_csv": "de_lima_mello_2015_implementation/results/fiben/benchmark/sf1/lmm_fiben_sf1_source_full/lmm_fiben_benchmark_raw_results.csv",
+  "result_limit": 1000,
+  "scale": "sf1",
+  "status": "completed",
+  "warmup_runs": 0
+}

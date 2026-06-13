@@ -3,24 +3,58 @@
     "$db": "lmm_fiben_sf1_source_full",
     "aggregate": "lmm_transaction",
     "cursor": {},
-    "maxTimeMS": 180000,
+    "maxTimeMS": 600000,
     "pipeline": [
       {
         "$match": {
-          "REFERSTO": 1001000,
-          "TRANSACTIONTYPE": 2
+          "REFERSTO": {
+            "$in": [
+              1002518
+            ]
+          }
+        }
+      },
+      {
+        "$set": {
+          "_price_value": {
+            "$ifNull": [
+              "$HASPRICE",
+              {
+                "$ifNull": [
+                  "$PRICE",
+                  "$VALUE"
+                ]
+              }
+            ]
+          }
         }
       },
       {
         "$group": {
-          "_id": "$REFERSTO",
-          "avg_sell_value": {
-            "$avg": "$VALUE"
+          "_id": null,
+          "avg_sell_price": {
+            "$avg": {
+              "$cond": [
+                {
+                  "$in": [
+                    "$TRANSACTIONTYPE",
+                    [
+                      2,
+                      "2"
+                    ]
+                  ]
+                },
+                "$_price_value",
+                null
+              ]
+            }
           },
           "transactions": {
             "$push": {
+              "REFERSTO": "$REFERSTO",
               "SECURITIESTRANSACTIONID": "$SECURITIESTRANSACTIONID",
-              "VALUE": "$VALUE"
+              "TRANSACTIONTYPE": "$TRANSACTIONTYPE",
+              "price": "$_price_value"
             }
           }
         }
@@ -32,8 +66,8 @@
         "$match": {
           "$expr": {
             "$lt": [
-              "$transactions.VALUE",
-              "$avg_sell_value"
+              "$transactions.price",
+              "$avg_sell_price"
             ]
           }
         }
@@ -43,9 +77,9 @@
       }
     ]
   },
-  "explainVersion": "2",
+  "explainVersion": "1",
   "ok": 1.0,
-  "queryShapeHash": "4F87596CCF6D1754E7EC49EE21D1FC5CE2DC744C9A753622007226B64C97250E",
+  "queryShapeHash": "17B95C884626C5743D72BD72F47F74F73BCE30135204642A359CAF156BD490AB",
   "serverInfo": {
     "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
     "host": "60053e166f8f",
@@ -69,196 +103,80 @@
       "$cursor": {
         "executionStats": {
           "executionStages": {
-            "closes": 1,
-            "executionTimeMillisEstimate": 1,
+            "advanced": 179,
+            "executionTimeMillisEstimate": 0,
             "inputStage": {
-              "closes": 1,
-              "executionTimeMillisEstimate": 1,
+              "advanced": 179,
+              "alreadyHasObj": 0,
+              "docsExamined": 179,
+              "executionTimeMillisEstimate": 0,
               "inputStage": {
-                "closes": 1,
-                "executionTimeMillisEstimate": 1,
-                "expressions": {
-                  "16": "aggDoubleDoubleSum(s10) ",
-                  "17": "sum(\n    if ((typeMatch(s10, 1088) ?: true) || !(isNumber(s10))) \n    then 0ll \n    else 1ll \n) ",
-                  "18": "addToArrayCapped(newObj(\"SECURITIESTRANSACTIONID\", s9, \"VALUE\", s10), 104857600) ",
-                  "initExprs": {
-                    "16": null,
-                    "17": null,
-                    "18": null
-                  }
+                "advanced": 179,
+                "direction": "forward",
+                "dupsDropped": 0,
+                "dupsTested": 0,
+                "executionTimeMillisEstimate": 0,
+                "indexBounds": {
+                  "REFERSTO": [
+                    "[1002518, 1002518]"
+                  ]
                 },
-                "groupBySlots": [
-                  15
-                ],
-                "inputStage": {
-                  "closes": 1,
-                  "executionTimeMillisEstimate": 1,
-                  "inputStage": {
-                    "closes": 1,
-                    "executionTimeMillisEstimate": 1,
-                    "filter": "traverseF(s11, lambda(l2.0) { ((move(l2.0) == 2) ?: false) }, false) ",
-                    "inputStage": {
-                      "closes": 1,
-                      "collectionScans": 0,
-                      "collectionSeeks": 196,
-                      "executionTimeMillisEstimate": 1,
-                      "indexScans": 0,
-                      "indexSeeks": 1,
-                      "indexesUsed": [
-                        "REFERSTO_1"
-                      ],
-                      "innerCloses": 1,
-                      "innerOpens": 196,
-                      "innerStage": {
-                        "closes": 1,
-                        "executionTimeMillisEstimate": 1,
-                        "inputStage": {
-                          "closes": 1,
-                          "executionTimeMillisEstimate": 1,
-                          "indexIdentSlot": 3,
-                          "indexKeyPatternSlot": 5,
-                          "indexKeySlot": 4,
-                          "isEOF": 0,
-                          "nReturned": 196,
-                          "numReads": 196,
-                          "opens": 196,
-                          "planNodeId": 2,
-                          "recordIdSlot": 7,
-                          "recordSlot": 6,
-                          "restoreState": 1,
-                          "saveState": 1,
-                          "scanFieldNames": [
-                            "REFERSTO",
-                            "SECURITIESTRANSACTIONID",
-                            "VALUE",
-                            "TRANSACTIONTYPE"
-                          ],
-                          "scanFieldSlots": [
-                            8,
-                            9,
-                            10,
-                            11
-                          ],
-                          "seekRecordIdSlot": 1,
-                          "snapshotIdSlot": 2,
-                          "stage": "seek"
-                        },
-                        "isEOF": 1,
-                        "limit": 1,
-                        "nReturned": 196,
-                        "opens": 196,
-                        "planNodeId": 2,
-                        "restoreState": 1,
-                        "saveState": 1,
-                        "stage": "limit"
-                      },
-                      "isEOF": 1,
-                      "nReturned": 196,
-                      "opens": 1,
-                      "outerCorrelated": [
-                        1,
-                        2,
-                        3,
-                        4,
-                        5
-                      ],
-                      "outerProjects": [],
-                      "outerStage": {
-                        "closes": 1,
-                        "executionTimeMillisEstimate": 0,
-                        "indexIdentSlot": 3,
-                        "indexKeySlot": 4,
-                        "indexKeysToInclude": "00000000000000000000000000000000",
-                        "indexName": "REFERSTO_1",
-                        "isEOF": 1,
-                        "keysExamined": 196,
-                        "nReturned": 196,
-                        "numReads": 197,
-                        "opens": 1,
-                        "outputSlots": [],
-                        "planNodeId": 1,
-                        "recordIdSlot": 1,
-                        "restoreState": 1,
-                        "saveState": 1,
-                        "seekKeyHigh": "KS(2D1E8C50FE04) ",
-                        "seekKeyLow": "KS(2D1E8C500104) ",
-                        "seeks": 1,
-                        "snapshotIdSlot": 2,
-                        "stage": "ixseek"
-                      },
-                      "planNodeId": 2,
-                      "restoreState": 1,
-                      "saveState": 1,
-                      "stage": "nlj",
-                      "totalDocsExamined": 196,
-                      "totalKeysExamined": 196
-                    },
-                    "isEOF": 1,
-                    "nReturned": 89,
-                    "numTested": 196,
-                    "opens": 1,
-                    "planNodeId": 2,
-                    "restoreState": 1,
-                    "saveState": 1,
-                    "stage": "filter"
-                  },
-                  "isEOF": 1,
-                  "nReturned": 89,
-                  "opens": 1,
-                  "planNodeId": 4,
-                  "projections": {
-                    "15": "(s8 ?: null) "
-                  },
-                  "restoreState": 1,
-                  "saveState": 1,
-                  "stage": "project"
-                },
+                "indexName": "REFERSTO_1",
+                "indexVersion": 2,
                 "isEOF": 1,
-                "mergingExprs": {
-                  "12": "aggMergeDoubleDoubleSums(s12) ",
-                  "13": "sum(s13) ",
-                  "14": "aggConcatArraysCapped(s14, 104857600) "
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "REFERSTO": 1
                 },
-                "nReturned": 1,
-                "opens": 1,
-                "planNodeId": 4,
-                "restoreState": 1,
-                "saveState": 1,
-                "spilledBytes": 0,
-                "spilledDataStorageSize": 0,
-                "spilledRecords": 0,
-                "spills": 0,
-                "stage": "group",
-                "usedDisk": false
+                "keysExamined": 179,
+                "multiKeyPaths": {
+                  "REFERSTO": []
+                },
+                "nReturned": 179,
+                "needTime": 0,
+                "needYield": 0,
+                "restoreState": 3,
+                "saveState": 3,
+                "seeks": 1,
+                "stage": "IXSCAN",
+                "works": 180
               },
               "isEOF": 1,
-              "nReturned": 1,
-              "opens": 1,
-              "planNodeId": 4,
-              "projections": {
-                "19": "\n    if (s17 == 0ll) \n    then null \n    else (doubleDoubleSumFinalize(s16) / s17) \n",
-                "20": "getElement(s18, 0) "
-              },
-              "restoreState": 1,
-              "saveState": 1,
-              "stage": "project"
+              "nReturned": 179,
+              "needTime": 0,
+              "needYield": 0,
+              "restoreState": 3,
+              "saveState": 3,
+              "stage": "FETCH",
+              "works": 180
             },
+            "isCached": false,
             "isEOF": 1,
-            "nReturned": 1,
-            "opens": 1,
-            "planNodeId": 4,
-            "projections": {
-              "21": "newObj(\"_id\", s15, \"avg_sell_value\", s19, \"transactions\", s20) "
+            "nReturned": 179,
+            "needTime": 0,
+            "needYield": 0,
+            "restoreState": 3,
+            "saveState": 3,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "HASPRICE": 1,
+              "PRICE": 1,
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "TRANSACTIONTYPE": 1,
+              "VALUE": 1,
+              "_id": 0
             },
-            "restoreState": 1,
-            "saveState": 1,
-            "stage": "project"
+            "works": 180
           },
           "executionSuccess": true,
           "executionTimeMillis": 1,
-          "nReturned": 1,
-          "totalDocsExamined": 196,
-          "totalKeysExamined": 196
+          "nReturned": 179,
+          "totalDocsExamined": 179,
+          "totalKeysExamined": 179
         },
         "queryPlanner": {
           "indexFilterSet": false,
@@ -268,94 +186,145 @@
           "namespace": "lmm_fiben_sf1_source_full.lmm_transaction",
           "optimizationTimeMillis": 0,
           "parsedQuery": {
-            "$and": [
-              {
-                "REFERSTO": {
-                  "$eq": 1001000
-                }
-              },
-              {
-                "TRANSACTIONTYPE": {
-                  "$eq": 2
-                }
-              }
-            ]
+            "REFERSTO": {
+              "$eq": 1002518
+            }
           },
-          "planCacheKey": "19E6F3CC",
-          "planCacheShapeHash": "B78B995B",
+          "planCacheKey": "7D39E168",
+          "planCacheShapeHash": "D9479603",
           "prunedSimilarIndexes": false,
-          "queryHash": "B78B995B",
+          "queryHash": "D9479603",
           "rejectedPlans": [],
           "winningPlan": {
-            "isCached": false,
-            "queryPlan": {
+            "inputStage": {
               "inputStage": {
-                "filter": {
-                  "TRANSACTIONTYPE": {
-                    "$eq": 2
-                  }
+                "direction": "forward",
+                "indexBounds": {
+                  "REFERSTO": [
+                    "[1002518, 1002518]"
+                  ]
                 },
-                "inputStage": {
-                  "direction": "forward",
-                  "indexBounds": {
-                    "REFERSTO": [
-                      "[1001000, 1001000]"
-                    ]
-                  },
-                  "indexName": "REFERSTO_1",
-                  "indexVersion": 2,
-                  "isMultiKey": false,
-                  "isPartial": false,
-                  "isSparse": false,
-                  "isUnique": false,
-                  "keyPattern": {
-                    "REFERSTO": 1
-                  },
-                  "multiKeyPaths": {
-                    "REFERSTO": []
-                  },
-                  "planNodeId": 1,
-                  "stage": "IXSCAN"
+                "indexName": "REFERSTO_1",
+                "indexVersion": 2,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "REFERSTO": 1
                 },
-                "planNodeId": 2,
-                "stage": "FETCH"
+                "multiKeyPaths": {
+                  "REFERSTO": []
+                },
+                "stage": "IXSCAN"
               },
-              "planNodeId": 4,
-              "stage": "GROUP"
+              "stage": "FETCH"
             },
-            "slotBasedPlan": {
-              "slots": "$$RESULT=s21 env: { s5 = {\"REFERSTO\" : 1} }",
-              "stages": "[4] project [s21 = newObj(\"_id\", s15, \"avg_sell_value\", s19, \"transactions\", s20)] \n[4] project [s19 = \n    if (s17 == 0ll) \n    then null \n    else (doubleDoubleSumFinalize(s16) / s17) \n, s20 = getElement(s18, 0)] \n[4] group [s15] [s16 = aggDoubleDoubleSum(s10), s17 = sum(\n    if ((typeMatch(s10, 1088) ?: true) || !(isNumber(s10))) \n    then 0ll \n    else 1ll \n), s18 = addToArrayCapped(newObj(\"SECURITIESTRANSACTIONID\", s9, \"VALUE\", s10), 104857600)] spillSlots[s12, s13, s14] mergingExprs[aggMergeDoubleDoubleSums(s12), sum(s13), aggConcatArraysCapped(s14, 104857600)] \n[4] project [s15 = (s8 ?: null)] \n[2] filter {traverseF(s11, lambda(l2.0) { ((move(l2.0) == 2) ?: false) }, false)} \n[2] nlj inner [] [s1, s2, s3, s4, s5] \n    left \n        [1] ixseek KS(2D1E8C500104) KS(2D1E8C50FE04) s4 s1 s2 s3 [] @\"a8307572-a86c-4dc3-bbfe-49c5d373963d\" @\"REFERSTO_1\" true \n    right \n        [2] limit 1ll \n        [2] seek s1 s6 s7 s2 s3 s4 s5 none none [s8 = REFERSTO, s9 = SECURITIESTRANSACTIONID, s10 = VALUE, s11 = TRANSACTIONTYPE] @\"a8307572-a86c-4dc3-bbfe-49c5d373963d\" true false \n"
+            "isCached": false,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "HASPRICE": 1,
+              "PRICE": 1,
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "TRANSACTIONTYPE": 1,
+              "VALUE": 1,
+              "_id": 0
             }
           }
         }
       },
       "executionTimeMillisEstimate": 1,
-      "nReturned": 1
+      "nReturned": 179
+    },
+    {
+      "$set": {
+        "_price_value": {
+          "$ifNull": [
+            "$HASPRICE",
+            {
+              "$ifNull": [
+                "$PRICE",
+                "$VALUE"
+              ]
+            }
+          ]
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 179
+    },
+    {
+      "$group": {
+        "_id": {
+          "$const": null
+        },
+        "avg_sell_price": {
+          "$avg": {
+            "$cond": [
+              {
+                "$in": [
+                  "$TRANSACTIONTYPE",
+                  {
+                    "$const": [
+                      2,
+                      "2"
+                    ]
+                  }
+                ]
+              },
+              "$_price_value",
+              {
+                "$const": null
+              }
+            ]
+          }
+        },
+        "transactions": {
+          "$push": {
+            "REFERSTO": "$REFERSTO",
+            "SECURITIESTRANSACTIONID": "$SECURITIESTRANSACTIONID",
+            "TRANSACTIONTYPE": "$TRANSACTIONTYPE",
+            "price": "$_price_value"
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "maxAccumulatorMemoryUsageBytes": {
+        "avg_sell_price": 104,
+        "transactions": 69703
+      },
+      "nReturned": 1,
+      "numBytesSpilledEstimate": 0,
+      "spilledDataStorageSize": 0,
+      "spilledRecords": 0,
+      "spills": 0,
+      "totalOutputDataSizeBytes": 69948,
+      "usedDisk": false
     },
     {
       "$unwind": {
         "path": "$transactions"
       },
       "executionTimeMillisEstimate": 1,
-      "nReturned": 89
+      "nReturned": 179
     },
     {
       "$match": {
         "$expr": {
           "$lt": [
-            "$transactions.VALUE",
-            "$avg_sell_value"
+            "$transactions.price",
+            "$avg_sell_price"
           ]
         }
       },
       "executionTimeMillisEstimate": 1,
-      "nReturned": 46
+      "nReturned": 87
     },
     {
       "$limit": 1000,
       "executionTimeMillisEstimate": 1,
-      "nReturned": 46
+      "nReturned": 87
     }
   ]
 }

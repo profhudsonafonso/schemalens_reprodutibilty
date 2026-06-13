@@ -377,28 +377,58 @@ def pick_security_ids_for_corporation(db, corporation_id: str) -> list[str]:
 
     for raw_sid in sorted(raw_security_ids):
         # Prefer transaction-backed SF variants, deterministically sorted.
-        variants = db["lmm_transaction"].distinct(
-            "REFERSTO",
-            {
-                "REFERSTO": {
-                    "$exists": True,
-                    "$nin": [None, "", "REFERSTO", "LISTEDSECURITYID"],
-                    "$regex": f"(^|_){re.escape(raw_sid)}$",
-                }
-            },
+        # Try to find the transaction-backed REFERSTO value preserving the
+        # original MongoDB type. This matters because SF1 may store ids as
+        # integers, while SF10/SF30 may store replicated ids as strings.
+        candidate_match_values = [raw_sid]
+        try:
+            candidate_match_values.append(int(raw_sid))
+        except Exception:
+            pass
+
+        variants = []
+
+        # Exact raw/id match first. This covers SF1 numeric identifiers.
+        for value in candidate_match_values:
+            variants.extend(
+                db["lmm_transaction"].distinct(
+                    "REFERSTO",
+                    {
+                        "REFERSTO": {
+                            "$exists": True,
+                            "$nin": [None, "", "REFERSTO", "LISTEDSECURITYID"],
+                            "$eq": value,
+                        }
+                    },
+                )
+            )
+
+        # Regex match for replicated string identifiers such as
+        # SF10_SEC_R01_<id> or SF30_SEC_R01_<id>.
+        variants.extend(
+            db["lmm_transaction"].distinct(
+                "REFERSTO",
+                {
+                    "REFERSTO": {
+                        "$exists": True,
+                        "$nin": [None, "", "REFERSTO", "LISTEDSECURITYID"],
+                        "$regex": f"(^|_){re.escape(raw_sid)}$",
+                    }
+                },
+            )
         )
 
-        variants = sorted(
-            str(v)
-            for v in variants
-            if v and str(v).split("_")[-1] == raw_sid
-        )
+        # Deduplicate while preserving original values and types.
+        dedup = {}
+        for v in variants:
+            if v is not None and str(v).split("_")[-1] == raw_sid:
+                dedup[str(v)] = v
+        variants = [dedup[k] for k in sorted(dedup)]
 
-        # Prefer SF-prefixed transaction-backed variants. The raw id may exist in
-        # Security, but transactions in SF10 usually reference SF10_SEC_Rxx_<id>.
+        # Prefer SF-prefixed transaction-backed variants when present.
         sf_variants = [
             v for v in variants
-            if v.startswith("SF10_SEC_R")
+            if isinstance(v, str) and "_SEC_R" in v and v.startswith("SF")
         ]
 
         if sf_variants:
@@ -406,8 +436,11 @@ def pick_security_ids_for_corporation(db, corporation_id: str) -> list[str]:
         elif variants:
             selected_ids.append(variants[0])
         else:
-            # Fallback to raw id if no transaction-backed id exists.
-            selected_ids.append(raw_sid)
+            # Fallback to numeric raw id when possible, otherwise string raw id.
+            try:
+                selected_ids.append(int(raw_sid))
+            except Exception:
+                selected_ids.append(raw_sid)
 
     if selected_ids:
         return selected_ids
@@ -507,7 +540,7 @@ def build_params(db) -> Dict[str, Any]:
     if not company:
         company = first_non_header_doc(db, "lmm_corporation", "CORPORATIONID")
 
-    corporation_id = str(company.get("CORPORATIONID"))
+    corporation_id = company.get("CORPORATIONID")
     corporation_security_ids = pick_security_ids_for_corporation(db, corporation_id)
 
     account = first_non_header_doc(

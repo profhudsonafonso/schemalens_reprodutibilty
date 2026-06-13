@@ -1,41 +1,70 @@
 {
   "command": {
     "$db": "lmm_fiben_sf1_source_full",
-    "aggregate": "lmm_person",
+    "aggregate": "lmm_transaction",
     "cursor": {},
-    "maxTimeMS": 180000,
+    "maxTimeMS": 600000,
     "pipeline": [
       {
         "$match": {
-          "PERSONID": 400000000000
+          "REFERSTO": 1001538,
+          "TRANSACTIONTYPE": {
+            "$in": [
+              1,
+              "1",
+              2,
+              "2"
+            ]
+          }
         }
       },
       {
-        "$unwind": "$financial_service_account"
-      },
-      {
-        "$unwind": "$financial_service_account.transaction"
-      },
-      {
         "$group": {
-          "_id": {
-            "person": "$PERSONID",
-            "stock": "$financial_service_account.transaction.REFERSTO"
-          },
+          "_id": "$ISFACILITATEDBY",
           "n_transactions": {
             "$sum": 1
           },
           "types": {
-            "$addToSet": "$financial_service_account.transaction.TRANSACTIONTYPE"
+            "$addToSet": "$TRANSACTIONTYPE"
           }
         }
       },
       {
         "$match": {
-          "types": {
-            "$all": [
-              1,
-              2
+          "$expr": {
+            "$and": [
+              {
+                "$gt": [
+                  {
+                    "$size": {
+                      "$setIntersection": [
+                        "$types",
+                        [
+                          1,
+                          "1"
+                        ]
+                      ]
+                    }
+                  },
+                  0
+                ]
+              },
+              {
+                "$gt": [
+                  {
+                    "$size": {
+                      "$setIntersection": [
+                        "$types",
+                        [
+                          2,
+                          "2"
+                        ]
+                      ]
+                    }
+                  },
+                  0
+                ]
+              }
             ]
           }
         }
@@ -45,9 +74,9 @@
       }
     ]
   },
-  "explainVersion": "1",
+  "explainVersion": "2",
   "ok": 1.0,
-  "queryShapeHash": "F32DA8CD1B653DCFBBCF47422EE332F4E6735A66E1EF699A977F6650846506FE",
+  "queryShapeHash": "B8D2B83E8B0CC820CF0C3BA1AA6E7E7247ACA551B7A4CE172F948656845ED978",
   "serverInfo": {
     "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
     "host": "60053e166f8f",
@@ -71,196 +100,331 @@
       "$cursor": {
         "executionStats": {
           "executionStages": {
-            "advanced": 1,
+            "closes": 1,
             "executionTimeMillisEstimate": 0,
             "inputStage": {
-              "advanced": 1,
-              "alreadyHasObj": 0,
-              "docsExamined": 1,
+              "closes": 1,
               "executionTimeMillisEstimate": 0,
               "inputStage": {
-                "advanced": 1,
-                "direction": "forward",
-                "dupsDropped": 0,
-                "dupsTested": 0,
+                "closes": 1,
                 "executionTimeMillisEstimate": 0,
-                "indexBounds": {
-                  "PERSONID": [
-                    "[400000000000, 400000000000]"
-                  ]
+                "expressions": {
+                  "14": "addToSetCapped(s9, 104857600) ",
+                  "15": "count() ",
+                  "initExprs": {
+                    "14": null,
+                    "15": null
+                  }
                 },
-                "indexName": "PERSONID_1",
-                "indexVersion": 2,
+                "groupBySlots": [
+                  13
+                ],
+                "inputStage": {
+                  "closes": 1,
+                  "executionTimeMillisEstimate": 0,
+                  "inputStage": {
+                    "closes": 1,
+                    "executionTimeMillisEstimate": 0,
+                    "filter": "traverseF(s9, lambda(l2.0) { isMember(move(l2.0), s10) }, false) ",
+                    "inputStage": {
+                      "closes": 1,
+                      "collectionScans": 0,
+                      "collectionSeeks": 229,
+                      "executionTimeMillisEstimate": 0,
+                      "indexScans": 0,
+                      "indexSeeks": 1,
+                      "indexesUsed": [
+                        "REFERSTO_1"
+                      ],
+                      "innerCloses": 1,
+                      "innerOpens": 229,
+                      "innerStage": {
+                        "closes": 1,
+                        "executionTimeMillisEstimate": 0,
+                        "inputStage": {
+                          "closes": 1,
+                          "executionTimeMillisEstimate": 0,
+                          "indexIdentSlot": 3,
+                          "indexKeyPatternSlot": 5,
+                          "indexKeySlot": 4,
+                          "isEOF": 0,
+                          "nReturned": 229,
+                          "numReads": 229,
+                          "opens": 229,
+                          "planNodeId": 2,
+                          "recordIdSlot": 7,
+                          "recordSlot": 6,
+                          "restoreState": 4,
+                          "saveState": 4,
+                          "scanFieldNames": [
+                            "ISFACILITATEDBY",
+                            "TRANSACTIONTYPE"
+                          ],
+                          "scanFieldSlots": [
+                            8,
+                            9
+                          ],
+                          "seekRecordIdSlot": 1,
+                          "snapshotIdSlot": 2,
+                          "stage": "seek"
+                        },
+                        "isEOF": 1,
+                        "limit": 1,
+                        "nReturned": 229,
+                        "opens": 229,
+                        "planNodeId": 2,
+                        "restoreState": 4,
+                        "saveState": 4,
+                        "stage": "limit"
+                      },
+                      "isEOF": 1,
+                      "nReturned": 229,
+                      "opens": 1,
+                      "outerCorrelated": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                      ],
+                      "outerProjects": [],
+                      "outerStage": {
+                        "closes": 1,
+                        "executionTimeMillisEstimate": 0,
+                        "indexIdentSlot": 3,
+                        "indexKeySlot": 4,
+                        "indexKeysToInclude": "00000000000000000000000000000000",
+                        "indexName": "REFERSTO_1",
+                        "isEOF": 1,
+                        "keysExamined": 229,
+                        "nReturned": 229,
+                        "numReads": 230,
+                        "opens": 1,
+                        "outputSlots": [],
+                        "planNodeId": 1,
+                        "recordIdSlot": 1,
+                        "restoreState": 4,
+                        "saveState": 4,
+                        "seekKeyHigh": "KS(2D1E9084FE04) ",
+                        "seekKeyLow": "KS(2D1E90840104) ",
+                        "seeks": 1,
+                        "snapshotIdSlot": 2,
+                        "stage": "ixseek"
+                      },
+                      "planNodeId": 2,
+                      "restoreState": 4,
+                      "saveState": 4,
+                      "stage": "nlj",
+                      "totalDocsExamined": 229,
+                      "totalKeysExamined": 229
+                    },
+                    "isEOF": 1,
+                    "nReturned": 229,
+                    "numTested": 229,
+                    "opens": 1,
+                    "planNodeId": 2,
+                    "restoreState": 4,
+                    "saveState": 4,
+                    "stage": "filter"
+                  },
+                  "isEOF": 1,
+                  "nReturned": 229,
+                  "opens": 1,
+                  "planNodeId": 4,
+                  "projections": {
+                    "13": "(s8 ?: null) "
+                  },
+                  "restoreState": 4,
+                  "saveState": 4,
+                  "stage": "project"
+                },
                 "isEOF": 1,
-                "isMultiKey": false,
-                "isPartial": false,
-                "isSparse": false,
-                "isUnique": false,
-                "keyPattern": {
-                  "PERSONID": 1
+                "mergingExprs": {
+                  "11": "aggSetUnionCapped(s11, 104857600) ",
+                  "12": "sum(s12) "
                 },
-                "keysExamined": 1,
-                "multiKeyPaths": {
-                  "PERSONID": []
-                },
-                "nReturned": 1,
-                "needTime": 0,
-                "needYield": 0,
-                "restoreState": 1,
-                "saveState": 1,
-                "seeks": 1,
-                "stage": "IXSCAN",
-                "works": 2
+                "nReturned": 227,
+                "opens": 1,
+                "planNodeId": 4,
+                "restoreState": 4,
+                "saveState": 4,
+                "spilledBytes": 0,
+                "spilledDataStorageSize": 0,
+                "spilledRecords": 0,
+                "spills": 0,
+                "stage": "group",
+                "usedDisk": false
               },
               "isEOF": 1,
-              "nReturned": 1,
-              "needTime": 0,
-              "needYield": 0,
-              "restoreState": 1,
-              "saveState": 1,
-              "stage": "FETCH",
-              "works": 2
+              "nReturned": 227,
+              "opens": 1,
+              "planNodeId": 4,
+              "projections": {
+                "16": "getElement(s14, 0) ",
+                "17": "(convert ( s15, int32) ?: s15) "
+              },
+              "restoreState": 4,
+              "saveState": 4,
+              "stage": "project"
             },
-            "isCached": false,
             "isEOF": 1,
-            "nReturned": 1,
-            "needTime": 0,
-            "needYield": 0,
-            "restoreState": 1,
-            "saveState": 1,
-            "stage": "PROJECTION_SIMPLE",
-            "transformBy": {
-              "PERSONID": 1,
-              "_id": 0,
-              "financial_service_account": 1
+            "nReturned": 227,
+            "opens": 1,
+            "planNodeId": 4,
+            "projections": {
+              "18": "newObj(\"_id\", s13, \"types\", s16, \"n_transactions\", s17) "
             },
-            "works": 2
+            "restoreState": 4,
+            "saveState": 4,
+            "stage": "project"
           },
           "executionSuccess": true,
-          "executionTimeMillis": 0,
-          "nReturned": 1,
-          "totalDocsExamined": 1,
-          "totalKeysExamined": 1
+          "executionTimeMillis": 2,
+          "nReturned": 227,
+          "totalDocsExamined": 229,
+          "totalKeysExamined": 229
         },
         "queryPlanner": {
           "indexFilterSet": false,
           "maxIndexedAndSolutionsReached": false,
           "maxIndexedOrSolutionsReached": false,
           "maxScansToExplodeReached": false,
-          "namespace": "lmm_fiben_sf1_source_full.lmm_person",
+          "namespace": "lmm_fiben_sf1_source_full.lmm_transaction",
           "optimizationTimeMillis": 0,
           "parsedQuery": {
-            "PERSONID": {
-              "$eq": 400000000000
-            }
+            "$and": [
+              {
+                "REFERSTO": {
+                  "$eq": 1001538
+                }
+              },
+              {
+                "TRANSACTIONTYPE": {
+                  "$in": [
+                    1,
+                    2,
+                    "1",
+                    "2"
+                  ]
+                }
+              }
+            ]
           },
-          "planCacheKey": "4FD6BC34",
-          "planCacheShapeHash": "5F164A1F",
+          "planCacheKey": "1136A239",
+          "planCacheShapeHash": "F1D73B1B",
           "prunedSimilarIndexes": false,
-          "queryHash": "5F164A1F",
+          "queryHash": "F1D73B1B",
           "rejectedPlans": [],
           "winningPlan": {
-            "inputStage": {
-              "inputStage": {
-                "direction": "forward",
-                "indexBounds": {
-                  "PERSONID": [
-                    "[400000000000, 400000000000]"
-                  ]
-                },
-                "indexName": "PERSONID_1",
-                "indexVersion": 2,
-                "isMultiKey": false,
-                "isPartial": false,
-                "isSparse": false,
-                "isUnique": false,
-                "keyPattern": {
-                  "PERSONID": 1
-                },
-                "multiKeyPaths": {
-                  "PERSONID": []
-                },
-                "stage": "IXSCAN"
-              },
-              "stage": "FETCH"
-            },
             "isCached": false,
-            "stage": "PROJECTION_SIMPLE",
-            "transformBy": {
-              "PERSONID": 1,
-              "_id": 0,
-              "financial_service_account": 1
+            "queryPlan": {
+              "inputStage": {
+                "filter": {
+                  "TRANSACTIONTYPE": {
+                    "$in": [
+                      1,
+                      2,
+                      "1",
+                      "2"
+                    ]
+                  }
+                },
+                "inputStage": {
+                  "direction": "forward",
+                  "indexBounds": {
+                    "REFERSTO": [
+                      "[1001538, 1001538]"
+                    ]
+                  },
+                  "indexName": "REFERSTO_1",
+                  "indexVersion": 2,
+                  "isMultiKey": false,
+                  "isPartial": false,
+                  "isSparse": false,
+                  "isUnique": false,
+                  "keyPattern": {
+                    "REFERSTO": 1
+                  },
+                  "multiKeyPaths": {
+                    "REFERSTO": []
+                  },
+                  "planNodeId": 1,
+                  "stage": "IXSCAN"
+                },
+                "planNodeId": 2,
+                "stage": "FETCH"
+              },
+              "planNodeId": 4,
+              "stage": "GROUP"
+            },
+            "slotBasedPlan": {
+              "slots": "$$RESULT=s18 env: { s5 = {\"REFERSTO\" : 1}, s10 = InList(1 \"1\" 2 \"2\") }",
+              "stages": "[4] project [s18 = newObj(\"_id\", s13, \"types\", s16, \"n_transactions\", s17)] \n[4] project [s16 = getElement(s14, 0), s17 = (convert ( s15, int32) ?: s15)] \n[4] group [s13] [s14 = addToSetCapped(s9, 104857600), s15 = count()] spillSlots[s11, s12] mergingExprs[aggSetUnionCapped(s11, 104857600), sum(s12)] \n[4] project [s13 = (s8 ?: null)] \n[2] filter {traverseF(s9, lambda(l2.0) { isMember(move(l2.0), s10) }, false)} \n[2] nlj inner [] [s1, s2, s3, s4, s5] \n    left \n        [1] ixseek KS(2D1E90840104) KS(2D1E9084FE04) s4 s1 s2 s3 [] @\"a8307572-a86c-4dc3-bbfe-49c5d373963d\" @\"REFERSTO_1\" true \n    right \n        [2] limit 1ll \n        [2] seek s1 s6 s7 s2 s3 s4 s5 none none [s8 = ISFACILITATEDBY, s9 = TRANSACTIONTYPE] @\"a8307572-a86c-4dc3-bbfe-49c5d373963d\" true false \n"
             }
           }
         }
       },
-      "executionTimeMillisEstimate": 0,
-      "nReturned": 1
-    },
-    {
-      "$unwind": {
-        "path": "$financial_service_account"
-      },
-      "executionTimeMillisEstimate": 0,
-      "nReturned": 1
-    },
-    {
-      "$unwind": {
-        "path": "$financial_service_account.transaction"
-      },
-      "executionTimeMillisEstimate": 0,
-      "nReturned": 2
-    },
-    {
-      "$group": {
-        "_id": {
-          "person": "$PERSONID",
-          "stock": "$financial_service_account.transaction.REFERSTO"
-        },
-        "n_transactions": {
-          "$sum": {
-            "$const": 1
-          }
-        },
-        "types": {
-          "$addToSet": "$financial_service_account.transaction.TRANSACTIONTYPE"
-        }
-      },
-      "executionTimeMillisEstimate": 0,
-      "maxAccumulatorMemoryUsageBytes": {
-        "n_transactions": 256,
-        "types": 224
-      },
-      "nReturned": 2,
-      "numBytesSpilledEstimate": 0,
-      "spilledDataStorageSize": 0,
-      "spilledRecords": 0,
-      "spills": 0,
-      "totalOutputDataSizeBytes": 1156,
-      "usedDisk": false
+      "executionTimeMillisEstimate": 2,
+      "nReturned": 227
     },
     {
       "$match": {
-        "$and": [
-          {
-            "types": {
-              "$eq": 1
+        "$expr": {
+          "$and": [
+            {
+              "$gt": [
+                {
+                  "$size": [
+                    {
+                      "$setIntersection": [
+                        "$types",
+                        {
+                          "$const": [
+                            1,
+                            "1"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$const": 0
+                }
+              ]
+            },
+            {
+              "$gt": [
+                {
+                  "$size": [
+                    {
+                      "$setIntersection": [
+                        "$types",
+                        {
+                          "$const": [
+                            2,
+                            "2"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$const": 0
+                }
+              ]
             }
-          },
-          {
-            "types": {
-              "$eq": 2
-            }
-          }
-        ]
+          ]
+        }
       },
-      "executionTimeMillisEstimate": 0,
-      "nReturned": 0
+      "executionTimeMillisEstimate": 2,
+      "nReturned": 2
     },
     {
       "$limit": 1000,
-      "executionTimeMillisEstimate": 0,
-      "nReturned": 0
+      "executionTimeMillisEstimate": 2,
+      "nReturned": 2
     }
   ]
 }

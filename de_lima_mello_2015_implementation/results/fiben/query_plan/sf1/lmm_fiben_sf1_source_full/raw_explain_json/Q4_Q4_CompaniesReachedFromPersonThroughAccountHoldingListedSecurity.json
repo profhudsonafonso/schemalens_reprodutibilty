@@ -3,11 +3,11 @@
     "$db": "lmm_fiben_sf1_source_full",
     "aggregate": "lmm_person",
     "cursor": {},
-    "maxTimeMS": 180000,
+    "maxTimeMS": 600000,
     "pipeline": [
       {
         "$match": {
-          "PERSONID": 400000000000
+          "PERSONID": 400000035163
         }
       },
       {
@@ -90,7 +90,7 @@
                 "executionTimeMillisEstimate": 0,
                 "indexBounds": {
                   "PERSONID": [
-                    "[400000000000, 400000000000]"
+                    "[400000035163, 400000035163]"
                   ]
                 },
                 "indexName": "PERSONID_1",
@@ -141,7 +141,7 @@
             "works": 2
           },
           "executionSuccess": true,
-          "executionTimeMillis": 0,
+          "executionTimeMillis": 15,
           "nReturned": 1,
           "totalDocsExamined": 1,
           "totalKeysExamined": 1
@@ -155,7 +155,7 @@
           "optimizationTimeMillis": 0,
           "parsedQuery": {
             "PERSONID": {
-              "$eq": 400000000000
+              "$eq": 400000035163
             }
           },
           "planCacheKey": "C469346D",
@@ -169,7 +169,7 @@
                 "direction": "forward",
                 "indexBounds": {
                   "PERSONID": [
-                    "[400000000000, 400000000000]"
+                    "[400000035163, 400000035163]"
                   ]
                 },
                 "indexName": "PERSONID_1",
@@ -198,22 +198,22 @@
           }
         }
       },
-      "executionTimeMillisEstimate": 1,
+      "executionTimeMillisEstimate": 0,
       "nReturned": 1
     },
     {
       "$unwind": {
         "path": "$financial_service_account"
       },
-      "executionTimeMillisEstimate": 1,
-      "nReturned": 1
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 7
     },
     {
       "$unwind": {
         "path": "$financial_service_account.holding"
       },
-      "executionTimeMillisEstimate": 1,
-      "nReturned": 2
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 61
     },
     {
       "$lookup": {
@@ -226,13 +226,13 @@
         }
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 1,
+      "executionTimeMillisEstimate": 8,
       "indexesUsed": [
         "LISTEDSECURITYID_1"
       ],
-      "nReturned": 2,
-      "totalDocsExamined": 2,
-      "totalKeysExamined": 2
+      "nReturned": 61,
+      "totalDocsExamined": 61,
+      "totalKeysExamined": 61
     },
     {
       "$lookup": {
@@ -242,13 +242,13 @@
         "localField": "listed_security.ISPROVIDEDBY"
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 1,
+      "executionTimeMillisEstimate": 16,
       "indexesUsed": [
         "CORPORATIONID_1"
       ],
-      "nReturned": 2,
-      "totalDocsExamined": 0,
-      "totalKeysExamined": 0
+      "nReturned": 61,
+      "totalDocsExamined": 32,
+      "totalKeysExamined": 32
     },
     {
       "$project": {
@@ -265,13 +265,13 @@
           "LISTEDSECURITYID": true
         }
       },
-      "executionTimeMillisEstimate": 1,
-      "nReturned": 2
+      "executionTimeMillisEstimate": 16,
+      "nReturned": 61
     },
     {
       "$limit": 1000,
-      "executionTimeMillisEstimate": 1,
-      "nReturned": 2
+      "executionTimeMillisEstimate": 16,
+      "nReturned": 61
     }
   ]
 }
