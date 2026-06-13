@@ -413,3 +413,24 @@ Main generated SF10 artifacts:
 - `results/fiben/comparison/sf10/lmm_vs_schemalens_sf10_winner_summary.csv`
 - `results/fiben/comparison/sf10/lmm_vs_schemalens_sf10_interpretation.md`
 <!-- FIBEN_SF10_LMM_COMPARISON_END -->
+
+
+<!-- FIBEN_SF10_QUERY_PLAN_FINAL_START -->
+## FIBEN SF10 final query-plan validation
+
+After aligning the Lima and Mello SF10 benchmark parameters with the SchemaLens benchmark semantics, the query-plan runner was rerun for Q1--Q9.
+
+Final parameter highlights:
+
+- IBM corporation id: `2860`
+- Q4 person id: `SF10_PERS_R01_400000035163`
+- Q7/Q8 IBM security id: `SF10_SEC_R01_1002518`
+- Q9 listed security id: `SF10_SEC_R01_1001538`
+
+All nine query-plan executions completed successfully. Q1, Q2, Q3, Q4, Q5, Q7, Q8, and Q9 used index scans and avoided collection scans. Q6 was the main outlier: it used a collection scan, examined 601029 documents, and reached 2790 ms in the query-plan measurement. This explains the high Q6 hot-run p95 latency observed in the final benchmark.
+
+Generated final query-plan interpretation files:
+
+- `results/fiben/comparison/sf10/lmm_sf10_query_plan_final_summary_interpreted.csv`
+- `results/fiben/comparison/sf10/lmm_sf10_query_plan_final_summary_interpreted.md`
+<!-- FIBEN_SF10_QUERY_PLAN_FINAL_END -->

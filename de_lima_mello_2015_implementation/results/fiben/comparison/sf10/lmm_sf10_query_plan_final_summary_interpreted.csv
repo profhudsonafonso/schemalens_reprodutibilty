@@ -1,0 +1,10 @@
+query_id,status,n_returned_accumulated,total_docs_examined_accumulated,total_keys_examined_accumulated,execution_time_ms_max,has_ixscan,has_collscan,has_group,interpretation_note
+Q1,completed,5,1,1,0,True,False,False,Completed with index usage and no collection scan.
+Q2,completed,35,4,4,0,True,False,False,Completed with index usage and no collection scan.
+Q3,completed,5,1,1,0,True,False,False,Completed with index usage and no collection scan.
+Q4,completed,317,62,62,11,True,False,False,Uses Q4-compatible person parameter; now returns non-zero benchmark results.
+Q5,completed,77,1,1,0,True,False,False,Completed with index usage and no collection scan.
+Q6,completed,199343,601029,1000,2790,False,True,False,"Main LMM query-plan outlier: COLLSCAN, no IXSCAN, and high documents examined."
+Q7,completed,1268,179,179,8,True,False,True,Uses indexed transaction access and grouping; aligned with final benchmark parameters.
+Q8,completed,1428,179,179,1,True,False,True,Uses indexed transaction access and grouping; aligned with final benchmark parameters.
+Q9,completed,2513,458,458,10,True,False,True,Uses indexed transaction access and grouping; aligned with final benchmark parameters.

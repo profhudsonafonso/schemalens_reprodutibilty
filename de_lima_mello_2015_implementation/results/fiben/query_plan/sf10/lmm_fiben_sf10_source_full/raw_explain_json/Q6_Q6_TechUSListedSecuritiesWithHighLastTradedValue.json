@@ -73,12 +73,12 @@
         "executionStats": {
           "executionStages": {
             "advanced": 51133,
-            "executionTimeMillisEstimate": 144,
+            "executionTimeMillisEstimate": 303,
             "inputStage": {
               "advanced": 51133,
               "direction": "forward",
               "docsExamined": 600029,
-              "executionTimeMillisEstimate": 124,
+              "executionTimeMillisEstimate": 302,
               "filter": {
                 "VALUE": {
                   "$gte": 4500
@@ -88,8 +88,8 @@
               "nReturned": 51133,
               "needTime": 548896,
               "needYield": 0,
-              "restoreState": 24,
-              "saveState": 25,
+              "restoreState": 36,
+              "saveState": 37,
               "stage": "COLLSCAN",
               "works": 600029
             },
@@ -98,8 +98,8 @@
             "nReturned": 51133,
             "needTime": 548896,
             "needYield": 0,
-            "restoreState": 24,
-            "saveState": 25,
+            "restoreState": 36,
+            "saveState": 37,
             "stage": "PROJECTION_SIMPLE",
             "transformBy": {
               "REFERSTO": 1,
@@ -110,7 +110,7 @@
             "works": 600029
           },
           "executionSuccess": true,
-          "executionTimeMillis": 1656,
+          "executionTimeMillis": 2790,
           "nReturned": 51133,
           "totalDocsExamined": 600029,
           "totalKeysExamined": 0
@@ -153,7 +153,7 @@
           }
         }
       },
-      "executionTimeMillisEstimate": 145,
+      "executionTimeMillisEstimate": 323,
       "nReturned": 41944
     },
     {
@@ -167,7 +167,7 @@
         }
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 1590,
+      "executionTimeMillisEstimate": 2756,
       "indexesUsed": [
         "LISTEDSECURITYID_1"
       ],
@@ -183,7 +183,7 @@
         "localField": "listed_security.ISPROVIDEDBY"
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 1655,
+      "executionTimeMillisEstimate": 2790,
       "indexesUsed": [
         "CORPORATIONID_1"
       ],
@@ -203,12 +203,12 @@
         },
         "listed_security": true
       },
-      "executionTimeMillisEstimate": 1655,
+      "executionTimeMillisEstimate": 2790,
       "nReturned": 1000
     },
     {
       "$limit": 1000,
-      "executionTimeMillisEstimate": 1655,
+      "executionTimeMillisEstimate": 2790,
       "nReturned": 1000
     }
   ]

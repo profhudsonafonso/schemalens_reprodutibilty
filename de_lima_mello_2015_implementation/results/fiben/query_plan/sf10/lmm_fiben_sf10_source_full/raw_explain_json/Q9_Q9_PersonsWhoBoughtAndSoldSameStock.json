@@ -101,13 +101,13 @@
         "executionStats": {
           "executionStages": {
             "closes": 1,
-            "executionTimeMillisEstimate": 0,
+            "executionTimeMillisEstimate": 1,
             "inputStage": {
               "closes": 1,
-              "executionTimeMillisEstimate": 0,
+              "executionTimeMillisEstimate": 1,
               "inputStage": {
                 "closes": 1,
-                "executionTimeMillisEstimate": 0,
+                "executionTimeMillisEstimate": 1,
                 "expressions": {
                   "14": "addToSetCapped(s9, 104857600) ",
                   "15": "count() ",
@@ -121,16 +121,16 @@
                 ],
                 "inputStage": {
                   "closes": 1,
-                  "executionTimeMillisEstimate": 0,
+                  "executionTimeMillisEstimate": 1,
                   "inputStage": {
                     "closes": 1,
-                    "executionTimeMillisEstimate": 0,
+                    "executionTimeMillisEstimate": 1,
                     "filter": "traverseF(s9, lambda(l2.0) { isMember(move(l2.0), s10) }, false) ",
                     "inputStage": {
                       "closes": 1,
                       "collectionScans": 0,
                       "collectionSeeks": 229,
-                      "executionTimeMillisEstimate": 0,
+                      "executionTimeMillisEstimate": 1,
                       "indexScans": 0,
                       "indexSeeks": 1,
                       "indexesUsed": [
@@ -140,10 +140,10 @@
                       "innerOpens": 229,
                       "innerStage": {
                         "closes": 1,
-                        "executionTimeMillisEstimate": 0,
+                        "executionTimeMillisEstimate": 1,
                         "inputStage": {
                           "closes": 1,
-                          "executionTimeMillisEstimate": 0,
+                          "executionTimeMillisEstimate": 1,
                           "indexIdentSlot": 3,
                           "indexKeyPatternSlot": 5,
                           "indexKeySlot": 4,
@@ -279,7 +279,7 @@
             "stage": "project"
           },
           "executionSuccess": true,
-          "executionTimeMillis": 3,
+          "executionTimeMillis": 10,
           "nReturned": 227,
           "totalDocsExamined": 229,
           "totalKeysExamined": 229
@@ -364,7 +364,7 @@
           }
         }
       },
-      "executionTimeMillisEstimate": 3,
+      "executionTimeMillisEstimate": 10,
       "nReturned": 227
     },
     {
@@ -418,12 +418,12 @@
           ]
         }
       },
-      "executionTimeMillisEstimate": 3,
+      "executionTimeMillisEstimate": 10,
       "nReturned": 2
     },
     {
       "$limit": 1000,
-      "executionTimeMillisEstimate": 3,
+      "executionTimeMillisEstimate": 10,
       "nReturned": 2
     }
   ]

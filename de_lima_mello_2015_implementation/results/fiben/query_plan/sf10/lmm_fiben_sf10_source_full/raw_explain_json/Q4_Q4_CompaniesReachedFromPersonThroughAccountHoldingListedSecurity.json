@@ -7,7 +7,7 @@
     "pipeline": [
       {
         "$match": {
-          "PERSONID": "400000000000"
+          "PERSONID": "SF10_PERS_R01_400000035163"
         }
       },
       {
@@ -90,7 +90,7 @@
                 "executionTimeMillisEstimate": 0,
                 "indexBounds": {
                   "PERSONID": [
-                    "[\"400000000000\", \"400000000000\"]"
+                    "[\"SF10_PERS_R01_400000035163\", \"SF10_PERS_R01_400000035163\"]"
                   ]
                 },
                 "indexName": "PERSONID_1",
@@ -141,7 +141,7 @@
             "works": 2
           },
           "executionSuccess": true,
-          "executionTimeMillis": 0,
+          "executionTimeMillis": 11,
           "nReturned": 1,
           "totalDocsExamined": 1,
           "totalKeysExamined": 1
@@ -155,7 +155,7 @@
           "optimizationTimeMillis": 0,
           "parsedQuery": {
             "PERSONID": {
-              "$eq": "400000000000"
+              "$eq": "SF10_PERS_R01_400000035163"
             }
           },
           "planCacheKey": "C469346D",
@@ -169,7 +169,7 @@
                 "direction": "forward",
                 "indexBounds": {
                   "PERSONID": [
-                    "[\"400000000000\", \"400000000000\"]"
+                    "[\"SF10_PERS_R01_400000035163\", \"SF10_PERS_R01_400000035163\"]"
                   ]
                 },
                 "indexName": "PERSONID_1",
@@ -206,14 +206,14 @@
         "path": "$financial_service_account"
       },
       "executionTimeMillisEstimate": 0,
-      "nReturned": 1
+      "nReturned": 7
     },
     {
       "$unwind": {
         "path": "$financial_service_account.holding"
       },
       "executionTimeMillisEstimate": 0,
-      "nReturned": 2
+      "nReturned": 61
     },
     {
       "$lookup": {
@@ -226,13 +226,13 @@
         }
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 0,
+      "executionTimeMillisEstimate": 9,
       "indexesUsed": [
         "LISTEDSECURITYID_1"
       ],
-      "nReturned": 2,
-      "totalDocsExamined": 2,
-      "totalKeysExamined": 2
+      "nReturned": 61,
+      "totalDocsExamined": 61,
+      "totalKeysExamined": 61
     },
     {
       "$lookup": {
@@ -242,11 +242,11 @@
         "localField": "listed_security.ISPROVIDEDBY"
       },
       "collectionScans": 0,
-      "executionTimeMillisEstimate": 0,
+      "executionTimeMillisEstimate": 11,
       "indexesUsed": [
         "CORPORATIONID_1"
       ],
-      "nReturned": 2,
+      "nReturned": 61,
       "totalDocsExamined": 0,
       "totalKeysExamined": 0
     },
@@ -265,13 +265,13 @@
           "LISTEDSECURITYID": true
         }
       },
-      "executionTimeMillisEstimate": 0,
-      "nReturned": 2
+      "executionTimeMillisEstimate": 11,
+      "nReturned": 61
     },
     {
       "$limit": 1000,
-      "executionTimeMillisEstimate": 0,
-      "nReturned": 2
+      "executionTimeMillisEstimate": 11,
+      "nReturned": 61
     }
   ]
 }

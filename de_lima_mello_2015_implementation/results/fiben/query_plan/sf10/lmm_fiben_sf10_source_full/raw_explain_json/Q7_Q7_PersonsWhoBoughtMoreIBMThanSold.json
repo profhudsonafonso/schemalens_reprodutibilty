@@ -126,12 +126,12 @@
         "executionStats": {
           "executionStages": {
             "advanced": 179,
-            "executionTimeMillisEstimate": 0,
+            "executionTimeMillisEstimate": 3,
             "inputStage": {
               "advanced": 179,
               "alreadyHasObj": 0,
               "docsExamined": 179,
-              "executionTimeMillisEstimate": 0,
+              "executionTimeMillisEstimate": 3,
               "filter": {
                 "TRANSACTIONTYPE": {
                   "$in": [
@@ -204,7 +204,7 @@
             "works": 180
           },
           "executionSuccess": true,
-          "executionTimeMillis": 3,
+          "executionTimeMillis": 8,
           "nReturned": 179,
           "totalDocsExamined": 179,
           "totalKeysExamined": 179
@@ -288,7 +288,7 @@
           }
         }
       },
-      "executionTimeMillisEstimate": 3,
+      "executionTimeMillisEstimate": 4,
       "nReturned": 179
     },
     {
@@ -362,7 +362,7 @@
           }
         }
       },
-      "executionTimeMillisEstimate": 3,
+      "executionTimeMillisEstimate": 4,
       "maxAccumulatorMemoryUsageBytes": {
         "buy_total": 22912,
         "n_transactions": 22912,
@@ -385,12 +385,12 @@
           ]
         }
       },
-      "executionTimeMillisEstimate": 3,
+      "executionTimeMillisEstimate": 4,
       "nReturned": 97
     },
     {
       "$limit": 1000,
-      "executionTimeMillisEstimate": 3,
+      "executionTimeMillisEstimate": 4,
       "nReturned": 97
     }
   ]
