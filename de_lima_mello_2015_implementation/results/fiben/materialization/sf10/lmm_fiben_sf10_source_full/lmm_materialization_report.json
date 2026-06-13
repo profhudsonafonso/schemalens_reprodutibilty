@@ -1,0 +1,76 @@
+{
+  "collections": [
+    {
+      "collection_name": "_src_fiben_countries",
+      "count": 250
+    },
+    {
+      "collection_name": "_src_fiben_holdings",
+      "count": 20844448
+    },
+    {
+      "collection_name": "_src_fiben_industries",
+      "count": 453
+    },
+    {
+      "collection_name": "lmm_corporation",
+      "count": 23241
+    },
+    {
+      "collection_name": "lmm_disclosure",
+      "count": 2081581
+    },
+    {
+      "collection_name": "lmm_financial_report",
+      "count": 483011
+    },
+    {
+      "collection_name": "lmm_financial_service_account",
+      "count": 3793531
+    },
+    {
+      "collection_name": "lmm_listed_security",
+      "count": 27451
+    },
+    {
+      "collection_name": "lmm_person",
+      "count": 1953901
+    },
+    {
+      "collection_name": "lmm_report_element",
+      "count": 81200841
+    },
+    {
+      "collection_name": "lmm_security",
+      "count": 27451
+    },
+    {
+      "collection_name": "lmm_sell_transaction",
+      "count": 19500001
+    },
+    {
+      "collection_name": "lmm_statement_element",
+      "count": 4437941
+    },
+    {
+      "collection_name": "lmm_transaction",
+      "count": 19500001
+    }
+  ],
+  "embedding_status_counts": {
+    "completed": 8,
+    "failed: PlanExecutor error during aggregation :: caused by :: operation exceeded time limit, full error: {'ok': 0.0, 'errmsg': 'PlanExecutor error during aggregation :: caused by :: operation exceeded time limit', 'code': 50, 'codeName': 'MaxTimeMSExpired'}": 1
+  },
+  "max_rows_per_view": null,
+  "n_collections": 14,
+  "output_dir": "de_lima_mello_2015_implementation/results/fiben/materialization/sf10/lmm_fiben_sf10_source_full",
+  "reference_status_counts": {
+    "completed": 3,
+    "skipped_bridge_reference": 1
+  },
+  "scale": "sf10",
+  "skip_embeddings": false,
+  "status": "completed",
+  "target_database": "lmm_fiben_sf10_source_full",
+  "target_db": "lmm_fiben_sf10_source_full"
+}

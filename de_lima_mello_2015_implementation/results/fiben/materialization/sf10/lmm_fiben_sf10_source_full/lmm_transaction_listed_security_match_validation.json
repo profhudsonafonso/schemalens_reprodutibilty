@@ -1,0 +1,14 @@
+{
+  "scale": "sf10",
+  "database": "lmm_fiben_sf10_source_full",
+  "relationship_name": "transaction_refers_to_listed_security",
+  "local_field": "lmm_transaction.REFERSTO",
+  "target_field_direct": "lmm_listed_security.LISTEDSECURITYID",
+  "target_field_indirect": "lmm_security.SECURITYID",
+  "total_transactions": 19500001,
+  "transactions_with_listed_security": 9967207,
+  "transactions_missing_listed_security": 9532794,
+  "diagnosis": "The missing transactions use synthetic references such as SF30_SEC_R10_1001746. These values do not match either lmm_listed_security.LISTEDSECURITYID or lmm_security.SECURITYID in the materialized SF10 database.",
+  "interpretation": "The failed Rule-5 embedding did not leave direct matchable transaction references unrepaired. The repair found zero remaining transactions whose REFERSTO value matches an existing listed security. The remaining missing embeddings correspond to source-level unmatched synthetic references and should be documented rather than artificially materialized.",
+  "decision": "Proceed with SF10 query-plan and benchmark evaluation using the current materialization, and report this as an unmatched-reference warning for the Lima and Mello SF10 baseline."
+}

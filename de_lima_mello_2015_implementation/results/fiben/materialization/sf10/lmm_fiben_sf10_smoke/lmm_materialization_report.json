@@ -1,0 +1,74 @@
+{
+  "collections": [
+    {
+      "collection_name": "_src_fiben_countries",
+      "count": 250
+    },
+    {
+      "collection_name": "_src_fiben_holdings",
+      "count": 10000
+    },
+    {
+      "collection_name": "_src_fiben_industries",
+      "count": 453
+    },
+    {
+      "collection_name": "lmm_corporation",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_disclosure",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_financial_report",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_financial_service_account",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_listed_security",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_person",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_report_element",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_security",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_sell_transaction",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_statement_element",
+      "count": 10000
+    },
+    {
+      "collection_name": "lmm_transaction",
+      "count": 10000
+    }
+  ],
+  "embedding_status_counts": {
+    "completed": 9
+  },
+  "max_rows_per_view": 10000,
+  "n_collections": 14,
+  "output_dir": "de_lima_mello_2015_implementation/results/fiben/materialization/sf10/lmm_fiben_sf10_smoke",
+  "reference_status_counts": {
+    "completed": 3,
+    "skipped_bridge_reference": 1
+  },
+  "scale": "sf10",
+  "skip_embeddings": false,
+  "status": "completed",
+  "target_database": "lmm_fiben_sf10_smoke"
+}

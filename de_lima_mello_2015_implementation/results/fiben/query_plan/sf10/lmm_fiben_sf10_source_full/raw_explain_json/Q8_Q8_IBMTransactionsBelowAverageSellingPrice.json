@@ -1,0 +1,330 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf10_source_full",
+    "aggregate": "lmm_transaction",
+    "cursor": {},
+    "maxTimeMS": 600000,
+    "pipeline": [
+      {
+        "$match": {
+          "REFERSTO": {
+            "$in": [
+              "SF10_SEC_R01_1002518"
+            ]
+          }
+        }
+      },
+      {
+        "$set": {
+          "_price_value": {
+            "$ifNull": [
+              "$HASPRICE",
+              {
+                "$ifNull": [
+                  "$PRICE",
+                  "$VALUE"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$group": {
+          "_id": null,
+          "avg_sell_price": {
+            "$avg": {
+              "$cond": [
+                {
+                  "$in": [
+                    "$TRANSACTIONTYPE",
+                    [
+                      2,
+                      "2"
+                    ]
+                  ]
+                },
+                "$_price_value",
+                null
+              ]
+            }
+          },
+          "transactions": {
+            "$push": {
+              "REFERSTO": "$REFERSTO",
+              "SECURITIESTRANSACTIONID": "$SECURITIESTRANSACTIONID",
+              "TRANSACTIONTYPE": "$TRANSACTIONTYPE",
+              "price": "$_price_value"
+            }
+          }
+        }
+      },
+      {
+        "$unwind": "$transactions"
+      },
+      {
+        "$match": {
+          "$expr": {
+            "$lt": [
+              "$transactions.price",
+              "$avg_sell_price"
+            ]
+          }
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "1",
+  "ok": 1.0,
+  "queryShapeHash": "24CC0FB3C3EE657893CEE8B345A6B4729FDD87F02E2A8A6D427F7F4DE6D13F43",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "advanced": 179,
+            "executionTimeMillisEstimate": 0,
+            "inputStage": {
+              "advanced": 179,
+              "alreadyHasObj": 0,
+              "docsExamined": 179,
+              "executionTimeMillisEstimate": 0,
+              "inputStage": {
+                "advanced": 179,
+                "direction": "forward",
+                "dupsDropped": 0,
+                "dupsTested": 0,
+                "executionTimeMillisEstimate": 0,
+                "indexBounds": {
+                  "REFERSTO": [
+                    "[\"SF10_SEC_R01_1002518\", \"SF10_SEC_R01_1002518\"]"
+                  ]
+                },
+                "indexName": "REFERSTO_1",
+                "indexVersion": 2,
+                "isEOF": 1,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "REFERSTO": 1
+                },
+                "keysExamined": 179,
+                "multiKeyPaths": {
+                  "REFERSTO": []
+                },
+                "nReturned": 179,
+                "needTime": 0,
+                "needYield": 0,
+                "restoreState": 3,
+                "saveState": 3,
+                "seeks": 1,
+                "stage": "IXSCAN",
+                "works": 180
+              },
+              "isEOF": 1,
+              "nReturned": 179,
+              "needTime": 0,
+              "needYield": 0,
+              "restoreState": 3,
+              "saveState": 3,
+              "stage": "FETCH",
+              "works": 180
+            },
+            "isCached": false,
+            "isEOF": 1,
+            "nReturned": 179,
+            "needTime": 0,
+            "needYield": 0,
+            "restoreState": 3,
+            "saveState": 3,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "HASPRICE": 1,
+              "PRICE": 1,
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "TRANSACTIONTYPE": 1,
+              "VALUE": 1,
+              "_id": 0
+            },
+            "works": 180
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 1,
+          "nReturned": 179,
+          "totalDocsExamined": 179,
+          "totalKeysExamined": 179
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf10_source_full.lmm_transaction",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "REFERSTO": {
+              "$eq": "SF10_SEC_R01_1002518"
+            }
+          },
+          "planCacheKey": "7D39E168",
+          "planCacheShapeHash": "D9479603",
+          "prunedSimilarIndexes": false,
+          "queryHash": "D9479603",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "inputStage": {
+              "inputStage": {
+                "direction": "forward",
+                "indexBounds": {
+                  "REFERSTO": [
+                    "[\"SF10_SEC_R01_1002518\", \"SF10_SEC_R01_1002518\"]"
+                  ]
+                },
+                "indexName": "REFERSTO_1",
+                "indexVersion": 2,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "REFERSTO": 1
+                },
+                "multiKeyPaths": {
+                  "REFERSTO": []
+                },
+                "stage": "IXSCAN"
+              },
+              "stage": "FETCH"
+            },
+            "isCached": false,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "HASPRICE": 1,
+              "PRICE": 1,
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "TRANSACTIONTYPE": 1,
+              "VALUE": 1,
+              "_id": 0
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 179
+    },
+    {
+      "$set": {
+        "_price_value": {
+          "$ifNull": [
+            "$HASPRICE",
+            {
+              "$ifNull": [
+                "$PRICE",
+                "$VALUE"
+              ]
+            }
+          ]
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 179
+    },
+    {
+      "$group": {
+        "_id": {
+          "$const": null
+        },
+        "avg_sell_price": {
+          "$avg": {
+            "$cond": [
+              {
+                "$in": [
+                  "$TRANSACTIONTYPE",
+                  {
+                    "$const": [
+                      2,
+                      "2"
+                    ]
+                  }
+                ]
+              },
+              "$_price_value",
+              {
+                "$const": null
+              }
+            ]
+          }
+        },
+        "transactions": {
+          "$push": {
+            "REFERSTO": "$REFERSTO",
+            "SECURITIESTRANSACTIONID": "$SECURITIESTRANSACTIONID",
+            "TRANSACTIONTYPE": "$TRANSACTIONTYPE",
+            "price": "$_price_value"
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "maxAccumulatorMemoryUsageBytes": {
+        "avg_sell_price": 104,
+        "transactions": 86350
+      },
+      "nReturned": 1,
+      "numBytesSpilledEstimate": 0,
+      "spilledDataStorageSize": 0,
+      "spilledRecords": 0,
+      "spills": 0,
+      "totalOutputDataSizeBytes": 86595,
+      "usedDisk": false
+    },
+    {
+      "$unwind": {
+        "path": "$transactions"
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 179
+    },
+    {
+      "$match": {
+        "$expr": {
+          "$lt": [
+            "$transactions.price",
+            "$avg_sell_price"
+          ]
+        }
+      },
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 87
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 1,
+      "nReturned": 87
+    }
+  ]
+}

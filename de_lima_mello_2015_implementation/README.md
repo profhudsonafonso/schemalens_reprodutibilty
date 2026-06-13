@@ -321,3 +321,95 @@ Query-level integrated summary:
 | Q7 | Lima & Mello | 0.457 | 1.187 | 1 | 359 | LMM is more selective. |
 | Q8 | SchemaLens | 1.228 | 0.864 | 392 | 359 | SchemaLens slightly better. |
 | Q9 | Lima & Mello | 0.352 | 0.851 | 1 | 458 | LMM is more selective. |
+
+
+<!-- FIBEN_SF10_LMM_COMPARISON_START -->
+## FIBEN SF10 final benchmark and SchemaLens comparison
+
+This phase extends the faithful Lima and Mello 2015 baseline from FIBEN SF1 to FIBEN SF10 and compares it against the best SchemaLens MongoDB candidate per query.
+
+### Protocol
+
+The final SF10 benchmark was executed with the same repetition protocol observed in the SchemaLens SF10 benchmark artifacts:
+
+- `warmup_runs = 0`
+- `cold_runs = 10`
+- `hot_runs = 10`
+- queries: Q1--Q9 read workload
+- metric used for comparison: hot-run p95 latency
+- result limit: 1000 documents
+- MongoDB database: `lmm_fiben_sf10_source_full`
+
+The final LMM SF10 benchmark produced:
+
+- 180 raw executions
+- 180 completed executions
+- 90 cold executions
+- 90 hot executions
+- 10 cold and 10 hot executions per query
+- no zero-returned hot queries
+
+### SF10 parameter-alignment notes
+
+Some FIBEN queries are parameter-sensitive. To make the Lima and Mello baseline comparable with SchemaLens, the runner was aligned with the SchemaLens parameter semantics:
+
+- Q1/Q2/Q5 use IBM as the target corporation.
+- Q4 uses a person with a complete `Person -> FinancialServiceAccount -> Holding -> Security -> Corporation` path.
+- Q7/Q8 use IBM as the target corporation and one deterministic transaction-backed IBM security variant, avoiding artificial multiplication across SF10 replicated security identifiers.
+- Q9 uses a transaction `REFERSTO` value from the transaction-based stock pool.
+
+The final relevant parameters were:
+
+- IBM corporation id: `2860`
+- IBM security for Q7/Q8: `SF10_SEC_R01_1002518`
+- Q4 person: `SF10_PERS_R01_400000035163`
+- Q9 listed security id: `SF10_SEC_R01_1001538`
+
+### Final LMM SF10 hot p95 results
+
+| Query | LMM hot p95 ms | Mean returned documents |
+|---|---:|---:|
+| Q1 | 0.318401 | 1 |
+| Q2 | 0.657670 | 1 |
+| Q3 | 0.307812 | 1 |
+| Q4 | 9.048946 | 61 |
+| Q5 | 0.689555 | 24 |
+| Q6 | 2944.970120 | 1000 |
+| Q7 | 1.379932 | 97 |
+| Q8 | 1.376053 | 87 |
+| Q9 | 1.441561 | 2 |
+
+### Lima and Mello vs SchemaLens on FIBEN SF10
+
+SchemaLens outperformed the faithful Lima and Mello baseline in 7 out of 9 read queries. Lima and Mello was faster in 2 out of 9 queries.
+
+| Query | Winner | LMM p95 ms | SchemaLens best p95 ms | LMM / SchemaLens | LMM returned | SchemaLens returned | Interpretation |
+|---|---|---:|---:|---:|---:|---:|---|
+| Q1 | SchemaLens | 0.318401 | 0.295784 | 1.076 | 1 | 1 | Near tie; same returned cardinality. |
+| Q2 | SchemaLens | 0.657670 | 0.155368 | 4.233 | 1 | 1 | Clear SchemaLens win. |
+| Q3 | LMM | 0.307812 | 0.899143 | 0.342 | 1 | 53.8 | LMM is faster, but returns far fewer documents. |
+| Q4 | SchemaLens | 9.048946 | 4.308413 | 2.100 | 61 | 536 | SchemaLens is faster despite returning more documents. |
+| Q5 | LMM | 0.689555 | 28.432783 | 0.024 | 24 | 6801 | LMM is faster, but returns far fewer documents; interpret with caution. |
+| Q6 | SchemaLens | 2944.970120 | 91.474332 | 32.194 | 1000 | 100 | Strong SchemaLens win. |
+| Q7 | SchemaLens | 1.379932 | 0.857698 | 1.609 | 97 | 97 | Clean SchemaLens win with aligned cardinality. |
+| Q8 | SchemaLens | 1.376053 | 0.921652 | 1.493 | 87 | 88 | Clean/near-clean SchemaLens win with almost aligned cardinality. |
+| Q9 | SchemaLens | 1.441561 | 1.056870 | 1.364 | 2 | 0.3 | SchemaLens win, but this is a low-cardinality parameter-pool case. |
+
+### Interpretation
+
+The SF10 result strengthens the baseline comparison. Under the same 10-cold/10-hot protocol, SchemaLens wins most queries and shows its strongest advantages in Q2, Q4, Q6, Q7, and Q8. The Q7 and Q8 comparison is especially important because their returned cardinalities are aligned or nearly aligned after parameter correction.
+
+Lima and Mello wins Q3 and Q5 in raw p95 latency, but both wins require caution because the LMM execution returns substantially fewer documents than the best SchemaLens candidate. Therefore, these cases should be reported as latency wins with cardinality caveats, not as fully clean semantic wins.
+
+### Generated artifacts
+
+Main generated SF10 artifacts:
+
+- `results/fiben/benchmark/sf10/lmm_fiben_sf10_source_full/lmm_fiben_benchmark_raw_results.csv`
+- `results/fiben/benchmark/sf10/lmm_fiben_sf10_source_full/lmm_fiben_benchmark_aggregate_results.csv`
+- `results/fiben/benchmark/sf10/lmm_fiben_sf10_source_full/lmm_fiben_benchmark_manifest.json`
+- `results/fiben/comparison/sf10/lmm_vs_schemalens_sf10_hot_best.csv`
+- `results/fiben/comparison/sf10/lmm_vs_schemalens_sf10_hot_best_interpreted.csv`
+- `results/fiben/comparison/sf10/lmm_vs_schemalens_sf10_winner_summary.csv`
+- `results/fiben/comparison/sf10/lmm_vs_schemalens_sf10_interpretation.md`
+<!-- FIBEN_SF10_LMM_COMPARISON_END -->

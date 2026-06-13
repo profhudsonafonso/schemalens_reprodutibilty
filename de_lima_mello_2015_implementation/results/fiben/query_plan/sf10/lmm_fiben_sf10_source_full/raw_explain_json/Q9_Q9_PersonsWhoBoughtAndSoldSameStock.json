@@ -1,0 +1,430 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf10_source_full",
+    "aggregate": "lmm_transaction",
+    "cursor": {},
+    "maxTimeMS": 600000,
+    "pipeline": [
+      {
+        "$match": {
+          "REFERSTO": "SF10_SEC_R01_1001538",
+          "TRANSACTIONTYPE": {
+            "$in": [
+              1,
+              "1",
+              2,
+              "2"
+            ]
+          }
+        }
+      },
+      {
+        "$group": {
+          "_id": "$ISFACILITATEDBY",
+          "n_transactions": {
+            "$sum": 1
+          },
+          "types": {
+            "$addToSet": "$TRANSACTIONTYPE"
+          }
+        }
+      },
+      {
+        "$match": {
+          "$expr": {
+            "$and": [
+              {
+                "$gt": [
+                  {
+                    "$size": {
+                      "$setIntersection": [
+                        "$types",
+                        [
+                          1,
+                          "1"
+                        ]
+                      ]
+                    }
+                  },
+                  0
+                ]
+              },
+              {
+                "$gt": [
+                  {
+                    "$size": {
+                      "$setIntersection": [
+                        "$types",
+                        [
+                          2,
+                          "2"
+                        ]
+                      ]
+                    }
+                  },
+                  0
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "2",
+  "ok": 1.0,
+  "queryShapeHash": "5C7DCC8CCCEF224BD9CEEEF83452A8BAD9F55056BFF3403A5E5AECBF15EB3D30",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "closes": 1,
+            "executionTimeMillisEstimate": 0,
+            "inputStage": {
+              "closes": 1,
+              "executionTimeMillisEstimate": 0,
+              "inputStage": {
+                "closes": 1,
+                "executionTimeMillisEstimate": 0,
+                "expressions": {
+                  "14": "addToSetCapped(s9, 104857600) ",
+                  "15": "count() ",
+                  "initExprs": {
+                    "14": null,
+                    "15": null
+                  }
+                },
+                "groupBySlots": [
+                  13
+                ],
+                "inputStage": {
+                  "closes": 1,
+                  "executionTimeMillisEstimate": 0,
+                  "inputStage": {
+                    "closes": 1,
+                    "executionTimeMillisEstimate": 0,
+                    "filter": "traverseF(s9, lambda(l2.0) { isMember(move(l2.0), s10) }, false) ",
+                    "inputStage": {
+                      "closes": 1,
+                      "collectionScans": 0,
+                      "collectionSeeks": 229,
+                      "executionTimeMillisEstimate": 0,
+                      "indexScans": 0,
+                      "indexSeeks": 1,
+                      "indexesUsed": [
+                        "REFERSTO_1"
+                      ],
+                      "innerCloses": 1,
+                      "innerOpens": 229,
+                      "innerStage": {
+                        "closes": 1,
+                        "executionTimeMillisEstimate": 0,
+                        "inputStage": {
+                          "closes": 1,
+                          "executionTimeMillisEstimate": 0,
+                          "indexIdentSlot": 3,
+                          "indexKeyPatternSlot": 5,
+                          "indexKeySlot": 4,
+                          "isEOF": 0,
+                          "nReturned": 229,
+                          "numReads": 229,
+                          "opens": 229,
+                          "planNodeId": 2,
+                          "recordIdSlot": 7,
+                          "recordSlot": 6,
+                          "restoreState": 4,
+                          "saveState": 4,
+                          "scanFieldNames": [
+                            "ISFACILITATEDBY",
+                            "TRANSACTIONTYPE"
+                          ],
+                          "scanFieldSlots": [
+                            8,
+                            9
+                          ],
+                          "seekRecordIdSlot": 1,
+                          "snapshotIdSlot": 2,
+                          "stage": "seek"
+                        },
+                        "isEOF": 1,
+                        "limit": 1,
+                        "nReturned": 229,
+                        "opens": 229,
+                        "planNodeId": 2,
+                        "restoreState": 4,
+                        "saveState": 4,
+                        "stage": "limit"
+                      },
+                      "isEOF": 1,
+                      "nReturned": 229,
+                      "opens": 1,
+                      "outerCorrelated": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5
+                      ],
+                      "outerProjects": [],
+                      "outerStage": {
+                        "closes": 1,
+                        "executionTimeMillisEstimate": 0,
+                        "indexIdentSlot": 3,
+                        "indexKeySlot": 4,
+                        "indexKeysToInclude": "00000000000000000000000000000000",
+                        "indexName": "REFERSTO_1",
+                        "isEOF": 1,
+                        "keysExamined": 229,
+                        "nReturned": 229,
+                        "numReads": 230,
+                        "opens": 1,
+                        "outputSlots": [],
+                        "planNodeId": 1,
+                        "recordIdSlot": 1,
+                        "restoreState": 4,
+                        "saveState": 4,
+                        "seekKeyHigh": "KS(3C534631305F5345435F5230315F3130303135333800FE04) ",
+                        "seekKeyLow": "KS(3C534631305F5345435F5230315F31303031353338000104) ",
+                        "seeks": 1,
+                        "snapshotIdSlot": 2,
+                        "stage": "ixseek"
+                      },
+                      "planNodeId": 2,
+                      "restoreState": 4,
+                      "saveState": 4,
+                      "stage": "nlj",
+                      "totalDocsExamined": 229,
+                      "totalKeysExamined": 229
+                    },
+                    "isEOF": 1,
+                    "nReturned": 229,
+                    "numTested": 229,
+                    "opens": 1,
+                    "planNodeId": 2,
+                    "restoreState": 4,
+                    "saveState": 4,
+                    "stage": "filter"
+                  },
+                  "isEOF": 1,
+                  "nReturned": 229,
+                  "opens": 1,
+                  "planNodeId": 4,
+                  "projections": {
+                    "13": "(s8 ?: null) "
+                  },
+                  "restoreState": 4,
+                  "saveState": 4,
+                  "stage": "project"
+                },
+                "isEOF": 1,
+                "mergingExprs": {
+                  "11": "aggSetUnionCapped(s11, 104857600) ",
+                  "12": "sum(s12) "
+                },
+                "nReturned": 227,
+                "opens": 1,
+                "planNodeId": 4,
+                "restoreState": 4,
+                "saveState": 4,
+                "spilledBytes": 0,
+                "spilledDataStorageSize": 0,
+                "spilledRecords": 0,
+                "spills": 0,
+                "stage": "group",
+                "usedDisk": false
+              },
+              "isEOF": 1,
+              "nReturned": 227,
+              "opens": 1,
+              "planNodeId": 4,
+              "projections": {
+                "16": "getElement(s14, 0) ",
+                "17": "(convert ( s15, int32) ?: s15) "
+              },
+              "restoreState": 4,
+              "saveState": 4,
+              "stage": "project"
+            },
+            "isEOF": 1,
+            "nReturned": 227,
+            "opens": 1,
+            "planNodeId": 4,
+            "projections": {
+              "18": "newObj(\"_id\", s13, \"types\", s16, \"n_transactions\", s17) "
+            },
+            "restoreState": 4,
+            "saveState": 4,
+            "stage": "project"
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 3,
+          "nReturned": 227,
+          "totalDocsExamined": 229,
+          "totalKeysExamined": 229
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf10_source_full.lmm_transaction",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "$and": [
+              {
+                "REFERSTO": {
+                  "$eq": "SF10_SEC_R01_1001538"
+                }
+              },
+              {
+                "TRANSACTIONTYPE": {
+                  "$in": [
+                    1,
+                    2,
+                    "1",
+                    "2"
+                  ]
+                }
+              }
+            ]
+          },
+          "planCacheKey": "1136A239",
+          "planCacheShapeHash": "F1D73B1B",
+          "prunedSimilarIndexes": false,
+          "queryHash": "F1D73B1B",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "isCached": false,
+            "queryPlan": {
+              "inputStage": {
+                "filter": {
+                  "TRANSACTIONTYPE": {
+                    "$in": [
+                      1,
+                      2,
+                      "1",
+                      "2"
+                    ]
+                  }
+                },
+                "inputStage": {
+                  "direction": "forward",
+                  "indexBounds": {
+                    "REFERSTO": [
+                      "[\"SF10_SEC_R01_1001538\", \"SF10_SEC_R01_1001538\"]"
+                    ]
+                  },
+                  "indexName": "REFERSTO_1",
+                  "indexVersion": 2,
+                  "isMultiKey": false,
+                  "isPartial": false,
+                  "isSparse": false,
+                  "isUnique": false,
+                  "keyPattern": {
+                    "REFERSTO": 1
+                  },
+                  "multiKeyPaths": {
+                    "REFERSTO": []
+                  },
+                  "planNodeId": 1,
+                  "stage": "IXSCAN"
+                },
+                "planNodeId": 2,
+                "stage": "FETCH"
+              },
+              "planNodeId": 4,
+              "stage": "GROUP"
+            },
+            "slotBasedPlan": {
+              "slots": "$$RESULT=s18 env: { s5 = {\"REFERSTO\" : 1}, s10 = InList(1 \"1\" 2 \"2\") }",
+              "stages": "[4] project [s18 = newObj(\"_id\", s13, \"types\", s16, \"n_transactions\", s17)] \n[4] project [s16 = getElement(s14, 0), s17 = (convert ( s15, int32) ?: s15)] \n[4] group [s13] [s14 = addToSetCapped(s9, 104857600), s15 = count()] spillSlots[s11, s12] mergingExprs[aggSetUnionCapped(s11, 104857600), sum(s12)] \n[4] project [s13 = (s8 ?: null)] \n[2] filter {traverseF(s9, lambda(l2.0) { isMember(move(l2.0), s10) }, false)} \n[2] nlj inner [] [s1, s2, s3, s4, s5] \n    left \n        [1] ixseek KS(3C534631305F5345435F5230315F31303031353338000104) KS(3C534631305F5345435F5230315F3130303135333800FE04) s4 s1 s2 s3 [] @\"106a0a20-9ed5-4ae1-b900-3ce6a87036c1\" @\"REFERSTO_1\" true \n    right \n        [2] limit 1ll \n        [2] seek s1 s6 s7 s2 s3 s4 s5 none none [s8 = ISFACILITATEDBY, s9 = TRANSACTIONTYPE] @\"106a0a20-9ed5-4ae1-b900-3ce6a87036c1\" true false \n"
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 3,
+      "nReturned": 227
+    },
+    {
+      "$match": {
+        "$expr": {
+          "$and": [
+            {
+              "$gt": [
+                {
+                  "$size": [
+                    {
+                      "$setIntersection": [
+                        "$types",
+                        {
+                          "$const": [
+                            1,
+                            "1"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$const": 0
+                }
+              ]
+            },
+            {
+              "$gt": [
+                {
+                  "$size": [
+                    {
+                      "$setIntersection": [
+                        "$types",
+                        {
+                          "$const": [
+                            2,
+                            "2"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$const": 0
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "executionTimeMillisEstimate": 3,
+      "nReturned": 2
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 3,
+      "nReturned": 2
+    }
+  ]
+}

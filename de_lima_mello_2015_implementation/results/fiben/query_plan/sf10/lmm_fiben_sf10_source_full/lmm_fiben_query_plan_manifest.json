@@ -1,0 +1,19 @@
+{
+  "database": "lmm_fiben_sf10_source_full",
+  "dataset": "FIBEN",
+  "important_note": "Q10 is skipped because it is an insert/update workload.",
+  "method": "lima_mello_2015",
+  "output_files": {
+    "manifest_json": "de_lima_mello_2015_implementation/results/fiben/query_plan/sf10/lmm_fiben_sf10_source_full/lmm_fiben_query_plan_manifest.json",
+    "params_json": "de_lima_mello_2015_implementation/results/fiben/query_plan/sf10/lmm_fiben_sf10_source_full/lmm_fiben_query_plan_params.json",
+    "raw_explain_json_dir": "de_lima_mello_2015_implementation/results/fiben/query_plan/sf10/lmm_fiben_sf10_source_full/raw_explain_json",
+    "status_csv": "de_lima_mello_2015_implementation/results/fiben/query_plan/sf10/lmm_fiben_sf10_source_full/lmm_fiben_query_plan_status_summary.csv",
+    "summary_csv": "de_lima_mello_2015_implementation/results/fiben/query_plan/sf10/lmm_fiben_sf10_source_full/lmm_fiben_query_plan_summary_results.csv"
+  },
+  "query_count": 3,
+  "scale": "sf10",
+  "status": "completed",
+  "status_counts": {
+    "completed": 3
+  }
+}

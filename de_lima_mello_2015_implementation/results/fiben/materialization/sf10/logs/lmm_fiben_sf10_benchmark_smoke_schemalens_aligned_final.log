@@ -1,0 +1,75 @@
+[2026-06-13 10:59:22] Running Lima & Mello FIBEN benchmark on lmm_fiben_sf10_source_full
+[2026-06-13 10:59:22] Queries: Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9
+[2026-06-13 10:59:22] Params: {"corporation_id": "2860", "corporation_ticker": "IBM", "person_id": "SF10_PERS_R01_400000035163", "account_id": "150000000000", "listed_security_id": "SF10_SEC_R01_1001538", "transaction_refersto": "SF10_SEC_R01_1001538", "corporation_security_ids": ["SF10_SEC_R01_1002518"], "high_value_threshold": 4500, "buy_type": "1", "sell_type": "2", "buy_type_values": [1, "1"], "sell_type_values": [2, "2"]}
+[2026-06-13 10:59:22] Warmup Q1: Q1_CompanyProfile
+[2026-06-13 10:59:22] cold Q1 repetition 1/1
+[2026-06-13 10:59:22] hot Q1 repetition 1/3
+[2026-06-13 10:59:22] hot Q1 repetition 2/3
+[2026-06-13 10:59:22] hot Q1 repetition 3/3
+[2026-06-13 10:59:22] Warmup Q2: Q2_CompanyWithIndustryCountryAndListedSecurities
+[2026-06-13 10:59:22] cold Q2 repetition 1/1
+[2026-06-13 10:59:22] hot Q2 repetition 1/3
+[2026-06-13 10:59:22] hot Q2 repetition 2/3
+[2026-06-13 10:59:22] hot Q2 repetition 3/3
+[2026-06-13 10:59:22] Warmup Q3: Q3_SecuritiesHeldInEachFinancialServiceAccount
+[2026-06-13 10:59:22] cold Q3 repetition 1/1
+[2026-06-13 10:59:22] hot Q3 repetition 1/3
+[2026-06-13 10:59:22] hot Q3 repetition 2/3
+[2026-06-13 10:59:22] hot Q3 repetition 3/3
+[2026-06-13 10:59:22] Warmup Q4: Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity
+[2026-06-13 10:59:22] cold Q4 repetition 1/1
+[2026-06-13 10:59:22] hot Q4 repetition 1/3
+[2026-06-13 10:59:22] hot Q4 repetition 2/3
+[2026-06-13 10:59:22] hot Q4 repetition 3/3
+[2026-06-13 10:59:22] Warmup Q5: Q5_ReportsAndMetricDataOfCompany
+[2026-06-13 10:59:22] cold Q5 repetition 1/1
+[2026-06-13 10:59:22] hot Q5 repetition 1/3
+[2026-06-13 10:59:22] hot Q5 repetition 2/3
+[2026-06-13 10:59:22] hot Q5 repetition 3/3
+[2026-06-13 10:59:22] Warmup Q6: Q6_TechUSListedSecuritiesWithHighLastTradedValue
+[2026-06-13 10:59:24] cold Q6 repetition 1/1
+[2026-06-13 10:59:27] hot Q6 repetition 1/3
+[2026-06-13 10:59:29] hot Q6 repetition 2/3
+[2026-06-13 10:59:32] hot Q6 repetition 3/3
+[2026-06-13 10:59:35] Warmup Q7: Q7_PersonsWhoBoughtMoreIBMThanSold
+[2026-06-13 10:59:35] cold Q7 repetition 1/1
+[2026-06-13 10:59:35] hot Q7 repetition 1/3
+[2026-06-13 10:59:35] hot Q7 repetition 2/3
+[2026-06-13 10:59:35] hot Q7 repetition 3/3
+[2026-06-13 10:59:35] Warmup Q8: Q8_IBMTransactionsBelowAverageSellingPrice
+[2026-06-13 10:59:35] cold Q8 repetition 1/1
+[2026-06-13 10:59:35] hot Q8 repetition 1/3
+[2026-06-13 10:59:35] hot Q8 repetition 2/3
+[2026-06-13 10:59:35] hot Q8 repetition 3/3
+[2026-06-13 10:59:35] Warmup Q9: Q9_PersonsWhoBoughtAndSoldSameStock
+[2026-06-13 10:59:35] cold Q9 repetition 1/1
+[2026-06-13 10:59:35] hot Q9 repetition 1/3
+[2026-06-13 10:59:35] hot Q9 repetition 2/3
+[2026-06-13 10:59:35] hot Q9 repetition 3/3
+[2026-06-13 10:59:35] Done.
+{
+  "aggregate_csv": "de_lima_mello_2015_implementation/results/fiben/benchmark/sf10/lmm_fiben_sf10_source_full/lmm_fiben_benchmark_aggregate_results.csv",
+  "cold_runs": 1,
+  "database": "lmm_fiben_sf10_source_full",
+  "dataset": "FIBEN",
+  "hot_runs": 3,
+  "important_note": "Q10 is excluded because it is an insert/update workload and requires isolated reset/rollback benchmarking.",
+  "max_time_ms": 600000,
+  "method": "lima_mello_2015",
+  "queries": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9"
+  ],
+  "raw_csv": "de_lima_mello_2015_implementation/results/fiben/benchmark/sf10/lmm_fiben_sf10_source_full/lmm_fiben_benchmark_raw_results.csv",
+  "result_limit": 1000,
+  "scale": "sf10",
+  "status": "completed",
+  "warmup_runs": 1
+}

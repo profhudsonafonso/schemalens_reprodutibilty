@@ -1,0 +1,211 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf10_source_full",
+    "aggregate": "lmm_corporation",
+    "cursor": {},
+    "maxTimeMS": 600000,
+    "pipeline": [
+      {
+        "$match": {
+          "CORPORATIONID": "2860"
+        }
+      },
+      {
+        "$unwind": "$financial_report"
+      },
+      {
+        "$project": {
+          "CORPORATIONID": 1,
+          "TICKER": 1,
+          "financial_report.FINANCIALREPORTID": 1,
+          "financial_report.disclosure_ref": 1,
+          "financial_report.report_element": 1
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "1",
+  "ok": 1.0,
+  "queryShapeHash": "E3BC2FBC3ADB96CF5F5DF9E24E644B498BD85117F13AA8D0F8276E20B8055401",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "advanced": 1,
+            "executionTimeMillisEstimate": 0,
+            "inputStage": {
+              "advanced": 1,
+              "alreadyHasObj": 0,
+              "docsExamined": 1,
+              "executionTimeMillisEstimate": 0,
+              "inputStage": {
+                "advanced": 1,
+                "direction": "forward",
+                "dupsDropped": 0,
+                "dupsTested": 0,
+                "executionTimeMillisEstimate": 0,
+                "indexBounds": {
+                  "CORPORATIONID": [
+                    "[\"2860\", \"2860\"]"
+                  ]
+                },
+                "indexName": "CORPORATIONID_1",
+                "indexVersion": 2,
+                "isEOF": 1,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "CORPORATIONID": 1
+                },
+                "keysExamined": 1,
+                "multiKeyPaths": {
+                  "CORPORATIONID": []
+                },
+                "nReturned": 1,
+                "needTime": 0,
+                "needYield": 0,
+                "restoreState": 1,
+                "saveState": 1,
+                "seeks": 1,
+                "stage": "IXSCAN",
+                "works": 2
+              },
+              "isEOF": 1,
+              "nReturned": 1,
+              "needTime": 0,
+              "needYield": 0,
+              "restoreState": 1,
+              "saveState": 1,
+              "stage": "FETCH",
+              "works": 2
+            },
+            "isCached": false,
+            "isEOF": 1,
+            "nReturned": 1,
+            "needTime": 0,
+            "needYield": 0,
+            "restoreState": 1,
+            "saveState": 1,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "CORPORATIONID": 1,
+              "TICKER": 1,
+              "_id": 1,
+              "financial_report": 1
+            },
+            "works": 2
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 0,
+          "nReturned": 1,
+          "totalDocsExamined": 1,
+          "totalKeysExamined": 1
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf10_source_full.lmm_corporation",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "CORPORATIONID": {
+              "$eq": "2860"
+            }
+          },
+          "planCacheKey": "F97E792C",
+          "planCacheShapeHash": "99609D66",
+          "prunedSimilarIndexes": false,
+          "queryHash": "99609D66",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "inputStage": {
+              "inputStage": {
+                "direction": "forward",
+                "indexBounds": {
+                  "CORPORATIONID": [
+                    "[\"2860\", \"2860\"]"
+                  ]
+                },
+                "indexName": "CORPORATIONID_1",
+                "indexVersion": 2,
+                "isMultiKey": false,
+                "isPartial": false,
+                "isSparse": false,
+                "isUnique": false,
+                "keyPattern": {
+                  "CORPORATIONID": 1
+                },
+                "multiKeyPaths": {
+                  "CORPORATIONID": []
+                },
+                "stage": "IXSCAN"
+              },
+              "stage": "FETCH"
+            },
+            "isCached": false,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "CORPORATIONID": 1,
+              "TICKER": 1,
+              "_id": 1,
+              "financial_report": 1
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 1
+    },
+    {
+      "$unwind": {
+        "path": "$financial_report"
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 24
+    },
+    {
+      "$project": {
+        "CORPORATIONID": true,
+        "TICKER": true,
+        "_id": true,
+        "financial_report": {
+          "FINANCIALREPORTID": true,
+          "disclosure_ref": true,
+          "report_element": true
+        }
+      },
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 24
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 0,
+      "nReturned": 24
+    }
+  ]
+}

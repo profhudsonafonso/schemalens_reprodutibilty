@@ -1,0 +1,15 @@
+semantic_view,collection_name,file_path,primary_key,inserted_documents,duplicate_errors,elapsed_seconds,root_entity,status
+fiben_corporations,lmm_corporation,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/CORPORATION.csv,CORPORATIONID,23241,0,0.19948959350585938,Corporation,completed
+fiben_disclosures,lmm_disclosure,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/DISCLOSURE.csv,DISCLOSUREID,2081581,0,27.16054105758667,Disclosure,completed
+fiben_reports,lmm_financial_report,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/FINANCIALREPORT.csv,FINANCIALREPORTID,483011,0,3.3414597511291504,FinancialReport,completed
+fiben_financial_service_accounts,lmm_financial_service_account,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/FINANCIALSERVICEACCOUNT.csv,FINANCIALSERVICEACCOUNTID,3793531,0,29.018247842788696,FinancialServiceAccount,completed
+fiben_listed_securities,lmm_listed_security,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/LISTEDSECURITY.csv,LISTEDSECURITYID,27451,0,0.2421731948852539,ListedSecurity,completed
+fiben_persons,lmm_person,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/PERSON.csv,PERSONID,1953901,0,20.635863780975342,Person,completed
+fiben_report_elements,lmm_report_element,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/ELEMENTSOFFINANCIALREPORT.csv,ELEMENTSOFFINANCIALREPORTID,81200841,0,502.1253652572632,ReportElement,completed
+fiben_securities,lmm_security,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/SECURITY.csv,LISTEDSECURITYID,27451,0,0.1197965145111084,Security,completed
+fiben_sell_transactions,lmm_sell_transaction,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/SECURITIESTRANSACTION.csv,SECURITIESTRANSACTIONID,19500001,0,182.5674695968628,SellTransaction,completed
+fiben_statement_elements,lmm_statement_element,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/ELEMENTOFFINANCIALSTATEMENT.csv,ELEMENTOFFINANCIALSTATEMENTID,4437941,0,53.4281964302063,StatementElement,completed
+fiben_transactions,lmm_transaction,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/SECURITIESTRANSACTION.csv,SECURITIESTRANSACTIONID,19500001,0,176.2934067249298,Transaction,completed
+fiben_countries,_src_fiben_countries,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/COUNTRY.csv,COUNTRYID,250,0,0.015588998794555664,Country,completed_auxiliary
+fiben_holdings,_src_fiben_holdings,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/HOLDING.csv,HOLDINGID,20844448,0,155.73618054389954,Holding,completed_auxiliary
+fiben_industries,_src_fiben_industries,/home/hudson/Documents/framework_test/fiben/data_sf/sf10/INDUSTRYSECTORCLASSIFIER.csv,INDUSTRYSECTORCLASSIFIERID,453,0,0.01276254653930664,Industry,completed_auxiliary

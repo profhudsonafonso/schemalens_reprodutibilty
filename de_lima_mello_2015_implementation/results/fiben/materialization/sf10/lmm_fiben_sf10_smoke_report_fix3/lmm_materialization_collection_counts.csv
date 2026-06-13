@@ -1,0 +1,15 @@
+collection_name,count
+_src_fiben_countries,250
+_src_fiben_holdings,1000
+_src_fiben_industries,453
+lmm_corporation,1000
+lmm_disclosure,1000
+lmm_financial_report,1000
+lmm_financial_service_account,1000
+lmm_listed_security,1000
+lmm_person,1000
+lmm_report_element,1000
+lmm_security,1000
+lmm_sell_transaction,1000
+lmm_statement_element,1000
+lmm_transaction,1000

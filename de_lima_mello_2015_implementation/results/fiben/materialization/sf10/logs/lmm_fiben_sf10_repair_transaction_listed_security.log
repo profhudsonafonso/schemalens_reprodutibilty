@@ -1,0 +1,24 @@
+[2026-06-13 03:08:17] Ensuring indexes
+[2026-06-13 03:08:17] Loading listed securities
+[2026-06-13 03:08:27] Listed securities loaded: 27451
+[2026-06-13 03:08:39] Done.
+{
+  "batch_size": 50000,
+  "database": "lmm_fiben_sf10_source_full",
+  "elapsed_seconds": 12.512029183097184,
+  "embedded_field": "listed_security",
+  "foreign_field": "LISTEDSECURITYID",
+  "important_note": "Repair avoids copying large later-created fields such as holding into each transaction.",
+  "local_field": "REFERSTO",
+  "lookup_from": "lmm_listed_security",
+  "n_batches": 1,
+  "n_listed_securities": 27451,
+  "only_missing": true,
+  "parent_collection": "lmm_transaction",
+  "relationship_name": "transaction_refers_to_listed_security",
+  "scale": "sf10",
+  "status": "completed",
+  "summary_csv": "de_lima_mello_2015_implementation/results/fiben/materialization/sf10/lmm_fiben_sf10_source_full/lmm_materialization_embedding_repair_transaction_listed_security.csv",
+  "total_matched": 0,
+  "total_modified": 0
+}

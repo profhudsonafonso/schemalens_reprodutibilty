@@ -1,0 +1,15 @@
+file_path,relative_file_path,file_name,normalized_stem,file_size_bytes
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/CORPORATION.csv,CORPORATION.csv,CORPORATION.csv,corporation,1636546
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/COUNTRY.csv,COUNTRY.csv,COUNTRY.csv,country,4985
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/DISCLOSURE.csv,DISCLOSURE.csv,DISCLOSURE.csv,disclosure,357401722
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/ELEMENTOFFINANCIALSTATEMENT.csv,ELEMENTOFFINANCIALSTATEMENT.csv,ELEMENTOFFINANCIALSTATEMENT.csv,elementoffinancialstatement,742615145
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/ELEMENTSOFFINANCIALREPORT.csv,ELEMENTSOFFINANCIALREPORT.csv,ELEMENTSOFFINANCIALREPORT.csv,elementsoffinancialreport,3414006337
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/FINANCIALREPORT.csv,FINANCIALREPORT.csv,FINANCIALREPORT.csv,financialreport,32941333
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/FINANCIALSERVICEACCOUNT.csv,FINANCIALSERVICEACCOUNT.csv,FINANCIALSERVICEACCOUNT.csv,financialserviceaccount,443551278
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/HOLDING.csv,HOLDING.csv,HOLDING.csv,holding,2146906246
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/INDUSTRYSECTORCLASSIFIER.csv,INDUSTRYSECTORCLASSIFIER.csv,INDUSTRYSECTORCLASSIFIER.csv,industrysectorclassifier,33026
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/LISTEDSECURITY.csv,LISTEDSECURITY.csv,LISTEDSECURITY.csv,listedsecurity,2969130
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/MONETARYAMOUNT.csv,MONETARYAMOUNT.csv,MONETARYAMOUNT.csv,monetaryamount,441275185
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/PERSON.csv,PERSON.csv,PERSON.csv,person,273010415
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/SECURITIESTRANSACTION.csv,SECURITIESTRANSACTION.csv,SECURITIESTRANSACTION.csv,securitiestransaction,2501417225
+/home/hudson/Documents/framework_test/fiben/data_sf/sf10/SECURITY.csv,SECURITY.csv,SECURITY.csv,security,1078820

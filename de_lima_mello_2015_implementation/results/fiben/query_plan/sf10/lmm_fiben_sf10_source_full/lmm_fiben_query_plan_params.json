@@ -1,0 +1,22 @@
+{
+  "account_id": "150000000000",
+  "buy_type": "1",
+  "buy_type_values": [
+    1,
+    "1"
+  ],
+  "corporation_id": "2860",
+  "corporation_security_ids": [
+    "SF10_SEC_R01_1002518"
+  ],
+  "corporation_ticker": "IBM",
+  "high_value_threshold": 4500,
+  "listed_security_id": "SF10_SEC_R01_1001538",
+  "person_id": null,
+  "sell_type": "2",
+  "sell_type_values": [
+    2,
+    "2"
+  ],
+  "transaction_refersto": "SF10_SEC_R01_1001538"
+}

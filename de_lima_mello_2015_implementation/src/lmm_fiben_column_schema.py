@@ -37,6 +37,10 @@ MANUAL_COLUMNS_BY_FILE_STEM: Dict[str, List[str]] = {
         "NAME",
         "SCHEME",
     ],
+    "INDUSTRYSECTORCLASSIFIER": [
+        "INDUSTRYSECTORCLASSIFIERID",
+        "NAME",
+    ],
     "LISTEDSECURITY": [
         "LISTEDSECURITYID",
         "ISPROVIDEDBY",

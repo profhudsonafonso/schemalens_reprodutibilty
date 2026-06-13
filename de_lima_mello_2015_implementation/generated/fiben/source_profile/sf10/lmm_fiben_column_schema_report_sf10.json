@@ -1,0 +1,32 @@
+{
+  "important_note": "FIBEN source files are treated as headerless CSVs. Manual schemas are used to assign stable column names before materialization.",
+  "manual_column_files": [
+    "CORPORATION",
+    "COUNTRY",
+    "DISCLOSURE",
+    "ELEMENTOFFINANCIALSTATEMENT",
+    "ELEMENTSOFFINANCIALREPORT",
+    "FINANCIALREPORT",
+    "FINANCIALSERVICEACCOUNT",
+    "HOLDING",
+    "INDUSTRYSECTORCLASSIFICATIONSCHEME",
+    "INDUSTRYSECTORCLASSIFIER",
+    "LISTEDSECURITY",
+    "PERSON",
+    "SECURITIESTRANSACTION",
+    "SECURITY"
+  ],
+  "missing_required_columns": [],
+  "n_column_schema_rows": 97,
+  "n_missing_required_columns": 0,
+  "n_required_columns": 32,
+  "n_semantic_views": 15,
+  "output_files": {
+    "column_schema_csv": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf10/lmm_fiben_column_schema_sf10.csv",
+    "report_json": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf10/lmm_fiben_column_schema_report_sf10.json",
+    "required_column_validation_csv": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf10/lmm_fiben_required_column_validation_sf10.csv",
+    "required_columns_csv": "de_lima_mello_2015_implementation/generated/fiben/source_profile/sf10/lmm_fiben_required_columns_sf10.csv"
+  },
+  "scale": "sf10",
+  "status": "completed"
+}

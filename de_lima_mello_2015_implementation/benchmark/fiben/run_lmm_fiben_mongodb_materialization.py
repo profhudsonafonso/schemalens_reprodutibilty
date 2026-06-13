@@ -673,6 +673,7 @@ def main() -> None:
     report = {
         "status": "completed",
         "target_database": args.target_db,
+        "target_db": args.target_db,
         "scale": args.scale,
         "max_rows_per_view": args.max_rows_per_view,
         "skip_embeddings": args.skip_embeddings,
