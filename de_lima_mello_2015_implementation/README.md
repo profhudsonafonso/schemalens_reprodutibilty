@@ -434,3 +434,56 @@ Generated final query-plan interpretation files:
 - `results/fiben/comparison/sf10/lmm_sf10_query_plan_final_summary_interpreted.csv`
 - `results/fiben/comparison/sf10/lmm_sf10_query_plan_final_summary_interpreted.md`
 <!-- FIBEN_SF10_QUERY_PLAN_FINAL_END -->
+
+
+<!-- FIBEN_SF30_ALIGNED_COMPARISON_START -->
+## FIBEN SF30 aligned rerun and SchemaLens comparison
+
+The Lima and Mello FIBEN SF30 baseline was materialized and benchmarked using the same aligned methodology used for SF1 and SF10.
+
+The SF30 source profile and column validation completed successfully:
+
+- required views: 15
+- matched views: 15
+- unmatched views: 0
+- missing required columns: 0
+
+The full MongoDB materialization was created in:
+
+- `lmm_fiben_sf30_source_full`
+
+The final SF30 benchmark used:
+
+- `warmup_runs = 0`
+- `cold_runs = 10`
+- `hot_runs = 10`
+- queries: Q1--Q9
+- raw executions: 180
+- completed executions: 180
+- zero-returned hot queries: 0
+
+During SF30 validation, the runner was corrected to prefer active-scale transaction references. This prevents SF30 runs from accidentally selecting `SF10_SEC_R01_*` identifiers when both SF10 and SF30 references exist in the materialized database. The final SF30 parameters use:
+
+- Q7/Q8 IBM security id: `SF30_SEC_R01_1002518`
+- Q9 listed security id: `SF30_SEC_R01_1001538`
+
+Final aligned SF30 result:
+
+| Winner | Number of queries |
+|---|---:|
+| SchemaLens | 5 |
+| Lima and Mello | 4 |
+
+SchemaLens wins Q2, Q6, Q7, Q8, and Q9. Lima and Mello wins Q1, Q3, Q4, and Q5.
+
+The clean aligned-cardinality cases are Q1, Q2, Q7, and Q8. SchemaLens wins 3 of these 4 cases. Lima and Mello wins Q1, but Q3, Q4, and Q5 return substantially fewer documents than SchemaLens and should therefore be interpreted with cardinality caveats.
+
+The strongest SchemaLens advantage remains Q6. Lima and Mello reaches 24358.563 ms p95, while SchemaLens reaches 418.835 ms p95. Query-plan validation shows that Lima and Mello uses a collection scan and examines more than 5 million documents for Q6.
+
+Generated aligned SF30 artifacts:
+
+- `results/fiben/comparison/sf30/SF30_ALIGNED_EXPERIMENT_REPORT.md`
+- `results/fiben/comparison/sf30/lmm_vs_schemalens_sf30_hot_best_aligned.csv`
+- `results/fiben/comparison/sf30/lmm_vs_schemalens_sf30_winner_summary_aligned.csv`
+- `results/fiben/comparison/sf30/lmm_vs_schemalens_sf30_interpretation_aligned.md`
+<!-- FIBEN_SF30_ALIGNED_COMPARISON_END -->

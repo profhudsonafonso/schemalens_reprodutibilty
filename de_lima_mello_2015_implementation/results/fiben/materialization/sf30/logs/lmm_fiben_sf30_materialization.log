@@ -1,0 +1,91 @@
+[2026-06-14 07:23:47] Dropping target database: lmm_fiben_sf30_source_full
+[2026-06-14 07:23:47] Loading Lima & Mello FIBEN materialization into lmm_fiben_sf30_source_full
+[2026-06-14 07:50:02] Creating indexes
+[2026-06-14 08:09:22] Running Rule-5 embedding edges
+[2026-06-14 08:09:22] Embedding transaction_refers_to_listed_security: lmm_transaction.REFERSTO -> lmm_listed_security.LISTEDSECURITYID as listed_security
+[2026-06-14 08:19:22] Embedding financial_report_contains_report_element: lmm_financial_report.FINANCIALREPORTID -> lmm_report_element.ISMEMBEROF as report_element
+[2026-06-14 08:20:31] Embedding account_has_holding: lmm_financial_service_account.FINANCIALSERVICEACCOUNTID -> _src_fiben_holdings.ISHELDBY as holding
+[2026-06-14 08:23:29] Embedding account_records_transaction: lmm_financial_service_account.FINANCIALSERVICEACCOUNTID -> lmm_transaction.ISFACILITATEDBY as transaction
+[2026-06-14 08:27:16] Embedding person_owns_financial_service_account: lmm_person.PERSONID -> lmm_financial_service_account.ISOWNEDBY as financial_service_account
+[2026-06-14 08:29:17] Embedding corporation_has_country: lmm_corporation.ISDOMICILEDIN -> _src_fiben_countries.COUNTRYID as country
+[2026-06-14 08:29:20] Embedding corporation_has_industry: lmm_corporation.ISCLASSIFIEDBY -> _src_fiben_industries.INDUSTRYSECTORCLASSIFIERID as industry
+[2026-06-14 08:29:23] Embedding corporation_has_financial_report: lmm_corporation.CORPORATIONID -> lmm_financial_report.ISPROVIDEDBY as financial_report
+[2026-06-14 08:29:33] Embedding holding_refers_to_listed_security: lmm_listed_security.LISTEDSECURITYID -> _src_fiben_holdings.REFERSTO as holding
+[2026-06-14 08:30:31] Adding simple Rule-6 reference fields
+[2026-06-14 08:45:51] Done.
+{
+  "collections": [
+    {
+      "collection_name": "_src_fiben_countries",
+      "count": 250
+    },
+    {
+      "collection_name": "_src_fiben_holdings",
+      "count": 16034191
+    },
+    {
+      "collection_name": "_src_fiben_industries",
+      "count": 453
+    },
+    {
+      "collection_name": "lmm_corporation",
+      "count": 69721
+    },
+    {
+      "collection_name": "lmm_disclosure",
+      "count": 6244741
+    },
+    {
+      "collection_name": "lmm_financial_report",
+      "count": 1449031
+    },
+    {
+      "collection_name": "lmm_financial_service_account",
+      "count": 2918101
+    },
+    {
+      "collection_name": "lmm_listed_security",
+      "count": 82351
+    },
+    {
+      "collection_name": "lmm_person",
+      "count": 1503001
+    },
+    {
+      "collection_name": "lmm_report_element",
+      "count": 81200841
+    },
+    {
+      "collection_name": "lmm_security",
+      "count": 82351
+    },
+    {
+      "collection_name": "lmm_sell_transaction",
+      "count": 19500001
+    },
+    {
+      "collection_name": "lmm_statement_element",
+      "count": 13313821
+    },
+    {
+      "collection_name": "lmm_transaction",
+      "count": 19500001
+    }
+  ],
+  "embedding_status_counts": {
+    "completed": 8,
+    "failed: PlanExecutor error during aggregation :: caused by :: operation exceeded time limit, full error: {'ok': 0.0, 'errmsg': 'PlanExecutor error during aggregation :: caused by :: operation exceeded time limit', 'code': 50, 'codeName': 'MaxTimeMSExpired'}": 1
+  },
+  "max_rows_per_view": null,
+  "n_collections": 14,
+  "output_dir": "de_lima_mello_2015_implementation/results/fiben/materialization/sf30/lmm_fiben_sf30_source_full",
+  "reference_status_counts": {
+    "completed": 3,
+    "skipped_bridge_reference": 1
+  },
+  "scale": "sf30",
+  "skip_embeddings": false,
+  "status": "completed",
+  "target_database": "lmm_fiben_sf30_source_full",
+  "target_db": "lmm_fiben_sf30_source_full"
+}

@@ -533,6 +533,43 @@ def pick_q4_person_with_reachable_company(db) -> str:
 
     raise RuntimeError("Could not find a Q4-compatible person in lmm_person.")
 
+
+def infer_active_scale_label(db) -> str | None:
+    """Infer active FIBEN scale from the MongoDB database name."""
+    name = getattr(db, "name", "").lower()
+    if "sf30" in name:
+        return "SF30"
+    if "sf10" in name:
+        return "SF10"
+    if "sf1" in name:
+        return "SF1"
+    return None
+
+
+def prefer_active_scale_refersto(db, value):
+    """Prefer REFERSTO values that match the active scale when available.
+
+    SF30 may contain both SF10_* and SF30_* transaction references. For an
+    SF30 database, using SF10_* references mixes scales and can bias Q7/Q8/Q9.
+    This helper preserves SF1 numeric identifiers, keeps SF10 values in SF10,
+    and upgrades SF10_* to SF30_* when the SF30 transaction reference exists.
+    """
+    if value is None:
+        return value
+
+    scale = infer_active_scale_label(db)
+    if not scale:
+        return value
+
+    suffix = str(value).split("_")[-1]
+    preferred = f"{scale}_SEC_R01_{suffix}"
+
+    # If the preferred active-scale value exists in transactions, use it.
+    if db["lmm_transaction"].find_one({"REFERSTO": preferred}, {"_id": 1}) is not None:
+        return preferred
+
+    return value
+
 def build_params(db) -> Dict[str, Any]:
     company = first_doc(db, "lmm_corporation", {"TICKER": "IBM"})
     if not company:
@@ -542,6 +579,10 @@ def build_params(db) -> Dict[str, Any]:
 
     corporation_id = company.get("CORPORATIONID")
     corporation_security_ids = pick_security_ids_for_corporation(db, corporation_id)
+    corporation_security_ids = [
+        prefer_active_scale_refersto(db, value)
+        for value in corporation_security_ids
+    ]
 
     account = first_non_header_doc(
         db,
@@ -555,6 +596,7 @@ def build_params(db) -> Dict[str, Any]:
 
     # Q9 follows the original SchemaLens raw REFERSTO pool.
     q9_refersto = pick_q9_refersto_raw_pool(db)
+    q9_refersto = prefer_active_scale_refersto(db, q9_refersto)
 
     buy_type = pick_transaction_type_value(db, 1)
     sell_type = pick_transaction_type_value(db, 2)

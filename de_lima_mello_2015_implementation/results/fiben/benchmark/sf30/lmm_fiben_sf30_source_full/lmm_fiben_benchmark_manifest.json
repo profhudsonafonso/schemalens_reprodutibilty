@@ -1,0 +1,26 @@
+{
+  "aggregate_csv": "de_lima_mello_2015_implementation/results/fiben/benchmark/sf30/lmm_fiben_sf30_source_full/lmm_fiben_benchmark_aggregate_results.csv",
+  "cold_runs": 10,
+  "database": "lmm_fiben_sf30_source_full",
+  "dataset": "FIBEN",
+  "hot_runs": 10,
+  "important_note": "Q10 is excluded because it is an insert/update workload and requires isolated reset/rollback benchmarking.",
+  "max_time_ms": 600000,
+  "method": "lima_mello_2015",
+  "queries": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9"
+  ],
+  "raw_csv": "de_lima_mello_2015_implementation/results/fiben/benchmark/sf30/lmm_fiben_sf30_source_full/lmm_fiben_benchmark_raw_results.csv",
+  "result_limit": 1000,
+  "scale": "sf30",
+  "status": "completed",
+  "warmup_runs": 0
+}

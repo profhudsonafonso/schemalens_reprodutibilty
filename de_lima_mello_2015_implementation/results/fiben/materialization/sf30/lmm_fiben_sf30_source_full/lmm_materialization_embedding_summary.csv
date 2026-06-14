@@ -1,0 +1,10 @@
+relationship_name,parent_collection,lookup_from,local_field,foreign_field,embedded_field,status,elapsed_seconds
+transaction_refers_to_listed_security,lmm_transaction,,,,listed_security,"failed: PlanExecutor error during aggregation :: caused by :: operation exceeded time limit, full error: {'ok': 0.0, 'errmsg': 'PlanExecutor error during aggregation :: caused by :: operation exceeded time limit', 'code': 50, 'codeName': 'MaxTimeMSExpired'}",
+financial_report_contains_report_element,lmm_financial_report,lmm_report_element,FINANCIALREPORTID,ISMEMBEROF,report_element,completed,69.48993062973022
+account_has_holding,lmm_financial_service_account,_src_fiben_holdings,FINANCIALSERVICEACCOUNTID,ISHELDBY,holding,completed,177.41285181045532
+account_records_transaction,lmm_financial_service_account,lmm_transaction,FINANCIALSERVICEACCOUNTID,ISFACILITATEDBY,transaction,completed,227.63562941551208
+person_owns_financial_service_account,lmm_person,lmm_financial_service_account,PERSONID,ISOWNEDBY,financial_service_account,completed,120.65102577209473
+corporation_has_country,lmm_corporation,_src_fiben_countries,ISDOMICILEDIN,COUNTRYID,country,completed,3.0192675590515137
+corporation_has_industry,lmm_corporation,_src_fiben_industries,ISCLASSIFIEDBY,INDUSTRYSECTORCLASSIFIERID,industry,completed,3.4770989418029785
+corporation_has_financial_report,lmm_corporation,lmm_financial_report,CORPORATIONID,ISPROVIDEDBY,financial_report,completed,9.224318981170654
+holding_refers_to_listed_security,lmm_listed_security,_src_fiben_holdings,LISTEDSECURITYID,REFERSTO,holding,completed,58.18972969055176

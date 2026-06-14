@@ -1,0 +1,215 @@
+{
+  "command": {
+    "$db": "lmm_fiben_sf30_source_full",
+    "aggregate": "lmm_transaction",
+    "cursor": {},
+    "maxTimeMS": 600000,
+    "pipeline": [
+      {
+        "$match": {
+          "VALUE": {
+            "$gte": 4500
+          }
+        }
+      },
+      {
+        "$lookup": {
+          "as": "listed_security",
+          "foreignField": "LISTEDSECURITYID",
+          "from": "lmm_listed_security",
+          "localField": "REFERSTO"
+        }
+      },
+      {
+        "$unwind": "$listed_security"
+      },
+      {
+        "$lookup": {
+          "as": "corporation",
+          "foreignField": "CORPORATIONID",
+          "from": "lmm_corporation",
+          "localField": "listed_security.ISPROVIDEDBY"
+        }
+      },
+      {
+        "$project": {
+          "REFERSTO": 1,
+          "SECURITIESTRANSACTIONID": 1,
+          "VALUE": 1,
+          "corporation.CORPORATIONID": 1,
+          "corporation.NAME": 1,
+          "listed_security": 1
+        }
+      },
+      {
+        "$limit": 1000
+      }
+    ]
+  },
+  "explainVersion": "1",
+  "ok": 1.0,
+  "queryShapeHash": "C8D799EAA2D03CE33B38738B37C94B9D2FE30A1284258550B0403195EF42A2A1",
+  "serverInfo": {
+    "gitVersion": "28927c60881a488fcbc5fd4d925b410f33258827",
+    "host": "60053e166f8f",
+    "port": 27017,
+    "version": "8.0.20"
+  },
+  "serverParameters": {
+    "internalDocumentSourceGroupMaxMemoryBytes": 104857600,
+    "internalDocumentSourceSetWindowFieldsMaxMemoryBytes": 104857600,
+    "internalLookupStageIntermediateDocumentMaxSizeBytes": 104857600,
+    "internalQueryFacetBufferSizeBytes": 104857600,
+    "internalQueryFacetMaxOutputDocSizeBytes": 104857600,
+    "internalQueryFrameworkControl": "trySbeRestricted",
+    "internalQueryMaxAddToSetBytes": 104857600,
+    "internalQueryMaxBlockingSortMemoryUsageBytes": 104857600,
+    "internalQueryPlannerIgnoreIndexWithCollationForRegex": 1,
+    "internalQueryProhibitBlockingMergeOnMongoS": 0
+  },
+  "stages": [
+    {
+      "$cursor": {
+        "executionStats": {
+          "executionStages": {
+            "advanced": 508121,
+            "executionTimeMillisEstimate": 2094,
+            "inputStage": {
+              "advanced": 508121,
+              "direction": "forward",
+              "docsExamined": 5068820,
+              "executionTimeMillisEstimate": 2008,
+              "filter": {
+                "VALUE": {
+                  "$gte": 4500
+                }
+              },
+              "isEOF": 0,
+              "nReturned": 508121,
+              "needTime": 4560699,
+              "needYield": 0,
+              "restoreState": 184,
+              "saveState": 185,
+              "stage": "COLLSCAN",
+              "works": 5068820
+            },
+            "isCached": false,
+            "isEOF": 0,
+            "nReturned": 508121,
+            "needTime": 4560699,
+            "needYield": 0,
+            "restoreState": 184,
+            "saveState": 185,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "VALUE": 1,
+              "_id": 1
+            },
+            "works": 5068820
+          },
+          "executionSuccess": true,
+          "executionTimeMillis": 21975,
+          "nReturned": 508121,
+          "totalDocsExamined": 5068820,
+          "totalKeysExamined": 0
+        },
+        "queryPlanner": {
+          "indexFilterSet": false,
+          "maxIndexedAndSolutionsReached": false,
+          "maxIndexedOrSolutionsReached": false,
+          "maxScansToExplodeReached": false,
+          "namespace": "lmm_fiben_sf30_source_full.lmm_transaction",
+          "optimizationTimeMillis": 0,
+          "parsedQuery": {
+            "VALUE": {
+              "$gte": 4500
+            }
+          },
+          "planCacheKey": "53399889",
+          "planCacheShapeHash": "5B65825D",
+          "prunedSimilarIndexes": false,
+          "queryHash": "5B65825D",
+          "rejectedPlans": [],
+          "winningPlan": {
+            "inputStage": {
+              "direction": "forward",
+              "filter": {
+                "VALUE": {
+                  "$gte": 4500
+                }
+              },
+              "stage": "COLLSCAN"
+            },
+            "isCached": false,
+            "stage": "PROJECTION_SIMPLE",
+            "transformBy": {
+              "REFERSTO": 1,
+              "SECURITIESTRANSACTIONID": 1,
+              "VALUE": 1,
+              "_id": 1
+            }
+          }
+        }
+      },
+      "executionTimeMillisEstimate": 2105,
+      "nReturned": 502132
+    },
+    {
+      "$lookup": {
+        "as": "listed_security",
+        "foreignField": "LISTEDSECURITYID",
+        "from": "lmm_listed_security",
+        "localField": "REFERSTO",
+        "unwinding": {
+          "preserveNullAndEmptyArrays": false
+        }
+      },
+      "collectionScans": 0,
+      "executionTimeMillisEstimate": 21934,
+      "indexesUsed": [
+        "LISTEDSECURITYID_1"
+      ],
+      "nReturned": 1000,
+      "totalDocsExamined": 1000,
+      "totalKeysExamined": 1000
+    },
+    {
+      "$lookup": {
+        "as": "corporation",
+        "foreignField": "CORPORATIONID",
+        "from": "lmm_corporation",
+        "localField": "listed_security.ISPROVIDEDBY"
+      },
+      "collectionScans": 0,
+      "executionTimeMillisEstimate": 21974,
+      "indexesUsed": [
+        "CORPORATIONID_1"
+      ],
+      "nReturned": 1000,
+      "totalDocsExamined": 0,
+      "totalKeysExamined": 0
+    },
+    {
+      "$project": {
+        "REFERSTO": true,
+        "SECURITIESTRANSACTIONID": true,
+        "VALUE": true,
+        "_id": true,
+        "corporation": {
+          "CORPORATIONID": true,
+          "NAME": true
+        },
+        "listed_security": true
+      },
+      "executionTimeMillisEstimate": 21974,
+      "nReturned": 1000
+    },
+    {
+      "$limit": 1000,
+      "executionTimeMillisEstimate": 21974,
+      "nReturned": 1000
+    }
+  ]
+}
