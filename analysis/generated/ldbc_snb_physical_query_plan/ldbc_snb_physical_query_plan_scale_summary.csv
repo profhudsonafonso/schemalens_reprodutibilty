@@ -1,0 +1,4 @@
+scale_label,candidate_phase_rows,component_rows,total_docs_examined,total_keys_examined,rows_with_ixscan,rows_with_collscan,rows_with_sort,rows_with_lookup,rows_with_group,rows_with_unwind
+sf0.1,128,316,15084.0,15248.0,76,0,26,0,0,0
+sf1,128,316,41044.0,41224.0,76,0,26,0,0,0
+sf3,128,316,85654.0,85894.0,76,0,26,0,0,0
