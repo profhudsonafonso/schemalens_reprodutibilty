@@ -1,0 +1,21 @@
+official_id,parameter_id,parameter_kind
+IC1,933|Mahinda,person_id_plus_first_name
+IC1,1129|Carmen,person_id_plus_first_name
+IC1,4194|Hồ Chí,person_id_plus_first_name
+IC1,8333|Rahul,person_id_plus_first_name
+IC1,8698|Rahul,person_id_plus_first_name
+IC2,933,person_id
+IC2,1129,person_id
+IC2,4194,person_id
+IC2,8333,person_id
+IC2,8698,person_id
+IC5,8333,person_id
+IC5,8698,person_id
+IC5,4194,person_id
+IC5,1129,person_id
+IC5,933,person_id
+IC7,933,person_id
+IC7,1129,person_id
+IC7,4194,person_id
+IC7,8333,person_id
+IC7,8698,person_id
