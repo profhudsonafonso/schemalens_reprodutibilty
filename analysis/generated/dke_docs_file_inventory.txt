@@ -1,0 +1,7 @@
+docs/imdb_framework_artifacts.md
+docs/ldbc_snb_physical_benchmark_phase2.md
+docs/ldbc_snb_physical_materialization.md
+docs/makefile_reproduction.md
+docs/revision_plan_2026_05_18.md
+docs/runtime_estimates.md
+docs/short_paper_reproduction.md

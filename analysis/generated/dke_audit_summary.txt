@@ -1,0 +1,73 @@
+=== DKE aggregate audit ===
+Rows: 1284
+Columns: ['dataset', 'scale_label', 'query_name', 'query_scale_phase_id', 'config_id', 'g_class', 'design_family', 'benchmark_group', 'run_phase', 'n_runs', 'n_success_runs', 'avg_latency_ms', 'median_latency_ms', 'p95_latency_ms', 'p99_latency_ms', 'min_latency_ms', 'max_latency_ms', 'std_latency_ms', 'avg_documents_returned', 'avg_documents_written', 'source_experiment_id', 'source_file']
+
+Rows by dataset:
+dataset
+fiben       360
+imdb        540
+ldbc_snb    384
+dtype: int64
+
+Queries by dataset:
+fiben: 10 queries
+  - Q10_CreateAccountHoldingAndBuyTransaction
+  - Q1_CompanyProfileIBM
+  - Q2_CompanyWithIndustryCountryAndListedSecurities
+  - Q3_SecuritiesHeldInEachFinancialServiceAccount
+  - Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity
+  - Q5_ReportsAndMetricDataOfCompany
+  - Q6_TechUSListedSecuritiesWithHighLastTradedValue
+  - Q7_PersonsWhoBoughtMoreIBMThanSold
+  - Q8_IBMTransactionsBelowAverageSellingPrice
+  - Q9_PersonsWhoBoughtAndSoldSameStock
+
+imdb: 10 queries
+  - QG10_AdvancedSearchWatchItems
+  - QG1_WatchItemById
+  - QG2_WatchItemByTitle
+  - QG3_RecommendationByGenreAndSubtype
+  - QG4_AllPersonsOfTypeForWatchItem
+  - QG5_AllPersonsForEpisodesOfSeries
+  - QG6_EpisodesOfSeries
+  - QG7_UpdateWatchItemMetadata
+  - QG8_AddPersonRoleToWatchItem
+  - QG9_TopRatedSeriesByGenre
+
+ldbc_snb: 22 queries
+  - IC1_TransitiveFriendsWithName
+  - IC2_RecentMessagesByFriends
+  - IC3_FriendsAndFriendsOfFriendsInCountries
+  - IC4_NewTopics
+  - IC5_NewGroups
+  - IC6_TagCoOccurrence
+  - IC7_RecentLikers
+  - INS1_AddPerson
+  - INS2_AddLikeToPost
+  - INS3_AddLikeToComment
+  - INS4_AddForum
+  - INS5_AddForumMembership
+  - INS6_AddPost
+  - INS7_AddComment
+  - INS8_AddFriendship
+  - IS1_ProfileOfPerson
+  - IS2_RecentMessagesOfPerson
+  - IS3_FriendsOfPerson
+  - IS4_ContentOfMessage
+  - IS5_CreatorOfMessage
+  - IS6_ForumOfMessage
+  - IS7_RepliesOfMessage
+
+Scales by dataset:
+fiben: ['sf1', 'sf10', 'sf30']
+imdb: ['sf0.25', 'sf0.5', 'sf1']
+ldbc_snb: ['sf0.1', 'sf1', 'sf3']
+
+Run phases:
+run_phase
+cold    642
+hot     642
+Name: count, dtype: int64
+
+Missing p95:
+0
