@@ -2,40 +2,47 @@
 
 This folder contains the analysis files used to verify and extend the experimental results of the SchemaLens paper.
 
-The goal of this folder is to support lightweight reproducibility from aggregate benchmark outputs, without requiring reviewers to rerun the full MongoDB benchmark.
+The goal of this folder is to support lightweight reproducibility from aggregate benchmark outputs and consolidated query-plan evidence, without requiring reviewers to rerun the full MongoDB benchmark.
 
 The analyses in this folder support:
 
-- normalized aggregate benchmark outputs;
-- baseline comparisons;
-- ablation studies;
-- near-best and regret analysis;
-- failure and near-failure analysis;
-- paper-ready tables.
+* normalized aggregate benchmark outputs;
+* baseline comparisons;
+* random-k diagnostics;
+* ablation studies;
+* near-best and regret analysis;
+* failure and near-failure analysis;
+* representative-case analysis;
+* physical MongoDB query-plan validation;
+* paper-ready tables.
 
-These analyses use the aggregate benchmark result files already included in the repository.
+These analyses use benchmark result files and methodology artifacts already included in the repository.
 
 ---
 
 ## Quick links
 
-- Normalize aggregate outputs: `analysis/scripts/normalize_aggregate_outputs.py`
-- Baseline coverage: `analysis/scripts/check_baseline_coverage.py`
-- Baseline simulation: `analysis/scripts/simulate_baselines.py`
-- Baseline diagnostics: `analysis/scripts/analyze_baseline_diagnostics.py`
-- Ablation normalization: `analysis/scripts/normalize_ablation_variables.py`
-- Ablation analysis: `analysis/scripts/run_ablation_analysis.py`
-- Representative cases: `analysis/scripts/analyze_representative_cases.py`
-- Joint explanatory cases: `analysis/scripts/find_joint_explanatory_cases.py`
-- Short-paper table reproduction: `analysis/scripts/reproduce_short_paper_tables.py`
-- IMDb query-plan validation: `analysis/generated/query_plan/imdb/`
+* Normalize aggregate outputs: `analysis/scripts/normalize_aggregate_outputs.py`
+* Baseline coverage: `analysis/scripts/check_baseline_coverage.py`
+* Baseline simulation: `analysis/scripts/simulate_baselines.py`
+* Baseline diagnostics: `analysis/scripts/analyze_baseline_diagnostics.py`
+* Ablation normalization: `analysis/scripts/normalize_ablation_variables.py`
+* Ablation analysis: `analysis/scripts/run_ablation_analysis.py`
+* Representative cases: `analysis/scripts/analyze_representative_cases.py`
+* Joint explanatory cases: `analysis/scripts/find_joint_explanatory_cases.py`
+* Short-paper table reproduction: `analysis/scripts/reproduce_short_paper_tables.py`
+* IMDb query-plan validation: `analysis/generated/query_plan/imdb/`
+* FIBEN query-plan validation: `analysis/generated/query_plan/fiben/`
+* LDBC SNB physical MongoDB query-plan validation: `analysis/generated/ldbc_snb_physical_query_plan/`
+* LDBC SNB physical IC7 baseline/ablation recalculation: `analysis/scripts/recompute_ldbc_physical_ic7_baseline_ablation.py`
 
 For short-paper Table 1 and Table 2 reproduction, see:
 
-    docs/short_paper_reproduction.md
+```text
+docs/short_paper_reproduction.md
+```
 
 ---
-
 
 ## Folder structure
 
@@ -66,7 +73,9 @@ analysis/
 │   ├── experimental_response_ablation_baselines.py
 │   ├── analyze_representative_cases.py
 │   ├── find_joint_explanatory_cases.py
-│   └── reproduce_short_paper_tables.py
+│   ├── reproduce_short_paper_tables.py
+│   ├── analyze_ldbc_snb_physical_query_plan.py
+│   └── recompute_ldbc_physical_ic7_baseline_ablation.py
 └── generated/
     ├── aggregate_results_all_datasets.csv
     ├── baseline_performance_by_case.csv
@@ -77,8 +86,11 @@ analysis/
     ├── short_paper_table1_details.csv
     ├── short_paper_table2_reproduced.csv
     ├── short_paper_reproduction_report.txt
-    └── query_plan/
+    ├── query_plan/
+    └── ldbc_snb_physical_query_plan/
 ```
+
+---
 
 ## Step 1 — Normalize aggregate benchmark outputs
 
@@ -159,7 +171,7 @@ analysis/generated/aggregate_results_all_datasets.csv
 analysis/generated/normalization_report.txt
 ```
 
-The file `aggregate_results_all_datasets.csv` is the common input for the next analysis scripts.
+The file `aggregate_results_all_datasets.csv` is the common input for baseline, ablation, and representative-case scripts.
 
 The file `normalization_report.txt` summarizes the generated output and checks whether the normalization was successful.
 
@@ -367,16 +379,16 @@ analysis/generated/normalization_report.txt
 
 reports:
 
-- total rows;
-- rows by dataset;
-- rows by dataset and scale;
-- rows by dataset and run phase;
-- benchmark groups;
-- unique queries by dataset;
-- G classes by dataset;
-- rows with missing p95 latency;
-- duplicated rows;
-- source files used.
+* total rows;
+* rows by dataset;
+* rows by dataset and scale;
+* rows by dataset and run phase;
+* benchmark groups;
+* unique queries by dataset;
+* G classes by dataset;
+* rows with missing p95 latency;
+* duplicated rows;
+* source files used.
 
 A successful normalization should report:
 
@@ -457,12 +469,12 @@ Lists the measured configuration classes available for each dataset, query, scal
 
 Shows, for each baseline and query-scale-phase case:
 
-- desired G classes;
-- available G classes;
-- selected available G classes;
-- missing G classes;
-- coverage ratio;
-- coverage status.
+* desired G classes;
+* available G classes;
+* selected available G classes;
+* missing G classes;
+* coverage ratio;
+* coverage status.
 
 #### `baseline_coverage_summary.csv`
 
@@ -498,8 +510,6 @@ Lists cases where a baseline requested configuration classes that were not avail
 #### `query_metadata_template.csv`
 
 Stores the query-level metadata used by `depth_only` and `relationship_type_only`.
-
-The LDBC SNB metadata is provisional and should be reviewed before using these two baselines in final paper text.
 
 ---
 
@@ -546,63 +556,6 @@ depth_only: 180 usable cases
 ```
 
 ---
-
-### Important note
-
-The LDBC SNB query metadata used for `depth_only` and `relationship_type_only` is provisional in this script.
-
-The metadata should be reviewed before using depth-only or relationship-type-only baseline results in the paper text.
-
----
-
-## What these steps do not do
-
-These steps do not simulate baseline performance.
-
-These steps do not run ablation analysis.
-
-These steps do not rerun MongoDB benchmarks.
-
-They only create a common, clean input file and verify whether baseline candidates are available in the measured outputs.
-
----
-
-## Next planned scripts
-
-The next analysis scripts will use:
-
-```text
-analysis/generated/aggregate_results_all_datasets.csv
-analysis/generated/baseline_coverage_by_case.csv
-```
-
-Planned scripts:
-
-```text
-analysis/scripts/simulate_baselines.py
-analysis/scripts/run_ablation_analysis.py
-analysis/scripts/analyze_failure_cases.py
-```
-
----
-
-## Reproducibility note
-
-These analyses are based on aggregate benchmark outputs already included in the repository.
-
-They are intended for lightweight verification of the paper results. Full benchmark reproduction is still possible, but it requires loading the datasets, materializing MongoDB candidate configurations, and rerunning repeated cold/hot benchmark executions.
-
-The lightweight path is recommended for quickly verifying:
-
-- p95 latency;
-- Top-1 preservation;
-- Top-3 preservation;
-- near-best preservation within the 5% threshold;
-- relative regret;
-- control-winner cases;
-- cross-scale behavior.
-
-
 
 ## Step 3 — Simulate baseline performance
 
@@ -808,7 +761,7 @@ LDBC SNB: 132
 
 The exact number of available cases depends on the baseline coverage.
 
-The previous coverage step showed:
+The coverage step should report:
 
 ```text
 random_k: 252 usable cases
@@ -844,7 +797,7 @@ On Windows PowerShell, run:
 py analysis\scripts\simulate_baselines.py
 ```
 
-
+---
 
 ## Step 4 — Baseline diagnostics and SchemaLens vs random-k
 
@@ -856,10 +809,10 @@ The `random_k` baseline is stochastic. It randomly samples the same number of me
 
 This means that `random_k` can perform well when:
 
-- the measured configuration space is small;
-- SchemaLens selects several classes;
-- many configurations are close to the best observed p95;
-- the global best has a high probability of being included by chance.
+* the measured configuration space is small;
+* SchemaLens selects several classes;
+* many configurations are close to the best observed p95;
+* the global best has a high probability of being included by chance.
 
 Therefore, `random_k` should be interpreted as a statistical sanity-check baseline, not as an explainable design method.
 
@@ -908,10 +861,10 @@ analysis/generated/baseline_performance_by_dataset_hot.csv
 
 These files summarize:
 
-- available cases;
-- Top-1 preservation;
-- near-best preservation;
-- mean relative regret.
+* available cases;
+* Top-1 preservation;
+* near-best preservation;
+* mean relative regret.
 
 ---
 
@@ -929,13 +882,13 @@ analysis/generated/schema_lens_vs_random_k_report.txt
 
 The comparison reports:
 
-- cases where SchemaLens has higher Top-1 preservation;
-- cases where `random_k` has higher Top-1 probability;
-- tied cases;
-- SchemaLens regret;
-- expected `random_k` regret;
-- dataset-level differences;
-- hot-run and cold-run differences.
+* cases where SchemaLens has higher Top-1 preservation;
+* cases where `random_k` has higher Top-1 probability;
+* tied cases;
+* SchemaLens regret;
+* expected `random_k` regret;
+* dataset-level differences;
+* hot-run and cold-run differences.
 
 ---
 
@@ -987,6 +940,7 @@ On Windows PowerShell, run:
 py analysis\scripts\analyze_baseline_diagnostics.py
 ```
 
+---
 
 ## Step 5 — Normalize ablation variables
 
@@ -1171,6 +1125,8 @@ On Windows PowerShell:
 py analysis\scripts\normalize_ablation_variables.py
 ```
 
+---
+
 ## Step 6 — Run ablation analysis
 
 ### Purpose
@@ -1334,11 +1290,13 @@ On Windows PowerShell:
 py analysis\scripts\run_ablation_analysis.py
 ```
 
+---
+
 ## Step 7 — Generate advisor experimental response
 
 ### Purpose
 
-This step generates a Markdown report summarizing the additional experimental analyses prepared in response to the advisor comments.
+This step generates a Markdown report summarizing the additional experimental analyses prepared in response to advisor comments.
 
 The report is intended as an intermediate explanation document. It is not necessarily the final paper text.
 
@@ -1427,9 +1385,9 @@ analysis/generated/advisor_experimental_response.md
 
 This file can be used as a detailed advisor-facing explanation of the baseline and ablation results before deciding which parts should be moved into the paper.
 
+---
 
-
-### Representative case analysis
+## Step 8 — Representative case analysis
 
 After running the aggregate normalization, baseline, random-k diagnostic, and ablation scripts, generate the representative-case analysis with:
 
@@ -1437,37 +1395,41 @@ After running the aggregate normalization, baseline, random-k diagnostic, and ab
 python analysis/scripts/analyze_representative_cases.py
 ```
 
-This script does **not** rerun MongoDB benchmarks. It only combines already measured aggregate benchmark outputs with normalized SchemaLens methodology variables.
+This script does not rerun MongoDB benchmarks. It only combines already measured aggregate benchmark outputs with normalized SchemaLens methodology variables.
 
 Inputs:
 
-- `analysis/generated/aggregate_results_all_datasets.csv`
-- `analysis/generated/query_analytical_metadata_all_datasets.csv`
-- `analysis/generated/query_class_activation_all_datasets.csv`
-- `analysis/generated/benchmark_configuration_selection_all_datasets.csv`
-- `analysis/generated/ablation_performance_by_case.csv`
-- `analysis/generated/baseline_performance_by_case.csv`
-- `analysis/generated/schema_lens_vs_random_k_by_case.csv`
+```text
+analysis/generated/aggregate_results_all_datasets.csv
+analysis/generated/query_analytical_metadata_all_datasets.csv
+analysis/generated/query_class_activation_all_datasets.csv
+analysis/generated/benchmark_configuration_selection_all_datasets.csv
+analysis/generated/ablation_performance_by_case.csv
+analysis/generated/baseline_performance_by_case.csv
+analysis/generated/schema_lens_vs_random_k_by_case.csv
+```
 
 Outputs:
 
-- `analysis/generated/representative_case_table.csv`
-- `analysis/generated/representative_case_analysis.md`
+```text
+analysis/generated/representative_case_table.csv
+analysis/generated/representative_case_analysis.md
+```
 
 The report explains selected IMDb, FIBEN, and LDBC SNB cases using:
 
-- selected root;
-- conceptual traversal count (`Rc`);
-- depth (`D`);
-- residual traversal (`Re`);
-- `DeltaRratio`;
-- dominant semantic type;
-- update-volatility signal;
-- observed-sharedness signal;
-- activated G classes;
-- measured benchmark classes;
-- hot-run p95 winner;
-- whether SchemaLens preserved Top-1 or a near-best configuration.
+* selected root;
+* conceptual traversal count (`Rc`);
+* depth (`D`);
+* residual traversal (`Re`);
+* `DeltaRratio`;
+* dominant semantic type;
+* update-volatility signal;
+* observed-sharedness signal;
+* activated G classes;
+* measured benchmark classes;
+* hot-run p95 winner;
+* whether SchemaLens preserved Top-1 or a near-best configuration.
 
 For a compact paper-oriented version using only the largest scale per dataset/query, run:
 
@@ -1483,7 +1445,9 @@ python analysis/scripts/analyze_representative_cases.py --near-best-threshold 0.
 
 Methodological note: the script does not simulate root-choice ablation. Testing alternative roots would require materializing and benchmarking additional MongoDB configurations rooted at non-selected entities.
 
-### Joint explanatory case selection
+---
+
+## Step 9 — Joint explanatory case selection
 
 This step identifies representative cases that jointly explain baseline separation and ablation sensitivity.
 
@@ -1497,52 +1461,188 @@ python analysis/scripts/find_joint_explanatory_cases.py
 
 Inputs:
 
-- `analysis/generated/baseline_performance_by_case.csv`
-- `analysis/generated/ablation_performance_by_case.csv`
+```text
+analysis/generated/baseline_performance_by_case.csv
+analysis/generated/ablation_performance_by_case.csv
+```
 
 Outputs:
 
-- `analysis/generated/joint_explanatory_cases_hot.csv`
-- `analysis/generated/joint_explanatory_cases_by_query_hot.csv`
-- `analysis/generated/joint_explanatory_cases_hot.md`
+```text
+analysis/generated/joint_explanatory_cases_hot.csv
+analysis/generated/joint_explanatory_cases_by_query_hot.csv
+analysis/generated/joint_explanatory_cases_hot.md
+```
 
 The script classifies each hot-run case into one of the following categories:
 
-- `joint_strong`
-- `baseline_strong`
-- `ablation_strong`
-- `baseline_strong_with_ablation_signal`
-- `ablation_strong_with_baseline_signal`
-- `baseline_moderate`
-- `ablation_moderate`
-- `weak_or_redundant`
+```text
+joint_strong
+baseline_strong
+ablation_strong
+baseline_strong_with_ablation_signal
+ablation_strong_with_baseline_signal
+baseline_moderate
+ablation_moderate
+weak_or_redundant
+```
 
 Interpretation:
 
-- `baseline_strong` cases are useful to explain why fixed heuristics such as always-reference, always-embed, depth-only, or relationship-type-only are unstable.
-- `ablation_strong` cases are useful to explain why SchemaLens analytical variables matter.
-- `joint_strong` cases are the most complete examples because they connect baseline failure, ablation sensitivity, workload structure, and measured winners.
+* `baseline_strong` cases are useful to explain why fixed heuristics such as always-reference, always-embed, depth-only, or relationship-type-only are unstable.
+* `ablation_strong` cases are useful to explain why SchemaLens analytical variables matter.
+* `joint_strong` cases are the most complete examples because they connect baseline failure, ablation sensitivity, workload structure, and measured winners.
 
 In the current revision, three representative explanatory cases are used as candidate examples:
 
-- LDBC SNB `IC7_RecentLikers`: mixed workload, primary vs. secondary_affected candidates, and ablation sensitivity.
-- FIBEN `Q2_CompanyWithIndustryCountryAndListedSecurities`: baseline separation and scale-dependent winner changes.
-- IMDb `QG9_TopRatedSeriesByGenre`: extreme baseline failure, especially for `relationship_type_only`.
+* LDBC SNB `IC7_RecentLikers`: mixed workload, primary vs. secondary-affected candidates, physical MongoDB query-plan evidence, and ablation sensitivity.
+* FIBEN `Q2_CompanyWithIndustryCountryAndListedSecurities`: baseline separation and scale-dependent winner changes.
+* IMDb `QG9_TopRatedSeriesByGenre`: extreme baseline failure, especially for `relationship_type_only`.
 
 This step does not rerun MongoDB benchmarks. It reuses measured hot-run p95 results and the already generated baseline and ablation outputs.
 
+---
 
-### IMDb query-plan validation
+## Step 10 — LDBC SNB physical MongoDB validation
+
+The LDBC SNB physical MongoDB validation is stored under:
+
+```text
+analysis/generated/ldbc_snb_physical_query_plan/
+```
+
+This folder contains consolidated benchmark/query-plan evidence for the physical MongoDB materializations of the LDBC SNB candidates at SF0.1, SF1, and SF3.
+
+The benchmark latency analysis covers the official LDBC SNB workload:
+
+```text
+IC1--IC7
+IS1--IS7
+INS1--INS8
+```
+
+The query-plan analysis covers the read-style workload components:
+
+```text
+IC1--IC7
+IS1--IS7
+```
+
+Insert workloads `INS1--INS8` are evaluated through benchmark latency and write-execution evidence. They are not reported in the read-style query-plan summary because MongoDB does not expose the same `executionStats` structure for write operations as it does for `find` and `aggregate` plans.
+
+### Main scripts
+
+Physical query-plan consolidation:
+
+```text
+analysis/scripts/analyze_ldbc_snb_physical_query_plan.py
+```
+
+Representative IC7 physical baseline/ablation recalculation:
+
+```text
+analysis/scripts/recompute_ldbc_physical_ic7_baseline_ablation.py
+```
+
+### Main generated files
+
+```text
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_benchmark_query_plan_joined.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_hot_winners_with_query_plan.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_query_plan_candidate_summary.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_query_plan_component_results.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_query_plan_coverage.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_query_plan_report.md
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_query_plan_scale_summary.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_ic7_baseline_behavior.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_ic7_ablation_behavior.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_ic7_baseline_ablation_tables.tex
+```
+
+### Physical LDBC SNB summary
+
+Hot-phase benchmark summary:
+
+| Scale | Queries | Activated Top-1 | Mean activated regret | Mean primary regret | Primary wins | Secondary wins | Control wins |
+| ----- | ------: | --------------: | --------------------: | ------------------: | -----------: | -------------: | -----------: |
+| SF0.1 |      22 |          0.9545 |              0.000006 |              0.0651 |           17 |              4 |            1 |
+| SF1   |      22 |          0.9545 |              0.001898 |              0.0521 |           14 |              7 |            1 |
+| SF3   |      22 |          0.9545 |              0.001473 |              0.0411 |           14 |              7 |            1 |
+
+Overall, SchemaLens preserves the global Top-1 configuration in 63 out of 66 hot query-scale cases.
+
+Read-query plan summary:
+
+| Scale | Candidate-phase rows | Components | Docs examined | Keys examined | IXSCAN rows | COLLSCAN rows | SORT rows |
+| ----- | -------------------: | ---------: | ------------: | ------------: | ----------: | ------------: | --------: |
+| SF0.1 |                  128 |        316 |        15,084 |        15,248 |          76 |             0 |        26 |
+| SF1   |                  128 |        316 |        41,044 |        41,224 |          76 |             0 |        26 |
+| SF3   |                  128 |        316 |        85,654 |        85,894 |          76 |             0 |        26 |
+
+Final coverage result:
+
+* All read-query plans for IC1--IC7 and IS1--IS7 are available.
+* No read-query plan uses `COLLSCAN` across SF0.1, SF1, and SF3.
+* INS1--INS8 are evaluated through latency and write-execution evidence.
+
+### Representative physical case: IC7
+
+IC7 (Recent Likers) combines a person-rooted access path with associative relationships over likes and person-to-person relationships.
+
+The measured physical SchemaLens space for IC7 is:
+
+```text
+G0, G3, G4, G6
+```
+
+Physical hot-phase winners:
+
+| Scale | Winner |   p95 ms | Candidate role                                           |
+| ----- | ------ | -------: | -------------------------------------------------------- |
+| SF0.1 | G3     | 0.780906 | Primary person-rooted candidate                          |
+| SF1   | G6     | 1.172215 | Secondary reverse-reference / endpoint-indexed candidate |
+| SF3   | G3     | 0.858621 | Primary person-rooted candidate                          |
+
+IC7 baseline and ablation outputs:
+
+```text
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_ic7_baseline_behavior.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_ic7_ablation_behavior.csv
+analysis/generated/ldbc_snb_physical_query_plan/ldbc_snb_physical_ic7_baseline_ablation_tables.tex
+```
+
+Main IC7 interpretation:
+
+* SchemaLens preserves Top-1 in all three IC7 physical scales.
+* random-k is reported as a budget-matched statistical control.
+* always-embed misses the winner at all three scales.
+* always-reference, depth-only, and relationship-type-only miss the SF1 winner because they do not preserve G6.
+* Ablation results show that relationship semantics, depth, residual traversal, sharedness, and update-sensitive evidence contribute to preserving the correct IC7 family members.
+
+Run command:
+
+```bash
+python analysis/scripts/analyze_ldbc_snb_physical_query_plan.py
+python analysis/scripts/recompute_ldbc_physical_ic7_baseline_ablation.py
+```
+
+---
+
+## Step 11 — IMDb query-plan validation
 
 The IMDb query-plan experiments were executed with the MongoDB query-plan-only runner:
 
-`benchmark/imdb/run_imdb_mongo_query_plan.py`
+```text
+benchmark/imdb/run_imdb_mongo_query_plan.py
+```
 
 The runner reuses the IMDb MongoDB materialization logic and collects `explain("executionStats")` metrics together with physical collection statistics.
 
 Runner:
 
-`python benchmark/imdb/run_imdb_mongo_query_plan.py`
+```bash
+python benchmark/imdb/run_imdb_mongo_query_plan.py
+```
 
 The runner collects MongoDB `explain("executionStats")` metrics and physical collection statistics, including:
 
@@ -1559,13 +1659,17 @@ The first detailed validation case is IMDb `QG9_TopRatedSeriesByGenre`.
 
 QG9 results are stored in:
 
-`analysis/generated/query_plan/imdb/qg9_validation/`
+```text
+analysis/generated/query_plan/imdb/qg9_validation/
+```
 
 This case explains why `G7 / series_g7` wins over WatchItem-rooted alternatives and over more embedded Series-rooted alternatives. `G7 / series_g7` uses a specialized `series` root with small documents. `G8 / series_g8` and `G9 / series_g9` use the same `series` root, but embed episode data that QG9 does not use, increasing physical document size. WatchItem-rooted configurations operate over the more generic `watchitems` collection and require a more complex indexed plan.
 
 The first full IMDb query-plan group is stored in:
 
-`analysis/generated/query_plan/imdb/group_A_light_no_roles/`
+```text
+analysis/generated/query_plan/imdb/group_A_light_no_roles/
+```
 
 Group A covers the following queries:
 
@@ -1597,61 +1701,79 @@ Main QG9 validation files:
 
 Raw MongoDB `explain` JSON files are not committed by default because they can become large in full query-plan runs.
 
-
 Group B results are stored in:
 
-`analysis/generated/query_plan/imdb/group_B_episodes/`
+```text
+analysis/generated/query_plan/imdb/group_B_episodes/
+```
 
 Group B covers:
 
-- `QG6_EpisodesOfSeries`
+* `QG6_EpisodesOfSeries`
 
 The run completed for `sf0.25`, `sf0.5`, and `sf1`. No failed query-plan rows were detected. A `query_plan_zero_returned_rows_group_B.csv` file was generated, but these rows correspond to expected MongoDB `COUNT` / `COUNT_SCAN` behavior over the `episodes` collection and should not be interpreted as execution failures.
 
-
 Group D results are stored in:
 
-`analysis/generated/query_plan/imdb/group_D_insert_qg8/`
+```text
+analysis/generated/query_plan/imdb/group_D_insert_qg8/
+```
 
 Group D covers:
 
-- `QG8_AddPersonRoleToWatchItem`
+* `QG8_AddPersonRoleToWatchItem`
 
 The run completed for `sf0.25`, `sf0.5`, and `sf1`. No failed query-plan rows were detected. Because QG8 is an insert/update-oriented operation, pure `insert_one` components are recorded as `not_explainable`, which is expected in MongoDB. For associative configurations such as `G4`, `G5`, and `G6`, the runner captured explainable update components using `UPDATE`, `FETCH`, and `IXSCAN` over the `watchitem_id_1` index.
 
 Group C results are documented in:
 
-`analysis/generated/query_plan/imdb/README_group_C_roles.md`
+```text
+analysis/generated/query_plan/imdb/README_group_C_roles.md
+```
 
 Group C covers:
 
-- `QG4_AllPersonsOfTypeForWatchItem`
-- `QG5_AllPersonsForEpisodesOfSeries`
+* `QG4_AllPersonsOfTypeForWatchItem`
+* `QG5_AllPersonsForEpisodesOfSeries`
 
 The full runs completed for `sf0.25` and `sf0.5`. For `sf1`, the full run was repeatedly interrupted during the materialization of the external `roles` collection. Therefore, the repository includes targeted associative runs for `watchitem_g4`, `watchitem_g5`, and `watchitem_g6`. The QG4 `sf1` associative run is stored in `group_C_roles_sf1_assoc_only/`. QG5 additionally requires the `episodes` collection, so its valid `sf1` run is stored in `group_C_qg5_sf1_assoc_only_with_episodes/`.
 
 All IMDb query-plan groups were executed with:
 
-`benchmark/imdb/run_imdb_mongo_query_plan.py`
+```text
+benchmark/imdb/run_imdb_mongo_query_plan.py
+```
 
 For IMDb query-plan details and journal-ready table reproduction, see:
 
-`analysis/generated/query_plan/imdb/README.md`
-- IMDb journal query-plan table reproduction: `analysis/scripts/reproduce_imdb_query_plan_journal_tables.py`
+```text
+analysis/generated/query_plan/imdb/README.md
+analysis/scripts/reproduce_imdb_query_plan_journal_tables.py
+```
 
-### FIBEN MongoDB query-plan validation
+---
+
+## Step 12 — FIBEN MongoDB query-plan validation
 
 The FIBEN MongoDB query-plan validation results are available in:
 
-`analysis/generated/query_plan/fiben/`
+```text
+analysis/generated/query_plan/fiben/
+```
 
-This folder contains consolidated query-plan summaries and component-level explain results for FIBEN across SF1, SF10, and SF30. Read queries Q1–Q9 completed successfully across all scales. Q10 was consistently marked as skipped because it is an insert/update workload and is not comparable under read-query MongoDB `executionStats`.
+This folder contains consolidated query-plan summaries and component-level explain results for FIBEN across SF1, SF10, and SF30.
+
+Read queries Q1--Q9 completed successfully across all scales.
+
+Q10 was consistently marked as skipped because it is an insert/update workload and is not comparable under read-query MongoDB `executionStats`.
 
 Main files:
 
-- `fiben_query_plan_summary_all.csv`
-- `fiben_query_plan_components_all.csv`
-- `fiben_query_plan_query_scale_status.csv`
-- `fiben_query_plan_query_scale_overview.csv`
-- `fiben_query_plan_best_by_estimated_bytes.csv`
-- `fiben_query_plan_compact_candidates.csv`
+```text
+fiben_query_plan_summary_all.csv
+fiben_query_plan_components_all.csv
+fiben_query_plan_query_scale_status.csv
+fiben_query_plan_query_scale_overview.csv
+fiben_query_plan_best_by_estimated_bytes.csv
+fiben_query_plan_compact_candidates.csv
+```
