@@ -353,3 +353,254 @@ print("By-scale status:")
 print(by_scale["status"].value_counts(dropna=False))
 print()
 print("Compact rows:", len(compact))
+
+# ---------------------------------------------------------------------
+# Paper-style cross-dataset summary
+# ---------------------------------------------------------------------
+# This table follows the interpretation used in the paper section
+# "Comparative Results Across Datasets": the activated configs are the
+# primary semantic family, while the best observed config is selected from
+# the broader comparison space.
+
+paper_selected = [
+    # IMDb: required QG2, QG3, QG4 + two strong additional cases
+    ("imdb", "QG2_WatchItemByTitle", "Filtered lookup"),
+    ("imdb", "QG3_RecommendationByGenreAndSubtype", "Association"),
+    ("imdb", "QG4_AllPersonsOfTypeForWatchItem", "Associative"),
+    ("imdb", "QG6_EpisodesOfSeries", "Containment"),
+    ("imdb", "QG9_TopRatedSeriesByGenre", "Ranking / containment-like"),
+
+    # FIBEN: required Q2, Q3, Q5 + two strong additional cases
+    ("fiben", "Q2_CompanyWithIndustryCountryAndListedSecurities", "Association"),
+    ("fiben", "Q3_SecuritiesHeldInEachFinancialServiceAccount", "Associative"),
+    ("fiben", "Q5_ReportsAndMetricDataOfCompany", "Analytical / containment-like"),
+    ("fiben", "Q8_IBMTransactionsBelowAverageSellingPrice", "Transaction filtering"),
+    ("fiben", "Q9_PersonsWhoBoughtAndSoldSameStock", "Transaction overlap"),
+]
+
+paper_short_names = {
+    "QG2_WatchItemByTitle": "QG2\\_WatchItem By Title",
+    "QG3_RecommendationByGenreAndSubtype": "QG3\\_Recommendation By Genre And Subtype",
+    "QG4_AllPersonsOfTypeForWatchItem": "QG4\\_All Persons Of Type For WatchItem",
+    "QG6_EpisodesOfSeries": "QG6\\_Episodes Of Series",
+    "QG9_TopRatedSeriesByGenre": "QG9\\_Top Rated Series By Genre",
+    "Q2_CompanyWithIndustryCountryAndListedSecurities": "Q2\\_Company With Industry, Country, and Listed Securities",
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount": "Q3\\_Securities Held In Each Financial Service Account",
+    "Q5_ReportsAndMetricDataOfCompany": "Q5\\_Reports And Metric Data Of Company",
+    "Q8_IBMTransactionsBelowAverageSellingPrice": "Q8\\_IBM Transactions Below Average Selling Price",
+    "Q9_PersonsWhoBoughtAndSoldSameStock": "Q9\\_Persons Who Bought And Sold Same Stock",
+}
+
+paper_interpretations = {
+    "QG2_WatchItemByTitle": "Filtered lookup case; the primary family does not preserve the global winner, but keeps low regret.",
+    "QG3_RecommendationByGenreAndSubtype": "Association-oriented recommendation case; evaluates whether the primary association family remains near-best against the broader space.",
+    "QG4_AllPersonsOfTypeForWatchItem": "Associative traversal case; bridge-aware alternatives preserve the best observed design.",
+    "QG6_EpisodesOfSeries": "Containment case; evaluates the trade-off between references and embedded containment across scale.",
+    "QG9_TopRatedSeriesByGenre": "Ranking and containment-like case; evaluates whether the activated family preserves the specialized series-root access pattern.",
+    "Q2_CompanyWithIndustryCountryAndListedSecurities": "Association and descriptor case; corporation-centred access with descriptors and listed securities remains inside the reduced family.",
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount": "Associative bridge case; account, holding, and security traversal is preserved by the activated family.",
+    "Q5_ReportsAndMetricDataOfCompany": "Analytical hierarchy case; the activated family remains near-best even when the control wins at one scale.",
+    "Q8_IBMTransactionsBelowAverageSellingPrice": "Transaction filtering case; transaction-oriented alternatives preserve the best observed configuration.",
+    "Q9_PersonsWhoBoughtAndSoldSameStock": "Transaction overlap case; buy/sell overlap remains inside the activated family.",
+}
+
+def paper_fmt_g_list(values):
+    vals = []
+    for v in values:
+        s = str(v)
+        if s.upper() == "CONTROL":
+            vals.append("\\mathrm{Control}")
+        elif s.startswith("G"):
+            vals.append(f"G_{s[1:]}")
+        else:
+            vals.append(s)
+    return "$" + ", ".join(vals) + "$"
+
+def paper_fmt_best(values):
+    vals = []
+    for v in values:
+        s = str(v)
+        if s.upper() == "CONTROL":
+            vals.append("\\mathrm{Control}")
+        elif s.startswith("G"):
+            vals.append(f"G_{s[1:]}")
+        else:
+            vals.append(s)
+    return "$" + " / ".join(vals) + "$"
+
+def paper_top1_label(top1_count, near_count, n):
+    if top1_count == n:
+        return "yes"
+    if near_count == n:
+        return "near-best"
+    if top1_count == 0:
+        return "no"
+    return f"{top1_count}/{n}"
+
+paper_by_scale_rows = []
+paper_compact_rows = []
+
+for dataset, query_name, family in paper_selected:
+    qdf = hot[(hot["dataset"] == dataset) & (hot["query_name"] == query_name)].copy()
+
+    if qdf.empty:
+        raise ValueError(f"Missing query in aggregate results: {dataset} {query_name}")
+
+    per_scale = []
+
+    for scale, sg in qdf.groupby("scale_label"):
+        sg = sg.copy()
+
+        full_best = sg.loc[sg["p95_latency_ms"].idxmin()]
+        primary = sg[
+            sg["benchmark_group"].astype(str).str.lower() == "primary"
+        ].copy()
+
+        if primary.empty:
+            raise ValueError(f"No primary rows for {dataset} {query_name} {scale}")
+
+        primary_best = primary.loc[primary["p95_latency_ms"].idxmin()]
+
+        full_best_p95 = float(full_best["p95_latency_ms"])
+        primary_best_p95 = float(primary_best["p95_latency_ms"])
+
+        regret = (
+            (primary_best_p95 - full_best_p95) / full_best_p95
+            if full_best_p95 > 0
+            else np.nan
+        )
+
+        primary_g = sorted(primary["g_class"].dropna().astype(str).unique())
+        full_best_g = str(full_best["g_class"])
+
+        top1 = int(full_best_g in primary_g)
+        near = int(regret <= 0.05 if not pd.isna(regret) else False)
+        dsr = 1 - (len(primary_g) / CONTROLLED_SPACE_SIZE)
+
+        row = {
+            "dataset": dataset,
+            "query_name": query_name,
+            "scale_label": scale,
+            "family": family,
+            "primary_activated_g": ",".join(primary_g),
+            "best_observed_g": full_best_g,
+            "primary_best_g": str(primary_best["g_class"]),
+            "full_best_p95_ms": full_best_p95,
+            "primary_best_p95_ms": primary_best_p95,
+            "dsr": dsr,
+            "top1_preserved": top1,
+            "near_best_preserved": near,
+            "relative_regret": regret,
+        }
+
+        paper_by_scale_rows.append(row)
+        per_scale.append(row)
+
+    ps = pd.DataFrame(per_scale)
+
+    activated_union = sorted(
+        set(",".join(ps["primary_activated_g"].dropna().astype(str)).split(",")) - {""}
+    )
+    best_by_scale = list(ps["best_observed_g"])
+
+    n = len(ps)
+    top1_count = int(ps["top1_preserved"].sum())
+    near_count = int(ps["near_best_preserved"].sum())
+
+    paper_compact_rows.append({
+        "dataset": "IMDb" if dataset == "imdb" else "FIBEN",
+        "family": family,
+        "query_name": query_name,
+        "query_latex": paper_short_names[query_name],
+        "activated_configs_latex": paper_fmt_g_list(activated_union),
+        "best_observed_latex": paper_fmt_best(best_by_scale),
+        "dsr_pct": float(ps["dsr"].mean()) * 100,
+        "top1": paper_top1_label(top1_count, near_count, n),
+        "top1_count": f"{top1_count}/{n}",
+        "near_best_count": f"{near_count}/{n}",
+        "mean_regret": float(ps["relative_regret"].mean()),
+        "interpretation": paper_interpretations[query_name],
+    })
+
+paper_by_scale = pd.DataFrame(paper_by_scale_rows)
+paper_compact = pd.DataFrame(paper_compact_rows)
+
+paper_by_scale.to_csv(
+    OUT / "dke_cross_dataset_summary_paper_by_scale.csv",
+    index=False,
+)
+
+paper_compact.to_csv(
+    OUT / "dke_cross_dataset_summary_paper_compact.csv",
+    index=False,
+)
+
+paper_lines = []
+paper_lines.append("\\begin{sidewaystable}[p]")
+paper_lines.append("\\centering")
+paper_lines.append("\\caption{Cross-dataset summary of representative activated families and official-workload validation.}")
+paper_lines.append("\\label{tab:cross_dataset_summary}")
+paper_lines.append("\\scriptsize")
+paper_lines.append("\\setlength{\\tabcolsep}{3.2pt}")
+paper_lines.append("\\begin{tabular}{p{1.3cm} ")
+paper_lines.append("                p{1.6cm} ")
+paper_lines.append("                p{2.3cm} ")
+paper_lines.append("                p{1.7cm} ")
+paper_lines.append("                p{1.5cm} ")
+paper_lines.append("                p{1.1cm} ")
+paper_lines.append("                p{1.1cm} ")
+paper_lines.append("                p{1.2cm} ")
+paper_lines.append("                p{3.0cm}}")
+paper_lines.append("\\toprule")
+paper_lines.append("\\textbf{Dataset} & ")
+paper_lines.append("\\textbf{Family} & ")
+paper_lines.append("\\textbf{Representative query} & ")
+paper_lines.append("\\textbf{Activated configs} & ")
+paper_lines.append("\\textbf{Best config/Instantiation} & ")
+paper_lines.append("\\textbf{DSR} & ")
+paper_lines.append("\\textbf{Top-1} & ")
+paper_lines.append("\\textbf{Regret} & ")
+paper_lines.append("\\textbf{Interpretation} \\\\")
+paper_lines.append("\\midrule")
+
+for _, r in paper_compact.iterrows():
+    paper_lines.append("")
+    paper_lines.append(f"{r['dataset']} & ")
+    paper_lines.append(f"{r['family']} & ")
+    paper_lines.append(f"{r['query_latex']} & ")
+    paper_lines.append(f"{r['activated_configs_latex']} & ")
+    paper_lines.append(f"{r['best_observed_latex']} & ")
+    paper_lines.append(f"{r['dsr_pct']:.1f}\\% & ")
+    paper_lines.append(f"{r['top1']} & ")
+    paper_lines.append(f"{r['mean_regret']:.3f} & ")
+    paper_lines.append(f"{r['interpretation']} \\\\")
+
+paper_lines.append("")
+paper_lines.append("\\bottomrule")
+paper_lines.append("\\end{tabular}")
+paper_lines.append("\\end{sidewaystable}")
+
+(OUT / "dke_cross_dataset_summary_paper.tex").write_text(
+    "\n".join(paper_lines),
+    encoding="utf-8",
+)
+
+print()
+print("Generated paper-style cross-dataset summary:")
+print(" - analysis/generated/dke_cross_dataset_summary_paper_by_scale.csv")
+print(" - analysis/generated/dke_cross_dataset_summary_paper_compact.csv")
+print(" - analysis/generated/dke_cross_dataset_summary_paper.tex")
+print()
+print(
+    paper_compact[
+        [
+            "dataset",
+            "query_name",
+            "activated_configs_latex",
+            "best_observed_latex",
+            "dsr_pct",
+            "top1",
+            "mean_regret",
+        ]
+    ].to_string(index=False)
+)

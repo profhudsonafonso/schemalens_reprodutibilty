@@ -1,0 +1,31 @@
+dataset,query_name,scale_label,family,primary_activated_g,best_observed_g,primary_best_g,full_best_p95_ms,primary_best_p95_ms,dsr,top1_preserved,near_best_preserved,relative_regret
+imdb,QG2_WatchItemByTitle,sf0.25,Filtered lookup,G0,G9,G0,0.2828345986927161,0.2979677996336249,0.9,0,0,0.05350547991955603
+imdb,QG2_WatchItemByTitle,sf0.5,Filtered lookup,G0,G7,G0,0.2852347490261309,0.3065782526391558,0.9,0,0,0.07482785209690414
+imdb,QG2_WatchItemByTitle,sf1,Filtered lookup,G0,G8,G0,0.3094789477472659,0.3165574067679699,0.9,0,1,0.022872182654842668
+imdb,QG3_RecommendationByGenreAndSubtype,sf0.25,Association,"G0,G2,G3",G8,G2,5.637626150928553,6.176213199796621,0.7,0,0,0.09553436755989199
+imdb,QG3_RecommendationByGenreAndSubtype,sf0.5,Association,"G0,G2,G3",G8,G0,7.588796650088624,7.950160656037042,0.7,0,1,0.04761809053668577
+imdb,QG3_RecommendationByGenreAndSubtype,sf1,Association,"G0,G2,G3",G8,G0,10.41732880621566,10.72731149906758,0.7,0,1,0.029756447033424116
+imdb,QG4_AllPersonsOfTypeForWatchItem,sf0.25,Associative,"G0,G4,G5,G6",G6,G6,0.3935545493732206,0.3935545493732206,0.6,1,1,0.0
+imdb,QG4_AllPersonsOfTypeForWatchItem,sf0.5,Associative,"G0,G4,G5,G6",G5,G5,0.3330338535306509,0.3330338535306509,0.6,1,1,0.0
+imdb,QG4_AllPersonsOfTypeForWatchItem,sf1,Associative,"G0,G4,G5,G6",G6,G6,0.2023525965341832,0.2023525965341832,0.6,1,1,0.0
+imdb,QG6_EpisodesOfSeries,sf0.25,Containment,"G7,G8,G9",G2,G7,0.6322362009086646,0.9189984484692104,0.7,0,0,0.453568218884658
+imdb,QG6_EpisodesOfSeries,sf0.5,Containment,"G7,G8,G9",G7,G7,1.0162401005800346,1.0162401005800346,0.7,1,1,0.0
+imdb,QG6_EpisodesOfSeries,sf1,Containment,"G7,G8,G9",G7,G7,2.2719003987731408,2.2719003987731408,0.7,1,1,0.0
+imdb,QG9_TopRatedSeriesByGenre,sf0.25,Ranking / containment-like,"G0,G2,G3",G7,G0,3.006609698422833,40.19758284921407,0.7,0,0,12.369737638477112
+imdb,QG9_TopRatedSeriesByGenre,sf0.5,Ranking / containment-like,"G0,G2,G3",G7,G2,2.054242697340668,78.13642835462812,0.7,0,0,37.036610014863435
+imdb,QG9_TopRatedSeriesByGenre,sf1,Ranking / containment-like,"G0,G2,G3",G7,G2,4.0780437040666575,159.41339150376731,0.7,0,0,38.0906530366016
+fiben,Q2_CompanyWithIndustryCountryAndListedSecurities,sf1,Association,"G1,G3,G5",G5,G5,0.1171174575574696,0.1171174575574696,0.7,1,1,0.0
+fiben,Q2_CompanyWithIndustryCountryAndListedSecurities,sf10,Association,"G1,G3,G5",G1,G1,0.1553680398501455,0.1553680398501455,0.7,1,1,0.0
+fiben,Q2_CompanyWithIndustryCountryAndListedSecurities,sf30,Association,"G1,G3,G5",G9,G1,0.2507009194232523,0.2679776109289378,0.7,0,0,0.06891355462688864
+fiben,Q3_SecuritiesHeldInEachFinancialServiceAccount,sf1,Associative,"G2,G3,G4,G5",G5,G5,0.4349461290985345,0.4349461290985345,0.6,1,1,0.0
+fiben,Q3_SecuritiesHeldInEachFinancialServiceAccount,sf10,Associative,"G2,G3,G4,G5",G4,G4,0.8991432900074869,0.8991432900074869,0.6,1,1,0.0
+fiben,Q3_SecuritiesHeldInEachFinancialServiceAccount,sf30,Associative,"G2,G3,G4,G5",G5,G5,1.652036904124543,1.652036904124543,0.6,1,1,0.0
+fiben,Q5_ReportsAndMetricDataOfCompany,sf1,Analytical / containment-like,"G2,G4",G2,G2,37.62679109349847,37.62679109349847,0.8,1,1,0.0
+fiben,Q5_ReportsAndMetricDataOfCompany,sf10,Analytical / containment-like,"G2,G4",G9,G2,28.43278254731557,47.67655749456024,0.8,0,0,0.676816449998192
+fiben,Q5_ReportsAndMetricDataOfCompany,sf30,Analytical / containment-like,"G2,G4",CONTROL,G4,45.21718232426791,45.43279848876408,0.8,0,1,0.004768456445382003
+fiben,Q8_IBMTransactionsBelowAverageSellingPrice,sf1,Transaction filtering,"G3,G5,G6",G7,G3,0.8635510283056645,1.4132418727967888,0.7,0,0,0.6365470325125412
+fiben,Q8_IBMTransactionsBelowAverageSellingPrice,sf10,Transaction filtering,"G3,G5,G6",G5,G5,0.9216521284542978,0.9216521284542978,0.7,1,1,0.0
+fiben,Q8_IBMTransactionsBelowAverageSellingPrice,sf30,Transaction filtering,"G3,G5,G6",G5,G5,1.2928820273373276,1.2928820273373276,0.7,1,1,0.0
+fiben,Q9_PersonsWhoBoughtAndSoldSameStock,sf1,Transaction overlap,"G2,G3,G4,G5",G7,G5,0.8514764602296054,0.9176732739433644,0.6,0,0,0.07774356286480147
+fiben,Q9_PersonsWhoBoughtAndSoldSameStock,sf10,Transaction overlap,"G2,G3,G4,G5",G5,G5,1.0568699159193784,1.0568699159193784,0.6,1,1,0.0
+fiben,Q9_PersonsWhoBoughtAndSoldSameStock,sf30,Transaction overlap,"G2,G3,G4,G5",G7,G4,1.2238605471793562,1.2250863132067025,0.6,0,1,0.001001556942227845

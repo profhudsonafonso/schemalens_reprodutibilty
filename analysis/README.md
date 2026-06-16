@@ -35,6 +35,7 @@ These analyses use benchmark result files and methodology artifacts already incl
 * FIBEN query-plan validation: `analysis/generated/query_plan/fiben/`
 * LDBC SNB physical MongoDB query-plan validation: `analysis/generated/ldbc_snb_physical_query_plan/`
 * LDBC SNB physical IC7 baseline/ablation recalculation: `analysis/scripts/recompute_ldbc_physical_ic7_baseline_ablation.py`
+* DKE finalization tables: `analysis/scripts/dke_make_extended_table15.py`
 
 For short-paper Table 1 and Table 2 reproduction, see:
 
@@ -1781,25 +1782,41 @@ fiben_query_plan_compact_candidates.csv
 <!-- DKE_FINALIZATION_START -->
 ## DKE finalization artifacts
 
-This repository includes additional analysis artifacts prepared for the DKE journal extension of SchemaLens. These artifacts support three paper-revision tasks: auditing the available benchmark outputs, extending the representative results table, and linking each reported case to query-plan evidence.
+This repository includes additional analysis artifacts prepared for the DKE journal extension of SchemaLens. These artifacts support three paper-revision tasks: auditing the available benchmark outputs, extending the representative cross-dataset table, and linking the reported cases to query-plan evidence.
 
 ### Generated files
 
 - `analysis/generated/dke_audit_summary.txt`: summary of available aggregate benchmark results across IMDb, FIBEN, and LDBC SNB.
-- `analysis/generated/dke_extended_table15_by_scale.csv`: per-scale extended Table 15 data using hot-run p95 latency.
-- `analysis/generated/dke_extended_table15_compact.csv`: compact paper-facing version of the extended Table 15.
-- `analysis/generated/dke_extended_table15_compact.tex`: LaTeX draft of the compact extended Table 15.
-- `analysis/generated/dke_query_plan_mapping_clean.csv`: curated mapping between Table 15 queries and query-plan evidence.
-- `analysis/generated/dke_extended_table15_compact_with_queryplan_clean.csv`: extended Table 15 enriched with query-plan experiment metadata.
+- `analysis/generated/dke_extended_table15_by_scale.csv`: per-scale extended table data using hot-run p95 latency and the broader selected SchemaLens benchmark space.
+- `analysis/generated/dke_extended_table15_compact.csv`: compact extended table using the broader selected SchemaLens benchmark space.
+- `analysis/generated/dke_extended_table15_compact.tex`: LaTeX draft of the compact extended table.
+- `analysis/generated/dke_extended_table15_compact_with_queryplan_clean.csv`: extended table enriched with curated query-plan metadata.
+- `analysis/generated/dke_query_plan_mapping_clean.csv`: curated mapping between table queries and query-plan evidence.
 - `analysis/generated/dke_query_plan_mapping_clean.tex`: LaTeX draft of the query-plan mapping table.
+- `analysis/generated/dke_cross_dataset_summary_paper_by_scale.csv`: per-scale paper-style summary following the journal text definition of activated semantic families.
+- `analysis/generated/dke_cross_dataset_summary_paper_compact.csv`: compact paper-style cross-dataset summary for the Overleaf table.
+- `analysis/generated/dke_cross_dataset_summary_paper.tex`: LaTeX draft of the paper-style cross-dataset table.
 
 ### Scripts
 
-- `analysis/scripts/dke_make_extended_table15.py`: builds the extended Table 15 artifacts from `aggregate_results_all_datasets.csv`.
+- `analysis/scripts/dke_make_extended_table15.py`: builds the DKE table artifacts from `analysis/generated/aggregate_results_all_datasets.csv`. It generates both the extended selected-space outputs and the paper-style primary-family outputs.
 - `analysis/scripts/dke_make_query_plan_mapping.py`: exploratory automatic query-plan mapping.
 - `analysis/scripts/dke_make_query_plan_mapping_clean.py`: curated query-plan mapping used for paper-facing artifacts.
 
-### Notes
+### Methodological notes
 
-The extended table uses only hot-run p95 latency. The design-space reduction ratio is computed over the controlled SchemaLens template space `G0--G9`. Near-best preservation follows the paper rule: a configuration is near-best when its p95 latency is within 5% of the best observed p95 for the same dataset, query, scale, and run phase. FIBEN Q10 is treated separately in the query-plan mapping because it is an insert/update workload and is not directly comparable to read-style `explain("executionStats")` evidence.
+The extended selected-space files report the broader measured SchemaLens-selected benchmark space, including primary and secondary-affected configurations. These files are useful for diagnostics and query-plan coverage.
+
+The paper-style cross-dataset table follows the wording of the DKE section "Comparative Results Across Datasets". In that table, `Activated configs` means the primary semantic family activated by SchemaLens for the representative query, while `Best config/Instantiation` is the best observed configuration in the broader measured comparison space.
+
+The paper-style metrics are computed as follows:
+
+- DSR = 1 - |A_primary(Q_i)| / 10.
+- Top-1 = whether the best observed G-class is inside A_primary(Q_i).
+- Regret = (best primary-family p95 - best observed p95) / best observed p95.
+
+All table calculations use hot-run p95 latency. The controlled SchemaLens template space is `G0--G9`, so the denominator for DSR is 10. Near-best preservation follows the paper rule: a configuration is near-best when its p95 latency is within 5% of the best observed p95 for the same dataset, query, scale, and run phase.
+
+FIBEN Q10 is treated separately in the query-plan mapping because it is an insert/update workload and is not directly comparable to read-style MongoDB `explain("executionStats")` evidence.
 <!-- DKE_FINALIZATION_END -->
+
