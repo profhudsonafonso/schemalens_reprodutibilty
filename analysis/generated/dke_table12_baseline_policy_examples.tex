@@ -1,0 +1,24 @@
+\begin{table*}[t]
+\centering
+\caption{Baseline policies used in the comparison. Candidate sets are real sets observed in the benchmark artifact.}
+\label{tab:baseline-policies}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.15\textwidth}p{0.38\textwidth}p{0.25\textwidth}p{0.16\textwidth}}
+\toprule
+Baseline & Real artifact examples & Rule & Purpose \\
+\midrule
+SchemaLens & IMDb QG9: $G0,G2,G3,G4,G5,G6,G7,G8,G9$; FIBEN Q2: $G1,G3,G5,G7,G9$; LDBC IC7: $G0,G3,G4,G6$ & Use the EER/workload analytical matrix to activate a query-specific family. & Main method under evaluation. \\
+\midrule
+Always-reference & IMDb QG9: $G0,G3,G6,G7$; FIBEN Q2: $Control,G3,G7$; LDBC IC7: $G0,G3,G6$ & Preserve candidates that keep entities external or reference-oriented. & Tests whether reference-preserving designs alone are sufficient. \\
+\midrule
+Always-embed & IMDb QG9: $G2,G4,G5,G8,G9$; FIBEN Q2: $G5,G9$; LDBC IC7: $G4$ & Preserve candidates that materialise related data under, or close to, the selected root. & Tests whether locality-oriented embedding is sufficient. \\
+\midrule
+Depth-only & IMDb QG9: $G2,G8,G9$; FIBEN Q2: $G9$; LDBC IC7: $G3,G4,G6$ & Select candidates using structural depth without relationship semantics, sharedness, or update-volatility evidence. & Tests whether structural coverage alone explains the winners. \\
+\midrule
+Relationship-type-only & IMDb QG9: $G0,G2,G3$; FIBEN Q2: $G3$; LDBC IC7: $G0,G3$ & Use the dominant relationship type without the full analytical matrix. & Tests whether semantic family alone is enough. \\
+\midrule
+Random-$k$ & IMDb QG9: random sample with $k=9$; FIBEN Q2: random sample with $k=5$; LDBC IC7: random sample with $k=4$ & Sample the same number of candidates as SchemaLens for the same query-scale case. & Non-explanatory sanity check for reduced-space size. \\
+\bottomrule
+\end{tabular}
+\end{table*}
