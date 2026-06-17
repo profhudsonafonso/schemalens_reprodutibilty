@@ -15,12 +15,12 @@ The goal is to understand whether random-k is genuinely stronger, or whether it 
 - analysis/generated/schema_lens_vs_random_k_report.txt
 
 ## Hot-run overall summary
-- always_embed: available=90/126, top1=0.4889, near_best=0.6444, mean_regret=0.1237
-- always_reference: available=126/126, top1=0.6270, near_best=0.7778, mean_regret=0.1075
-- depth_only: available=90/126, top1=0.5889, near_best=0.7222, mean_regret=0.1106
-- random_k: available=126/126, top1=0.8884, near_best=0.9328, mean_regret=0.0276
-- relationship_type_only: available=117/126, top1=0.5299, near_best=0.6667, mean_regret=0.8959
-- schema_lens: available=126/126, top1=0.8651, near_best=0.9206, mean_regret=0.0324
+- always_embed: available=90/126, top1=0.4111, near_best=0.5889, mean_regret=0.1909
+- always_reference: available=126/126, top1=0.6984, near_best=0.8413, mean_regret=0.0436
+- depth_only: available=90/126, top1=0.5333, near_best=0.6778, mean_regret=0.0980
+- random_k: available=126/126, top1=0.8882, near_best=0.9446, mean_regret=0.0212
+- relationship_type_only: available=117/126, top1=0.5299, near_best=0.6667, mean_regret=0.9046
+- schema_lens: available=126/126, top1=0.8492, near_best=0.9286, mean_regret=0.0289
 
 ## Hot-run dataset summary
 - fiben / always_embed: available=27/30, top1=0.5556, near_best=0.8519, mean_regret=0.0471
@@ -35,26 +35,26 @@ The goal is to understand whether random-k is genuinely stronger, or whether it 
 - imdb / random_k: available=30/30, top1=0.7772, near_best=0.8756, mean_regret=0.0414
 - imdb / relationship_type_only: available=30/30, top1=0.2667, near_best=0.5333, mean_regret=3.0655
 - imdb / schema_lens: available=30/30, top1=0.6333, near_best=0.8333, mean_regret=0.0387
-- ldbc_snb / always_embed: available=33/66, top1=0.3939, near_best=0.4848, mean_regret=0.1942
-- ldbc_snb / always_reference: available=66/66, top1=0.7727, near_best=0.8333, mean_regret=0.1397
-- ldbc_snb / depth_only: available=36/66, top1=0.5833, near_best=0.7222, mean_regret=0.1570
-- ldbc_snb / random_k: available=66/66, top1=0.9775, near_best=0.9775, mean_regret=0.0128
-- ldbc_snb / relationship_type_only: available=57/66, top1=0.6842, near_best=0.7719, mean_regret=0.0796
-- ldbc_snb / schema_lens: available=66/66, top1=0.9848, near_best=0.9848, mean_regret=0.0078
+- ldbc_snb / always_embed: available=33/66, top1=0.1818, near_best=0.3333, mean_regret=0.3774
+- ldbc_snb / always_reference: available=66/66, top1=0.9091, near_best=0.9545, mean_regret=0.0176
+- ldbc_snb / depth_only: available=36/66, top1=0.4444, near_best=0.6111, mean_regret=0.1256
+- ldbc_snb / random_k: available=66/66, top1=0.9772, near_best=1.0000, mean_regret=0.0006
+- ldbc_snb / relationship_type_only: available=57/66, top1=0.6842, near_best=0.7719, mean_regret=0.0974
+- ldbc_snb / schema_lens: available=66/66, top1=0.9545, near_best=1.0000, mean_regret=0.0011
 
 ## SchemaLens vs random-k summary
 - dataset / dataset=fiben: cases=60, schema_top1=0.8333, random_top1=0.8048, schema_regret=0.0937, random_regret=0.0774, schema_higher_top1_cases=50, random_higher_top1_cases=10, top1_tie_cases=0
 - dataset / dataset=imdb: cases=60, schema_top1=0.6667, random_top1=0.7770, schema_regret=0.0626, random_regret=0.0405, schema_higher_top1_cases=16, random_higher_top1_cases=20, top1_tie_cases=24
-- dataset / dataset=ldbc_snb: cases=132, schema_top1=0.9848, random_top1=0.9777, schema_regret=0.0043, random_regret=0.0070, schema_higher_top1_cases=4, random_higher_top1_cases=2, top1_tie_cases=126
+- dataset / dataset=ldbc_snb: cases=132, schema_top1=0.9545, random_top1=0.9772, schema_regret=0.0045, random_regret=0.0022, schema_higher_top1_cases=0, random_higher_top1_cases=6, top1_tie_cases=126
 - dataset+run_phase / dataset=fiben / run_phase=cold: cases=30, schema_top1=0.8333, random_top1=0.8060, schema_regret=0.1072, random_regret=0.1084, schema_higher_top1_cases=25, random_higher_top1_cases=5, top1_tie_cases=0
 - dataset+run_phase / dataset=fiben / run_phase=hot: cases=30, schema_top1=0.8333, random_top1=0.8036, schema_regret=0.0801, random_regret=0.0465, schema_higher_top1_cases=25, random_higher_top1_cases=5, top1_tie_cases=0
 - dataset+run_phase / dataset=imdb / run_phase=cold: cases=30, schema_top1=0.7000, random_top1=0.7768, schema_regret=0.0864, random_regret=0.0397, schema_higher_top1_cases=9, random_higher_top1_cases=9, top1_tie_cases=12
 - dataset+run_phase / dataset=imdb / run_phase=hot: cases=30, schema_top1=0.6333, random_top1=0.7772, schema_regret=0.0387, random_regret=0.0414, schema_higher_top1_cases=7, random_higher_top1_cases=11, top1_tie_cases=12
-- dataset+run_phase / dataset=ldbc_snb / run_phase=cold: cases=66, schema_top1=0.9848, random_top1=0.9780, schema_regret=0.0007, random_regret=0.0011, schema_higher_top1_cases=2, random_higher_top1_cases=1, top1_tie_cases=63
-- dataset+run_phase / dataset=ldbc_snb / run_phase=hot: cases=66, schema_top1=0.9848, random_top1=0.9775, schema_regret=0.0078, random_regret=0.0128, schema_higher_top1_cases=2, random_higher_top1_cases=1, top1_tie_cases=63
-- overall: cases=252, schema_top1=0.8730, random_top1=0.8888, schema_regret=0.0394, random_regret=0.0317, schema_higher_top1_cases=70, random_higher_top1_cases=32, top1_tie_cases=150
-- run_phase / run_phase=cold: cases=126, schema_top1=0.8810, random_top1=0.8891, schema_regret=0.0465, random_regret=0.0358, schema_higher_top1_cases=36, random_higher_top1_cases=15, top1_tie_cases=75
-- run_phase / run_phase=hot: cases=126, schema_top1=0.8651, random_top1=0.8884, schema_regret=0.0324, random_regret=0.0276, schema_higher_top1_cases=34, random_higher_top1_cases=17, top1_tie_cases=75
+- dataset+run_phase / dataset=ldbc_snb / run_phase=cold: cases=66, schema_top1=0.9545, random_top1=0.9773, schema_regret=0.0079, random_regret=0.0039, schema_higher_top1_cases=0, random_higher_top1_cases=3, top1_tie_cases=63
+- dataset+run_phase / dataset=ldbc_snb / run_phase=hot: cases=66, schema_top1=0.9545, random_top1=0.9772, schema_regret=0.0011, random_regret=0.0006, schema_higher_top1_cases=0, random_higher_top1_cases=3, top1_tie_cases=63
+- overall: cases=252, schema_top1=0.8571, random_top1=0.8885, schema_regret=0.0396, random_regret=0.0293, schema_higher_top1_cases=66, random_higher_top1_cases=36, top1_tie_cases=150
+- run_phase / run_phase=cold: cases=126, schema_top1=0.8651, random_top1=0.8888, schema_regret=0.0502, random_regret=0.0373, schema_higher_top1_cases=34, random_higher_top1_cases=17, top1_tie_cases=75
+- run_phase / run_phase=hot: cases=126, schema_top1=0.8492, random_top1=0.8882, schema_regret=0.0289, random_regret=0.0212, schema_higher_top1_cases=32, random_higher_top1_cases=19, top1_tie_cases=75
 
 ## Interpretation note
 Random-k is a stochastic baseline. It samples the same number of measured configuration classes as SchemaLens selects.

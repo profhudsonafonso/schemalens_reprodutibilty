@@ -36,9 +36,9 @@ def fmt_space(gs):
 baseline_spaces = {
     "SchemaLens": ["G0", "G3", "G4", "G6"],
     "random-k": ["G0", "G3", "G4", "G6"],
-    "always-reference": ["G0", "G3"],
+    "always-reference": ["G0", "G3", "G6"],
     "always-embed": ["G4"],
-    "depth-only": ["G3", "G4"],
+    "depth-only": ["G3", "G4", "G6"],
     "relationship-type-only": ["G0", "G3"],
 }
 

@@ -112,7 +112,7 @@ Main interpretation:
 * SchemaLens preserves Top-1 in all three IC7 physical scales.
 * random-k is reported as a budget-matched statistical control.
 * always-embed misses the winner at all three scales.
-* always-reference, depth-only, and relationship-type-only miss the SF1 winner because they do not preserve G6.
+* always-reference and depth-only preserve the SF1 winner because they include G6, while relationship-type-only misses the SF1 winner because it does not preserve G6.
 * The ablation results show that relationship semantics, depth, residual traversal, sharedness, and update-sensitive evidence contribute to preserving the correct IC7 family members.
 
 ## Reproduction

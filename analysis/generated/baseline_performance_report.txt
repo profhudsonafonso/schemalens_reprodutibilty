@@ -18,12 +18,12 @@ It uses p95 latency values already present in the normalized aggregate results.
 - analysis/generated/baseline_performance_report.txt
 
 ## Overall summary
-- always_embed: available=180/252, top1=0.5278, top3=0.9278, near_best=0.7278, mean_regret=0.1089, median_regret=0.0000
-- always_reference: available=252/252, top1=0.5992, top3=0.9167, near_best=0.7262, mean_regret=0.1590, median_regret=0.0000
-- depth_only: available=180/252, top1=0.5444, top3=0.8444, near_best=0.7333, mean_regret=0.1277, median_regret=0.0000
-- random_k: available=252/252, top1=0.8888, top3=0.9956, near_best=0.9360, mean_regret=0.0317, median_regret=0.0000
-- relationship_type_only: available=234/252, top1=0.4829, top3=0.7906, near_best=0.6410, mean_regret=0.7463, median_regret=0.0031
-- schema_lens: available=252/252, top1=0.8730, top3=0.9881, near_best=0.9206, mean_regret=0.0394, median_regret=0.0000
+- always_embed: available=180/252, top1=0.4444, top3=0.9444, near_best=0.6222, mean_regret=0.3080, median_regret=0.0051
+- always_reference: available=252/252, top1=0.6746, top3=0.9167, near_best=0.7817, mean_regret=0.1236, median_regret=0.0000
+- depth_only: available=180/252, top1=0.5167, top3=0.8833, near_best=0.6778, mean_regret=0.1451, median_regret=0.0000
+- random_k: available=252/252, top1=0.8885, top3=0.9956, near_best=0.9379, mean_regret=0.0293, median_regret=0.0000
+- relationship_type_only: available=234/252, top1=0.5043, top3=0.7991, near_best=0.6368, mean_regret=0.9919, median_regret=0.0000
+- schema_lens: available=252/252, top1=0.8571, top3=0.9881, near_best=0.9127, mean_regret=0.0396, median_regret=0.0000
 
 ## Dataset-level summary
 - fiben / always_embed: available=54/60, top1=0.5000, near_best=0.8519, mean_regret=0.1154
@@ -38,12 +38,12 @@ It uses p95 latency values already present in the normalized aggregate results.
 - imdb / random_k: available=60/60, top1=0.7770, near_best=0.8652, mean_regret=0.0405
 - imdb / relationship_type_only: available=60/60, top1=0.2500, near_best=0.4167, mean_regret=2.3680
 - imdb / schema_lens: available=60/60, top1=0.6667, near_best=0.7833, mean_regret=0.0626
-- ldbc_snb / always_embed: available=66/132, top1=0.3788, near_best=0.5758, mean_regret=0.1386
-- ldbc_snb / always_reference: available=132/132, top1=0.7803, near_best=0.8636, mean_regret=0.0792
-- ldbc_snb / depth_only: available=72/132, top1=0.5000, near_best=0.7083, mean_regret=0.1033
-- ldbc_snb / random_k: available=132/132, top1=0.9777, near_best=0.9850, mean_regret=0.0070
-- ldbc_snb / relationship_type_only: available=114/132, top1=0.6579, near_best=0.7895, mean_regret=0.0688
-- ldbc_snb / schema_lens: available=132/132, top1=0.9848, near_best=0.9924, mean_regret=0.0043
+- ldbc_snb / always_embed: available=66/132, top1=0.1515, near_best=0.2879, mean_regret=0.6816
+- ldbc_snb / always_reference: available=132/132, top1=0.9242, near_best=0.9697, mean_regret=0.0117
+- ldbc_snb / depth_only: available=72/132, top1=0.4306, near_best=0.5694, mean_regret=0.1467
+- ldbc_snb / random_k: available=132/132, top1=0.9772, near_best=0.9887, mean_regret=0.0022
+- ldbc_snb / relationship_type_only: available=114/132, top1=0.7018, near_best=0.7807, mean_regret=0.5727
+- ldbc_snb / schema_lens: available=132/132, top1=0.9545, near_best=0.9773, mean_regret=0.0045
 
 ## Failure and near-failure candidates
 - Rows flagged: 523
