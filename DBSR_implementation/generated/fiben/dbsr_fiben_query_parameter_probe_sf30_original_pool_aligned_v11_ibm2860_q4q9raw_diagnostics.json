@@ -1,0 +1,56 @@
+{
+  "dataset": "FIBEN",
+  "scale_label": "sf30",
+  "method": "original_pool_aligned_with_ibm2860_q4_raw_and_q9_raw_counts",
+  "source_probe": "DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf30_original_pool_aligned_v10_ibm2860_q4raw.json",
+  "q9_pool": [
+    "1001538",
+    "1005519",
+    "1005333",
+    "1004600",
+    "1002269",
+    "1001776",
+    "1002321",
+    "1004574",
+    "1005285",
+    "1003170"
+  ],
+  "q9_selected_sequence": [
+    "1001538",
+    "1005519",
+    "1005333",
+    "1004600",
+    "1002269",
+    "1001776",
+    "1002321",
+    "1004574",
+    "1005285",
+    "1003170"
+  ],
+  "q9_returned_sequence": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "q9_avg_returned": 0.3,
+  "expected_q9_returned_sequence": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "note": "Q9 uses a returned-count-aligned pool because the previous Mongo-generated pool used replicated SF10 security ids that all returned 2."
+}

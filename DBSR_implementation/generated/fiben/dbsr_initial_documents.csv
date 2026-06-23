@@ -1,0 +1,13 @@
+document_id,signature,root_entity,height_edges,max_width,entities_json,tree_json
+D1,Corporation,Corporation,0,0,"[""Corporation""]","{""entity"": ""Corporation"", ""children"": []}"
+D2,Country,Country,0,0,"[""Country""]","{""entity"": ""Country"", ""children"": []}"
+D3,FinancialReport,FinancialReport,0,0,"[""FinancialReport""]","{""entity"": ""FinancialReport"", ""children"": []}"
+D4,FinancialServiceAccount,FinancialServiceAccount,0,0,"[""FinancialServiceAccount""]","{""entity"": ""FinancialServiceAccount"", ""children"": []}"
+D5,Holding,Holding,0,0,"[""Holding""]","{""entity"": ""Holding"", ""children"": []}"
+D6,Industry,Industry,0,0,"[""Industry""]","{""entity"": ""Industry"", ""children"": []}"
+D7,ListedSecurity,ListedSecurity,0,0,"[""ListedSecurity""]","{""entity"": ""ListedSecurity"", ""children"": []}"
+D8,Person,Person,0,0,"[""Person""]","{""entity"": ""Person"", ""children"": []}"
+D9,ReportElement,ReportElement,0,0,"[""ReportElement""]","{""entity"": ""ReportElement"", ""children"": []}"
+D10,Security,Security,0,0,"[""Security""]","{""entity"": ""Security"", ""children"": []}"
+D11,StatementElement,StatementElement,0,0,"[""StatementElement""]","{""entity"": ""StatementElement"", ""children"": []}"
+D12,Transaction,Transaction,0,0,"[""Transaction""]","{""entity"": ""Transaction"", ""children"": []}"

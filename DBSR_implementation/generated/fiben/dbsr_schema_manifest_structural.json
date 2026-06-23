@@ -1,0 +1,735 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "manifest_type": "structural_schema_manifest_executable_coverage",
+  "version": "0.2-structural-topk-plus-coverage-closure",
+  "selection_policy": {
+    "source": "dbsr_ranked_schemas.csv + dbsr_pruned_query_plans.csv",
+    "top_k_documents": 10,
+    "ranking_basis": "structural_proxy_utility",
+    "coverage_policy": "add_documents_from_best_pruned_plan_until_each_sequence_is_executable",
+    "physical_materialization": "not_performed_in_this_phase"
+  },
+  "summary": {
+    "selected_documents": 15,
+    "initial_top_k_documents": 10,
+    "added_documents_for_executable_coverage": 5,
+    "partial_covered_queries": 9,
+    "partial_covered_sequences": 15,
+    "executable_queries": 9,
+    "executable_sequences": 15,
+    "total_sequences": 15,
+    "non_executable_sequences": [],
+    "total_selected_utility": 1.403427303847,
+    "query_names": [
+      "Q1_CompanyProfileIBM",
+      "Q2_CompanyWithIndustryCountryAndListedSecurities",
+      "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+      "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+      "Q5_ReportsAndMetricDataOfCompany",
+      "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+      "Q7_PersonsWhoBoughtMoreIBMThanSold",
+      "Q8_IBMTransactionsBelowAverageSellingPrice",
+      "Q9_PersonsWhoBoughtAndSoldSameStock"
+    ],
+    "sequence_ids": [
+      "Q1_S1",
+      "Q2_S1",
+      "Q2_S2",
+      "Q2_S3",
+      "Q3_S1",
+      "Q4_S1",
+      "Q5_S1",
+      "Q6_S1",
+      "Q6_S2",
+      "Q7_S1",
+      "Q7_S2",
+      "Q8_S1",
+      "Q8_S2",
+      "Q9_S1",
+      "Q9_S2"
+    ]
+  },
+  "coverage_summary": {
+    "initial_selected_documents": 10,
+    "final_selected_documents": 15,
+    "added_documents_for_executable_coverage": 5,
+    "total_sequences": 15,
+    "initial_executable_sequences": 11,
+    "final_executable_sequences": 15,
+    "total_queries": 9,
+    "final_executable_queries": 9,
+    "non_executable_sequences": []
+  },
+  "collections": [
+    {
+      "rank": 1,
+      "source_rank": 1,
+      "collection_name": "dbsr_rank01_listedsecurity",
+      "document_signature": "ListedSecurity",
+      "root_entity": "ListedSecurity",
+      "embedded_or_included_entities": [
+        "ListedSecurity"
+      ],
+      "height_edges": 0,
+      "max_width": 0,
+      "total_utility": 0.24699892254,
+      "queries_covered": 7,
+      "sequences_covered": 11,
+      "plans_using_document": 14,
+      "query_names": [
+        "Q2_CompanyWithIndustryCountryAndListedSecurities",
+        "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q8_IBMTransactionsBelowAverageSellingPrice",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "sequence_ids": [
+        "Q2_S3",
+        "Q3_S1",
+        "Q4_S1",
+        "Q6_S1",
+        "Q6_S2",
+        "Q7_S1",
+        "Q7_S2",
+        "Q8_S1",
+        "Q8_S2",
+        "Q9_S1",
+        "Q9_S2"
+      ],
+      "tree": {
+        "entity": "ListedSecurity",
+        "children": []
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 2,
+      "source_rank": 2,
+      "collection_name": "dbsr_rank02_transaction_listedsecurity",
+      "document_signature": "Transaction|{ListedSecurity}",
+      "root_entity": "Transaction",
+      "embedded_or_included_entities": [
+        "Transaction",
+        "ListedSecurity"
+      ],
+      "height_edges": 1,
+      "max_width": 1,
+      "total_utility": 0.239945244797,
+      "queries_covered": 3,
+      "sequences_covered": 6,
+      "plans_using_document": 3,
+      "query_names": [
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q8_IBMTransactionsBelowAverageSellingPrice",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "sequence_ids": [
+        "Q7_S1",
+        "Q7_S2",
+        "Q8_S1",
+        "Q8_S2",
+        "Q9_S1",
+        "Q9_S2"
+      ],
+      "tree": {
+        "entity": "Transaction",
+        "children": [
+          {
+            "entity": "ListedSecurity",
+            "children": []
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 3,
+      "source_rank": 3,
+      "collection_name": "dbsr_rank03_corporation",
+      "document_signature": "Corporation",
+      "root_entity": "Corporation",
+      "embedded_or_included_entities": [
+        "Corporation"
+      ],
+      "height_edges": 0,
+      "max_width": 0,
+      "total_utility": 0.181393169286,
+      "queries_covered": 4,
+      "sequences_covered": 6,
+      "plans_using_document": 9,
+      "query_names": [
+        "Q1_CompanyProfileIBM",
+        "Q2_CompanyWithIndustryCountryAndListedSecurities",
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "Q5_ReportsAndMetricDataOfCompany"
+      ],
+      "sequence_ids": [
+        "Q1_S1",
+        "Q2_S1",
+        "Q2_S2",
+        "Q2_S3",
+        "Q4_S1",
+        "Q5_S1"
+      ],
+      "tree": {
+        "entity": "Corporation",
+        "children": []
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 4,
+      "source_rank": 4,
+      "collection_name": "dbsr_rank04_person",
+      "document_signature": "Person",
+      "root_entity": "Person",
+      "embedded_or_included_entities": [
+        "Person"
+      ],
+      "height_edges": 0,
+      "max_width": 0,
+      "total_utility": 0.136620850758,
+      "queries_covered": 3,
+      "sequences_covered": 5,
+      "plans_using_document": 5,
+      "query_names": [
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "sequence_ids": [
+        "Q4_S1",
+        "Q7_S1",
+        "Q7_S2",
+        "Q9_S1",
+        "Q9_S2"
+      ],
+      "tree": {
+        "entity": "Person",
+        "children": []
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 5,
+      "source_rank": 5,
+      "collection_name": "dbsr_rank05_corporation_country",
+      "document_signature": "Corporation|{Country}",
+      "root_entity": "Corporation",
+      "embedded_or_included_entities": [
+        "Corporation",
+        "Country"
+      ],
+      "height_edges": 1,
+      "max_width": 1,
+      "total_utility": 0.097529113658,
+      "queries_covered": 2,
+      "sequences_covered": 2,
+      "plans_using_document": 3,
+      "query_names": [
+        "Q2_CompanyWithIndustryCountryAndListedSecurities",
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue"
+      ],
+      "sequence_ids": [
+        "Q2_S2",
+        "Q6_S2"
+      ],
+      "tree": {
+        "entity": "Corporation",
+        "children": [
+          {
+            "entity": "Country",
+            "children": []
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 6,
+      "source_rank": 6,
+      "collection_name": "dbsr_rank06_corporation_industry",
+      "document_signature": "Corporation|{Industry}",
+      "root_entity": "Corporation",
+      "embedded_or_included_entities": [
+        "Corporation",
+        "Industry"
+      ],
+      "height_edges": 1,
+      "max_width": 1,
+      "total_utility": 0.097529113658,
+      "queries_covered": 2,
+      "sequences_covered": 2,
+      "plans_using_document": 3,
+      "query_names": [
+        "Q2_CompanyWithIndustryCountryAndListedSecurities",
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue"
+      ],
+      "sequence_ids": [
+        "Q2_S1",
+        "Q6_S1"
+      ],
+      "tree": {
+        "entity": "Corporation",
+        "children": [
+          {
+            "entity": "Industry",
+            "children": []
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 7,
+      "source_rank": 7,
+      "collection_name": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Holding|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "embedded_or_included_entities": [
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.074705073036,
+      "queries_covered": 2,
+      "sequences_covered": 2,
+      "plans_using_document": 2,
+      "query_names": [
+        "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity"
+      ],
+      "sequence_ids": [
+        "Q3_S1",
+        "Q4_S1"
+      ],
+      "tree": {
+        "entity": "FinancialServiceAccount",
+        "children": [
+          {
+            "entity": "Holding",
+            "children": [
+              {
+                "entity": "ListedSecurity",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 8,
+      "source_rank": 8,
+      "collection_name": "dbsr_rank08_corporation_security_listedsecurity",
+      "document_signature": "Corporation|{Security|{ListedSecurity}}",
+      "root_entity": "Corporation",
+      "embedded_or_included_entities": [
+        "Corporation",
+        "Security",
+        "ListedSecurity"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.067796610169,
+      "queries_covered": 1,
+      "sequences_covered": 1,
+      "plans_using_document": 1,
+      "query_names": [
+        "Q2_CompanyWithIndustryCountryAndListedSecurities"
+      ],
+      "sequence_ids": [
+        "Q2_S3"
+      ],
+      "tree": {
+        "entity": "Corporation",
+        "children": [
+          {
+            "entity": "Security",
+            "children": [
+              {
+                "entity": "ListedSecurity",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 9,
+      "source_rank": 9,
+      "collection_name": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Transaction|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "embedded_or_included_entities": [
+        "FinancialServiceAccount",
+        "Transaction",
+        "ListedSecurity"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.064516129032,
+      "queries_covered": 2,
+      "sequences_covered": 4,
+      "plans_using_document": 1,
+      "query_names": [
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "sequence_ids": [
+        "Q7_S1",
+        "Q7_S2",
+        "Q9_S1",
+        "Q9_S2"
+      ],
+      "tree": {
+        "entity": "FinancialServiceAccount",
+        "children": [
+          {
+            "entity": "Transaction",
+            "children": [
+              {
+                "entity": "ListedSecurity",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 10,
+      "source_rank": 10,
+      "collection_name": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "document_signature": "Person|{FinancialServiceAccount|{Transaction}}",
+      "root_entity": "Person",
+      "embedded_or_included_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "Transaction"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.064516129032,
+      "queries_covered": 2,
+      "sequences_covered": 4,
+      "plans_using_document": 1,
+      "query_names": [
+        "Q7_PersonsWhoBoughtMoreIBMThanSold",
+        "Q9_PersonsWhoBoughtAndSoldSameStock"
+      ],
+      "sequence_ids": [
+        "Q7_S1",
+        "Q7_S2",
+        "Q9_S1",
+        "Q9_S2"
+      ],
+      "tree": {
+        "entity": "Person",
+        "children": [
+          {
+            "entity": "FinancialServiceAccount",
+            "children": [
+              {
+                "entity": "Transaction",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "top_k_ranked_document",
+      "added_for_query": "",
+      "added_for_sequence": "",
+      "added_from_plan": ""
+    },
+    {
+      "rank": 11,
+      "source_rank": 19,
+      "collection_name": "dbsr_rank11_person_financialserviceaccount_holding",
+      "document_signature": "Person|{FinancialServiceAccount|{Holding}}",
+      "root_entity": "Person",
+      "embedded_or_included_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "Holding"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.028742298869,
+      "queries_covered": 1,
+      "sequences_covered": 1,
+      "plans_using_document": 3,
+      "query_names": [
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity"
+      ],
+      "sequence_ids": [
+        "Q4_S1"
+      ],
+      "tree": {
+        "entity": "Person",
+        "children": [
+          {
+            "entity": "FinancialServiceAccount",
+            "children": [
+              {
+                "entity": "Holding",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "added_for_executable_sequence_coverage",
+      "added_for_query": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+      "added_for_sequence": "Q4_S1",
+      "added_from_plan": "Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity|{Security|{Corporation}}"
+    },
+    {
+      "rank": 12,
+      "source_rank": 12,
+      "collection_name": "dbsr_rank12_listedsecurity_security_corporation",
+      "document_signature": "ListedSecurity|{Security|{Corporation}}",
+      "root_entity": "ListedSecurity",
+      "embedded_or_included_entities": [
+        "ListedSecurity",
+        "Security",
+        "Corporation"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.054354161206,
+      "queries_covered": 2,
+      "sequences_covered": 3,
+      "plans_using_document": 4,
+      "query_names": [
+        "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue"
+      ],
+      "sequence_ids": [
+        "Q4_S1",
+        "Q6_S1",
+        "Q6_S2"
+      ],
+      "tree": {
+        "entity": "ListedSecurity",
+        "children": [
+          {
+            "entity": "Security",
+            "children": [
+              {
+                "entity": "Corporation",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "added_for_executable_sequence_coverage",
+      "added_for_query": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+      "added_for_sequence": "Q4_S1",
+      "added_from_plan": "Person|{FinancialServiceAccount|{Holding}} -> ListedSecurity|{Security|{Corporation}}"
+    },
+    {
+      "rank": 13,
+      "source_rank": 29,
+      "collection_name": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "document_signature": "FinancialReport|{ReportElement|{StatementElement}}",
+      "root_entity": "FinancialReport",
+      "embedded_or_included_entities": [
+        "FinancialReport",
+        "ReportElement",
+        "StatementElement"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.016260162602,
+      "queries_covered": 1,
+      "sequences_covered": 1,
+      "plans_using_document": 1,
+      "query_names": [
+        "Q5_ReportsAndMetricDataOfCompany"
+      ],
+      "sequence_ids": [
+        "Q5_S1"
+      ],
+      "tree": {
+        "entity": "FinancialReport",
+        "children": [
+          {
+            "entity": "ReportElement",
+            "children": [
+              {
+                "entity": "StatementElement",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "added_for_executable_sequence_coverage",
+      "added_for_query": "Q5_ReportsAndMetricDataOfCompany",
+      "added_for_sequence": "Q5_S1",
+      "added_from_plan": "Corporation -> FinancialReport|{ReportElement|{StatementElement}}"
+    },
+    {
+      "rank": 14,
+      "source_rank": 31,
+      "collection_name": "dbsr_rank14_security_corporation_industry",
+      "document_signature": "Security|{Corporation|{Industry}}",
+      "root_entity": "Security",
+      "embedded_or_included_entities": [
+        "Security",
+        "Corporation",
+        "Industry"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.016260162602,
+      "queries_covered": 1,
+      "sequences_covered": 1,
+      "plans_using_document": 1,
+      "query_names": [
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue"
+      ],
+      "sequence_ids": [
+        "Q6_S1"
+      ],
+      "tree": {
+        "entity": "Security",
+        "children": [
+          {
+            "entity": "Corporation",
+            "children": [
+              {
+                "entity": "Industry",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "added_for_executable_sequence_coverage",
+      "added_for_query": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+      "added_for_sequence": "Q6_S1",
+      "added_from_plan": "ListedSecurity -> Security|{Corporation|{Industry}}"
+    },
+    {
+      "rank": 15,
+      "source_rank": 30,
+      "collection_name": "dbsr_rank15_security_corporation_country",
+      "document_signature": "Security|{Corporation|{Country}}",
+      "root_entity": "Security",
+      "embedded_or_included_entities": [
+        "Security",
+        "Corporation",
+        "Country"
+      ],
+      "height_edges": 2,
+      "max_width": 1,
+      "total_utility": 0.016260162602,
+      "queries_covered": 1,
+      "sequences_covered": 1,
+      "plans_using_document": 1,
+      "query_names": [
+        "Q6_TechUSListedSecuritiesWithHighLastTradedValue"
+      ],
+      "sequence_ids": [
+        "Q6_S2"
+      ],
+      "tree": {
+        "entity": "Security",
+        "children": [
+          {
+            "entity": "Corporation",
+            "children": [
+              {
+                "entity": "Country",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "tree_found_in_generated_documents": true,
+      "materialization_status": "not_materialized",
+      "selection_reason": "added_for_executable_sequence_coverage",
+      "added_for_query": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+      "added_for_sequence": "Q6_S2",
+      "added_from_plan": "ListedSecurity -> Security|{Corporation|{Country}}"
+    }
+  ],
+  "implementation_assumptions": [
+    "This manifest starts from top-k ranked DBSR documents and then closes the selection for executable sequence coverage.",
+    "A sequence is executable when at least one pruned query plan can be expressed using only selected documents.",
+    "This avoids confusing partial document coverage with full query executability.",
+    "It does not resolve physical duplication conflicts yet.",
+    "It does not create MongoDB collections yet.",
+    "Overlapping document structures are allowed in this structural manifest and must be resolved or explicitly materialized in a later phase.",
+    "The manifest is independent from SchemaLens G0-G9 templates."
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "dataset": "FIBEN",
+  "scale_label": "sf1",
+  "source": "offline_statistics_template",
+  "status": "template_not_measured",
+  "notes": [
+    "This file defines the statistics contract expected by the DBSR statistics-aware cost model.",
+    "The current SchemaLens FIBEN benchmark databases were temporary and are not available in this repository environment.",
+    "Real statistics must be generated during DBSR materialization/benchmark execution before any statistics-aware ranking is reported."
+  ],
+  "collections": [
+    {
+      "entity": "Corporation",
+      "collection": "fiben_corporations",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "Industry",
+      "collection": "fiben_industries",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "Country",
+      "collection": "fiben_countries",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "Security",
+      "collection": "fiben_securities",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "ListedSecurity",
+      "collection": "fiben_listed_securities",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "Person",
+      "collection": "fiben_persons",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "FinancialServiceAccount",
+      "collection": "fiben_financial_service_accounts",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "Holding",
+      "collection": "fiben_holdings",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "Transaction",
+      "collection": "fiben_transactions",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "FinancialReport",
+      "collection": "fiben_reports",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "ReportElement",
+      "collection": "fiben_report_elements",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    },
+    {
+      "entity": "StatementElement",
+      "collection": "fiben_statement_elements",
+      "count": null,
+      "avg_object_size_bytes": null,
+      "size_bytes": null,
+      "storage_size_bytes": null,
+      "total_index_size_bytes": null,
+      "statistics_status": "pending_measurement"
+    }
+  ],
+  "implementation_assumptions": [
+    {
+      "id": "S01",
+      "text": "Statistics-aware DBSR ranking must not be reported from this template because counts and sizes are not measured."
+    },
+    {
+      "id": "S02",
+      "text": "Real statistics should be captured during future DBSR MongoDB materialization before benchmark databases are dropped."
+    },
+    {
+      "id": "S03",
+      "text": "The template intentionally stores no credentials, local paths, host names, or machine-specific metadata."
+    }
+  ]
+}

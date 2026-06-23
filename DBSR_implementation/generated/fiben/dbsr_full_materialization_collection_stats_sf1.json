@@ -1,0 +1,107 @@
+{
+  "dbsr_rank01_listedsecurity": {
+    "count": 2745,
+    "avgObjSize": 210,
+    "size": 577172,
+    "storageSize": 192512,
+    "totalIndexSize": 57344
+  },
+  "dbsr_rank02_transaction_listedsecurity": {
+    "count": 500000,
+    "avgObjSize": 519,
+    "size": 259537010,
+    "storageSize": 73129984,
+    "totalIndexSize": 5226496
+  },
+  "dbsr_rank03_corporation": {
+    "count": 2324,
+    "avgObjSize": 176,
+    "size": 409769,
+    "storageSize": 147456,
+    "totalIndexSize": 49152
+  },
+  "dbsr_rank04_person": {
+    "count": 50100,
+    "avgObjSize": 263,
+    "size": 13213147,
+    "storageSize": 4669440,
+    "totalIndexSize": 520192
+  },
+  "dbsr_rank05_corporation_country": {
+    "count": 2324,
+    "avgObjSize": 315,
+    "size": 733796,
+    "storageSize": 188416,
+    "totalIndexSize": 49152
+  },
+  "dbsr_rank06_corporation_industry": {
+    "count": 2324,
+    "avgObjSize": 444,
+    "size": 1032520,
+    "storageSize": 282624,
+    "totalIndexSize": 49152
+  },
+  "dbsr_rank07_financialserviceaccount_holding_listedsecurity": {
+    "count": 97270,
+    "avgObjSize": 2596,
+    "size": 252602760,
+    "storageSize": 70995968,
+    "totalIndexSize": 974848
+  },
+  "dbsr_rank08_corporation_security_listedsecurity": {
+    "count": 2324,
+    "avgObjSize": 645,
+    "size": 1499437,
+    "storageSize": 397312,
+    "totalIndexSize": 49152
+  },
+  "dbsr_rank09_financialserviceaccount_transaction_listedsecurity": {
+    "count": 97270,
+    "avgObjSize": 2921,
+    "size": 284189801,
+    "storageSize": 80048128,
+    "totalIndexSize": 983040
+  },
+  "dbsr_rank10_person_financialserviceaccount_transaction": {
+    "count": 50100,
+    "avgObjSize": 3634,
+    "size": 182070748,
+    "storageSize": 50987008,
+    "totalIndexSize": 507904
+  },
+  "dbsr_rank11_person_financialserviceaccount_holding": {
+    "count": 50100,
+    "avgObjSize": 2842,
+    "size": 142403421,
+    "storageSize": 39907328,
+    "totalIndexSize": 512000
+  },
+  "dbsr_rank12_listedsecurity_security_corporation": {
+    "count": 2745,
+    "avgObjSize": 573,
+    "size": 1573094,
+    "storageSize": 405504,
+    "totalIndexSize": 57344
+  },
+  "dbsr_rank13_financialreport_reportelement_statementelement": {
+    "count": 48301,
+    "avgObjSize": 29215,
+    "size": 1411118674,
+    "storageSize": 267341824,
+    "totalIndexSize": 495616
+  },
+  "dbsr_rank14_security_corporation_industry": {
+    "count": 2745,
+    "avgObjSize": 614,
+    "size": 1685752,
+    "storageSize": 413696,
+    "totalIndexSize": 45056
+  },
+  "dbsr_rank15_security_corporation_country": {
+    "count": 2745,
+    "avgObjSize": 484,
+    "size": 1329153,
+    "storageSize": 278528,
+    "totalIndexSize": 45056
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "dataset": "FIBEN",
+  "scale_label": "sf1",
+  "method": "original_pool_aligned_with_fixed_ibm2860",
+  "source_probe": "DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf1_original_pool_aligned_v2.json",
+  "ibm_corporation_id": "2860",
+  "note": "SF1 Mongo source fallback selected corporation 2085, but SchemaLens SF1 returned-count behavior matches IBM corporation 2860 used by the final SF10-aligned protocol."
+}

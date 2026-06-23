@@ -1,0 +1,31 @@
+{
+  "dataset": "FIBEN",
+  "scale_label": "sf30",
+  "method": "original_pool_aligned_with_fixed_ibm2860_and_q4_raw_sequence",
+  "source_probe": "DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf30_original_pool_aligned_v9_ibm2860.json",
+  "q4_person_pool": [
+    "400000035163",
+    "400000045419",
+    "400000007776",
+    "400000046876",
+    "400000037693",
+    "400000048453",
+    "400000008545",
+    "400000038539",
+    "400000021340",
+    "400000027583"
+  ],
+  "expected_q4_returned_sequence": [
+    1800,
+    1680,
+    1590,
+    1590,
+    1590,
+    1590,
+    1560,
+    1560,
+    1560,
+    1560
+  ],
+  "note": "Q3 and Q9 already match the raw benchmark through parameter-pool cycling. Q4 required replacing replicated top-person ids with the base top-person sequence used by the original benchmark pool."
+}

@@ -1,0 +1,4 @@
+scale_label,queries,dbsr_lower_estimated_bytes,schemalens_lower_estimated_bytes,ties_estimated_bytes,dbsr_lower_docs,schemalens_lower_docs,ties_docs,avg_docs_ratio,avg_keys_ratio,avg_estimated_bytes_ratio
+sf1,9,6,3,0,6,1,2,0.6070541377097461,29.801970964384356,0.9153750040834685
+sf10,9,7,2,0,6,2,1,4.953870975003929,72.28917393232365,17.352512067644547
+sf30,9,7,2,0,6,2,1,5.23792414009108,78.23091588038405,19.034277893968138

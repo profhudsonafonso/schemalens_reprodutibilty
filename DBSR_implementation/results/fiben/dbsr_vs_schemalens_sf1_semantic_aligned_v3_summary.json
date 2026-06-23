@@ -1,0 +1,15 @@
+{
+  "baseline": "DBSR",
+  "comparison_target": "SchemaLens",
+  "dataset": "FIBEN",
+  "scale_label": "sf1_semantic_aligned_v3",
+  "queries_compared": 9,
+  "missing_queries": [],
+  "dbsr_wins": 3,
+  "schemalens_wins": 6,
+  "dbsr_near_schemalens_5_percent": 4,
+  "avg_dbsr_regret_vs_schemalens": 1.076379,
+  "dbsr_aggregate": "DBSR_implementation/results/fiben/dbsr_fiben_query_benchmark_aggregate_sf1_official_semantic_v3_20hot.csv",
+  "schemalens_aggregate": "analysis/fiben/benchmark_aggregate_results_fiben_sf1.csv",
+  "methodological_note": "This comparison uses the best SchemaLens p95 observed per FIBEN query from the SchemaLens aggregate CSV and the official DBSR hot p95 from the materialized DBSR collections."
+}

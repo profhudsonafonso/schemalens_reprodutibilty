@@ -1,0 +1,236 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf10",
+  "mongo_database": "dbsr_fiben_sf10_source_full",
+  "schema_lens_raw": "analysis/fiben/benchmark_raw_results_fiben_sf10.csv",
+  "schema_lens_sequences": {
+    "Q3": [
+      23,
+      12,
+      23,
+      34,
+      34,
+      111,
+      111,
+      23,
+      89,
+      78
+    ],
+    "Q4": [
+      600,
+      560,
+      530,
+      530,
+      530,
+      530,
+      520,
+      520,
+      520,
+      520
+    ],
+    "Q9": [
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  "notes": [
+    "This probe aligns DBSR parameter pools with the SchemaLens SF10 raw returned-count sequence.",
+    "It does not change DBSR document structures or indexes.",
+    "The pool length is 10 so a 20-hot-run benchmark repeats the SchemaLens 10-run sequence twice."
+  ],
+  "Q3_selected": [
+    {
+      "target_returned_count": 23,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 12,
+      "selected_id": "150000000011",
+      "selected_returned_count": 13,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 23,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 34,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 34,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 111,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 111,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 23,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 89,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 78,
+      "selected_id": "150000000005",
+      "selected_returned_count": 21,
+      "match_type": "nearest_reused"
+    }
+  ],
+  "Q4_selected": [
+    {
+      "target_returned_count": 600,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 560,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 530,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 530,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 530,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 530,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 520,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 520,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 520,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    },
+    {
+      "target_returned_count": 520,
+      "selected_id": "SF10_PERS_R01_400000035163",
+      "selected_returned_count": 60,
+      "match_type": "nearest_reused"
+    }
+  ],
+  "Q9_selected": [
+    {
+      "target_returned_count": 2,
+      "selected_id": "1001538",
+      "selected_returned_count": 2,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "LISTEDSECURITYID",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "1001001",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "1001004",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "1001006",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "1001007",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "1001008",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "1001009",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 0,
+      "selected_id": "1001011",
+      "selected_returned_count": 0,
+      "match_type": "exact"
+    },
+    {
+      "target_returned_count": 1,
+      "selected_id": "1001000",
+      "selected_returned_count": 1,
+      "match_type": "exact"
+    }
+  ]
+}

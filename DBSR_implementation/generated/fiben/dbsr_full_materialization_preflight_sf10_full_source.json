@@ -1,0 +1,1378 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf10_full_source",
+  "check_type": "full_materialization_preflight",
+  "mongo_database": "dbsr_fiben_sf10_source_full",
+  "mongo_access": true,
+  "official_benchmark": false,
+  "threshold_mb": 16.0,
+  "source_stats": {
+    "fiben_corporations": {
+      "count": 23241,
+      "avg_obj_size": 206.0,
+      "storage_size": 1232896,
+      "total_index_size": 851968
+    },
+    "fiben_countries": {
+      "count": 250,
+      "avg_obj_size": 109.0,
+      "storage_size": 28672,
+      "total_index_size": 40960
+    },
+    "fiben_financial_service_accounts": {
+      "count": 3793531,
+      "avg_obj_size": 260.0,
+      "storage_size": 177737728,
+      "total_index_size": 138051584
+    },
+    "fiben_holdings": {
+      "count": 20844448,
+      "avg_obj_size": 227.0,
+      "storage_size": 1029627904,
+      "total_index_size": 974782464
+    },
+    "fiben_industries": {
+      "count": 453,
+      "avg_obj_size": 249.0,
+      "storage_size": 45056,
+      "total_index_size": 40960
+    },
+    "fiben_listed_securities": {
+      "count": 27451,
+      "avg_obj_size": 251.0,
+      "storage_size": 1753088,
+      "total_index_size": 630784
+    },
+    "fiben_persons": {
+      "count": 1953901,
+      "avg_obj_size": 314.0,
+      "storage_size": 175833088,
+      "total_index_size": 46391296
+    },
+    "fiben_report_elements": {
+      "count": 81200841,
+      "avg_obj_size": 142.0,
+      "storage_size": 2103304192,
+      "total_index_size": 2918158336
+    },
+    "fiben_reports": {
+      "count": 483011,
+      "avg_obj_size": 178.0,
+      "storage_size": 18153472,
+      "total_index_size": 11300864
+    },
+    "fiben_securities": {
+      "count": 27451,
+      "avg_obj_size": 182.0,
+      "storage_size": 921600,
+      "total_index_size": 1298432
+    },
+    "fiben_statement_elements": {
+      "count": 4437941,
+      "avg_obj_size": 533.0,
+      "storage_size": 333320192,
+      "total_index_size": 112562176
+    },
+    "fiben_transactions": {
+      "count": 19500001,
+      "avg_obj_size": 320.0,
+      "storage_size": 1336504320,
+      "total_index_size": 914759680
+    }
+  },
+  "relation_stats": [
+    {
+      "source_view": "fiben_listed_securities",
+      "join_column": "LISTEDSECURITYID",
+      "relationship_id": "transaction_refers_to_listed_security",
+      "child_collection": "fiben_listed_securities",
+      "child_join_column": "LISTEDSECURITYID",
+      "parent_keys_with_children": 27451,
+      "total_children": 27451,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "SF10_SEC_R09_1003392",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R06_1005542",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R08_1005013",
+          "child_count": 1
+        },
+        {
+          "join_value": "1004036",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R04_1005611",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "ListedSecurity"
+    },
+    {
+      "source_view": "fiben_countries",
+      "join_column": "COUNTRYID",
+      "relationship_id": "corporation_has_country",
+      "child_collection": "fiben_countries",
+      "child_join_column": "COUNTRYID",
+      "parent_keys_with_children": 250,
+      "total_children": 250,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "75",
+          "child_count": 1
+        },
+        {
+          "join_value": "182",
+          "child_count": 1
+        },
+        {
+          "join_value": "108",
+          "child_count": 1
+        },
+        {
+          "join_value": "3",
+          "child_count": 1
+        },
+        {
+          "join_value": "140",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "Country"
+    },
+    {
+      "source_view": "fiben_industries",
+      "join_column": "INDUSTRYSECTORCLASSIFIERID",
+      "relationship_id": "corporation_has_industry",
+      "child_collection": "fiben_industries",
+      "child_join_column": "INDUSTRYSECTORCLASSIFIERID",
+      "parent_keys_with_children": 453,
+      "total_children": 453,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "2015",
+          "child_count": 1
+        },
+        {
+          "join_value": "6141",
+          "child_count": 1
+        },
+        {
+          "join_value": "3480",
+          "child_count": 1
+        },
+        {
+          "join_value": "3651",
+          "child_count": 1
+        },
+        {
+          "join_value": "4522",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "Industry"
+    },
+    {
+      "source_view": "fiben_holdings",
+      "join_column": "ISHELDBY",
+      "relationship_id": "account_has_holding",
+      "child_collection": "fiben_holdings",
+      "child_join_column": "ISHELDBY",
+      "parent_keys_with_children": 3793531,
+      "total_children": 20844448,
+      "max_children": 10,
+      "avg_children_when_present": 5.494735116175405,
+      "top_parent_values": [
+        {
+          "join_value": "150000000005",
+          "child_count": 10
+        },
+        {
+          "join_value": "150000000021",
+          "child_count": 10
+        },
+        {
+          "join_value": "150000000036",
+          "child_count": 10
+        },
+        {
+          "join_value": "150000000027",
+          "child_count": 10
+        },
+        {
+          "join_value": "150000000006",
+          "child_count": 10
+        }
+      ],
+      "child_entity": "Holding"
+    },
+    {
+      "source_view": "fiben_listed_securities",
+      "join_column": "LISTEDSECURITYID",
+      "relationship_id": "holding_refers_to_listed_security",
+      "child_collection": "fiben_listed_securities",
+      "child_join_column": "LISTEDSECURITYID",
+      "parent_keys_with_children": 27451,
+      "total_children": 27451,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "SF10_SEC_R09_1003273",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R04_1004139",
+          "child_count": 1
+        },
+        {
+          "join_value": "1003881",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R04_1004338",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R08_1002264",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "ListedSecurity"
+    },
+    {
+      "source_view": "fiben_securities",
+      "join_column": "ISPROVIDEDBY",
+      "relationship_id": "corporation_has_security",
+      "child_collection": "fiben_securities",
+      "child_join_column": "ISPROVIDEDBY",
+      "parent_keys_with_children": 23241,
+      "total_children": 27451,
+      "max_children": 13,
+      "avg_children_when_present": 1.1811453896131836,
+      "top_parent_values": [
+        {
+          "join_value": "SF10_CORP_R07_2688",
+          "child_count": 13
+        },
+        {
+          "join_value": "SF10_CORP_R05_2688",
+          "child_count": 13
+        },
+        {
+          "join_value": "SF10_CORP_R09_2688",
+          "child_count": 13
+        },
+        {
+          "join_value": "SF10_CORP_R01_2688",
+          "child_count": 13
+        },
+        {
+          "join_value": "SF10_CORP_R03_2688",
+          "child_count": 13
+        }
+      ],
+      "child_entity": "Security"
+    },
+    {
+      "source_view": "fiben_listed_securities",
+      "join_column": "LISTEDSECURITYID",
+      "relationship_id": "security_has_listed_security",
+      "child_collection": "fiben_listed_securities",
+      "child_join_column": "LISTEDSECURITYID",
+      "parent_keys_with_children": 27451,
+      "total_children": 27451,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "SF10_SEC_R05_1001475",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R04_1003745",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R05_1004308",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R02_1001234",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R04_1001591",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "ListedSecurity"
+    },
+    {
+      "source_view": "fiben_transactions",
+      "join_column": "ISFACILITATEDBY",
+      "relationship_id": "account_records_transaction",
+      "child_collection": "fiben_transactions",
+      "child_join_column": "ISFACILITATEDBY",
+      "parent_keys_with_children": 3772471,
+      "total_children": 19500001,
+      "max_children": 16,
+      "avg_children_when_present": 5.169026083964595,
+      "top_parent_values": [
+        {
+          "join_value": "150000018979",
+          "child_count": 16
+        },
+        {
+          "join_value": "150000006411",
+          "child_count": 16
+        },
+        {
+          "join_value": "150000066523",
+          "child_count": 16
+        },
+        {
+          "join_value": "150000061722",
+          "child_count": 16
+        },
+        {
+          "join_value": "150000008362",
+          "child_count": 16
+        }
+      ],
+      "child_entity": "Transaction"
+    },
+    {
+      "source_view": "fiben_financial_service_accounts",
+      "join_column": "ISOWNEDBY",
+      "relationship_id": "person_owns_financial_service_account",
+      "child_collection": "fiben_financial_service_accounts",
+      "child_join_column": "ISOWNEDBY",
+      "parent_keys_with_children": 1950001,
+      "total_children": 3793531,
+      "max_children": 7,
+      "avg_children_when_present": 1.9453995151797359,
+      "top_parent_values": [
+        {
+          "join_value": "400000000316",
+          "child_count": 7
+        },
+        {
+          "join_value": "400000000201",
+          "child_count": 7
+        },
+        {
+          "join_value": "400000000347",
+          "child_count": 7
+        },
+        {
+          "join_value": "400000000324",
+          "child_count": 7
+        },
+        {
+          "join_value": "400000000257",
+          "child_count": 7
+        }
+      ],
+      "child_entity": "FinancialServiceAccount"
+    },
+    {
+      "source_view": "fiben_securities",
+      "join_column": "ISTRADEDON",
+      "relationship_id": "security_has_listed_security",
+      "child_collection": "fiben_securities",
+      "child_join_column": "ISTRADEDON",
+      "parent_keys_with_children": 27451,
+      "total_children": 27451,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "1004072",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R09_1002826",
+          "child_count": 1
+        },
+        {
+          "join_value": "1002168",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R02_1002827",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_SEC_R08_1001047",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "Security"
+    },
+    {
+      "source_view": "fiben_corporations",
+      "join_column": "CORPORATIONID",
+      "relationship_id": "corporation_has_security",
+      "child_collection": "fiben_corporations",
+      "child_join_column": "CORPORATIONID",
+      "parent_keys_with_children": 23241,
+      "total_children": 23241,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "SF10_CORP_R06_2909",
+          "child_count": 1
+        },
+        {
+          "join_value": "1136",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_CORP_R07_1743",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_CORP_R03_1305",
+          "child_count": 1
+        },
+        {
+          "join_value": "SF10_CORP_R03_1585",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "Corporation"
+    },
+    {
+      "source_view": "fiben_report_elements",
+      "join_column": "ISMEMBEROF",
+      "relationship_id": "financial_report_contains_report_element",
+      "child_collection": "fiben_report_elements",
+      "child_join_column": "ISMEMBEROF",
+      "parent_keys_with_children": 482071,
+      "total_children": 81200841,
+      "max_children": 822,
+      "avg_children_when_present": 168.4416631575017,
+      "top_parent_values": [
+        {
+          "join_value": "SF10_FREP_R01_1033789",
+          "child_count": 822
+        },
+        {
+          "join_value": "SF10_FREP_R07_1033789",
+          "child_count": 822
+        },
+        {
+          "join_value": "1033789",
+          "child_count": 822
+        },
+        {
+          "join_value": "SF10_FREP_R02_1033789",
+          "child_count": 822
+        },
+        {
+          "join_value": "SF10_FREP_R06_1033789",
+          "child_count": 822
+        }
+      ],
+      "child_entity": "ReportElement"
+    },
+    {
+      "source_view": "fiben_statement_elements",
+      "join_column": "ELEMENTOFFINANCIALSTATEMENTID",
+      "relationship_id": "report_element_has_statement_element",
+      "child_collection": "fiben_statement_elements",
+      "child_join_column": "ELEMENTOFFINANCIALSTATEMENTID",
+      "parent_keys_with_children": 4437941,
+      "total_children": 4437941,
+      "max_children": 1,
+      "avg_children_when_present": 1.0,
+      "top_parent_values": [
+        {
+          "join_value": "100035",
+          "child_count": 1
+        },
+        {
+          "join_value": "100042",
+          "child_count": 1
+        },
+        {
+          "join_value": "100016",
+          "child_count": 1
+        },
+        {
+          "join_value": "100004",
+          "child_count": 1
+        },
+        {
+          "join_value": "100032",
+          "child_count": 1
+        }
+      ],
+      "child_entity": "StatementElement"
+    }
+  ],
+  "collection_results": [
+    {
+      "target_collection": "dbsr_rank01_listedsecurity",
+      "document_signature": "ListedSecurity",
+      "root_entity": "ListedSecurity",
+      "root_source_view": "fiben_listed_securities",
+      "root_count": 27451,
+      "embedding_steps": 0,
+      "estimated_worst_case_bson_bytes": 251,
+      "estimated_worst_case_bson_mb": 0.000239,
+      "risk_label": "low_risk",
+      "max_child_summary": []
+    },
+    {
+      "target_collection": "dbsr_rank02_transaction_listedsecurity",
+      "document_signature": "Transaction|{ListedSecurity}",
+      "root_entity": "Transaction",
+      "root_source_view": "fiben_transactions",
+      "root_count": 19500001,
+      "embedding_steps": 1,
+      "estimated_worst_case_bson_bytes": 571,
+      "estimated_worst_case_bson_mb": 0.000545,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "transaction_refers_to_listed_security",
+          "parent_entity": "Transaction",
+          "child_entity": "ListedSecurity",
+          "child_source_view": "fiben_listed_securities",
+          "child_join_column": "LISTEDSECURITYID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_SEC_R09_1003392",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R06_1005542",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R08_1005013",
+              "child_count": 1
+            },
+            {
+              "join_value": "1004036",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R04_1005611",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank03_corporation",
+      "document_signature": "Corporation",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_count": 23241,
+      "embedding_steps": 0,
+      "estimated_worst_case_bson_bytes": 206,
+      "estimated_worst_case_bson_mb": 0.000196,
+      "risk_label": "low_risk",
+      "max_child_summary": []
+    },
+    {
+      "target_collection": "dbsr_rank04_person",
+      "document_signature": "Person",
+      "root_entity": "Person",
+      "root_source_view": "fiben_persons",
+      "root_count": 1953901,
+      "embedding_steps": 0,
+      "estimated_worst_case_bson_bytes": 314,
+      "estimated_worst_case_bson_mb": 0.000299,
+      "risk_label": "low_risk",
+      "max_child_summary": []
+    },
+    {
+      "target_collection": "dbsr_rank05_corporation_country",
+      "document_signature": "Corporation|{Country}",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_count": 23241,
+      "embedding_steps": 1,
+      "estimated_worst_case_bson_bytes": 315,
+      "estimated_worst_case_bson_mb": 0.0003,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "corporation_has_country",
+          "parent_entity": "Corporation",
+          "child_entity": "Country",
+          "child_source_view": "fiben_countries",
+          "child_join_column": "COUNTRYID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "75",
+              "child_count": 1
+            },
+            {
+              "join_value": "182",
+              "child_count": 1
+            },
+            {
+              "join_value": "108",
+              "child_count": 1
+            },
+            {
+              "join_value": "3",
+              "child_count": 1
+            },
+            {
+              "join_value": "140",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank06_corporation_industry",
+      "document_signature": "Corporation|{Industry}",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_count": 23241,
+      "embedding_steps": 1,
+      "estimated_worst_case_bson_bytes": 455,
+      "estimated_worst_case_bson_mb": 0.000434,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "corporation_has_industry",
+          "parent_entity": "Corporation",
+          "child_entity": "Industry",
+          "child_source_view": "fiben_industries",
+          "child_join_column": "INDUSTRYSECTORCLASSIFIERID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "2015",
+              "child_count": 1
+            },
+            {
+              "join_value": "6141",
+              "child_count": 1
+            },
+            {
+              "join_value": "3480",
+              "child_count": 1
+            },
+            {
+              "join_value": "3651",
+              "child_count": 1
+            },
+            {
+              "join_value": "4522",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Holding|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_count": 3793531,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 5040,
+      "estimated_worst_case_bson_mb": 0.004807,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "account_has_holding",
+          "parent_entity": "FinancialServiceAccount",
+          "child_entity": "Holding",
+          "child_source_view": "fiben_holdings",
+          "child_join_column": "ISHELDBY",
+          "max_children": 10,
+          "avg_children_when_present": 5.494735116175405,
+          "top_parent_values": [
+            {
+              "join_value": "150000000005",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000021",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000036",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000027",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000006",
+              "child_count": 10
+            }
+          ]
+        },
+        {
+          "relationship_id": "holding_refers_to_listed_security",
+          "parent_entity": "Holding",
+          "child_entity": "ListedSecurity",
+          "child_source_view": "fiben_listed_securities",
+          "child_join_column": "LISTEDSECURITYID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_SEC_R09_1003273",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R04_1004139",
+              "child_count": 1
+            },
+            {
+              "join_value": "1003881",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R04_1004338",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R08_1002264",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "document_signature": "Corporation|{Security|{ListedSecurity}}",
+      "root_entity": "Corporation",
+      "root_source_view": "fiben_corporations",
+      "root_count": 23241,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 5835,
+      "estimated_worst_case_bson_mb": 0.005565,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "corporation_has_security",
+          "parent_entity": "Corporation",
+          "child_entity": "Security",
+          "child_source_view": "fiben_securities",
+          "child_join_column": "ISPROVIDEDBY",
+          "max_children": 13,
+          "avg_children_when_present": 1.1811453896131836,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_CORP_R07_2688",
+              "child_count": 13
+            },
+            {
+              "join_value": "SF10_CORP_R05_2688",
+              "child_count": 13
+            },
+            {
+              "join_value": "SF10_CORP_R09_2688",
+              "child_count": 13
+            },
+            {
+              "join_value": "SF10_CORP_R01_2688",
+              "child_count": 13
+            },
+            {
+              "join_value": "SF10_CORP_R03_2688",
+              "child_count": 13
+            }
+          ]
+        },
+        {
+          "relationship_id": "security_has_listed_security",
+          "parent_entity": "Security",
+          "child_entity": "ListedSecurity",
+          "child_source_view": "fiben_listed_securities",
+          "child_join_column": "LISTEDSECURITYID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_SEC_R05_1001475",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R04_1003745",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R05_1004308",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R02_1001234",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R04_1001591",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "document_signature": "FinancialServiceAccount|{Transaction|{ListedSecurity}}",
+      "root_entity": "FinancialServiceAccount",
+      "root_source_view": "fiben_financial_service_accounts",
+      "root_count": 3793531,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 9396,
+      "estimated_worst_case_bson_mb": 0.008961,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "account_records_transaction",
+          "parent_entity": "FinancialServiceAccount",
+          "child_entity": "Transaction",
+          "child_source_view": "fiben_transactions",
+          "child_join_column": "ISFACILITATEDBY",
+          "max_children": 16,
+          "avg_children_when_present": 5.169026083964595,
+          "top_parent_values": [
+            {
+              "join_value": "150000018979",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000006411",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000066523",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000061722",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000008362",
+              "child_count": 16
+            }
+          ]
+        },
+        {
+          "relationship_id": "transaction_refers_to_listed_security",
+          "parent_entity": "Transaction",
+          "child_entity": "ListedSecurity",
+          "child_source_view": "fiben_listed_securities",
+          "child_join_column": "LISTEDSECURITYID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_SEC_R09_1003392",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R06_1005542",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R08_1005013",
+              "child_count": 1
+            },
+            {
+              "join_value": "1004036",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R04_1005611",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "document_signature": "Person|{FinancialServiceAccount|{Transaction}}",
+      "root_entity": "Person",
+      "root_source_view": "fiben_persons",
+      "root_count": 1953901,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 37974,
+      "estimated_worst_case_bson_mb": 0.036215,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "person_owns_financial_service_account",
+          "parent_entity": "Person",
+          "child_entity": "FinancialServiceAccount",
+          "child_source_view": "fiben_financial_service_accounts",
+          "child_join_column": "ISOWNEDBY",
+          "max_children": 7,
+          "avg_children_when_present": 1.9453995151797359,
+          "top_parent_values": [
+            {
+              "join_value": "400000000316",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000201",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000347",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000324",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000257",
+              "child_count": 7
+            }
+          ]
+        },
+        {
+          "relationship_id": "account_records_transaction",
+          "parent_entity": "FinancialServiceAccount",
+          "child_entity": "Transaction",
+          "child_source_view": "fiben_transactions",
+          "child_join_column": "ISFACILITATEDBY",
+          "max_children": 16,
+          "avg_children_when_present": 5.169026083964595,
+          "top_parent_values": [
+            {
+              "join_value": "150000018979",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000006411",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000066523",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000061722",
+              "child_count": 16
+            },
+            {
+              "join_value": "150000008362",
+              "child_count": 16
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "document_signature": "Person|{FinancialServiceAccount|{Holding}}",
+      "root_entity": "Person",
+      "root_source_view": "fiben_persons",
+      "root_count": 1953901,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 18024,
+      "estimated_worst_case_bson_mb": 0.017189,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "person_owns_financial_service_account",
+          "parent_entity": "Person",
+          "child_entity": "FinancialServiceAccount",
+          "child_source_view": "fiben_financial_service_accounts",
+          "child_join_column": "ISOWNEDBY",
+          "max_children": 7,
+          "avg_children_when_present": 1.9453995151797359,
+          "top_parent_values": [
+            {
+              "join_value": "400000000316",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000201",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000347",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000324",
+              "child_count": 7
+            },
+            {
+              "join_value": "400000000257",
+              "child_count": 7
+            }
+          ]
+        },
+        {
+          "relationship_id": "account_has_holding",
+          "parent_entity": "FinancialServiceAccount",
+          "child_entity": "Holding",
+          "child_source_view": "fiben_holdings",
+          "child_join_column": "ISHELDBY",
+          "max_children": 10,
+          "avg_children_when_present": 5.494735116175405,
+          "top_parent_values": [
+            {
+              "join_value": "150000000005",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000021",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000036",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000027",
+              "child_count": 10
+            },
+            {
+              "join_value": "150000000006",
+              "child_count": 10
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "document_signature": "ListedSecurity|{Security|{Corporation}}",
+      "root_entity": "ListedSecurity",
+      "root_source_view": "fiben_listed_securities",
+      "root_count": 27451,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 639,
+      "estimated_worst_case_bson_mb": 0.000609,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "security_has_listed_security",
+          "parent_entity": "ListedSecurity",
+          "child_entity": "Security",
+          "child_source_view": "fiben_securities",
+          "child_join_column": "ISTRADEDON",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "1004072",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R09_1002826",
+              "child_count": 1
+            },
+            {
+              "join_value": "1002168",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R02_1002827",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_SEC_R08_1001047",
+              "child_count": 1
+            }
+          ]
+        },
+        {
+          "relationship_id": "corporation_has_security",
+          "parent_entity": "Security",
+          "child_entity": "Corporation",
+          "child_source_view": "fiben_corporations",
+          "child_join_column": "CORPORATIONID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_CORP_R06_2909",
+              "child_count": 1
+            },
+            {
+              "join_value": "1136",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R07_1743",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R03_1305",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R03_1585",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "document_signature": "FinancialReport|{ReportElement|{StatementElement}}",
+      "root_entity": "FinancialReport",
+      "root_source_view": "fiben_reports",
+      "root_count": 483011,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 555028,
+      "estimated_worst_case_bson_mb": 0.529316,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "financial_report_contains_report_element",
+          "parent_entity": "FinancialReport",
+          "child_entity": "ReportElement",
+          "child_source_view": "fiben_report_elements",
+          "child_join_column": "ISMEMBEROF",
+          "max_children": 822,
+          "avg_children_when_present": 168.4416631575017,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_FREP_R01_1033789",
+              "child_count": 822
+            },
+            {
+              "join_value": "SF10_FREP_R07_1033789",
+              "child_count": 822
+            },
+            {
+              "join_value": "1033789",
+              "child_count": 822
+            },
+            {
+              "join_value": "SF10_FREP_R02_1033789",
+              "child_count": 822
+            },
+            {
+              "join_value": "SF10_FREP_R06_1033789",
+              "child_count": 822
+            }
+          ]
+        },
+        {
+          "relationship_id": "report_element_has_statement_element",
+          "parent_entity": "ReportElement",
+          "child_entity": "StatementElement",
+          "child_source_view": "fiben_statement_elements",
+          "child_join_column": "ELEMENTOFFINANCIALSTATEMENTID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "100035",
+              "child_count": 1
+            },
+            {
+              "join_value": "100042",
+              "child_count": 1
+            },
+            {
+              "join_value": "100016",
+              "child_count": 1
+            },
+            {
+              "join_value": "100004",
+              "child_count": 1
+            },
+            {
+              "join_value": "100032",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank14_security_corporation_industry",
+      "document_signature": "Security|{Corporation|{Industry}}",
+      "root_entity": "Security",
+      "root_source_view": "fiben_securities",
+      "root_count": 27451,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 637,
+      "estimated_worst_case_bson_mb": 0.000607,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "corporation_has_security",
+          "parent_entity": "Security",
+          "child_entity": "Corporation",
+          "child_source_view": "fiben_corporations",
+          "child_join_column": "CORPORATIONID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_CORP_R06_2909",
+              "child_count": 1
+            },
+            {
+              "join_value": "1136",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R07_1743",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R03_1305",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R03_1585",
+              "child_count": 1
+            }
+          ]
+        },
+        {
+          "relationship_id": "corporation_has_industry",
+          "parent_entity": "Corporation",
+          "child_entity": "Industry",
+          "child_source_view": "fiben_industries",
+          "child_join_column": "INDUSTRYSECTORCLASSIFIERID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "2015",
+              "child_count": 1
+            },
+            {
+              "join_value": "6141",
+              "child_count": 1
+            },
+            {
+              "join_value": "3480",
+              "child_count": 1
+            },
+            {
+              "join_value": "3651",
+              "child_count": 1
+            },
+            {
+              "join_value": "4522",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "target_collection": "dbsr_rank15_security_corporation_country",
+      "document_signature": "Security|{Corporation|{Country}}",
+      "root_entity": "Security",
+      "root_source_view": "fiben_securities",
+      "root_count": 27451,
+      "embedding_steps": 2,
+      "estimated_worst_case_bson_bytes": 497,
+      "estimated_worst_case_bson_mb": 0.000474,
+      "risk_label": "low_risk",
+      "max_child_summary": [
+        {
+          "relationship_id": "corporation_has_security",
+          "parent_entity": "Security",
+          "child_entity": "Corporation",
+          "child_source_view": "fiben_corporations",
+          "child_join_column": "CORPORATIONID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "SF10_CORP_R06_2909",
+              "child_count": 1
+            },
+            {
+              "join_value": "1136",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R07_1743",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R03_1305",
+              "child_count": 1
+            },
+            {
+              "join_value": "SF10_CORP_R03_1585",
+              "child_count": 1
+            }
+          ]
+        },
+        {
+          "relationship_id": "corporation_has_country",
+          "parent_entity": "Corporation",
+          "child_entity": "Country",
+          "child_source_view": "fiben_countries",
+          "child_join_column": "COUNTRYID",
+          "max_children": 1,
+          "avg_children_when_present": 1.0,
+          "top_parent_values": [
+            {
+              "join_value": "75",
+              "child_count": 1
+            },
+            {
+              "join_value": "182",
+              "child_count": 1
+            },
+            {
+              "join_value": "108",
+              "child_count": 1
+            },
+            {
+              "join_value": "3",
+              "child_count": 1
+            },
+            {
+              "join_value": "140",
+              "child_count": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "risk_counts": {
+    "low_risk": 15
+  },
+  "high_risk_collections": [],
+  "implementation_note": "This preflight does not materialize DBSR collections and does not affect schema selection or p95 results. It estimates physical document-size risk before full MongoDB materialization."
+}

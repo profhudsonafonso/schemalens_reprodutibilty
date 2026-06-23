@@ -1,0 +1,34 @@
+{
+  "dataset": "FIBEN",
+  "test": "ReportElement.ELEMENTSOFFINANCIALREPORTID -> StatementElement.ELEMENTOFFINANCIALSTATEMENTID",
+  "result": {
+    "report_elements_total": 8120084,
+    "statement_distinct_ids": 443794,
+    "matched_report_elements": 443794,
+    "match_ratio": 0.054653868112694404,
+    "matched_examples": [
+      "62684955",
+      "62678189",
+      "62678191",
+      "62678195",
+      "62678205",
+      "62678221",
+      "62678223",
+      "62678225",
+      "62678229",
+      "62678237"
+    ],
+    "unmatched_examples": [
+      "62063948",
+      "62063950",
+      "62063953",
+      "62063955",
+      "62065508",
+      "62063960",
+      "62063961",
+      "62063963",
+      "62063966",
+      "62063967"
+    ]
+  }
+}

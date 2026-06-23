@@ -1,0 +1,564 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "version": "0.2-reviewed-workload-draft",
+  "scope": "read_queries_only",
+  "queries": [
+    {
+      "query_name": "Q1_CompanyProfileIBM",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Corporation"
+      ],
+      "root_entity": "Corporation",
+      "touched_entities": [
+        "Corporation"
+      ],
+      "generic_class_from_existing_metadata": "QG1",
+      "query_family_from_existing_metadata": "Local lookup",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "dbsr_sequence_inferred": [
+        "Corporation"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q1_S1",
+          "path": [
+            "Corporation"
+          ],
+          "intent": "local company profile lookup"
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q1_S1",
+          "intent": "local company profile lookup"
+        }
+      ]
+    },
+    {
+      "query_name": "Q2_CompanyWithIndustryCountryAndListedSecurities",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Corporation",
+        "Industry",
+        "Country",
+        "ListedSecurity"
+      ],
+      "root_entity": "Corporation",
+      "touched_entities": [
+        "Corporation",
+        "Industry",
+        "Country",
+        "ListedSecurity"
+      ],
+      "generic_class_from_existing_metadata": "QG2",
+      "query_family_from_existing_metadata": "Shallow rooted retrieval",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "dbsr_sequence_inferred": [
+        "Corporation",
+        "Industry",
+        "Country",
+        "ListedSecurity"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q2_S1",
+          "path": [
+            "Corporation",
+            "Industry"
+          ],
+          "intent": "company to industry descriptor"
+        },
+        {
+          "sequence_id": "Q2_S2",
+          "path": [
+            "Corporation",
+            "Country"
+          ],
+          "intent": "company to country descriptor"
+        },
+        {
+          "sequence_id": "Q2_S3",
+          "path": [
+            "Corporation",
+            "Security",
+            "ListedSecurity"
+          ],
+          "intent": "company to listed securities"
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q2_S1",
+          "intent": "company to industry descriptor"
+        },
+        {
+          "sequence_id": "Q2_S2",
+          "intent": "company to country descriptor"
+        },
+        {
+          "sequence_id": "Q2_S3",
+          "intent": "company to listed securities"
+        }
+      ]
+    },
+    {
+      "query_name": "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Security"
+      ],
+      "root_entity": "FinancialServiceAccount",
+      "touched_entities": [
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Security"
+      ],
+      "generic_class_from_existing_metadata": "QG3",
+      "query_family_from_existing_metadata": "Associative retrieval",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "dbsr_sequence_inferred": [
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Security"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q3_S1",
+          "path": [
+            "FinancialServiceAccount",
+            "Holding",
+            "ListedSecurity"
+          ],
+          "intent": "account to holdings and listed securities"
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q3_S1",
+          "intent": "account to holdings and listed securities"
+        }
+      ]
+    },
+    {
+      "query_name": "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Person",
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "root_entity": "Person",
+      "touched_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "generic_class_from_existing_metadata": "QG4",
+      "query_family_from_existing_metadata": "Deep traversal",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "dbsr_sequence_inferred": [
+        "Person",
+        "FinancialServiceAccount",
+        "Holding",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q4_S1",
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Holding",
+            "ListedSecurity",
+            "Security",
+            "Corporation"
+          ],
+          "intent": "person to accounts, holdings, listed securities, securities, and companies"
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q4_S1",
+          "intent": "person to accounts, holdings, listed securities, securities, and companies"
+        }
+      ]
+    },
+    {
+      "query_name": "Q5_ReportsAndMetricDataOfCompany",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Corporation",
+        "FinancialReport",
+        "ReportElement",
+        "StatementElement",
+        "Disclosure"
+      ],
+      "root_entity": "Corporation",
+      "touched_entities": [
+        "Corporation",
+        "FinancialReport",
+        "ReportElement",
+        "StatementElement",
+        "Disclosure"
+      ],
+      "generic_class_from_existing_metadata": "QG5",
+      "query_family_from_existing_metadata": "Containment retrieval",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "Disclosure is not included in the first reviewed sequence unless the exact query implementation requires it.",
+      "dbsr_sequence_inferred": [
+        "Corporation",
+        "FinancialReport",
+        "ReportElement",
+        "StatementElement",
+        "Disclosure"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q5_S1",
+          "path": [
+            "Corporation",
+            "FinancialReport",
+            "ReportElement",
+            "StatementElement"
+          ],
+          "intent": "company to financial reports and metric data"
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q5_S1",
+          "intent": "company to financial reports and metric data"
+        }
+      ]
+    },
+    {
+      "query_name": "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "ListedSecurity",
+        "Corporation",
+        "Industry",
+        "Country"
+      ],
+      "root_entity": "ListedSecurity",
+      "touched_entities": [
+        "ListedSecurity",
+        "Corporation",
+        "Industry",
+        "Country"
+      ],
+      "generic_class_from_existing_metadata": "QG6",
+      "query_family_from_existing_metadata": "Filtered search / recommendation",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "The first adapter infers read JOIN sequences from existing FIBEN benchmark metadata only to bootstrap DBSR inputs. These sequences must be manually reviewed against the FIBEN query definitions before DBSR schema generation.",
+      "dbsr_sequence_inferred": [
+        "ListedSecurity",
+        "Corporation",
+        "Industry",
+        "Country"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q6_S1",
+          "path": [
+            "ListedSecurity",
+            "Security",
+            "Corporation",
+            "Industry"
+          ],
+          "intent": "listed security to corporation and industry filter"
+        },
+        {
+          "sequence_id": "Q6_S2",
+          "path": [
+            "ListedSecurity",
+            "Security",
+            "Corporation",
+            "Country"
+          ],
+          "intent": "listed security to corporation and country filter"
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q6_S1",
+          "intent": "listed security to corporation and industry filter"
+        },
+        {
+          "sequence_id": "Q6_S2",
+          "intent": "listed security to corporation and country filter"
+        }
+      ]
+    },
+    {
+      "query_name": "Q7_PersonsWhoBoughtMoreIBMThanSold",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Corporation",
+        "Holding"
+      ],
+      "root_entity": "Person",
+      "touched_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Corporation",
+        "Holding"
+      ],
+      "generic_class_from_existing_metadata": "QG7",
+      "query_family_from_existing_metadata": "Aggregation / ranking",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "BuyTransaction and SellTransaction are represented as subtype/filter conditions over Transaction in the DBSR read sequence, because the physical relationship path is FinancialServiceAccount -> Transaction -> ListedSecurity.",
+      "dbsr_sequence_inferred": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Corporation",
+        "Holding"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q7_S1",
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person to buy transactions for listed security",
+          "filters": {
+            "transaction_subtype": "buy"
+          }
+        },
+        {
+          "sequence_id": "Q7_S2",
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person to sell transactions for listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q7_S1",
+          "intent": "person to buy transactions for listed security"
+        },
+        {
+          "sequence_id": "Q7_S2",
+          "intent": "person to sell transactions for listed security"
+        }
+      ]
+    },
+    {
+      "query_name": "Q8_IBMTransactionsBelowAverageSellingPrice",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Transaction",
+        "SellTransaction",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "root_entity": "Transaction",
+      "touched_entities": [
+        "Transaction",
+        "SellTransaction",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "generic_class_from_existing_metadata": "QG8",
+      "query_family_from_existing_metadata": "Aggregation / ranking",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "SellTransaction is represented as a subtype/filter condition over Transaction in the DBSR read sequence.",
+      "dbsr_sequence_inferred": [
+        "Transaction",
+        "SellTransaction",
+        "ListedSecurity",
+        "Corporation"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q8_S1",
+          "path": [
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "transactions related to IBM listed security"
+        },
+        {
+          "sequence_id": "Q8_S2",
+          "path": [
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "selling-price comparison for IBM listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q8_S1",
+          "intent": "transactions related to IBM listed security"
+        },
+        {
+          "sequence_id": "Q8_S2",
+          "intent": "selling-price comparison for IBM listed security"
+        }
+      ]
+    },
+    {
+      "query_name": "Q9_PersonsWhoBoughtAndSoldSameStock",
+      "query_type": "read",
+      "dbsr_sequence": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Holding"
+      ],
+      "root_entity": "Person",
+      "touched_entities": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Holding"
+      ],
+      "generic_class_from_existing_metadata": "QG9",
+      "query_family_from_existing_metadata": "Associative retrieval + comparison",
+      "frequency": 1.0,
+      "status": "manual_sequence_reviewed_draft",
+      "source": "inferred_from_existing_fiben_benchmark_plan_metadata_without_using_g_class_or_results",
+      "implementation_assumption": "BuyTransaction and SellTransaction are represented as subtype/filter conditions over Transaction in the DBSR read sequence.",
+      "dbsr_sequence_inferred": [
+        "Person",
+        "FinancialServiceAccount",
+        "BuyTransaction",
+        "SellTransaction",
+        "Transaction",
+        "ListedSecurity",
+        "Holding"
+      ],
+      "dbsr_sequences": [
+        {
+          "sequence_id": "Q9_S1",
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person buy path to listed security",
+          "filters": {
+            "transaction_subtype": "buy"
+          }
+        },
+        {
+          "sequence_id": "Q9_S2",
+          "path": [
+            "Person",
+            "FinancialServiceAccount",
+            "Transaction",
+            "ListedSecurity"
+          ],
+          "intent": "person sell path to listed security",
+          "filters": {
+            "transaction_subtype": "sell"
+          }
+        }
+      ],
+      "review_status": "reviewed_draft",
+      "manual_override_source": "DBSR_implementation/input/fiben/query_sequence_overrides.json",
+      "manual_sequence_intents": [
+        {
+          "sequence_id": "Q9_S1",
+          "intent": "person buy path to listed security"
+        },
+        {
+          "sequence_id": "Q9_S2",
+          "intent": "person sell path to listed security"
+        }
+      ]
+    }
+  ],
+  "manual_review_required": true,
+  "notes": [
+    "This file is a draft bootstrap artifact.",
+    "Before DBSR generation, each dbsr_sequence must be reviewed against the real FIBEN query semantics.",
+    "Q10 is excluded from this read-workload input and should be handled separately as an update/insert limitation or extension.",
+    "Manual query-sequence overrides were applied. The result is still a reviewed draft and must be checked against exact FIBEN query implementations before final DBSR generation."
+  ],
+  "manual_review_status": "reviewed_draft_not_final",
+  "override_file": "DBSR_implementation/input/fiben/query_sequence_overrides.json"
+}

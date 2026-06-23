@@ -1,0 +1,30 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf10",
+  "mongo_database": "dbsr_fiben_sf10_source_full",
+  "parameter_probe": "DBSR_implementation/generated/fiben/dbsr_fiben_query_parameter_probe_sf10_original_pool_aligned_v8_q9_raw.json",
+  "queries": [
+    "Q1_CompanyProfileIBM",
+    "Q2_CompanyWithIndustryCountryAndListedSecurities",
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount",
+    "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity",
+    "Q5_ReportsAndMetricDataOfCompany",
+    "Q6_TechUSListedSecuritiesWithHighLastTradedValue",
+    "Q7_PersonsWhoBoughtMoreIBMThanSold",
+    "Q8_IBMTransactionsBelowAverageSellingPrice",
+    "Q9_PersonsWhoBoughtAndSoldSameStock",
+    "Q10_CreateAccountHoldingAndBuyTransaction"
+  ],
+  "run_phase": "hot",
+  "repetitions": 10,
+  "explain_verbosity": "executionStats",
+  "components": "DBSR_implementation/results/fiben/query_plan/dbsr_fiben_query_plan_sf10_components_all.csv",
+  "summary": "DBSR_implementation/results/fiben/query_plan/dbsr_fiben_query_plan_sf10_summary_all.csv",
+  "compact_candidates": "DBSR_implementation/results/fiben/query_plan/dbsr_fiben_query_plan_sf10_compact_candidates.csv",
+  "query_scale_overview": "DBSR_implementation/results/fiben/query_plan/dbsr_fiben_query_plan_sf10_query_scale_overview.csv",
+  "query_scale_status": "DBSR_implementation/results/fiben/query_plan/dbsr_fiben_query_plan_sf10_query_scale_status.csv",
+  "failed_components": 0,
+  "skipped_components": 10,
+  "created_at": "2026-06-12T07:58:59.785503+00:00"
+}

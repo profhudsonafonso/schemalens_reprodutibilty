@@ -1,0 +1,120 @@
+
+    t0 = time.perf_counter()
+    doc = coll.find_one({"CORPORATIONID": corporation_id})
+    if doc is None:
+        doc = normalized_collection(db, "Corporation").find_one({"CORPORATIONID": corporation_id})
+    latency_ms = (time.perf_counter() - t0) * 1000
+
+    return {
+        "latency_ms": latency_ms,
+        "success": True,
+        "documents_returned": 1 if doc else 0,
+        "documents_written": 0,
+    }
+
+
+def execute_q2(db, cfg, param):
+    corporation_id = param
+    coll = candidate_collection(db, cfg)
+
+    t0 = time.perf_counter()
+    doc = coll.find_one({"CORPORATIONID": corporation_id})
+
+    if doc is None:
+        corp = normalized_collection(db, "Corporation").find_one({"CORPORATIONID": corporation_id})
+        if not corp:
+            n = 0
+        else:
+            industry = normalized_collection(db, "Industry").find_one({
+                "INDUSTRYSECTORCLASSIFIERID": corp.get("ISCLASSIFIEDBY")
+            })
+            country = normalized_collection(db, "Country").find_one({
+                "COUNTRYID": corp.get("ISDOMICILEDIN")
+            })
+            securities = list(normalized_collection(db, "Security").find({
+                "ISPROVIDEDBY": corporation_id
+            }))
+            listed_ids = [
+                normalize_join_key(s.get("SECURITYID"))
+                for s in securities
+                if s.get("SECURITYID") is not None
+            ]
+            listed = list(normalized_collection(db, "ListedSecurity").find({
+                "_norm_LISTEDSECURITYID": {"$in": listed_ids}
+            })) if listed_ids else []
+            n = 1 + int(industry is not None) + int(country is not None) + len(listed)
+    else:
+        n = 1
+
+    latency_ms = (time.perf_counter() - t0) * 1000
+    return {"latency_ms": latency_ms, "success": True, "documents_returned": n, "documents_written": 0}
+
+
+def execute_q3(db, cfg, param):
+    account_id = param
+    t0 = time.perf_counter()
+
+    account = normalized_collection(db, "FinancialServiceAccount").find_one({
+        "FINANCIALSERVICEACCOUNTID": account_id
+    })
+    holdings = list(normalized_collection(db, "Holding").find({"ISHELDBY": account_id}))
+    sec_ids = [
+        normalize_join_key(h.get("REFERSTO"))
+        for h in holdings
+        if h.get("REFERSTO") is not None
+    ]
+    listed = list(normalized_collection(db, "ListedSecurity").find({
+        "_norm_LISTEDSECURITYID": {"$in": sec_ids}
+    })) if sec_ids else []
+
+    latency_ms = (time.perf_counter() - t0) * 1000
+    return {
+        "latency_ms": latency_ms,
+        "success": True,
+        "documents_returned": int(account is not None) + len(holdings) + len(listed),
+        "documents_written": 0,
+    }
+
+
+def execute_q4(db, cfg, param):
+    person_id = param
+    t0 = time.perf_counter()
+
+    accounts = list(normalized_collection(db, "FinancialServiceAccount").find({"ISOWNEDBY": person_id}))
+    account_ids = [a.get("FINANCIALSERVICEACCOUNTID") for a in accounts]
+    holdings = list(normalized_collection(db, "Holding").find({
+        "ISHELDBY": {"$in": account_ids}
+    })) if account_ids else []
+
+    # Correct FIBEN physical join:
+    # HOLDING.REFERSTO references SECURITY.SECURITYID.
+    # Therefore, Q4 must not use SECURITY.ISTRADEDON here.
+    security_ids = [
+        normalize_join_key(h.get("REFERSTO"))
+        for h in holdings
+        if h.get("REFERSTO") is not None
+    ]
+
+    securities = list(normalized_collection(db, "Security").find({
+        "_norm_SECURITYID": {"$in": security_ids}
+    })) if security_ids else []
+
+    corp_ids = [
+        bson_safe(s.get("ISPROVIDEDBY"))
+        for s in securities
+        if s.get("ISPROVIDEDBY") is not None
+    ]
+    corporations = list(normalized_collection(db, "Corporation").find({
+        "CORPORATIONID": {"$in": corp_ids}
+    })) if corp_ids else []
+
+    latency_ms = (time.perf_counter() - t0) * 1000
+    return {
+        "latency_ms": latency_ms,
+        "success": True,
+        "documents_returned": len(corporations),
+        "documents_written": 0,
+    }
+
+
+def execute_q5(db, cfg, param):

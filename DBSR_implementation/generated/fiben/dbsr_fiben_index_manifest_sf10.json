@@ -1,0 +1,507 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf10",
+  "mongo_database": "dbsr_fiben_sf10_source_full",
+  "index_plan_type": "dbsr_secondary_indexes",
+  "collections": 15,
+  "indexes_requested": 44,
+  "indexes_created_or_existing": 44,
+  "indexes_failed": 0,
+  "created": [
+    {
+      "collection": "dbsr_rank01_listedsecurity",
+      "fields": [
+        [
+          "LISTEDSECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_LISTEDSECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank01_listedsecurity",
+      "fields": [
+        [
+          "TICKERSYMBOL",
+          1
+        ]
+      ],
+      "index_name": "idx_TICKERSYMBOL_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "fields": [
+        [
+          "SECURITIESTRANSACTIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_SECURITIESTRANSACTIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "fields": [
+        [
+          "REFERSTO",
+          1
+        ]
+      ],
+      "index_name": "idx_REFERSTO_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "fields": [
+        [
+          "TRANSACTIONKIND",
+          1
+        ]
+      ],
+      "index_name": "idx_TRANSACTIONKIND_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "fields": [
+        [
+          "REFERSTO",
+          1
+        ],
+        [
+          "TRANSACTIONKIND",
+          1
+        ]
+      ],
+      "index_name": "idx_REFERSTO_1_TRANSACTIONKIND_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "fields": [
+        [
+          "listedSecurity.TICKERSYMBOL",
+          1
+        ]
+      ],
+      "index_name": "idx_listedSecurity_TICKERSYMBOL_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank03_corporation",
+      "fields": [
+        [
+          "CORPORATIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_CORPORATIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank03_corporation",
+      "fields": [
+        [
+          "TICKERSYMBOL",
+          1
+        ]
+      ],
+      "index_name": "idx_TICKERSYMBOL_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank04_person",
+      "fields": [
+        [
+          "PERSONID",
+          1
+        ]
+      ],
+      "index_name": "idx_PERSONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank05_corporation_country",
+      "fields": [
+        [
+          "CORPORATIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_CORPORATIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank05_corporation_country",
+      "fields": [
+        [
+          "country.COUNTRYID",
+          1
+        ]
+      ],
+      "index_name": "idx_country_COUNTRYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank06_corporation_industry",
+      "fields": [
+        [
+          "CORPORATIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_CORPORATIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank06_corporation_industry",
+      "fields": [
+        [
+          "industry.INDUSTRYSECTORCLASSIFIERID",
+          1
+        ]
+      ],
+      "index_name": "idx_industry_INDUSTRYSECTORCLASSIFIERID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "fields": [
+        [
+          "FINANCIALSERVICEACCOUNTID",
+          1
+        ]
+      ],
+      "index_name": "idx_FINANCIALSERVICEACCOUNTID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "fields": [
+        [
+          "holding.REFERSTO",
+          1
+        ]
+      ],
+      "index_name": "idx_holding_REFERSTO_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "fields": [
+        [
+          "holding.listedSecurity.LISTEDSECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_holding_listedSecurity_LISTEDSECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "fields": [
+        [
+          "CORPORATIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_CORPORATIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "fields": [
+        [
+          "security.SECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_security_SECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "fields": [
+        [
+          "security.listedSecurity.LISTEDSECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_security_listedSecurity_LISTEDSECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "fields": [
+        [
+          "FINANCIALSERVICEACCOUNTID",
+          1
+        ]
+      ],
+      "index_name": "idx_FINANCIALSERVICEACCOUNTID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "fields": [
+        [
+          "transaction.REFERSTO",
+          1
+        ]
+      ],
+      "index_name": "idx_transaction_REFERSTO_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "fields": [
+        [
+          "transaction.TRANSACTIONKIND",
+          1
+        ]
+      ],
+      "index_name": "idx_transaction_TRANSACTIONKIND_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank09_financialserviceaccount_transaction_listedsecurity",
+      "fields": [
+        [
+          "transaction.REFERSTO",
+          1
+        ],
+        [
+          "transaction.TRANSACTIONKIND",
+          1
+        ]
+      ],
+      "index_name": "idx_transaction_REFERSTO_1_transaction_TRANSACTIONKIND_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "fields": [
+        [
+          "PERSONID",
+          1
+        ]
+      ],
+      "index_name": "idx_PERSONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "fields": [
+        [
+          "financialServiceAccount.FINANCIALSERVICEACCOUNTID",
+          1
+        ]
+      ],
+      "index_name": "idx_financialServiceAccount_FINANCIALSERVICEACCOUNTID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "fields": [
+        [
+          "financialServiceAccount.transaction.REFERSTO",
+          1
+        ]
+      ],
+      "index_name": "idx_financialServiceAccount_transaction_REFERSTO_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank10_person_financialserviceaccount_transaction",
+      "fields": [
+        [
+          "financialServiceAccount.transaction.TRANSACTIONKIND",
+          1
+        ]
+      ],
+      "index_name": "idx_financialServiceAccount_transaction_TRANSACTIONKIND_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "fields": [
+        [
+          "PERSONID",
+          1
+        ]
+      ],
+      "index_name": "idx_PERSONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "fields": [
+        [
+          "financialServiceAccount.FINANCIALSERVICEACCOUNTID",
+          1
+        ]
+      ],
+      "index_name": "idx_financialServiceAccount_FINANCIALSERVICEACCOUNTID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "fields": [
+        [
+          "financialServiceAccount.holding.REFERSTO",
+          1
+        ]
+      ],
+      "index_name": "idx_financialServiceAccount_holding_REFERSTO_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "fields": [
+        [
+          "LISTEDSECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_LISTEDSECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "fields": [
+        [
+          "security.SECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_security_SECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank12_listedsecurity_security_corporation",
+      "fields": [
+        [
+          "security.corporation.CORPORATIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_security_corporation_CORPORATIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "fields": [
+        [
+          "FINANCIALREPORTID",
+          1
+        ]
+      ],
+      "index_name": "idx_FINANCIALREPORTID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "fields": [
+        [
+          "REPORTSOF",
+          1
+        ]
+      ],
+      "index_name": "idx_REPORTSOF_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "fields": [
+        [
+          "reportElement.ELEMENTSOFFINANCIALREPORTID",
+          1
+        ]
+      ],
+      "index_name": "idx_reportElement_ELEMENTSOFFINANCIALREPORTID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "fields": [
+        [
+          "reportElement.statementElement.ELEMENTOFFINANCIALSTATEMENTID",
+          1
+        ]
+      ],
+      "index_name": "idx_reportElement_statementElement_ELEMENTOFFINANCIALSTATEMENTID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank14_security_corporation_industry",
+      "fields": [
+        [
+          "SECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_SECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank14_security_corporation_industry",
+      "fields": [
+        [
+          "corporation.CORPORATIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_corporation_CORPORATIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank14_security_corporation_industry",
+      "fields": [
+        [
+          "corporation.industry.INDUSTRYSECTORCLASSIFIERID",
+          1
+        ]
+      ],
+      "index_name": "idx_corporation_industry_INDUSTRYSECTORCLASSIFIERID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank15_security_corporation_country",
+      "fields": [
+        [
+          "SECURITYID",
+          1
+        ]
+      ],
+      "index_name": "idx_SECURITYID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank15_security_corporation_country",
+      "fields": [
+        [
+          "corporation.CORPORATIONID",
+          1
+        ]
+      ],
+      "index_name": "idx_corporation_CORPORATIONID_1",
+      "status": "created_or_existing"
+    },
+    {
+      "collection": "dbsr_rank15_security_corporation_country",
+      "fields": [
+        [
+          "corporation.country.COUNTRYID",
+          1
+        ]
+      ],
+      "index_name": "idx_corporation_country_COUNTRYID_1",
+      "status": "created_or_existing"
+    }
+  ],
+  "failed": [],
+  "implementation_note": "These indexes are created on DBSR materialized collections before the official query benchmark. They do not change the DBSR document structures."
+}

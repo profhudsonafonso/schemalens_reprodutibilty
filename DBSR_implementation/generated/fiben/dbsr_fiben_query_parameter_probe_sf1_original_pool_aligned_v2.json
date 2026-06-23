@@ -1,0 +1,461 @@
+{
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf1",
+  "probe_type": "dbsr_fiben_query_parameter_probe",
+  "mongo_database": "dbsr_fiben_sf10_source_full",
+  "mongo_access": true,
+  "official_benchmark": false,
+  "collection_counts": {
+    "dbsr_rank01_listedsecurity": 27451,
+    "dbsr_rank02_transaction_listedsecurity": 19500001,
+    "dbsr_rank03_corporation": 23241,
+    "dbsr_rank04_person": 1953901,
+    "dbsr_rank05_corporation_country": 23241,
+    "dbsr_rank06_corporation_industry": 23241,
+    "dbsr_rank07_financialserviceaccount_holding_listedsecurity": 3793531,
+    "dbsr_rank08_corporation_security_listedsecurity": 23241,
+    "dbsr_rank09_financialserviceaccount_transaction_listedsecurity": 3793531,
+    "dbsr_rank10_person_financialserviceaccount_transaction": 1953901,
+    "dbsr_rank11_person_financialserviceaccount_holding": 1953901,
+    "dbsr_rank12_listedsecurity_security_corporation": 27451,
+    "dbsr_rank13_financialreport_reportelement_statementelement": 483011,
+    "dbsr_rank14_security_corporation_industry": 27451,
+    "dbsr_rank15_security_corporation_country": 27451
+  },
+  "parameters": {
+    "Q1_CompanyProfileIBM": {
+      "collection": "dbsr_rank03_corporation",
+      "corporation_id": "2085",
+      "ticker_symbol": "IBM",
+      "name": "International Business Machines Corporation",
+      "returned_sample": true,
+      "corporation_id_pool": [
+        "2085"
+      ]
+    },
+    "Q2_CompanyWithIndustryCountryAndListedSecurities": {
+      "main_collection": "dbsr_rank08_corporation_security_listedsecurity",
+      "corporation_id": "2085",
+      "ticker_symbol": "IBM",
+      "security_ids": [
+        "1004222"
+      ],
+      "listed_security_ids": [
+        "1004222"
+      ],
+      "returned_sample": true,
+      "corporation_id_pool": [
+        "2085"
+      ]
+    },
+    "Q3_SecuritiesHeldInEachFinancialServiceAccount": {
+      "collection": "dbsr_rank07_financialserviceaccount_holding_listedsecurity",
+      "financial_service_account_id": "150000000000",
+      "financial_service_account_id_pool": [
+        "150000000000",
+        "150000000001",
+        "150000000002",
+        "150000000003",
+        "150000000004",
+        "150000000005",
+        "150000000006",
+        "150000000007",
+        "150000000008",
+        "150000000009",
+        "150000000010",
+        "150000000011",
+        "150000000012",
+        "150000000013",
+        "150000000014",
+        "150000000015",
+        "150000000016",
+        "150000000017",
+        "150000000018",
+        "150000000019"
+      ],
+      "pool_size": 20,
+      "holding_ids": [
+        "500000000000",
+        "500000000001"
+      ],
+      "listed_security_ids": [
+        "1003507",
+        "1005113"
+      ],
+      "returned_sample": true
+    },
+    "Q4_CompaniesReachedFromPersonThroughAccountHoldingListedSecurity": {
+      "collection": "dbsr_rank11_person_financialserviceaccount_holding",
+      "person_id": "400000035163",
+      "person_id_pool": [
+        "400000035163",
+        "400000045419",
+        "400000007776",
+        "400000046876",
+        "400000037693",
+        "400000048453",
+        "400000008545",
+        "400000038539",
+        "400000021340",
+        "400000027583",
+        "400000034370",
+        "400000042275",
+        "400000020278",
+        "400000009311",
+        "400000004973",
+        "400000012028",
+        "400000017533",
+        "400000042854",
+        "400000049676",
+        "400000001880"
+      ],
+      "pool_size": 20,
+      "pool_diagnostics": [
+        {
+          "_id": "400000035163",
+          "person_id": "400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R01_400000035163",
+          "person_id": "SF10_PERS_R01_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R02_400000035163",
+          "person_id": "SF10_PERS_R02_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R03_400000035163",
+          "person_id": "SF10_PERS_R03_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R04_400000035163",
+          "person_id": "SF10_PERS_R04_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R05_400000035163",
+          "person_id": "SF10_PERS_R05_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R06_400000035163",
+          "person_id": "SF10_PERS_R06_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R07_400000035163",
+          "person_id": "SF10_PERS_R07_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R08_400000035163",
+          "person_id": "SF10_PERS_R08_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "SF10_PERS_R09_400000035163",
+          "person_id": "SF10_PERS_R09_400000035163",
+          "n_reachable_corporations": 60,
+          "n_holdings": 61
+        },
+        {
+          "_id": "400000045419",
+          "person_id": "400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R01_400000045419",
+          "person_id": "SF10_PERS_R01_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R02_400000045419",
+          "person_id": "SF10_PERS_R02_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R03_400000045419",
+          "person_id": "SF10_PERS_R03_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R04_400000045419",
+          "person_id": "SF10_PERS_R04_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R05_400000045419",
+          "person_id": "SF10_PERS_R05_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R06_400000045419",
+          "person_id": "SF10_PERS_R06_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R07_400000045419",
+          "person_id": "SF10_PERS_R07_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R08_400000045419",
+          "person_id": "SF10_PERS_R08_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        },
+        {
+          "_id": "SF10_PERS_R09_400000045419",
+          "person_id": "SF10_PERS_R09_400000045419",
+          "n_reachable_corporations": 56,
+          "n_holdings": 56
+        }
+      ],
+      "financial_service_account_ids": [
+        "150000000000"
+      ],
+      "holding_ids": [
+        "500000000000",
+        "500000000001"
+      ],
+      "listed_security_ids": [
+        "1003507",
+        "1005113"
+      ],
+      "returned_sample": true
+    },
+    "Q5_ReportsAndMetricDataOfCompany": {
+      "collection": "dbsr_rank13_financialreport_reportelement_statementelement",
+      "financial_report_id": "1001821",
+      "corporation_id": "2085",
+      "ticker_symbol": "IBM",
+      "report_element_ids": [
+        "1082205",
+        "1089233",
+        "1098285",
+        "1097427",
+        "1098010",
+        "1104926",
+        "1103936",
+        "1127609",
+        "1137271",
+        "1145710"
+      ],
+      "statement_element_ids": [
+        "1127609",
+        "1349936",
+        "1581736",
+        "1577024",
+        "1628425",
+        "1628426",
+        "1651173",
+        "1887819"
+      ],
+      "returned_sample": true,
+      "corporation_id_pool": [
+        "2085"
+      ]
+    },
+    "Q6_TechUSListedSecuritiesWithHighLastTradedValue": {
+      "industry_collection": "dbsr_rank14_security_corporation_industry",
+      "country_collection": "dbsr_rank15_security_corporation_country",
+      "industry_security_id": "1001000",
+      "country_security_id": "1001000",
+      "industry_ids": [
+        "7372"
+      ],
+      "country_ids": [
+        "237"
+      ],
+      "returned_sample": true,
+      "industry_keyword": "tech",
+      "country_name": "United States",
+      "min_last_traded_value": 100
+    },
+    "Q7_PersonsWhoBoughtMoreIBMThanSold": {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "corporation_id": "2085",
+      "ticker_symbol": "IBM",
+      "person_id": "400000000000",
+      "account_ids": [
+        "150000000000"
+      ],
+      "transaction_ids": [
+        "600000223274",
+        "600000491222"
+      ],
+      "transaction_kinds": [
+        "1",
+        "2"
+      ],
+      "listed_security_ids": [
+        "1002183",
+        "1004783"
+      ],
+      "returned_sample": true,
+      "corporation_id_pool": [
+        "2085"
+      ]
+    },
+    "Q8_IBMTransactionsBelowAverageSellingPrice": {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "corporation_id": "2085",
+      "ticker_symbol": "IBM",
+      "transaction_id": "600000000000",
+      "listed_security_id": "1003213",
+      "transaction_kind": "2",
+      "amount": "2488.0",
+      "returned_sample": true,
+      "corporation_id_pool": [
+        "2085"
+      ]
+    },
+    "Q9_PersonsWhoBoughtAndSoldSameStock": {
+      "collection": "dbsr_rank02_transaction_listedsecurity",
+      "person_id": "400000008607",
+      "matched_stock_id": "1001538",
+      "listed_security_id_pool": [
+        "1001538",
+        "1005293",
+        "1004451",
+        "1005071",
+        "1001624",
+        "1001169",
+        "1001243",
+        "1004103",
+        "1002000",
+        "1005328",
+        "1001460",
+        "1003042",
+        "1003931",
+        "1004228",
+        "1001078",
+        "1001851",
+        "1001251",
+        "1001656",
+        "1003710",
+        "1003902"
+      ],
+      "pool_size": 20,
+      "matched_tx_count": 3,
+      "account_ids": [
+        "150000016643",
+        "150000016644",
+        "150000016645",
+        "150000016646",
+        "150000016647",
+        "150000016648",
+        "150000016649"
+      ],
+      "transaction_ids": [
+        "600000007028",
+        "600000230083",
+        "600000029248",
+        "600000205881",
+        "600000258806",
+        "600000274670",
+        "600000437017",
+        "600000438628",
+        "600000450514",
+        "600000068824"
+      ],
+      "listed_security_ids": [
+        "1005519",
+        "1003170",
+        "1005333",
+        "1004600",
+        "1004673",
+        "1002269",
+        "1001776",
+        "1002321",
+        "1004574",
+        "1005285"
+      ],
+      "transaction_kinds": [
+        "1",
+        "1",
+        "1",
+        "1",
+        "2",
+        "2",
+        "1",
+        "2",
+        "1",
+        "2"
+      ],
+      "returned_sample": true,
+      "listed_security_id": "1001538"
+    },
+    "Q10_CreateAccountHoldingAndBuyTransaction": {
+      "person_id_pool": [
+        "400000035163",
+        "400000045419",
+        "400000007776",
+        "400000046876",
+        "400000037693",
+        "400000048453",
+        "400000008545",
+        "400000038539",
+        "400000021340",
+        "400000027583",
+        "400000034370",
+        "400000042275",
+        "400000020278",
+        "400000009311",
+        "400000004973",
+        "400000012028",
+        "400000017533",
+        "400000042854",
+        "400000049676",
+        "400000001880"
+      ],
+      "listed_security_id_pool": [
+        "1001538",
+        "1005293",
+        "1004451",
+        "1005071",
+        "1001624",
+        "1001169",
+        "1001243",
+        "1004103",
+        "1002000",
+        "1005328",
+        "1001460",
+        "1003042",
+        "1003931",
+        "1004228",
+        "1001078",
+        "1001851",
+        "1001251",
+        "1001656",
+        "1003710",
+        "1003902"
+      ]
+    }
+  },
+  "missing_parameter_samples": [],
+  "implementation_note": "This probe only selects real parameter samples from the materialized DBSR collections. It does not measure latency and does not affect schema selection.",
+  "parameter_alignment": "mongo_original_pool_aligned"
+}

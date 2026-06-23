@@ -1,0 +1,62 @@
+def execute_q9(db, cfg, param, buy_type_values, sell_type_values):
+    listed_security_id = param
+    t0 = time.perf_counter()
+
+    txs = list(normalized_collection(db, "Transaction").find({
+        "REFERSTO": listed_security_id
+    }))
+
+    account_types = defaultdict(set)
+    for t in txs:
+        account = t.get("ISFACILITATEDBY")
+        ttype = t.get("HASTYPE")
+        if ttype in buy_type_values:
+            account_types[account].add("buy")
+        elif ttype in sell_type_values:
+            account_types[account].add("sell")
+
+    accounts = [
+        acc for acc, types in account_types.items()
+        if "buy" in types and "sell" in types
+    ]
+
+    latency_ms = (time.perf_counter() - t0) * 1000
+    return {
+        "latency_ms": latency_ms,
+        "success": True,
+        "documents_returned": len(accounts),
+        "documents_written": 0,
+    }
+
+
+def execute_q10(db, cfg, param, repetition, buy_type_value):
+    person_id = param.get("person_id") if isinstance(param, dict) else None
+    listed_security_id = param.get("listed_security_id") if isinstance(param, dict) else None
+
+    if person_id is None or listed_security_id is None:
+        return {
+            "latency_ms": None,
+            "success": False,
+            "documents_returned": 0,
+            "documents_written": 0,
+        }
+
+    account_id = int(time.time() * 1000) + repetition
+    holding_id = account_id + 100000000
+    transaction_id = account_id + 200000000
+
+    account_doc = {
+        "FINANCIALSERVICEACCOUNTID": account_id,
+        "ISOWNEDBY": person_id,
+        "HASACCOUNTNUMBER": account_id,
+        "HASSTARTDATE": datetime.now().date().isoformat(),
+        "_benchmark_inserted": True,
+    }
+
+    holding_doc = {
+        "HOLDINGID": holding_id,
+        "ISHELDBY": account_id,
+        "REFERSTO": listed_security_id,
+        "HASCOUNT": 1.0,
+        "_benchmark_inserted": True,
+    }

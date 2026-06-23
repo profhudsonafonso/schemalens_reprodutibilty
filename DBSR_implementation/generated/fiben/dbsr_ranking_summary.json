@@ -1,0 +1,27 @@
+{
+  "implementation_status": "phase_2c_structural_cost_pruning_and_first_utility_ranking",
+  "input_query_plans": 90,
+  "scored_query_plans": 90,
+  "pruned_query_plans": 57,
+  "utility_matrix_rows": 127,
+  "ranked_documents": 35,
+  "recommended_documents": 10,
+  "near_best_cost_ratio": 1.2,
+  "max_plans_per_sequence": 5,
+  "top_k_documents": 10,
+  "generated_files": [
+    "dbsr_scored_query_plans.csv",
+    "dbsr_pruned_query_plans.csv",
+    "dbsr_document_utility_matrix.csv",
+    "dbsr_ranked_schemas.csv",
+    "dbsr_recommended_documents.csv",
+    "dbsr_ranking_summary.json"
+  ],
+  "implementation_assumptions": [
+    "This phase uses a structural proxy cost, not the final DBSR cost model.",
+    "The cost rewards shorter query plans and penalizes larger/deeper/wider document trees.",
+    "Cardinality, selectivity, physical object size, and MongoDB execution statistics are not used yet.",
+    "Document utility is aggregated from pruned query plans and uniformly distributed over documents used by each plan.",
+    "Full schema assembly from ranked documents is deferred to a later phase."
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "ibm_corporation_id": "2860",
+  "Q3_pool": [
+    "150000000000",
+    "150000000001",
+    "150000000002",
+    "150000000003",
+    "150000000004",
+    "150000000005",
+    "150000000006",
+    "150000000007",
+    "150000000008",
+    "150000000009",
+    "150000000010",
+    "150000000011",
+    "150000000012",
+    "150000000013",
+    "150000000014",
+    "150000000015",
+    "150000000016",
+    "150000000017",
+    "150000000018",
+    "150000000019"
+  ],
+  "Q4_pool": [
+    {
+      "PERSONID": "400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R01_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R02_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R03_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R04_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R05_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R06_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R07_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R08_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF10_PERS_R09_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R01_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R02_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R03_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R04_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R05_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R06_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R07_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R08_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R09_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    },
+    {
+      "PERSONID": "SF30_PERS_R10_400000035163",
+      "n_reachable_corporations": 600,
+      "n_holdings": 61
+    }
+  ],
+  "Q9_pool": [
+    "1001538",
+    "SF10_SEC_R01_1001538",
+    "SF10_SEC_R02_1001538",
+    "SF10_SEC_R03_1001538",
+    "SF10_SEC_R04_1001538",
+    "SF10_SEC_R05_1001538",
+    "SF10_SEC_R06_1001538",
+    "SF10_SEC_R07_1001538",
+    "SF10_SEC_R08_1001538",
+    "SF10_SEC_R09_1001538",
+    "SF30_SEC_R01_1001538",
+    "SF30_SEC_R02_1001538",
+    "SF30_SEC_R03_1001538",
+    "SF30_SEC_R04_1001538",
+    "SF30_SEC_R05_1001538",
+    "SF30_SEC_R06_1001538",
+    "SF30_SEC_R07_1001538",
+    "SF30_SEC_R08_1001538",
+    "SF30_SEC_R09_1001538",
+    "SF30_SEC_R10_1001538"
+  ],
+  "baseline": "DBSR",
+  "dataset": "FIBEN",
+  "scale_label": "sf10",
+  "data_dir": "<FIBEN_SF10_DATA_DIR>",
+  "sample_size": 20,
+  "method": "original_schema_lens_parameter_pool_reconstruction"
+}
