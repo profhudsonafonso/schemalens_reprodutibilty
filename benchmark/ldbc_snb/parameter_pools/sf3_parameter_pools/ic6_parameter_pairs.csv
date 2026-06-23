@@ -1,0 +1,6 @@
+official_id,parameter_id,root_person_id,tag_id,reachable_people,parameter_kind
+IC6,933|8,933,8,3456,person_id_plus_reachable_tag
+IC6,1129|1410,1129,1410,5304,person_id_plus_reachable_tag
+IC6,4194|1930,4194,1930,5314,person_id_plus_reachable_tag
+IC6,8333|1023,8333,1023,7221,person_id_plus_reachable_tag
+IC6,8698|0,8698,0,5891,person_id_plus_reachable_tag

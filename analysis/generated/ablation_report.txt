@@ -20,22 +20,22 @@ No latency is inferred for unmeasured configurations.
 - no_relationship_semantics_no_depth: removes both relationship-semantics and depth-sensitive classes.
 
 ## Overall summary
-- full_schema_lens: available=252/252, top1=0.8730, top3=0.9881, near_best=0.9206, mean_regret=0.0394, median_regret=0.0000
-- no_depth: available=252/252, top1=0.5516, top3=0.9841, near_best=0.7063, mean_regret=0.9666, median_regret=0.0000
-- no_relationship_semantics: available=234/252, top1=0.4615, top3=0.8590, near_best=0.6581, mean_regret=1.1203, median_regret=0.0059
-- no_relationship_semantics_no_depth: available=234/252, top1=0.4145, top3=0.7821, near_best=0.5940, mean_regret=1.1803, median_regret=0.0173
-- no_residual_traversal: available=252/252, top1=0.4802, top3=0.9802, near_best=0.6746, mean_regret=1.0118, median_regret=0.0042
-- no_sharedness: available=252/252, top1=0.5675, top3=0.9722, near_best=0.7421, mean_regret=0.9647, median_regret=0.0000
-- no_update_volatility: available=252/252, top1=0.5714, top3=0.9484, near_best=0.7540, mean_regret=0.9563, median_regret=0.0000
+- full_schema_lens: available=252/252, top1=0.8571, top3=0.9881, near_best=0.9127, mean_regret=0.0396, median_regret=0.0000
+- no_depth: available=252/252, top1=0.5238, top3=0.9841, near_best=0.6508, mean_regret=0.6047, median_regret=0.0000
+- no_relationship_semantics: available=234/252, top1=0.4316, top3=0.8419, near_best=0.5769, mean_regret=0.9821, median_regret=0.0166
+- no_relationship_semantics_no_depth: available=234/252, top1=0.3846, top3=0.7650, near_best=0.5128, mean_regret=1.0421, median_regret=0.0431
+- no_residual_traversal: available=252/252, top1=0.4563, top3=0.9841, near_best=0.6151, mean_regret=0.6533, median_regret=0.0121
+- no_sharedness: available=252/252, top1=0.4563, top3=0.9722, near_best=0.5913, mean_regret=0.7702, median_regret=0.0088
+- no_update_volatility: available=252/252, top1=0.4643, top3=0.8968, near_best=0.6111, mean_regret=0.7620, median_regret=0.0065
 
 ## Hot-run summary
-- full_schema_lens: available=126/126, top1=0.8651, near_best=0.9206, mean_regret=0.0324
-- no_depth: available=126/126, top1=0.5794, near_best=0.6825, mean_regret=0.1435
-- no_relationship_semantics: available=117/126, top1=0.4786, near_best=0.6325, mean_regret=0.1580
-- no_relationship_semantics_no_depth: available=117/126, top1=0.4274, near_best=0.5641, mean_regret=0.1986
-- no_residual_traversal: available=126/126, top1=0.4921, near_best=0.6508, mean_regret=0.1573
-- no_sharedness: available=126/126, top1=0.5317, near_best=0.6905, mean_regret=0.1232
-- no_update_volatility: available=126/126, top1=0.5397, near_best=0.6905, mean_regret=0.1286
+- full_schema_lens: available=126/126, top1=0.8492, near_best=0.9286, mean_regret=0.0289
+- no_depth: available=126/126, top1=0.5635, near_best=0.7143, mean_regret=0.1168
+- no_relationship_semantics: available=117/126, top1=0.4701, near_best=0.6325, mean_regret=0.2439
+- no_relationship_semantics_no_depth: available=117/126, top1=0.4188, near_best=0.5641, mean_regret=0.2844
+- no_residual_traversal: available=126/126, top1=0.4841, near_best=0.6825, mean_regret=0.1352
+- no_sharedness: available=126/126, top1=0.4524, near_best=0.6349, mean_regret=0.2133
+- no_update_volatility: available=126/126, top1=0.4444, near_best=0.6270, mean_regret=0.1611
 
 ## Dataset-level summary
 - fiben / full_schema_lens: available=60/60, top1=0.8333, near_best=0.9000, mean_regret=0.0937
@@ -52,13 +52,13 @@ No latency is inferred for unmeasured configurations.
 - imdb / no_residual_traversal: available=60/60, top1=0.3000, near_best=0.5500, mean_regret=0.2576
 - imdb / no_sharedness: available=60/60, top1=0.5667, near_best=0.6667, mean_regret=0.1643
 - imdb / no_update_volatility: available=60/60, top1=0.5333, near_best=0.6667, mean_regret=0.1073
-- ldbc_snb / full_schema_lens: available=132/132, top1=0.9848, near_best=0.9924, mean_regret=0.0043
-- ldbc_snb / no_depth: available=132/132, top1=0.5682, near_best=0.7045, mean_regret=1.7517
-- ldbc_snb / no_relationship_semantics: available=114/132, top1=0.5439, near_best=0.7193, mean_regret=1.9863
-- ldbc_snb / no_relationship_semantics_no_depth: available=114/132, top1=0.5439, near_best=0.7193, mean_regret=1.9863
-- ldbc_snb / no_residual_traversal: available=132/132, top1=0.5000, near_best=0.6818, mean_regret=1.7604
-- ldbc_snb / no_sharedness: available=132/132, top1=0.5379, near_best=0.7273, mean_regret=1.7162
-- ldbc_snb / no_update_volatility: available=132/132, top1=0.5303, near_best=0.7348, mean_regret=1.7327
+- ldbc_snb / full_schema_lens: available=132/132, top1=0.9545, near_best=0.9773, mean_regret=0.0045
+- ldbc_snb / no_depth: available=132/132, top1=0.5152, near_best=0.5985, mean_regret=1.0608
+- ldbc_snb / no_relationship_semantics: available=114/132, top1=0.4825, near_best=0.5526, mean_regret=1.7026
+- ldbc_snb / no_relationship_semantics_no_depth: available=114/132, top1=0.4825, near_best=0.5526, mean_regret=1.7026
+- ldbc_snb / no_residual_traversal: available=132/132, top1=0.4545, near_best=0.5682, mean_regret=1.0759
+- ldbc_snb / no_sharedness: available=132/132, top1=0.3258, near_best=0.4394, mean_regret=1.3449
+- ldbc_snb / no_update_volatility: available=132/132, top1=0.3258, near_best=0.4621, mean_regret=1.3618
 
 ## Hot-run dataset-level summary
 - fiben / full_schema_lens: available=30/30, top1=0.8333, near_best=0.8667, mean_regret=0.0801
@@ -75,13 +75,13 @@ No latency is inferred for unmeasured configurations.
 - imdb / no_residual_traversal: available=30/30, top1=0.3667, near_best=0.7000, mean_regret=0.0785
 - imdb / no_sharedness: available=30/30, top1=0.5333, near_best=0.7000, mean_regret=0.1648
 - imdb / no_update_volatility: available=30/30, top1=0.4333, near_best=0.6667, mean_regret=0.0977
-- ldbc_snb / full_schema_lens: available=66/66, top1=0.9848, near_best=0.9848, mean_regret=0.0078
-- ldbc_snb / no_depth: available=66/66, top1=0.5909, near_best=0.6364, mean_regret=0.1961
-- ldbc_snb / no_relationship_semantics: available=57/66, top1=0.5614, near_best=0.6491, mean_regret=0.1552
-- ldbc_snb / no_relationship_semantics_no_depth: available=57/66, top1=0.5614, near_best=0.6491, mean_regret=0.1552
-- ldbc_snb / no_residual_traversal: available=66/66, top1=0.5000, near_best=0.5909, mean_regret=0.2104
-- ldbc_snb / no_sharedness: available=66/66, top1=0.5152, near_best=0.6364, mean_regret=0.1189
-- ldbc_snb / no_update_volatility: available=66/66, top1=0.5152, near_best=0.6364, mean_regret=0.1622
+- ldbc_snb / full_schema_lens: available=66/66, top1=0.9545, near_best=1.0000, mean_regret=0.0011
+- ldbc_snb / no_depth: available=66/66, top1=0.5606, near_best=0.6970, mean_regret=0.1450
+- ldbc_snb / no_relationship_semantics: available=57/66, top1=0.5439, near_best=0.6491, mean_regret=0.3315
+- ldbc_snb / no_relationship_semantics_no_depth: available=57/66, top1=0.5439, near_best=0.6491, mean_regret=0.3315
+- ldbc_snb / no_residual_traversal: available=66/66, top1=0.4848, near_best=0.6515, mean_regret=0.1682
+- ldbc_snb / no_sharedness: available=66/66, top1=0.3636, near_best=0.5303, mean_regret=0.2909
+- ldbc_snb / no_update_volatility: available=66/66, top1=0.3333, near_best=0.5152, mean_regret=0.2242
 
 ## Rule coverage
 - Query-level ablation rule rows: 294
@@ -94,7 +94,7 @@ No latency is inferred for unmeasured configurations.
 - no_update_volatility: queries=42, empty_selections=0
 
 ## Failure and near-failure candidates
-- Rows flagged: 756
+- Rows flagged: 842
 - A row is flagged when Top-1 is not preserved, near-best is not preserved, or relative regret is above the near-best threshold.
 
 ## Methodological note

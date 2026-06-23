@@ -1,0 +1,174 @@
+[2026-06-09T08:53:56.572280+00:00] [INFO] LDBC SNB physical materialization builder started
+[2026-06-09T08:53:56.572385+00:00] [INFO] Command: build_ldbc_snb_physical_materializations.py --data-dir data/sf3 --artifacts-dir ldbc_snb_sf0_1_mongo_benchmark_bundle --execution-plan benchmark_execution_plan.csv --results-dir results/physical_materialization/sf3_full_comparison_consolidated --scale-label sf3 --mongo-host 127.0.0.1 --mongo-port 27018 --mongo-username mongo --mongo-password mongo --mongo-auth-source admin --db-prefix ldbc_snb_phys_sf3 --batch-size 50000 --max-summary-items 5000 --force-rebuild-db --verbose
+[2026-06-09T08:53:56.572431+00:00] [INFO] This script builds materializations only; it does not run p95 benchmark or query-plan analysis.
+[2026-06-09T08:53:56.579984+00:00] [INFO] Saved selected experiments: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf3_full_comparison_consolidated/materialization/selected_experiments_summary.csv
+[2026-06-09T08:53:56.580037+00:00] [INFO] Selected plan rows: 64
+[2026-06-09T08:53:56.580201+00:00] [INFO] Selected candidate IDs: 64
+[2026-06-09T08:53:56.580703+00:00] [INFO] [load] dynamic_dir=/home/hudson/Documents/framework_test/ldbc_snb_benchmark/data/sf3/social_network-sf3-CsvMergeForeign-StringDateFormatter/dynamic
+[2026-06-09T08:53:56.580758+00:00] [INFO] [load] static_dir=/home/hudson/Documents/framework_test/ldbc_snb_benchmark/data/sf3/social_network-sf3-CsvMergeForeign-StringDateFormatter/static
+[2026-06-09T08:56:04.770858+00:00] [INFO] [load] loaded dataframes:
+[2026-06-09T08:56:04.770994+00:00] [INFO]   - persons: 24328 rows
+[2026-06-09T08:56:04.771041+00:00] [INFO]   - forums: 221792 rows
+[2026-06-09T08:56:04.771084+00:00] [INFO]   - posts: 2597141 rows
+[2026-06-09T08:56:04.771123+00:00] [INFO]   - comments: 6413095 rows
+[2026-06-09T08:56:04.771160+00:00] [INFO]   - places: 1460 rows
+[2026-06-09T08:56:04.771199+00:00] [INFO]   - organisations: 7955 rows
+[2026-06-09T08:56:04.771241+00:00] [INFO]   - tags: 16080 rows
+[2026-06-09T08:56:04.771277+00:00] [INFO]   - tagclasses: 71 rows
+[2026-06-09T08:56:04.771312+00:00] [INFO]   - person_knows_person: 565247 rows
+[2026-06-09T08:56:04.771348+00:00] [INFO]   - forum_has_member_person: 4982242 rows
+[2026-06-09T08:56:04.771382+00:00] [INFO]   - person_likes_post: 2498139 rows
+[2026-06-09T08:56:04.771418+00:00] [INFO]   - person_likes_comment: 5281724 rows
+[2026-06-09T08:56:04.771452+00:00] [INFO]   - post_has_tag: 2229757 rows
+[2026-06-09T08:56:04.771497+00:00] [INFO]   - comment_has_tag: 8426418 rows
+[2026-06-09T08:56:04.771530+00:00] [INFO]   - forum_has_tag: 767382 rows
+[2026-06-09T08:56:04.771588+00:00] [INFO]   - person_has_interest_tag: 569918 rows
+[2026-06-09T08:56:04.771623+00:00] [INFO]   - person_study_at_organisation: 19497 rows
+[2026-06-09T08:56:04.771678+00:00] [INFO]   - person_work_at_organisation: 53023 rows
+[2026-06-09T08:56:04.771712+00:00] [INFO]   - person_is_located_in_place: 24328 rows
+[2026-06-09T08:56:04.771744+00:00] [INFO]   - forum_has_moderator_person: 221792 rows
+[2026-06-09T08:56:04.771775+00:00] [INFO]   - forum_container_of_post: 2597141 rows
+[2026-06-09T08:56:04.771807+00:00] [INFO]   - post_has_creator_person: 2597141 rows
+[2026-06-09T08:56:04.771837+00:00] [INFO]   - post_is_located_in_place: 2597141 rows
+[2026-06-09T08:56:04.771869+00:00] [INFO]   - comment_has_creator_person: 6413095 rows
+[2026-06-09T08:56:04.771900+00:00] [INFO]   - comment_is_located_in_place: 6413095 rows
+[2026-06-09T08:56:04.771931+00:00] [INFO]   - comment_reply_of_post: 3161867 rows
+[2026-06-09T08:56:04.771962+00:00] [INFO]   - comment_reply_of_comment: 3251228 rows
+[2026-06-09T08:56:04.771993+00:00] [INFO]   - organisation_is_located_in_place: 7955 rows
+[2026-06-09T08:56:04.772024+00:00] [INFO]   - tag_has_type_tagclass: 16080 rows
+[2026-06-09T08:56:04.772056+00:00] [INFO]   - tagclass_is_subclass_of_tagclass: 70 rows
+[2026-06-09T08:56:04.772087+00:00] [INFO]   - place_is_part_of_place: 1454 rows
+[2026-06-09T08:56:04.783539+00:00] [INFO] MongoDB connection OK
+[2026-06-09T08:56:04.783995+00:00] [INFO] [1/64] Materializing candidate=ldbc_snb_is1_g0_edd90ee3 official_id=IS1 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is1_g0_edd90ee3
+[2026-06-09T09:00:08.169926+00:00] [INFO] Candidate ldbc_snb_is1_g0_edd90ee3 materialization_status=ready elapsed=243.36s
+[2026-06-09T09:00:08.170117+00:00] [INFO] [2/64] Materializing candidate=ldbc_snb_is1_g3_6c817501 official_id=IS1 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is1_g3_6c817501
+[2026-06-09T09:04:13.311302+00:00] [INFO] Candidate ldbc_snb_is1_g3_6c817501 materialization_status=ready_generic elapsed=245.10s
+[2026-06-09T09:04:13.311817+00:00] [INFO] [3/64] Materializing candidate=ldbc_snb_is2_g0_1d094f1c official_id=IS2 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is2_g0_1d094f1c
+[2026-06-09T09:11:04.536195+00:00] [INFO] Candidate ldbc_snb_is2_g0_1d094f1c materialization_status=ready elapsed=411.19s
+[2026-06-09T09:11:04.536397+00:00] [INFO] [4/64] Materializing candidate=ldbc_snb_is2_g3_b993236d official_id=IS2 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is2_g3_b993236d
+[2026-06-09T09:19:17.191673+00:00] [INFO] Candidate ldbc_snb_is2_g3_b993236d materialization_status=ready_generic elapsed=492.61s
+[2026-06-09T09:19:17.191980+00:00] [INFO] [5/64] Materializing candidate=ldbc_snb_is2_g4_9622e695 official_id=IS2 g=G4 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is2_g4_9622e695
+[2026-06-09T09:31:16.292283+00:00] [INFO] Candidate ldbc_snb_is2_g4_9622e695 materialization_status=ready_generic elapsed=719.03s
+[2026-06-09T09:31:16.292615+00:00] [INFO] [6/64] Materializing candidate=ldbc_snb_is2_g6_7253ed90 official_id=IS2 g=G6 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is2_g6_7253ed90
+[2026-06-09T09:43:34.177471+00:00] [INFO] Candidate ldbc_snb_is2_g6_7253ed90 materialization_status=ready_generic elapsed=737.82s
+[2026-06-09T09:43:34.177773+00:00] [INFO] [7/64] Materializing candidate=ldbc_snb_is2_g7_26e684aa official_id=IS2 g=G7 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is2_g7_26e684aa
+[2026-06-09T09:50:58.929565+00:00] [INFO] Candidate ldbc_snb_is2_g7_26e684aa materialization_status=ready elapsed=444.72s
+[2026-06-09T09:50:58.929765+00:00] [INFO] [8/64] Materializing candidate=ldbc_snb_is2_g9_b1df45f6 official_id=IS2 g=G9 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is2_g9_b1df45f6
+[2026-06-09T09:59:50.490211+00:00] [INFO] Candidate ldbc_snb_is2_g9_b1df45f6 materialization_status=ready_generic elapsed=531.51s
+[2026-06-09T09:59:50.490556+00:00] [INFO] [9/64] Materializing candidate=ldbc_snb_is3_g0_fc24df68 official_id=IS3 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is3_g0_fc24df68
+[2026-06-09T10:04:16.514853+00:00] [INFO] Candidate ldbc_snb_is3_g0_fc24df68 materialization_status=ready elapsed=265.97s
+[2026-06-09T10:04:16.515335+00:00] [INFO] [10/64] Materializing candidate=ldbc_snb_is3_g3_ebc00ba6 official_id=IS3 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is3_g3_ebc00ba6
+[2026-06-09T10:08:40.144637+00:00] [INFO] Candidate ldbc_snb_is3_g3_ebc00ba6 materialization_status=ready_generic elapsed=263.58s
+[2026-06-09T10:08:40.147977+00:00] [INFO] [11/64] Materializing candidate=ldbc_snb_is4_g1_c923c633 official_id=IS4 g=G1 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is4_g1_c923c633
+[2026-06-09T10:12:56.571607+00:00] [INFO] Candidate ldbc_snb_is4_g1_c923c633 materialization_status=ready elapsed=256.38s
+[2026-06-09T10:12:56.571907+00:00] [INFO] [12/64] Materializing candidate=ldbc_snb_is4_g0_103e0c60 official_id=IS4 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is4_g0_103e0c60
+[2026-06-09T10:17:12.841262+00:00] [INFO] Candidate ldbc_snb_is4_g0_103e0c60 materialization_status=ready elapsed=256.22s
+[2026-06-09T10:17:12.841560+00:00] [INFO] [13/64] Materializing candidate=ldbc_snb_is5_g0_0e8582ef official_id=IS5 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is5_g0_0e8582ef
+[2026-06-09T10:23:11.227763+00:00] [INFO] Candidate ldbc_snb_is5_g0_0e8582ef materialization_status=ready elapsed=358.35s
+[2026-06-09T10:23:11.228057+00:00] [INFO] [14/64] Materializing candidate=ldbc_snb_is5_g3_f332352f official_id=IS5 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is5_g3_f332352f
+[2026-06-09T10:30:22.661306+00:00] [INFO] Candidate ldbc_snb_is5_g3_f332352f materialization_status=ready_generic elapsed=431.40s
+[2026-06-09T10:30:22.661634+00:00] [INFO] [15/64] Materializing candidate=ldbc_snb_is6_g7_0aecbe5c official_id=IS6 g=G7 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is6_g7_0aecbe5c
+[2026-06-09T10:36:46.306142+00:00] [INFO] Candidate ldbc_snb_is6_g7_0aecbe5c materialization_status=ready elapsed=383.61s
+[2026-06-09T10:36:46.306441+00:00] [INFO] [16/64] Materializing candidate=ldbc_snb_is6_g9_c7584187 official_id=IS6 g=G9 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is6_g9_c7584187
+[2026-06-09T10:44:52.250188+00:00] [INFO] Candidate ldbc_snb_is6_g9_c7584187 materialization_status=ready_generic elapsed=485.89s
+[2026-06-09T10:44:52.250499+00:00] [INFO] [17/64] Materializing candidate=ldbc_snb_is6_g0_768bbe02 official_id=IS6 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is6_g0_768bbe02
+[2026-06-09T10:51:21.567626+00:00] [INFO] Candidate ldbc_snb_is6_g0_768bbe02 materialization_status=ready elapsed=389.26s
+[2026-06-09T10:51:21.568004+00:00] [INFO] [18/64] Materializing candidate=ldbc_snb_is6_g3_f811f02c official_id=IS6 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is6_g3_f811f02c
+[2026-06-09T10:59:27.012919+00:00] [INFO] Candidate ldbc_snb_is6_g3_f811f02c materialization_status=ready_generic elapsed=485.39s
+[2026-06-09T10:59:27.013227+00:00] [INFO] [19/64] Materializing candidate=ldbc_snb_is7_g0_7dff7761 official_id=IS7 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is7_g0_7dff7761
+[2026-06-09T11:06:58.698680+00:00] [INFO] Candidate ldbc_snb_is7_g0_7dff7761 materialization_status=ready elapsed=451.64s
+[2026-06-09T11:06:58.699477+00:00] [INFO] [20/64] Materializing candidate=ldbc_snb_is7_g3_6298fb5e official_id=IS7 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is7_g3_6298fb5e
+[2026-06-09T11:16:03.399315+00:00] [INFO] Candidate ldbc_snb_is7_g3_6298fb5e materialization_status=ready_generic elapsed=544.65s
+[2026-06-09T11:16:03.399545+00:00] [INFO] [21/64] Materializing candidate=ldbc_snb_is7_g7_4e6a7bf8 official_id=IS7 g=G7 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is7_g7_4e6a7bf8
+[2026-06-09T11:23:42.451522+00:00] [INFO] Candidate ldbc_snb_is7_g7_4e6a7bf8 materialization_status=ready elapsed=459.01s
+[2026-06-09T11:23:42.451954+00:00] [INFO] [22/64] Materializing candidate=ldbc_snb_is7_g9_392f7469 official_id=IS7 g=G9 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_is7_g9_392f7469
+[2026-06-09T11:32:58.791899+00:00] [INFO] Candidate ldbc_snb_is7_g9_392f7469 materialization_status=ready_generic elapsed=556.29s
+[2026-06-09T11:32:58.795188+00:00] [INFO] [23/64] Materializing candidate=ldbc_snb_ic1_g0_6aac8974 official_id=IC1 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic1_g0_6aac8974
+[2026-06-09T11:37:24.810555+00:00] [INFO] Candidate ldbc_snb_ic1_g0_6aac8974 materialization_status=ready elapsed=265.96s
+[2026-06-09T11:37:24.810996+00:00] [INFO] [24/64] Materializing candidate=ldbc_snb_ic1_g3_89a97e97 official_id=IC1 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic1_g3_89a97e97
+[2026-06-09T11:41:52.108939+00:00] [INFO] Candidate ldbc_snb_ic1_g3_89a97e97 materialization_status=ready_generic elapsed=267.24s
+[2026-06-09T11:41:52.109255+00:00] [INFO] [25/64] Materializing candidate=ldbc_snb_ic2_g0_bcc20fff official_id=IC2 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic2_g0_bcc20fff
+[2026-06-09T11:48:00.521530+00:00] [INFO] Candidate ldbc_snb_ic2_g0_bcc20fff materialization_status=ready elapsed=368.37s
+[2026-06-09T11:48:00.521850+00:00] [INFO] [26/64] Materializing candidate=ldbc_snb_ic2_g3_8f05f032 official_id=IC2 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic2_g3_8f05f032
+[2026-06-09T11:55:37.482177+00:00] [INFO] Candidate ldbc_snb_ic2_g3_8f05f032 materialization_status=ready_generic elapsed=456.92s
+[2026-06-09T11:55:37.482504+00:00] [INFO] [27/64] Materializing candidate=ldbc_snb_ic3_g0_f7817cbe official_id=IC3 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic3_g0_f7817cbe
+[2026-06-09T12:03:23.814174+00:00] [INFO] Candidate ldbc_snb_ic3_g0_f7817cbe materialization_status=ready elapsed=466.28s
+[2026-06-09T12:03:23.814656+00:00] [INFO] [28/64] Materializing candidate=ldbc_snb_ic3_g3_f4732bc1 official_id=IC3 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic3_g3_f4732bc1
+[2026-06-09T12:12:54.423641+00:00] [INFO] Candidate ldbc_snb_ic3_g3_f4732bc1 materialization_status=ready_generic elapsed=570.56s
+[2026-06-09T12:12:54.423897+00:00] [INFO] [29/64] Materializing candidate=ldbc_snb_ic3_g7_a1750f34 official_id=IC3 g=G7 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic3_g7_a1750f34
+[2026-06-09T12:20:38.330397+00:00] [INFO] Candidate ldbc_snb_ic3_g7_a1750f34 materialization_status=ready elapsed=463.87s
+[2026-06-09T12:20:38.330614+00:00] [INFO] [30/64] Materializing candidate=ldbc_snb_ic3_g9_75aa81cd official_id=IC3 g=G9 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic3_g9_75aa81cd
+[2026-06-09T12:30:06.176402+00:00] [INFO] Candidate ldbc_snb_ic3_g9_75aa81cd materialization_status=ready_generic elapsed=567.79s
+[2026-06-09T12:30:06.176720+00:00] [INFO] [31/64] Materializing candidate=ldbc_snb_ic4_g0_54d8940c official_id=IC4 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic4_g0_54d8940c
+[2026-06-09T12:35:34.569113+00:00] [INFO] Candidate ldbc_snb_ic4_g0_54d8940c materialization_status=ready elapsed=328.34s
+[2026-06-09T12:35:34.569665+00:00] [INFO] [32/64] Materializing candidate=ldbc_snb_ic4_g3_00df9f3e official_id=IC4 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic4_g3_00df9f3e
+[2026-06-09T12:41:22.626295+00:00] [INFO] Candidate ldbc_snb_ic4_g3_00df9f3e materialization_status=ready_generic elapsed=348.00s
+[2026-06-09T12:41:22.629705+00:00] [INFO] [33/64] Materializing candidate=ldbc_snb_ic5_g0_f44bd6f8 official_id=IC5 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic5_g0_f44bd6f8
+[2026-06-09T12:48:13.938296+00:00] [INFO] Candidate ldbc_snb_ic5_g0_f44bd6f8 materialization_status=ready elapsed=411.26s
+[2026-06-09T12:48:13.938609+00:00] [INFO] [34/64] Materializing candidate=ldbc_snb_ic5_g3_45734260 official_id=IC5 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic5_g3_45734260
+[2026-06-09T12:56:26.421968+00:00] [INFO] Candidate ldbc_snb_ic5_g3_45734260 materialization_status=ready_generic elapsed=492.43s
+[2026-06-09T12:56:26.422275+00:00] [INFO] [35/64] Materializing candidate=ldbc_snb_ic5_g4_69144c92 official_id=IC5 g=G4 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic5_g4_69144c92
+[2026-06-09T13:06:45.067072+00:00] [INFO] Candidate ldbc_snb_ic5_g4_69144c92 materialization_status=ready_generic elapsed=618.58s
+[2026-06-09T13:06:45.067476+00:00] [INFO] [36/64] Materializing candidate=ldbc_snb_ic5_g6_733601c1 official_id=IC5 g=G6 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic5_g6_733601c1
+[2026-06-09T13:17:05.439292+00:00] [INFO] Candidate ldbc_snb_ic5_g6_733601c1 materialization_status=ready_generic elapsed=620.30s
+[2026-06-09T13:17:05.439613+00:00] [INFO] [37/64] Materializing candidate=ldbc_snb_ic5_g7_a2002d4c official_id=IC5 g=G7 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic5_g7_a2002d4c
+[2026-06-09T13:23:59.981311+00:00] [INFO] Candidate ldbc_snb_ic5_g7_a2002d4c materialization_status=ready elapsed=414.51s
+[2026-06-09T13:23:59.981532+00:00] [INFO] [38/64] Materializing candidate=ldbc_snb_ic5_g9_7a7a63d2 official_id=IC5 g=G9 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic5_g9_7a7a63d2
+[2026-06-09T13:32:06.273840+00:00] [INFO] Candidate ldbc_snb_ic5_g9_7a7a63d2 materialization_status=ready_generic elapsed=486.24s
+[2026-06-09T13:32:06.277112+00:00] [INFO] [39/64] Materializing candidate=ldbc_snb_ic6_g0_f6a698ed official_id=IC6 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic6_g0_f6a698ed
+[2026-06-09T13:37:40.925773+00:00] [INFO] Candidate ldbc_snb_ic6_g0_f6a698ed materialization_status=ready elapsed=334.61s
+[2026-06-09T13:37:40.926228+00:00] [INFO] [40/64] Materializing candidate=ldbc_snb_ic6_g3_9a00a0b5 official_id=IC6 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic6_g3_9a00a0b5
+[2026-06-09T13:43:31.979581+00:00] [INFO] Candidate ldbc_snb_ic6_g3_9a00a0b5 materialization_status=ready_generic elapsed=351.01s
+[2026-06-09T13:43:31.979814+00:00] [INFO] [41/64] Materializing candidate=ldbc_snb_ic7_g0_39cfc8f6 official_id=IC7 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic7_g0_39cfc8f6
+[2026-06-09T13:51:46.077220+00:00] [INFO] Candidate ldbc_snb_ic7_g0_39cfc8f6 materialization_status=ready elapsed=494.05s
+[2026-06-09T13:51:46.077551+00:00] [INFO] [42/64] Materializing candidate=ldbc_snb_ic7_g3_d6d26f02 official_id=IC7 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic7_g3_d6d26f02
+[2026-06-09T14:03:15.511173+00:00] [INFO] Candidate ldbc_snb_ic7_g3_d6d26f02 materialization_status=ready elapsed=689.38s
+[2026-06-09T14:03:15.514441+00:00] [INFO] [43/64] Materializing candidate=ldbc_snb_ic7_g4_5de4a081 official_id=IC7 g=G4 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic7_g4_5de4a081
+[2026-06-09T14:15:55.023991+00:00] [INFO] Candidate ldbc_snb_ic7_g4_5de4a081 materialization_status=ready elapsed=759.46s
+[2026-06-09T14:15:55.027454+00:00] [INFO] [44/64] Materializing candidate=ldbc_snb_ic7_g6_084f8a43 official_id=IC7 g=G6 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ic7_g6_084f8a43
+[2026-06-09T14:28:08.855865+00:00] [INFO] Candidate ldbc_snb_ic7_g6_084f8a43 materialization_status=ready elapsed=733.79s
+[2026-06-09T14:28:08.856203+00:00] [INFO] [45/64] Materializing candidate=ldbc_snb_ins1_g0_ffbfd07e official_id=INS1 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins1_g0_ffbfd07e
+[2026-06-09T14:32:37.920644+00:00] [INFO] Candidate ldbc_snb_ins1_g0_ffbfd07e materialization_status=ready elapsed=269.02s
+[2026-06-09T14:32:37.921158+00:00] [INFO] [46/64] Materializing candidate=ldbc_snb_ins1_g3_10a467d5 official_id=INS1 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins1_g3_10a467d5
+[2026-06-09T14:37:07.057739+00:00] [INFO] Candidate ldbc_snb_ins1_g3_10a467d5 materialization_status=ready_generic elapsed=269.06s
+[2026-06-09T14:37:07.058065+00:00] [INFO] [47/64] Materializing candidate=ldbc_snb_ins2_g4_9fb1f96c official_id=INS2 g=G4 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins2_g4_9fb1f96c
+[2026-06-09T14:42:54.040682+00:00] [INFO] Candidate ldbc_snb_ins2_g4_9fb1f96c materialization_status=ready_generic elapsed=346.94s
+[2026-06-09T14:42:54.041028+00:00] [INFO] [48/64] Materializing candidate=ldbc_snb_ins2_g6_f226f1c0 official_id=INS2 g=G6 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins2_g6_f226f1c0
+[2026-06-09T14:48:37.862081+00:00] [INFO] Candidate ldbc_snb_ins2_g6_f226f1c0 materialization_status=ready_generic elapsed=343.77s
+[2026-06-09T14:48:37.862388+00:00] [INFO] [49/64] Materializing candidate=ldbc_snb_ins3_g4_9ec9f8f6 official_id=INS3 g=G4 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins3_g4_9ec9f8f6
+[2026-06-09T14:55:53.077622+00:00] [INFO] Candidate ldbc_snb_ins3_g4_9ec9f8f6 materialization_status=ready_generic elapsed=435.17s
+[2026-06-09T14:55:53.077938+00:00] [INFO] [50/64] Materializing candidate=ldbc_snb_ins3_g6_c1c01729 official_id=INS3 g=G6 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins3_g6_c1c01729
+[2026-06-09T15:03:07.924021+00:00] [INFO] Candidate ldbc_snb_ins3_g6_c1c01729 materialization_status=ready_generic elapsed=434.80s
+[2026-06-09T15:03:07.924335+00:00] [INFO] [51/64] Materializing candidate=ldbc_snb_ins4_g0_63b0def3 official_id=INS4 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins4_g0_63b0def3
+[2026-06-09T15:07:42.238077+00:00] [INFO] Candidate ldbc_snb_ins4_g0_63b0def3 materialization_status=ready elapsed=274.28s
+[2026-06-09T15:07:42.238433+00:00] [INFO] [52/64] Materializing candidate=ldbc_snb_ins4_g3_b5f0ac72 official_id=INS4 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins4_g3_b5f0ac72
+[2026-06-09T15:12:24.460648+00:00] [INFO] Candidate ldbc_snb_ins4_g3_b5f0ac72 materialization_status=ready_generic elapsed=282.17s
+[2026-06-09T15:12:24.460957+00:00] [INFO] [53/64] Materializing candidate=ldbc_snb_ins5_g4_79a744a2 official_id=INS5 g=G4 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins5_g4_79a744a2
+[2026-06-09T15:19:34.258381+00:00] [INFO] Candidate ldbc_snb_ins5_g4_79a744a2 materialization_status=ready_generic elapsed=429.75s
+[2026-06-09T15:19:34.258697+00:00] [INFO] [54/64] Materializing candidate=ldbc_snb_ins5_g6_9496cfdb official_id=INS5 g=G6 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins5_g6_9496cfdb
+[2026-06-09T15:26:46.272454+00:00] [INFO] Candidate ldbc_snb_ins5_g6_9496cfdb materialization_status=ready_generic elapsed=431.96s
+[2026-06-09T15:26:46.272778+00:00] [INFO] [55/64] Materializing candidate=ldbc_snb_ins6_g0_50983b9d official_id=INS6 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins6_g0_50983b9d
+[2026-06-09T15:33:17.631414+00:00] [INFO] Candidate ldbc_snb_ins6_g0_50983b9d materialization_status=ready elapsed=391.31s
+[2026-06-09T15:33:17.631910+00:00] [INFO] [56/64] Materializing candidate=ldbc_snb_ins6_g3_d110d93b official_id=INS6 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins6_g3_d110d93b
+[2026-06-09T15:42:08.828971+00:00] [INFO] Candidate ldbc_snb_ins6_g3_d110d93b materialization_status=ready_generic elapsed=531.15s
+[2026-06-09T15:42:08.829292+00:00] [INFO] [57/64] Materializing candidate=ldbc_snb_ins6_g7_2ba4aefb official_id=INS6 g=G7 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins6_g7_2ba4aefb
+[2026-06-09T15:48:37.615037+00:00] [INFO] Candidate ldbc_snb_ins6_g7_2ba4aefb materialization_status=ready elapsed=388.74s
+[2026-06-09T15:48:37.615446+00:00] [INFO] [58/64] Materializing candidate=ldbc_snb_ins6_g9_0dad4d32 official_id=INS6 g=G9 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins6_g9_0dad4d32
+[2026-06-09T15:57:28.075389+00:00] [INFO] Candidate ldbc_snb_ins6_g9_0dad4d32 materialization_status=ready_generic elapsed=530.41s
+[2026-06-09T15:57:28.075721+00:00] [INFO] [59/64] Materializing candidate=ldbc_snb_ins7_g0_1f628fad official_id=INS7 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins7_g0_1f628fad
+[2026-06-09T16:07:39.728202+00:00] [INFO] Candidate ldbc_snb_ins7_g0_1f628fad materialization_status=ready elapsed=611.60s
+[2026-06-09T16:07:39.728769+00:00] [INFO] [60/64] Materializing candidate=ldbc_snb_ins7_g3_e7300dd8 official_id=INS7 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins7_g3_e7300dd8
+[2026-06-09T16:23:59.089825+00:00] [INFO] Candidate ldbc_snb_ins7_g3_e7300dd8 materialization_status=ready_generic elapsed=979.31s
+[2026-06-09T16:23:59.090041+00:00] [INFO] [61/64] Materializing candidate=ldbc_snb_ins7_g7_c86de251 official_id=INS7 g=G7 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins7_g7_c86de251
+[2026-06-09T16:34:11.198192+00:00] [INFO] Candidate ldbc_snb_ins7_g7_c86de251 materialization_status=ready elapsed=612.07s
+[2026-06-09T16:34:11.198665+00:00] [INFO] [62/64] Materializing candidate=ldbc_snb_ins7_g9_bcd2ce9b official_id=INS7 g=G9 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins7_g9_bcd2ce9b
+[2026-06-09T16:50:47.837197+00:00] [INFO] Candidate ldbc_snb_ins7_g9_bcd2ce9b materialization_status=ready_generic elapsed=996.55s
+[2026-06-09T16:50:47.837526+00:00] [INFO] [63/64] Materializing candidate=ldbc_snb_ins8_g0_2acc6939 official_id=INS8 g=G0 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins8_g0_2acc6939
+[2026-06-09T16:55:03.271679+00:00] [INFO] Candidate ldbc_snb_ins8_g0_2acc6939 materialization_status=ready elapsed=255.39s
+[2026-06-09T16:55:03.271975+00:00] [INFO] [64/64] Materializing candidate=ldbc_snb_ins8_g3_8e5c5f42 official_id=INS8 g=G3 db=ldbc_snb_phys_sf3_sf3_ldbc_snb_ins8_g3_8e5c5f42
+[2026-06-09T16:59:30.702970+00:00] [INFO] Candidate ldbc_snb_ins8_g3_8e5c5f42 materialization_status=ready_generic elapsed=267.39s
+[2026-06-09T16:59:30.714858+00:00] [INFO] Saved physical materialization manifest: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf3_full_comparison_consolidated/materialization/physical_materialization_manifest.csv
+[2026-06-09T16:59:30.715090+00:00] [INFO] Saved physical support matrix: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf3_full_comparison_consolidated/materialization/physical_support_matrix.csv
+[2026-06-09T16:59:30.715137+00:00] [INFO] Saved physical impossibility report: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf3_full_comparison_consolidated/materialization/physical_impossibility_report.csv
+[2026-06-09T16:59:30.715173+00:00] [INFO] Saved materialization validation summary: /home/hudson/Documents/framework_test/ldbc_snb_benchmark/results/physical_materialization/sf3_full_comparison_consolidated/materialization/materialization_validation_summary.csv
+[2026-06-09T16:59:30.715207+00:00] [INFO] Done.

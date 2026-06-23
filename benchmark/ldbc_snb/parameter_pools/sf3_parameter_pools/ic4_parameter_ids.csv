@@ -1,0 +1,6 @@
+official_id,parameter_id,root_person_id,friend_count,sample_post_count,sample_tag_edges,parameter_kind
+IC4,933,933,8,4133,505,person_id_with_friend_posts_and_tags
+IC4,1129,1129,17,5297,219,person_id_with_friend_posts_and_tags
+IC4,4194,4194,22,6783,596,person_id_with_friend_posts_and_tags
+IC4,8333,8333,37,7239,418,person_id_with_friend_posts_and_tags
+IC4,8698,8698,27,6341,932,person_id_with_friend_posts_and_tags

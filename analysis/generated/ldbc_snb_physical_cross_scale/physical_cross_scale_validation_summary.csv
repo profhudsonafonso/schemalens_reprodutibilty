@@ -1,0 +1,4 @@
+scale_label,query_count,aggregate_rows,raw_rows,query_write_plan_rows,failed_runs_total,semantic_warning_total,raw_failed_rows,non_completed_plan_rows,collscan_rows,valid_run
+sf0.1,22,128,1280,128,0,0,0,0,0,True
+sf1,22,128,1280,128,0,0,0,0,0,True
+sf3,22,128,1280,128,0,0,0,0,0,True

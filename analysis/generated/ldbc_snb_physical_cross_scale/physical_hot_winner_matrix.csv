@@ -1,0 +1,23 @@
+official_id,sf0.1,sf1,sf3
+IC1,G0 / primary / p95=407.677,G0 / primary / p95=2827.206,G0 / primary / p95=5567.528
+IC2,G3 / primary / p95=11.365,G3 / primary / p95=16.605,G0 / primary / p95=36.357
+IC3,G3 / primary / p95=645.505,G7 / secondary_affected / p95=3664.198,G7 / secondary_affected / p95=5790.022
+IC4,G0 / primary / p95=15.355,G3 / primary / p95=61.062,G0 / primary / p95=62.667
+IC5,G3 / primary / p95=2962.312,G7 / secondary_affected / p95=8636.625,G9 / secondary_affected / p95=16242.847
+IC6,G0 / primary / p95=49.478,G0 / primary / p95=82.237,G3 / primary / p95=99.29
+IC7,G3 / primary / p95=0.781,G6 / secondary_affected / p95=1.172,G3 / primary / p95=0.859
+INS1,G3 / primary / p95=0.992,G3 / primary / p95=1.874,G3 / primary / p95=1.234
+INS2,G6 / primary / p95=1.07,G6 / primary / p95=0.555,G4 / primary / p95=1.665
+INS3,G6 / primary / p95=1.3,G6 / primary / p95=1.054,G6 / primary / p95=1.113
+INS4,G0 / primary / p95=1.989,G3 / primary / p95=1.452,G3 / primary / p95=1.982
+INS5,G6 / primary / p95=0.652,G6 / primary / p95=0.681,G6 / primary / p95=0.591
+INS6,G7 / secondary_affected / p95=1.562,G7 / secondary_affected / p95=1.757,G7 / secondary_affected / p95=1.019
+INS7,G7 / secondary_affected / p95=1.109,G7 / secondary_affected / p95=1.599,G7 / secondary_affected / p95=1.596
+INS8,G0 / primary / p95=0.513,G3 / primary / p95=0.858,G0 / primary / p95=0.508
+IS1,G3 / primary / p95=0.332,G3 / primary / p95=0.351,G3 / primary / p95=0.286
+IS2,G9 / secondary_affected / p95=1.376,G9 / secondary_affected / p95=1.877,G7 / secondary_affected / p95=1.288
+IS3,G3 / primary / p95=0.704,G3 / primary / p95=0.707,G3 / primary / p95=0.704
+IS4,G0 / control / p95=93.523,G0 / control / p95=1247.114,G0 / control / p95=4795.356
+IS5,G0 / primary / p95=1.25,G3 / primary / p95=0.55,G3 / primary / p95=0.922
+IS6,G9 / primary / p95=94.482,G3 / secondary_affected / p95=1294.504,G3 / secondary_affected / p95=4783.009
+IS7,G9 / secondary_affected / p95=0.874,G3 / primary / p95=1.258,G7 / secondary_affected / p95=1.341

@@ -1,0 +1,64 @@
+\begin{table}[t]
+\centering
+\caption{Baseline behavior for LDBC SNB IC7 under physical MongoDB hot-run p95.}
+\label{tab:ldbc-ic7-physical-baseline}
+\small
+\begin{tabular}{llllrrrl}
+\toprule
+Scale & Winner & Baseline & Choice & p95 & $\Delta$ms & Regret & Top-1 \\
+\midrule
+sf0.1 & G3, 0.781 & SchemaLens & G3 & 0.781 & 0.000 & 0.000 & yes \\
+sf0.1 & G3, 0.781 & always-embed & G4 & 0.954 & 0.174 & 0.222 & no \\
+sf0.1 & G3, 0.781 & always-reference & G3 & 0.781 & 0.000 & 0.000 & yes \\
+sf0.1 & G3, 0.781 & depth-only & G3 & 0.781 & 0.000 & 0.000 & yes \\
+sf0.1 & G3, 0.781 & random-k & G3 & 0.781 & 0.000 & 0.000 & yes \\
+sf0.1 & G3, 0.781 & relationship-type-only & G3 & 0.781 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & SchemaLens & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & always-embed & G4 & 2.108 & 0.936 & 0.798 & no \\
+sf1 & G6, 1.172 & always-reference & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & depth-only & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & random-k & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & relationship-type-only & G3 & 1.728 & 0.555 & 0.474 & no \\
+sf3 & G3, 0.859 & SchemaLens & G3 & 0.859 & 0.000 & 0.000 & yes \\
+sf3 & G3, 0.859 & always-embed & G4 & 1.785 & 0.926 & 1.079 & no \\
+sf3 & G3, 0.859 & always-reference & G3 & 0.859 & 0.000 & 0.000 & yes \\
+sf3 & G3, 0.859 & depth-only & G3 & 0.859 & 0.000 & 0.000 & yes \\
+sf3 & G3, 0.859 & random-k & G3 & 0.859 & 0.000 & 0.000 & yes \\
+sf3 & G3, 0.859 & relationship-type-only & G3 & 0.859 & 0.000 & 0.000 & yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Ablation behavior for LDBC SNB IC7 under physical MongoDB hot-run p95.}
+\label{tab:ldbc-ic7-physical-ablation}
+\small
+\begin{tabular}{llllrrrl}
+\toprule
+Scale & Winner & Ablation / remaining space & Choice & p95 & $\Delta$ms & Regret & Top-1 \\
+\midrule
+sf0.1 & G3, 0.781 & full SchemaLens: G0,G3,G4,G6 & G3 & 0.781 & 0.000 & 0.000 & yes \\
+sf0.1 & G3, 0.781 & no-depth: G0,G6 & G6 & 0.841 & 0.060 & 0.077 & no \\
+sf0.1 & G3, 0.781 & no-rel.-semantics-no-depth: G0 & G0 & 3.539 & 2.758 & 3.532 & no \\
+sf0.1 & G3, 0.781 & no-relationship-semantics: G0 & G0 & 3.539 & 2.758 & 3.532 & no \\
+sf0.1 & G3, 0.781 & no-residual-traversal: G0,G6 & G6 & 0.841 & 0.060 & 0.077 & no \\
+sf0.1 & G3, 0.781 & no-sharedness: G0,G4 & G4 & 0.954 & 0.174 & 0.222 & no \\
+sf0.1 & G3, 0.781 & no-update-volatility: G0,G4,G6 & G6 & 0.841 & 0.060 & 0.077 & no \\
+sf1 & G6, 1.172 & full SchemaLens: G0,G3,G4,G6 & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & no-depth: G0,G6 & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & no-rel.-semantics-no-depth: G0 & G0 & 3.579 & 2.407 & 2.053 & no \\
+sf1 & G6, 1.172 & no-relationship-semantics: G0 & G0 & 3.579 & 2.407 & 2.053 & no \\
+sf1 & G6, 1.172 & no-residual-traversal: G0,G6 & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf1 & G6, 1.172 & no-sharedness: G0,G4 & G4 & 2.108 & 0.936 & 0.798 & no \\
+sf1 & G6, 1.172 & no-update-volatility: G0,G4,G6 & G6 & 1.172 & 0.000 & 0.000 & yes \\
+sf3 & G3, 0.859 & full SchemaLens: G0,G3,G4,G6 & G3 & 0.859 & 0.000 & 0.000 & yes \\
+sf3 & G3, 0.859 & no-depth: G0,G6 & G6 & 1.585 & 0.727 & 0.846 & no \\
+sf3 & G3, 0.859 & no-rel.-semantics-no-depth: G0 & G0 & 5.043 & 4.184 & 4.873 & no \\
+sf3 & G3, 0.859 & no-relationship-semantics: G0 & G0 & 5.043 & 4.184 & 4.873 & no \\
+sf3 & G3, 0.859 & no-residual-traversal: G0,G6 & G6 & 1.585 & 0.727 & 0.846 & no \\
+sf3 & G3, 0.859 & no-sharedness: G0,G4 & G4 & 1.785 & 0.926 & 1.079 & no \\
+sf3 & G3, 0.859 & no-update-volatility: G0,G4,G6 & G6 & 1.585 & 0.727 & 0.846 & no \\
+\bottomrule
+\end{tabular}
+\end{table}
